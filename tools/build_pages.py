@@ -3,7 +3,9 @@
 import json, os, re, datetime, html, urllib.parse, collections
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'site')
-BASE = 'https://bakssine.netlify.app'
+# 사이트 주소: 환경변수 SITE_BASE_URL(없으면 깃허브 페이지 주소). 하위 경로면 PREFIX 가 '/bakssine' 처럼 붙음
+BASE = (os.environ.get('SITE_BASE_URL') or 'https://thecloudstay.github.io/bakssine').rstrip('/')
+PREFIX = urllib.parse.urlparse(BASE).path.rstrip('/')
 TODAY = datetime.date.today().isoformat()
 NOW = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
@@ -39,6 +41,7 @@ def head_extra():
 def inject_index():
     p = os.path.join(SITE, 'index.html'); s = open(p, encoding='utf-8').read()
     s = re.sub(r'<!--head-extra-->.*?<!--/head-extra-->', '<!--head-extra-->' + head_extra() + '<!--/head-extra-->', s, flags=re.S)
+    s = re.sub(r'https://[a-z0-9.\-]+(?:/bakssine)?(?=/og/home\.png|/"|/rss\.xml)', BASE, s)
     open(p, 'w', encoding='utf-8').write(s)
     st = json.load(open(os.path.join(SITE, 'data', 'status.json'), encoding='utf-8')) if os.path.exists(os.path.join(SITE, 'data', 'status.json')) else {}
     st.setdefault('keys', {}).update({'ga': bool(GA), 'naver': bool(NAVER), 'kakao': bool(KAKAO)})
@@ -94,6 +97,7 @@ PAGES = []  # (path, lastmod, priority)
 def write(path, htmltext, prio='0.6'):
     fp = os.path.join(SITE, path.strip('/'), 'index.html') if path.endswith('/') else os.path.join(SITE, path.strip('/'))
     os.makedirs(os.path.dirname(fp), exist_ok=True)
+    if PREFIX: htmltext = re.sub(r'(href|src|action)="/(?!/)', lambda m: f'{m.group(1)}="{PREFIX}/', htmltext)
     open(fp, 'w', encoding='utf-8').write(htmltext)
     if not path.endswith('.html') or path == '/404.html':
         if path != '/404.html': PAGES.append((path, TODAY, prio))

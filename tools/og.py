@@ -22,7 +22,7 @@ def card(path, title, lines, kicker='박씨네', tag=None):
         f = F('Medium', 30); d.text((72, y), ln, font=f, fill=col or MUTE); y += 46
     d.rectangle([0, 614, 1200, 630], fill=MOSS)
     d.line([72, 560, 1128, 560], fill=LINE, width=2)
-    d.text((72, 574), 'bakssine.netlify.app · 전국 시군 집계 · 개별 농가 위치는 싣지 않습니다', font=F('Medium', 20), fill=MUTE)
+    d.text((72, 574), 'thecloudstay.github.io/bakssine · 전국 시군 집계 · 개별 농가 위치는 싣지 않습니다', font=F('Medium', 20), fill=MUTE)
     im.save(path, optimize=True)
 J = lambda p: json.load(open(os.path.join(SITE, 'data', p), encoding='utf-8'))
 LS, AQ, CR, PL, MK = J('livestock.json'), J('aqua.json'), J('crops.json'), J('places.json'), J('markets.json')

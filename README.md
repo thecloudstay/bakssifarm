@@ -3,7 +3,7 @@
 전국 시군별 가축 사육(35개 축종, 2018~2026), 양식 어장 면허 구역(11,486곳), 지리적표시 대표 품목(204건)을 한 지도에서 보고,
 공판장·가축시장·수협 위판장·공영도매시장 위치와 경락가, 사료·자재 공동구매 모집판을 함께 둔 사이트입니다.
 
-- 주소: https://bakssine.netlify.app (넷리파이 프로젝트 bakssine)
+- 주소: https://thecloudstay.github.io/bakssine/ (깃허브 페이지, main 에 밀어 넣으면 자동으로 올라감). 넷리파이 프로젝트 bakssine(49a1aa45-…)은 토큰을 넣으면 함께 올라감. 나중에 도메인을 붙이면 저장소 변수 `SITE_BASE_URL` 만 바꾸면 됨
 - 원칙: 개별 농가·어가 핀은 싣지 않음(가장 작은 단위는 리·읍면동). 예시 숫자는 「예시」, 확인 전 위치는 「위치 근사」로 표시.
 
 ## 폴더
@@ -21,6 +21,7 @@
   - `indexnow.py` 색인 알림, `report.py` 텔레그램 아침 보고
 - `raw/` — 원본 묶음(사육규모 35축종, 시군 경계)
 - `private/` — 공개하지 않는 가공 자료(리 단위 집계)
+- `.github/workflows/pages.yml` main 에 밀어 넣으면 깃허브 페이지에 올리기(처음 한 번 페이지를 자동으로 켬)
 - `.github/workflows/daily.yml` 매일 06:17 수집→생성→기록→올리기→색인 알림, `report.yml` 매일 09:00 텔레그램 보고
 
 ## 다시 만들기
@@ -32,8 +33,9 @@ python3 tools/build_pages.py && python3 tools/og.py
 ## 저장소 비밀값(설정 → Secrets)
 | 이름 | 쓰임 | 없으면 |
 |---|---|---|
-| `NETLIFY_AUTH_TOKEN` | 아침 올리기 | 올리기 단계 건너뜀 |
-| `NETLIFY_SITE_ID` | `49a1aa45-e2be-40c1-8eeb-6e3c3a8dd7dc` | 올리기 단계 건너뜀 |
+| (변수) `SITE_BASE_URL` | 사이트 주소. 도메인 붙이면 여기만 바꿈 | 깃허브 페이지 주소 사용 |
+| `NETLIFY_AUTH_TOKEN` | 넷리파이에도 올리기(선택) | 넷리파이 단계 건너뜀 |
+| `NETLIFY_SITE_ID` | `49a1aa45-e2be-40c1-8eeb-6e3c3a8dd7dc`(선택) | 넷리파이 단계 건너뜀 |
 | `DATA_GO_KR_KEY` | 공공데이터포털 일반 인증키(축평원·인허가) | 경락가·인허가 「대기」 |
 | `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | 아침 보고 | 보고 안 보냄 |
 | `INDEXNOW_KEY` | 색인 알림(아무 영숫자 8~128자) | 알림 건너뜀 |

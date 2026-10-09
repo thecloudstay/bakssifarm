@@ -1,0 +1,41 @@
+# 깃허브 페이지 올리기: main 에 밀어 넣으면 바로 올라감(집지니 방식). 아침 작업 흐름도 이 흐름을 불러 씀
+name: 올리기(깃허브 페이지)
+on:
+  push:
+    branches: [main]
+    paths: ['site/**', 'tools/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+  workflow_call:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      SITE_BASE_URL: ${{ vars.SITE_BASE_URL }}
+      GA_ID: ${{ secrets.GA_ID }}
+      NAVER_SITE_VERIFICATION: ${{ secrets.NAVER_SITE_VERIFICATION }}
+      KAKAO_JS_KEY: ${{ secrets.KAKAO_JS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: main }
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pillow
+      - name: 글 화면·사이트 지도 생성(열쇠 주입 포함)
+        run: python tools/build_pages.py
+      - name: 페이지 설정(처음이면 자동으로 켬)
+        uses: actions/configure-pages@v5
+        with: { enablement: true }
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: site }
+      - id: deployment
+        uses: actions/deploy-pages@v4
