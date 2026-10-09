@@ -1,7 +1,7 @@
 # 어장 모드 위판장(수협)·농장 모드 공영도매시장 핀
 # 위판장: 공공 좌표 자료가 없어 조합이 있는 시군의 중심 좌표로 두고 「위치 근사·확인 전」 표시 → 한국농수산식품유통공사 산지위판장 현황(15088061) 받으면 주소로 교체
 import json
-feats = json.load(open('work/units.json'))['features']
+feats = json.load(open('raw/units_sigun.geojson'))['features']
 def center(u):
     for f in feats:
         if f['properties']['u'] != u: continue

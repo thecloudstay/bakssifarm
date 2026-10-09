@@ -1,6 +1,6 @@
 import json,csv,io,re
-F=json.load(open('raw/bundle.json'))
-topo=json.load(open('work/units_topo.json'))
+F=json.load(open('raw/livestock_bundle.json'))
+topo=json.load(open('site/data/units.json'))
 units=set(g['properties']['u'] for g in topo['objects']['units']['geometries'])
 YEARS=list(range(2018,2027))
 GROUP={'한우':'소','젖소':'소','육우':'소','일반돼지':'돼지','종돈':'돼지','흑돼지':'돼지','미니피그':'돼지','실험용돼지':'돼지','멧돼지':'돼지',

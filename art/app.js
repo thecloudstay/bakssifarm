@@ -444,7 +444,7 @@
         h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>양식 면허 · 어장정보도 2025</small></h1>';
         h += '<div class="nums"><div><b>' + man(e.n) + '<i>건</i></b><span>양식 면허</span></div><div><b>' + man(e.ha) + '<i>㏊</i></b><span>면허 면적</span></div></div>';
         h += '<p class="chg">마을어장(어촌계) ' + man(e.v[0]) + '곳 · ' + man(e.v[1]) + '㏊' + (e.j ? ' · 정치망 ' + e.j + '곳' : '') + '</p>';
-        if (e.top.length) h += '<p class="read">주로 ' + e.top.slice(0, 3).map(function (t) { return t[0]; }).join(', ') + '을(를) 키웁니다. ' + (e.top[0][1] / e.n > 0.5 ? e.top[0][0] + ' 면허가 절반을 넘습니다.' : '') + '</p>';
+        if (e.top.length) h += '<p class="read">주된 양식은 ' + e.top.slice(0, 3).map(function (t) { return t[0]; }).join(', ') + '입니다. ' + (e.top[0][1] / e.n > 0.5 ? e.top[0][0] + ' 면허가 절반을 넘습니다.' : '') + '</p>';
         h += '</section>';
         if (e.top.length) {
           var mx = e.top[0][1];

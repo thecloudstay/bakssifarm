@@ -1,7 +1,7 @@
 # 해루낚 어장정보도(국립해양조사원 개방해 2025) 구역을 시군·품종별로 집계
 import json, glob, re, collections, os
-HN = '../hn/data/eo/'
-units = json.load(open('work/units.json'))
+HN = 'raw/eo/'
+units = json.load(open('raw/units_sigun.geojson'))
 
 # 품종 정규화
 SPEC = [
