@@ -1,0 +1,32 @@
+# 넷리파이 올리기(양식 접수용 주소 bakssine.netlify.app). 토큰이 있으면 아침 작업 흐름이 자동으로 올리고,
+# 없을 때는 넷리파이 연동창구에서 받은 임시 올리기 주소(proxy_path)를 넣어 손으로 실행할 수 있음
+name: 올리기(넷리파이)
+on:
+  workflow_dispatch:
+    inputs:
+      proxy_path:
+        description: 넷리파이 연동창구가 준 임시 올리기 주소(토큰이 없을 때만)
+        required: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID || '49a1aa45-e2be-40c1-8eeb-6e3c3a8dd7dc' }}
+      SITE_BASE_URL: ${{ vars.SITE_BASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: 토큰으로 올리기
+        if: ${{ env.NETLIFY_AUTH_TOKEN != '' }}
+        run: npx --yes netlify-cli@17 deploy --prod --dir=site --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN" --message="올리기 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+      - name: 임시 주소로 올리기
+        if: ${{ env.NETLIFY_AUTH_TOKEN == '' && github.event.inputs.proxy_path != '' }}
+        run: |
+          cat > netlify.toml <<'T'
+          [build]
+            publish = "site"
+            command = ""
+          T
+          npx -y @netlify/mcp@latest --site-id "$NETLIFY_SITE_ID" --proxy-path "${{ github.event.inputs.proxy_path }}"

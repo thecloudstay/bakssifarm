@@ -6,6 +6,8 @@ SITE = os.path.join(ROOT, 'site')
 # 사이트 주소: 환경변수 SITE_BASE_URL(없으면 깃허브 페이지 주소). 하위 경로면 PREFIX 가 '/bakssine' 처럼 붙음
 BASE = (os.environ.get('SITE_BASE_URL') or 'https://thecloudstay.github.io/bakssine').rstrip('/')
 PREFIX = urllib.parse.urlparse(BASE).path.rstrip('/')
+# 양식(제보·모집·등록)은 넷리파이 양식 기능이 받으므로, 어디에 올라가 있든 넷리파이 주소로 보냄
+FORM_BASE = (os.environ.get('FORM_BASE_URL') or 'https://bakssine.netlify.app').rstrip('/')
 TODAY = datetime.date.today().isoformat()
 NOW = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
@@ -103,7 +105,7 @@ def write(path, htmltext, prio='0.6'):
         if path != '/404.html': PAGES.append((path, TODAY, prio))
 
 def form(name, fields, button, thanks):
-    h = f'<form class="form" name="{name}" method="POST" action="{thanks}" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="{name}"><p hidden><label>사람이면 비워 두세요 <input name="bot-field"></label></p>'
+    h = f'<form class="form" name="{name}" method="POST" action="{FORM_BASE}{thanks}" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="{name}"><p hidden><label>사람이면 비워 두세요 <input name="bot-field"></label></p>'
     for f in fields:
         if f[0] == 'row': h += '<div class="row">' + ''.join(field(x) for x in f[1]) + '</div>'
         else: h += field(f)
