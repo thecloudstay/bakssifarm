@@ -37,14 +37,17 @@ jobs:
         run: python tools/sync_forms.py
       - name: 이상 신호(고수온·급등락·전염병)
         run: python tools/collect_signals.py
+      - name: 수입 단가(관세청 수출입실적) — 매달 3일
+        run: |
+          if [ "$(TZ=Asia/Seoul date +%d)" = "03" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then python tools/collect_trade.py; else echo "매달 3일 아침에만"; fi
       - name: 글 화면·사이트 지도·새 소식
         run: python tools/build_pages.py
       - name: 미리보기 그림
         run: python tools/og.py
       - name: 저장소에 기록
         run: |
-          git config user.name "박씨네 아침 작업"
-          git config user.email "bot@bakssine.local"
+          git config user.name "박씨팜 아침 작업"
+          git config user.email "bot@bakssifarm.local"
           git add -A site/data site/index.html tools/urls.txt private || true
           git diff --cached --quiet || git commit -m "아침 수집 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           git push || true

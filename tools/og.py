@@ -12,7 +12,7 @@ def seal(d, x, y, s=44):
     d.line([x + s * 0.5, y + s * 0.77, x + s * 0.5, y + s * 0.45], fill='white', width=int(w))
     d.polygon([(x + s * 0.5, y + s * 0.5), (x + s * 0.27, y + s * 0.3), (x + s * 0.5, y + s * 0.36)], fill='white')
     d.polygon([(x + s * 0.5, y + s * 0.45), (x + s * 0.75, y + s * 0.22), (x + s * 0.5, y + s * 0.3)], fill='white')
-def card(path, title, lines, kicker='박씨네', tag=None):
+def card(path, title, lines, kicker='박씨팜', tag=None):
     im = Image.new('RGB', (1200, 630), 'white'); d = ImageDraw.Draw(im)
     seal(d, 72, 64); d.text((130, 66), kicker, font=F('Bold', 34), fill=INK)
     if tag: d.text((1128, 72), tag, font=F('Medium', 24), fill=MUTE, anchor='ra')
@@ -22,7 +22,7 @@ def card(path, title, lines, kicker='박씨네', tag=None):
         f = F('Medium', 30); d.text((72, y), ln, font=f, fill=col or MUTE); y += 46
     d.rectangle([0, 614, 1200, 630], fill=MOSS)
     d.line([72, 560, 1128, 560], fill=LINE, width=2)
-    d.text((72, 574), 'thecloudstay.github.io/bakssine · 전국 시군 집계 · 개별 농가 위치는 싣지 않습니다', font=F('Medium', 20), fill=MUTE)
+    d.text((72, 574), 'thecloudstay.github.io/bakssifarm · 전국 시군 집계 · 개별 농가 위치는 싣지 않습니다', font=F('Medium', 20), fill=MUTE)
     im.save(path, optimize=True)
 J = lambda p: json.load(open(os.path.join(SITE, 'data', p), encoding='utf-8'))
 LS, AQ, CR, PL, MK = J('livestock.json'), J('aqua.json'), J('crops.json'), J('places.json'), J('markets.json')
@@ -31,8 +31,8 @@ def man(n):
     return f'{n:,.0f}'
 card(os.path.join(OUT, 'home.png'), '농장·어장·동물농장 한 지도', [('가축 35개 축종 · 2018~2026년 시군별 사육 현황', None), ('양식 면허 구역 11,486곳 · 수협 위판장 63', None), ('지리적표시 대표 품목 204건 · 공영도매시장 32', None), ('공판장·가축시장 위치와 경락가 조회, 공동구매 모집판', MOSS)])
 card(os.path.join(OUT, 'price.png'), '경락가 조회', [('소·돼지 등급별 경락가 · 공판장별 경매', None), ('농산물 도매시장 경락가 · 수협 위판 시세', None), ('내 품목 가격 알림', MOSS)])
-card(os.path.join(OUT, 'buy.png'), '옆집은 얼마에 사나', [('사료 · 종묘 · 비료 · 자재 구입가 시세판', None), ('익명 제보 → 시군별 중위값 → 내 가격 성적표', None), ('박씨네는 팔지도 사지도 않습니다', MOSS)])
-card(os.path.join(OUT, 'gongu.png'), '사료·자재 공동구매 모집판', [('같은 시군 농가끼리 모아서 싸게', None), ('배합사료 · 양식 사료 · 비료 · 농자재', None), ('박씨네는 판매자가 아닙니다 — 모집과 연결만', MOSS)])
+card(os.path.join(OUT, 'buy.png'), '옆집은 얼마에 사나', [('사료 · 종묘 · 비료 · 자재 구입가 시세판', None), ('익명 제보 → 시군별 중위값 → 내 가격 성적표', None), ('박씨팜은 팔지도 사지도 않습니다', MOSS)])
+card(os.path.join(OUT, 'gongu.png'), '사료·자재 공동구매 모집판', [('같은 시군 농가끼리 모아서 싸게', None), ('배합사료 · 양식 사료 · 비료 · 농자재', None), ('박씨팜은 판매자가 아닙니다 — 모집과 연결만', MOSS)])
 card(os.path.join(OUT, 'pro.png'), '데이터 상품과 업체 등록', [('리별 사료 수요 지도 · 진입·이탈 지수', None), ('공판장별 가격차 · 양식 면허 만료 달력', None), ('사료·도축·운송·수의 업체 지역 등록', MOSS)])
 ani = collections.defaultdict(list)
 for s in LS['species']:

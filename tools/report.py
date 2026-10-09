@@ -6,7 +6,7 @@ from common import *
 TOKEN = env('TELEGRAM_BOT_TOKEN'); CHAT = env('TELEGRAM_CHAT_ID'); keyflag('telegram', TOKEN and CHAT)
 st = jload(os.path.join(DATA, 'status.json'), {}); price = jload(os.path.join(DATA, 'price', 'latest.json'), {}); gongu = jload(os.path.join(DATA, 'gongu.json'), {'items': []})
 NAMES = {'ekape_price': '경락가', 'license': '인허가', 'forms': '양식', 'pages': '글 화면', 'og': '미리보기', 'indexnow': '색인 알림', 'deploy': '올리기'}
-lines = [f'🌱 박씨네 아침 보고 {now().strftime("%m월 %d일")}']
+lines = [f'🌱 박씨팜 아침 보고 {now().strftime("%m월 %d일")}']
 cols = st.get('collectors', {})
 okl = [NAMES.get(k, k) for k, v in cols.items() if v.get('ok')]; bad = [f'{NAMES.get(k, k)}({v.get("msg", "")[:40]})' for k, v in cols.items() if v.get('ok') is False]; wait = [NAMES.get(k, k) for k, v in cols.items() if v.get('ok') is None]
 lines.append('수집 정상: ' + (', '.join(okl) or '없음'))
@@ -22,7 +22,7 @@ items = gongu.get('items', [])
 if items:
     lines.append(f'공동구매 모집 {len(items)}건: ' + ' · '.join(f'{i["id"]} {i["item"]} {i["area"]} {i["status"]}' for i in items[:3]))
 if st.get('counts', {}).get('forms'): lines.append('양식 접수: ' + str(st['counts']['forms']))
-lines.append(f'글 화면 {st.get("counts", {}).get("pages", "–")}쪽 · https://thecloudstay.github.io/bakssine/console/')
+lines.append(f'글 화면 {st.get("counts", {}).get("pages", "–")}쪽 · https://thecloudstay.github.io/bakssifarm/console/')
 if now().weekday() == 0:
     hist = sorted(os.listdir(os.path.join(DATA, 'price', 'history'))) if os.path.isdir(os.path.join(DATA, 'price', 'history')) else []
     wk = [jload(os.path.join(DATA, 'price', 'history', f)) for f in hist[-5:]]

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /console/
-Sitemap: https://thecloudstay.github.io/bakssine/sitemap.xml
+Sitemap: https://thecloudstay.github.io/bakssifarm/sitemap.xml

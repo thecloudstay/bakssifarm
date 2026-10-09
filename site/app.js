@@ -1,4 +1,4 @@
-/* 박씨네 — 한 지도, 세 가지 보기(동물농장·어장·농장)
+/* 박씨팜 — 한 지도, 세 가지 보기(동물농장·어장·농장)
    동물농장: 가축위생방역지원본부 시군별 사육규모(2018~2026, 1월) · 공판장·가축시장
    어장: 국립해양조사원 어장정보도 2025(양식 면허 구역) · 수협 위판장
    농장: 지리적표시 등록부(대표 판매 품목) · 공영도매시장
@@ -577,7 +577,7 @@
     }
     else if (m.type === '위판장') h += seaBoard('오늘 이 위판장 시세');
     else if (m.type === '도매시장') h += cropBoard('오늘 이 도매시장 경락가');
-    var srcs = { '공판장': '위치: 박씨네 정리본(공판장 13곳). 전화·주소 대조한 곳은 「대조함」으로 표시.', '가축시장': '가축시장 장날·위치는 공공 연동창구가 없어 직접 확인해 채우는 중입니다.',
+    var srcs = { '공판장': '위치: 박씨팜 정리본(공판장 13곳). 전화·주소 대조한 곳은 「대조함」으로 표시.', '가축시장': '가축시장 장날·위치는 공공 연동창구가 없어 직접 확인해 채우는 중입니다.',
       '위판장': '위판장은 수협 지구별 조합 기준 63곳. 공공 좌표가 없어 시군 중심에 두었고, 산지위판장 현황 자료의 주소로 바꿀 예정입니다.', '도매시장': '공영도매시장 32곳. 좌표는 근사(1~2㎞)이며 주소 대조 뒤 확정합니다.' };
     h += '<section class="sec"><p class="src">' + esc(srcs[m.type] || '') + '</p></section>';
     return h;
@@ -701,7 +701,7 @@
     var ms = mode().measures.map(function (m) { return m[0]; }); if (!keep || ms.indexOf(S.m) < 0) S.m = ms.indexOf(S.m) >= 0 && keep ? S.m : ms[0];
     var first = speciesList()[0]; SP = findSpecies(S.sp) || first; S.sp = SP.k; $('#pickName').textContent = S.sp;
     drawSeg(); computeBreaks(); restyle(); drawLabels(); drawPins(); drawZones(); drawBiz(); drawLayers(); drawLegend(); hint(); renderPanel();
-    document.title = '박씨네 ' + mode().name + ' — ' + S.sp + ' 지도';
+    document.title = '박씨팜 ' + mode().name + ' — ' + S.sp + ' 지도';
   }
 
   /* ── 찾기 */
