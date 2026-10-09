@@ -8,6 +8,8 @@ BASE = (os.environ.get('SITE_BASE_URL') or 'https://thecloudstay.github.io/bakss
 PREFIX = urllib.parse.urlparse(BASE).path.rstrip('/')
 # 양식(제보·모집·등록)은 넷리파이 양식 기능이 받으므로, 어디에 올라가 있든 넷리파이 주소로 보냄
 FORM_BASE = (os.environ.get('FORM_BASE_URL') or 'https://bakssine.netlify.app').rstrip('/')
+# 접수함 주소(구글 앱스 스크립트 웹앱 /exec)가 있으면 모든 양식을 그리로 보냄(넷리파이 없이도 동작)
+FORM_ENDPOINT = (os.environ.get('FORM_ENDPOINT') or '').strip()
 TODAY = datetime.date.today().isoformat()
 NOW = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
@@ -34,6 +36,7 @@ if os.path.exists(os.path.join(ROOT, 'tools', 'config.json')): CFG = json.load(o
 GA = os.environ.get('GA_ID') or CFG.get('ga_id') or ''
 NAVER = os.environ.get('NAVER_SITE_VERIFICATION') or CFG.get('naver_verification') or ''
 KAKAO = os.environ.get('KAKAO_JS_KEY') or CFG.get('kakao_js_key') or ''
+FORM_ENDPOINT = FORM_ENDPOINT or (CFG.get('form_endpoint') or '').strip()
 def head_extra():
     h = ''
     if NAVER: h += f'<meta name="naver-site-verification" content="{html.escape(NAVER)}">\n'
@@ -87,6 +90,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 </header>
 <main class="wrap">
 {body}
+{FORM_JS % (json.dumps(FORM_ENDPOINT), PREFIX)}
 <footer class="foot">
   <p>박씨네 — 전국 시군별 가축 사육·양식 어장·대표 품목 지도. 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
   <p><a href="/">지도</a><a href="/price/">경락가</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
@@ -110,8 +114,9 @@ def form(name, fields, button, thanks):
         if f[0] == 'row': h += '<div class="row">' + ''.join(field(x) for x in f[1]) + '</div>'
         else: h += field(f)
     h += f'<label class="agree"><input type="checkbox" name="동의" value="예" required> 적은 연락처는 이 신청의 연락 목적으로만 쓰고, 박씨네는 판매자·중개인이 아니며 거래의 당사자가 되지 않는다는 점에 동의합니다.</label>'
-    h += f'<button class="btn prime wide" type="submit">{E(button)}</button></form>'
+    h += f'<button class="btn prime wide" type="submit">{E(button)}</button><p class="mini form-msg" hidden></p></form>'
     return h
+FORM_JS = '''<script>(function(){var EP=%s;document.querySelectorAll('form.form').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var b=f.querySelector('button[type=submit]');b.disabled=true;b.textContent='보내는 중…';var fd=new FormData(f);var body=new URLSearchParams(fd);var url=EP||f.getAttribute('action');fetch(url,{method:'POST',body:body,mode:EP?'no-cors':'cors'}).then(function(r){if(!EP&&!r.ok)throw new Error(r.status);location.href=f.getAttribute('action').replace(/^https?:\\/\\/[^/]+/,'%s');}).catch(function(){b.disabled=false;b.textContent='다시 보내기';var m=f.querySelector('.form-msg');m.hidden=false;m.textContent='지금은 접수 창구가 응답하지 않습니다. 잠시 뒤 다시 눌러 주세요.';});});});})();</script>'''
 def field(f):
     kind, name, label = f[0], f[1], f[2]
     req = ' required' if (len(f) > 3 and f[3]) else ''

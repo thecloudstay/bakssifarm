@@ -34,6 +34,7 @@ python3 tools/build_pages.py && python3 tools/og.py
 | 이름 | 쓰임 | 없으면 |
 |---|---|---|
 | (변수) `SITE_BASE_URL` | 사이트 주소. 도메인 붙이면 여기만 바꿈 | 깃허브 페이지 주소 사용 |
+| (변수) `FORM_ENDPOINT` | 접수함(구글 앱스 스크립트 웹앱 /exec, `tools/gas/접수함.gs`) | 양식이 넷리파이로 감(넷리파이가 멈추면 접수 안 됨) |
 | `NETLIFY_AUTH_TOKEN` | 넷리파이에도 올리기(선택) | 넷리파이 단계 건너뜀 |
 | `NETLIFY_SITE_ID` | `49a1aa45-e2be-40c1-8eeb-6e3c3a8dd7dc`(선택) | 넷리파이 단계 건너뜀 |
 | `DATA_GO_KR_KEY` | 공공데이터포털 일반 인증키(축평원·인허가) | 경락가·인허가 「대기」 |

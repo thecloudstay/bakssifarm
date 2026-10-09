@@ -21,6 +21,7 @@ jobs:
       NAVER_SITE_VERIFICATION: ${{ secrets.NAVER_SITE_VERIFICATION }}
       KAKAO_JS_KEY: ${{ secrets.KAKAO_JS_KEY }}
       SITE_BASE_URL: ${{ vars.SITE_BASE_URL }}
+      FORM_ENDPOINT: ${{ vars.FORM_ENDPOINT }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

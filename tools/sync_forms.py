@@ -3,9 +3,21 @@
 import sys, os, json, datetime, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
-TOKEN = env('NETLIFY_AUTH_TOKEN'); SITE_ID = env('NETLIFY_SITE_ID')
+TOKEN = env('NETLIFY_AUTH_TOKEN'); SITE_ID = env('NETLIFY_SITE_ID'); EP = env('FORM_ENDPOINT')
+if EP:
+    # 구글 앱스 스크립트 접수함: 집계만 받아 옴(개별 제보·연락처는 접수함 밖으로 안 나옴)
+    try:
+        buy = json.loads(get(EP, {'what': 'buy'})); gongu = json.loads(get(EP, {'what': 'gongu'})); cnt = json.loads(get(EP, {'what': 'count'})).get('counts', {})
+        jsave(os.path.join(DATA, 'buyprice.json'), {'at': stamp(), 'n': buy.get('n', 0), 'items': buy.get('items', [])}, indent=1)
+        jsave(os.path.join(DATA, 'gongu.json'), {'at': stamp(), 'items': gongu.get('items', [])}, indent=1)
+        p = os.path.join(DATA, 'status.json'); st = jload(p, {}); st.setdefault('counts', {})['forms'] = ' · '.join(f'{k} {v}' for k, v in cnt.items()) or '0'; st.setdefault('keys', {})['forms'] = True; jsave(p, st, indent=1)
+        status('forms', True, f'접수함 · 모집 {len(gongu.get("items", []))}건 · 구입가 제보 {buy.get("n", 0)}건')
+        print('접수함', cnt)
+    except Exception as e:
+        status('forms', False, '접수함 ' + str(e)[:160]); print('실패', e)
+    sys.exit(0)
 if not TOKEN or not SITE_ID:
-    status('forms', None, '넷리파이 열쇠 없음'); print('열쇠 없음'); sys.exit(0)
+    status('forms', None, '접수함 주소(FORM_ENDPOINT)도 넷리파이 열쇠도 없음'); print('열쇠 없음'); sys.exit(0)
 H = {'Authorization': 'Bearer ' + TOKEN, 'User-Agent': 'bakssine/1.0'}
 try:
     forms = json.loads(get(f'https://api.netlify.com/api/v1/sites/{SITE_ID}/forms', headers=H))
