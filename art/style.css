@@ -164,6 +164,16 @@ button{font:inherit;color:inherit;cursor:pointer}
 .cards span{display:block;font-size:13px;color:var(--mute);margin-top:2px}
 .board-note a{color:var(--moss);font-weight:620;text-underline-offset:3px}
 
+.sig{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sig li{padding:10px 12px;border:1px solid #efd9a8;background:#fdf7e7;border-radius:10px;font-size:14px}
+.sig li.hi{border-color:#e7b4a3;background:#fbeeea}
+.sig b{display:block;font-weight:700}
+.sig b i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--grain);margin-right:7px;vertical-align:1px}
+.sig li.hi b i{background:var(--brick)}
+.sig span{display:block;color:var(--mute);font-size:13.5px;margin-top:2px}
+.sig em{font-style:normal;color:var(--moss);font-weight:620;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.sig-none .read{color:var(--faint)}
+
 /* ── 지도 위 */
 .layers{position:absolute;top:14px;left:14px;right:70px;display:flex;flex-wrap:wrap;gap:6px;z-index:500;pointer-events:none}
 .chip{pointer-events:auto;display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 13px;border-radius:var(--r-chip);

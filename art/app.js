@@ -32,7 +32,7 @@
 
   var S = { mode: 'ani', sp: '한우', m: 'n', sel: null, pin: null, zone: null, layers: { farm: true, market: true, cattle: true, wharf: true, zone: true, whole: true } };
   var LS, AQ, CR, PL, MK, TOPO, FEAT, UNITS = {}, map, polyLayer, lblLayer, pinLayer, zoneLayer, bizLayer, breaks = [], YEARS, SP, CELLS = {};
-  var PR = null, BIZ = null, BIZD = {};   // 경락가 최신값, 인허가 사업장 겹(있을 때만)
+  var PR = null, BIZ = null, BIZD = {}, SG = null;   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
   var BIZN = { feed: '사료 공장', slaughter: '도축장', hatchery: '부화장', breeding: '종축장', vet: '동물병원', pharmacy: '동물약국' };
   var ALL_SEA = { k: '모든 양식', g: '', all: true };
 
@@ -312,6 +312,16 @@
       '<a href="pro/index.html"><b>데이터·업체 등록</b><span>리 단위 사료 수요 지도, 진입·이탈 지수, 업체 알리기</span></a></div></section>';
   }
   function kakaoLink(name) { return 'https://map.kakao.com/?q=' + encodeURIComponent(name); }
+  function signalsBlock(u) {
+    var list = SG && SG.items ? SG.items.filter(function (i) { return !u || i.area === u || i.area === '전국'; }) : [];
+    if (!list.length) {
+      if (u) return '';
+      return '<section class="sec sig-none"><p class="eyebrow"><span>오늘의 이상 신호</span><span>' + esc(SG && SG.at ? SG.at.slice(5, 16) : '연동 전') + '</span></p><p class="read small">고수온·저수온, 경락가 급등락, 가축전염병 발생이 잡히면 여기 먼저 뜹니다. 지금은 잡힌 신호가 없습니다.</p></section>';
+    }
+    return '<section class="sec"><p class="eyebrow"><span>오늘의 이상 신호</span><span>' + list.length + '건</span></p><ul class="sig">' + list.slice(0, 4).map(function (i) {
+      return '<li class="' + (i.level === '경보' ? 'hi' : '') + '"><b><i></i>' + esc(i.kind) + ' · ' + esc(i.title) + '</b><span>' + esc(i.body) + (i.area && i.area !== '전국' ? ' <em data-u="' + esc(i.area) + '">' + esc(unitFull(i.area)) + '</em>' : '') + '</span></li>';
+    }).join('') + '</ul>' + (list.length > 4 ? '<p class="mini"><a href="price/index.html">신호 ' + list.length + '건 모두 보기 →</a></p>' : '') + '</section>';
+  }
 
   /* ── 판: 동물농장 */
   var EX = {
@@ -411,7 +421,7 @@
       if (!r) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>' + esc(S.sp) + '</small></h1><p class="read">이 시군에는 ' + esc(S.sp) + ' 사육 기록이 없습니다.</p></section>';
       else {
         var sum = summary(r.y, r.b, unitFull(S.sel), S.sp + ' · ' + YEARS[YEARS.length - 1] + '년 1월').replace('</section>', rankText(S.sel) + '</section>');
-        h += boardHtml + sum;
+        h += signalsBlock(S.sel) + boardHtml + sum;
         h += '<section class="sec"><p class="eyebrow"><span>' + YEARS[0] + '년부터 지금까지</span></p>' + trendSvg(r.y) + key + '</section>';
         h += scaleBlock(r.b);
       }
@@ -419,7 +429,7 @@
     } else {
       var nb = Object.keys(SP.d).reduce(function (acc, u) { var b = SP.d[u].b; if (!b) return acc; b.forEach(function (x, i) { acc[i] = acc[i] || [0, 0]; acc[i][0] += x[0]; acc[i][1] += x[1]; }); return acc; }, []);
       var sum2 = summary(SP.tot, nb, '전국 ' + S.sp, YEARS[YEARS.length - 1] + '년 1월 · ' + Object.keys(SP.d).length + '개 시군');
-      h += boardHtml + sum2;
+      h += signalsBlock() + boardHtml + sum2;
       h += '<section class="sec"><p class="eyebrow"><span>' + YEARS[0] + '년부터 지금까지</span></p>' + trendSvg(SP.tot) + key + '</section>';
       var us = Object.keys(SP.d).filter(function (u) { return latest(u, 1) > 0; }).sort(function (a, b) { return latest(b, 1) - latest(a, 1); }).slice(0, 8);
       h += topList(S.sp + ' 많은 곳', SP.w, us, function (u) { return latest(u, 1); });
@@ -440,6 +450,7 @@
     if (S.sel) {
       var e = AQ.units[S.sel];
       h += backBtn();
+      h += signalsBlock(S.sel);
       if (!e) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>어장</small></h1><p class="read">이 시군에는 어장 면허 기록이 없습니다. 바다를 끼지 않은 곳이거나 내수면만 있는 곳입니다.</p></section>';
       else {
         h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>양식 면허 · 어장정보도 2025</small></h1>';
@@ -461,6 +472,7 @@
       h += otherModes(S.sel);
     } else {
       var tn = 0, ta = 0; Object.keys(AQ.units).forEach(function (u) { tn += AQ.units[u].n; ta += AQ.units[u].ha; });
+      h += signalsBlock();
       if (SP.all) {
         h += '<section class="sec"><h1 class="place">전국 양식 어장<small>어장정보도 2025 · ' + Object.keys(AQ.units).length + '개 시군</small></h1>';
         h += '<div class="nums"><div><b>' + man(tn) + '<i>건</i></b><span>양식 면허</span></div><div><b>' + man(ta) + '<i>㏊</i></b><span>면허 면적</span></div></div>';
@@ -525,6 +537,7 @@
       h += cropBoard();
       h += otherModes(S.sel);
     } else {
+      h += signalsBlock();
       if (SP.all) {
         var cnt = {}; CR.items.forEach(function (it) { if (!it.off) cnt[it.kind] = (cnt[it.kind] || 0) + 1; });
         h += '<section class="sec"><h1 class="place">전국 대표 판매 품목<small>지리적표시 ' + CR.items.filter(function (i) { return !i.off; }).length + '건 · ' + Object.keys(CR.units).length + '개 시군</small></h1>';
@@ -592,6 +605,7 @@
       b.addEventListener('click', go); b.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
     });
     el.querySelectorAll('[data-pin]').forEach(function (b) { b.addEventListener('click', function () { selectPin(b.getAttribute('data-pin')); }); });
+    el.querySelectorAll('.sig em[data-u]').forEach(function (b) { b.addEventListener('click', function () { selectUnit(b.getAttribute('data-u'), true); }); });
     el.querySelectorAll('[data-mode]').forEach(function (b) { b.addEventListener('click', function () { var u = S.sel; setMode(b.getAttribute('data-mode')); if (u) selectUnit(u, false); }); });
     $('#panel').scrollTop = 0;
   }
@@ -714,10 +728,10 @@
   /* ── 시작 */
   function get(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
   function opt(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json')])
+  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json')])
     .then(function (res) {
       LS = res[0]; TOPO = res[1]; MK = res[2]; AQ = res[3]; CR = res[4]; PL = res[5]; YEARS = LS.years;
-      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8];
+      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9];
       FEAT = topojson.feature(TOPO, TOPO.objects.units);
       var q = new URLSearchParams(location.search);
       S.mode = MODES[q.get('mode')] ? q.get('mode') : 'ani';

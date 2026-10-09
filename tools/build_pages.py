@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
+PRICE = J('price/latest.json', {}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -134,6 +134,12 @@ def price_page():
     ek = PRICE.get('ekape'); at = PRICE.get('at') or ''
     b = '<p class="crumb"><a href="/">박씨네</a> › 경락가</p><h1 class="title">경락가 조회</h1><p class="lead">소·돼지는 축산물품질평가원 등급별 경락가, 농산물은 공영도매시장 경락가, 수산물은 수협 위판 시세. 연동창구가 붙는 순서대로 이 화면에 들어옵니다.</p>'
     b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('축산물품질평가원 등급별 경락가', 'on' if ek else 'soon'), ('공판장별 실시간 경매', 'soon'), ('농산물 도매시장 경락가', 'soon'), ('수협 위판 시세', 'soon')]) + '</div>'
+    b += '<h2>오늘의 이상 신호 — 급등·급락, 고수온, 폐사</h2>'
+    sig = SIG.get('items', [])
+    if sig:
+        b += '<table class="t"><tr><th>구분</th><th>신호</th><th>지역</th><th>설명</th></tr>' + ''.join(f'<tr><td class="{"bad" if i["level"] == "경보" else "wait"}">{E(i["level"])} · {E(i["kind"])}</td><td>{E(i["title"])}</td><td>{E(ufull(i["area"]) if "|" in i["area"] else i["area"])}</td><td>{E(i["body"])}<br><span class="mini">{E(i["src"])}</span></td></tr>' for i in sig) + '</table>'
+    else:
+        b += '<p>고수온·저수온(국립해양조사원 실측 수온, 매일), 경락가 급등락(직전 5거래일 중위값 대비 ±5%), 가축전염병 발생(재난안전데이터)을 아침마다 살펴 여기와 지도 첫 화면, 텔레그램 보고에 올립니다. 지금은 잡힌 신호가 없습니다.</p>'
     b += '<h2>소·돼지 등급별 경락가</h2>'
     if ek:
         b += f'<p class="mini">축산물품질평가원 · {E(at)} 기준 · 원/㎏</p>'

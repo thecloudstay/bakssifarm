@@ -1,13 +1,28 @@
 {
- "built": "2026-10-09 10:37",
+ "built": "2026-10-09 10:50",
  "counts": {
   "pages": 173
  },
  "collectors": {
   "pages": {
    "ok": true,
-   "at": "2026-10-09 10:37",
+   "at": "2026-10-09 10:50",
    "msg": "173쪽"
+  },
+  "signals_sea": {
+   "ok": true,
+   "at": "2026-10-09 10:50",
+   "msg": "관측소 21곳 · 수온 신호 1건"
+  },
+  "signals_price": {
+   "ok": null,
+   "at": "2026-10-09 10:50",
+   "msg": "경락가 이력 3일 미만"
+  },
+  "signals_disease": {
+   "ok": null,
+   "at": "2026-10-09 10:50",
+   "msg": "열쇠 없음(SAFETYDATA_KEY)"
   }
  }
 }

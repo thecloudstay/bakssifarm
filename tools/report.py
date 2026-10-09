@@ -16,11 +16,13 @@ if price.get('ekape'):
     for sec in price['ekape']:
         top = sec['rows'][:3]
         lines.append(f'{sec["title"]}({price.get("date", "")}): ' + ' · '.join(f'{r["g"]} {r["p"]:,}' + (f'({r["d"]:+,})' if r.get('d') is not None else '') for r in top))
+sig = jload(os.path.join(DATA, 'signals.json'), {}).get('items', [])
+if sig: lines.append('⚠️ 이상 신호 ' + str(len(sig)) + '건: ' + ' · '.join(f'{i["kind"]} {i["title"]}' for i in sig[:4]))
 items = gongu.get('items', [])
 if items:
     lines.append(f'공동구매 모집 {len(items)}건: ' + ' · '.join(f'{i["id"]} {i["item"]} {i["area"]} {i["status"]}' for i in items[:3]))
 if st.get('counts', {}).get('forms'): lines.append('양식 접수: ' + str(st['counts']['forms']))
-lines.append(f'글 화면 {st.get("counts", {}).get("pages", "–")}쪽 · https://bakssine.netlify.app/console/')
+lines.append(f'글 화면 {st.get("counts", {}).get("pages", "–")}쪽 · https://thecloudstay.github.io/bakssine/console/')
 if now().weekday() == 0:
     hist = sorted(os.listdir(os.path.join(DATA, 'price', 'history'))) if os.path.isdir(os.path.join(DATA, 'price', 'history')) else []
     wk = [jload(os.path.join(DATA, 'price', 'history', f)) for f in hist[-5:]]
