@@ -309,7 +309,8 @@
       '<a href="price/"><b>오늘 경락가는 얼마?</b><span>소·돼지 등급별·공판장별 경락가, 도매시장·위판 시세</span></a>' +
       '<a href="buy/"><b>옆집은 사료·종묘를 얼마에 사나?</b><span>익명 구입가 제보로 시군별 중위값, 내 가격 성적표</span></a>' +
       '<a href="gongu/"><b>같이 사면 얼마나 싸지나?</b><span>같은 시군끼리 사료·포장 박스·자재 공동구매 모집판</span></a>' +
-      '<a href="pro/"><b>데이터·업체 등록</b><span>리 단위 사료 수요 지도, 진입·이탈 지수, 업체 알리기</span></a></div></section>';
+      '<a href="sheet/"><b>산지 시세 한 장</b><span>등급별·공판장별 경락가, 수입 단가, 이상 신호를 아침마다 한 장으로</span></a>' +
+      '<a href="pro/"><b>업체이신가요?</b><span>우리 업체 이름이 붙은 시세 화면을 농가에게 — 농가는 무료, 업체가 냅니다</span></a></div></section>';
   }
   function kakaoLink(name) { return 'https://map.kakao.com/?q=' + encodeURIComponent(name); }
   function signalsBlock(u) {

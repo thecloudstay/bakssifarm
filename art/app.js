@@ -1,4 +1,4 @@
-/* 박씨네 — 한 지도, 세 가지 보기(동물농장·어장·농장)
+/* 박씨팜 — 한 지도, 세 가지 보기(동물농장·어장·농장)
    동물농장: 가축위생방역지원본부 시군별 사육규모(2018~2026, 1월) · 공판장·가축시장
    어장: 국립해양조사원 어장정보도 2025(양식 면허 구역) · 수협 위판장
    농장: 지리적표시 등록부(대표 판매 품목) · 공영도매시장
@@ -265,7 +265,7 @@
     } else {
       h += chip('farm', '대표 품목', KIND['과일']);
       h += chip('whole', '도매시장 <span class="n">' + PL.markets.length + '</span>', '#a8821a');
-      h += '<button type="button" class="chip wait" title="농업경영체 등록 통계·재배면적은 자료 받는 대로 시군 단위로 표시"><span class="dot"></span>재배면적·농가 수 <span class="n">곧 추가</span></button>';
+      h += '<button type="button" class="chip wait" title="도매시장·산지공판장 경락 원자료의 산지(출하 시군) 항목으로 시군×품목 12개월 거래금액을 집계해 칠합니다. 벼·보리처럼 농협 수매로 빠지는 품목은 뺍니다"><span class="dot"></span>실제 출하 금액(경락 기준) <span class="n">곧 추가</span></button>';
     }
     $('#layers').innerHTML = h;
     $('#layers').querySelectorAll('[data-l]').forEach(function (b) {
@@ -309,7 +309,8 @@
       '<a href="price/index.html"><b>오늘 경락가는 얼마?</b><span>소·돼지 등급별·공판장별 경락가, 도매시장·위판 시세</span></a>' +
       '<a href="buy/"><b>옆집은 사료·종묘를 얼마에 사나?</b><span>익명 구입가 제보로 시군별 중위값, 내 가격 성적표</span></a>' +
       '<a href="gongu/index.html"><b>같이 사면 얼마나 싸지나?</b><span>같은 시군끼리 사료·포장 박스·자재 공동구매 모집판</span></a>' +
-      '<a href="pro/index.html"><b>데이터·업체 등록</b><span>리 단위 사료 수요 지도, 진입·이탈 지수, 업체 알리기</span></a></div></section>';
+      '<a href="sheet/"><b>산지 시세 한 장</b><span>등급별·공판장별 경락가, 수입 단가, 이상 신호를 아침마다 한 장으로</span></a>' +
+      '<a href="pro/index.html"><b>업체이신가요?</b><span>우리 업체 이름이 붙은 시세 화면을 농가에게 — 농가는 무료, 업체가 냅니다</span></a></div></section>';
   }
   function kakaoLink(name) { return 'https://map.kakao.com/?q=' + encodeURIComponent(name); }
   function signalsBlock(u) {
@@ -525,7 +526,7 @@
     if (S.sel) {
       var c = CR.units[S.sel];
       h += backBtn();
-      if (!c) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>농장</small></h1><p class="read">이 시군에는 아직 지리적표시로 등록된 품목이 없습니다. 재배면적·농가 수 자료가 들어오면 주력 작물을 보여 드립니다.</p></section>';
+      if (!c) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>농장</small></h1><p class="read">이 시군에는 아직 지리적표시로 등록된 품목이 없습니다. 경락 원자료(산지 기준)가 쌓이면 실제 출하 금액 순위로 주력 품목을 보여 드립니다.</p></section>';
       else {
         h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>대표 판매 품목 · 지리적표시 ' + c.n + '건</small></h1>';
         h += kindChips(c.items, c.list);
@@ -542,7 +543,7 @@
         var cnt = {}; CR.items.forEach(function (it) { if (!it.off) cnt[it.kind] = (cnt[it.kind] || 0) + 1; });
         h += '<section class="sec"><h1 class="place">전국 대표 판매 품목<small>지리적표시 ' + CR.items.filter(function (i) { return !i.off; }).length + '건 · ' + Object.keys(CR.units).length + '개 시군</small></h1>';
         h += '<div class="cats big">' + CR.kinds.map(function (k) { return '<span><i style="background:' + KIND[k] + '"></i>' + esc(k) + ' <b>' + (cnt[k] || 0) + '</b></span>'; }).join('') + '</div>';
-        h += '<p class="read">시군을 누르면 그곳의 대표 품목과 등록 내역이 나옵니다. 재배면적·농가 수는 농업경영체 통계가 들어오는 대로 함께 보여 드립니다.</p></section>';
+        h += '<p class="read">시군을 누르면 그곳의 대표 품목과 등록 내역이 나옵니다. 색칠 기준은 등록 수가 아니라 실제 팔린 돈으로 바꿉니다. 도매시장·공판장 경락 원자료의 산지 항목이 쌓이는 대로 시군별 출하 금액 순위를 보여 드립니다.</p></section>';
         h += cropBoard();
         var us = Object.keys(CR.units).sort(function (a, b) { return CR.units[b].n - CR.units[a].n; }).slice(0, 8);
         h += topList('등록 품목 많은 시군', '건', us, function (u) { return CR.units[u].n; });
@@ -577,7 +578,7 @@
     }
     else if (m.type === '위판장') h += seaBoard('오늘 이 위판장 시세');
     else if (m.type === '도매시장') h += cropBoard('오늘 이 도매시장 경락가');
-    var srcs = { '공판장': '위치: 박씨네 정리본(공판장 13곳). 전화·주소 대조한 곳은 「대조함」으로 표시.', '가축시장': '가축시장 장날·위치는 공공 연동창구가 없어 직접 확인해 채우는 중입니다.',
+    var srcs = { '공판장': '위치: 박씨팜 정리본(공판장 13곳). 전화·주소 대조한 곳은 「대조함」으로 표시.', '가축시장': '가축시장 장날·위치는 공공 연동창구가 없어 직접 확인해 채우는 중입니다.',
       '위판장': '위판장은 수협 지구별 조합 기준 63곳. 공공 좌표가 없어 시군 중심에 두었고, 산지위판장 현황 자료의 주소로 바꿀 예정입니다.', '도매시장': '공영도매시장 32곳. 좌표는 근사(1~2㎞)이며 주소 대조 뒤 확정합니다.' };
     h += '<section class="sec"><p class="src">' + esc(srcs[m.type] || '') + '</p></section>';
     return h;
@@ -701,7 +702,7 @@
     var ms = mode().measures.map(function (m) { return m[0]; }); if (!keep || ms.indexOf(S.m) < 0) S.m = ms.indexOf(S.m) >= 0 && keep ? S.m : ms[0];
     var first = speciesList()[0]; SP = findSpecies(S.sp) || first; S.sp = SP.k; $('#pickName').textContent = S.sp;
     drawSeg(); computeBreaks(); restyle(); drawLabels(); drawPins(); drawZones(); drawBiz(); drawLayers(); drawLegend(); hint(); renderPanel();
-    document.title = '박씨네 ' + mode().name + ' — ' + S.sp + ' 지도';
+    document.title = '박씨팜 ' + mode().name + ' — ' + S.sp + ' 지도';
   }
 
   /* ── 찾기 */

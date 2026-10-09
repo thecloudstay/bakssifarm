@@ -53,7 +53,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/pro/', '데이터·업체'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/sheet/', '시세 한 장'), ('/pro/', '업체·데이터'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
@@ -227,21 +227,64 @@ def pro_page():
                 m = re.search(r'(20\d\d)', str(z['e']))
                 if m: exp[m.group(1)] += 1
     years = sorted(exp)[:8]
-    b = '<p class="crumb"><a href="/">박씨팜</a> › 데이터·업체</p><h1 class="title">데이터 상품과 업체 등록</h1><p class="lead">지도에 공개된 시군 집계는 무료입니다. 그 아래 단계, 리·읍면동 단위로 가공한 자료와 업체 알림은 유료로 준비합니다. 개별 농가·어가 핀은 어떤 상품에도 넣지 않습니다.</p>'
-    b += '<div class="grid3">'
-    b += '<div class="card on"><h3>무료 <span class="tag mute">지금</span></h3><p>시군별 사육 마릿수·농가 수(2018~2026), 양식 면허 수·면적, 대표 품목, 공판장·위판장·도매시장 위치, 경락가 조회.</p></div>'
-    b += '<div class="card"><h3>농가용 <span class="tag">준비 중</span></h3><p>내 시군의 리별 사료 수요 지도, 경락가·위판 시세 아침 알림, 공동구매 성립 알림, 면허 만료·재허가 일정 알림.</p><div class="pricebox"><b>월 구독</b><span>가격 확정 전</span></div></div>'
-    b += '<div class="card"><h3>업체용 <span class="tag">준비 중</span></h3><p>사료 공장·대리점·도축장·운송·수의·종묘·어구 업체의 지역 등록, 공동구매 성립 소식 우선 수신, 지역 수요 보고서.</p><div class="pricebox"><b>지역 등록</b><span>가격 확정 전</span></div></div></div>'
-    b += '<h2>준비 중인 가공 자료</h2><div class="grid2">'
-    b += '<div class="card"><h3>리별 사료 수요 지도</h3><p>지방행정 인허가(가축사육업) 자료의 리·읍면동 집계에 축종별 사료 환산 계수를 곱해, 한 달에 몇 톤이 어디서 필요한지 보여 줍니다. 공급처의 배송 동선 설계용.</p></div>'
-    b += '<div class="card"><h3>진입·이탈 지수</h3><p>인허가 이력(개업·폐업)과 사육규모 9년치로 시군·축종별 진입과 이탈 속도를 셉니다. 어디가 커지고 어디가 비는지, 축사 매물과 사료 수요가 함께 움직이는 곳.</p></div>'
-    b += '<div class="card"><h3>공판장별 가격차 보고</h3><p>같은 등급이 공판장마다 얼마나 다른지 주 단위로. 출하처를 바꿀 때 운송비와 비교할 수 있게.</p></div>'
-    b += f'<div class="card"><h3>양식 면허 만료 달력</h3><p>어장정보도의 면허 만료 연도를 시군·품종별로 셉니다. 재허가·시설 교체·종묘 수요가 몰리는 해를 미리 봅니다.</p><p class="mini" style="margin-top:8px">만료 연도별 면허 수(양식): ' + ' · '.join(f'{y}년 {exp[y]:,}건' for y in years) + '</p></div></div>'
-    b += '<h2>업체 등록</h2><p>지역과 업종을 적어 주시면 그 시군에서 공동구매가 성립할 때 먼저 알려 드립니다. 등록 자체는 지금 무료이며, 유료 전환 전에 미리 안내드립니다.</p>'
-    b += form('biz', [('row', [('sel', '업종', '업종', True, ['사료 공장', '사료 대리점', '조사료', '도축·가공', '운송', '동물병원·수의', '종축·종묘·종자', '어구·양식 자재', '비료·농자재', '보험·금융', '기타']), ('text', '상호', '상호', True, '')]), ('row', [('sel', '지역', '주된 지역(시군)', True, ['전국'] + SIGUN_OPTS), ('text', '담당', '담당자 이름', True, '')]), ('row', [('tel', '연락처', '연락처', True), ('text', '전자우편', '전자우편(선택)', False, '')]), ('area', '소개', '취급 품목과 배송 가능 지역', True, '예: 비육우 배합사료, 전남 서부 배송')], '업체 등록', '/pro/thanks/')
-    b += '<h2>원칙</h2><ul><li>개별 농가·어가의 위치·이름·연락처는 상품에 넣지 않습니다. 가장 작은 단위는 리·읍면동입니다.</li><li>공공 자료의 이용 조건(공공누리 제1유형, 출처 표시)을 지킵니다. 카카오 주소 변환 결과는 저장하지 않습니다.</li><li>숫자가 예시이면 「예시」라고 씁니다. 확인 전 위치는 「위치 근사」로 표시합니다.</li></ul>'
-    write('/pro/', shell('/pro/', '데이터 상품과 업체 등록 — 리별 사료 수요, 진입·이탈 지수, 면허 만료 달력 | 박씨팜', '리별 사료 수요 지도, 진입·이탈 지수, 공판장별 가격차, 양식 면허 만료 달력. 사료·도축·운송 업체 지역 등록.', b, '/og/pro.png'), '0.7')
-    write('/pro/thanks/', shell('/pro/thanks/', '등록되었습니다 | 박씨팜', '업체 등록 접수', '<h1 class="title">등록되었습니다</h1><p class="lead">확인 뒤 연락드립니다. <a href="/pro/">데이터·업체 화면으로</a></p>', noindex=True))
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 업체·데이터</p><h1 class="title">업체와 기관을 위한 박씨팜</h1><p class="lead">농가에게는 전부 무료입니다. 돈은 농가와 거래하는 쪽 — 사료·박스·종묘·도축·운송 업체, 보험·금융, 지자체 — 이 냅니다. 박씨팜은 거래에 끼지 않고 숫자만 다룹니다. 그래서 「이 숫자엔 우리 이해관계가 없다」고 말할 수 있습니다.</p>'
+    b += '<h2>네 가지 상품</h2><div class="grid2">'
+    b += '<div class="card on"><h3>1. 산지 시세 한 장 <span class="tag mute">시험 발송 중</span></h3><p>소·돼지 등급별 경락가(전국·공판장별), 돈육 대표가격, 수입 단가, 위판·도매 시세, 오늘의 이상 신호를 아침마다 한 장으로. 1858년부터 시세만 팔아 온 미국 어너 배리 방식을 한국 축·수산에 그대로. 가공·유통·사료 업체의 아침 회의용.</p><p><a href="/sheet/">오늘 시세 한 장 보기 →</a></p><div class="pricebox"><b>업체 구독</b><span>가격 확정 전 · 시험 발송 신청은 시세 한 장 화면에서</span></div></div>'
+    b += '<div class="card"><h3>2. 우리 업체 이름이 붙은 화면 <span class="tag">바로 시험 가능</span></h3><p>사료 대리점·도축장·공판장·수협이 「○○에서 드리는 오늘의 시세」 화면을 자기 농가에게 줍니다. 농가는 공짜, 업체가 냅니다. 미국 곡물 수매업체 1,200곳이 쓰는 부셸 방식. 경락가·우리 시군 구입가·공동구매 성립 소식·이상 신호가 들어갑니다.</p><p><a href="/partner/?biz=예시 사료 대리점&u=전남|고흥군">화면 예시 보기 →</a></p><div class="pricebox"><b>화면 사용료</b><span>가격 확정 전 · 아래 업체 등록에서 「내 화면」 표시</span></div></div>'
+    b += '<div class="card"><h3>3. 지역 수요·원가 지수 <span class="tag">자료 쌓는 중</span></h3><p>구입가 제보와 출하 자료가 쌓이면 시군·축종별 원가·수익 지수와 리별 사료 수요 지도, 진입·이탈 지수가 나옵니다. 보험사·농협 금융·지자체가 사는 층. 생산자가 만든 미국 캐틀팩스처럼, 개별 농가 자료는 절대 밖으로 나가지 않고 집계만 나갑니다.</p><p class="mini" style="margin-top:8px">양식 면허 만료 달력(어장정보도): ' + ' · '.join(f'{y}년 {exp[y]:,}건' for y in years) + '</p></div>'
+    b += '<div class="card"><h3>4. 공동구매 견적 참여 <span class="tag mute">모집판 성립 때</span></h3><p>포장 박스·조사료·자재처럼 규제가 없는 품목부터, 같은 시군 농가의 수요가 모이면 등록 업체에 먼저 알리고 견적을 받습니다. 돈과 물건은 박씨팜을 거치지 않습니다.</p><p><a href="/gongu/">모집판 보기 →</a></p></div></div>'
+    b += '<h2>업체 등록</h2><p>지역과 업종을 적어 주시면 그 시군에서 공동구매가 성립할 때 먼저 알려 드리고, 원하시면 「우리 업체 이름 화면」을 만들어 드립니다. 등록은 지금 무료이며, 유료 전환 전에 미리 안내드립니다.</p>'
+    b += form('biz', [('row', [('sel', '업종', '업종', True, ['사료 공장', '사료 대리점', '조사료', '포장 박스·포장재', '도축·가공', '운송', '동물병원·수의', '종축·종묘·종자', '어구·양식 자재', '비료·농자재', '보험·금융', '지자체·협회', '기타']), ('text', '상호', '상호', True, '')]), ('row', [('sel', '지역', '주된 지역(시군)', True, ['전국'] + SIGUN_OPTS), ('text', '담당', '담당자 이름', True, '')]), ('row', [('tel', '연락처', '연락처', True), ('text', '전자우편', '전자우편(선택)', False, '')]), ('row', [('sel', '원하는것', '원하는 것', True, ['우리 업체 이름 화면', '시세 한 장 구독', '공동구매 견적 참여', '지역 수요 보고서', '아직 모름']), ('text', '농가수', '거래 농가 수(대략, 선택)', False, '예: 120')]), ('area', '소개', '취급 품목과 배송 가능 지역', True, '예: 비육우 배합사료, 전남 서부 배송')], '업체 등록', '/pro/thanks/')
+    b += '<h2>하지 않는 것 — 해외에서 무너진 곳이 가르쳐 준 것</h2><ul><li>농가에게 월 회비를 받지 않습니다(농가 회원비를 받던 곳은 전부 접었습니다).</li><li>직접 팔거나 재고를 들거나 결제를 대신하지 않습니다(거래를 떠안은 곳은 5년 안에 무너졌습니다).</li><li>「연결해 드립니다」 성사 수수료를 받지 않습니다. 업체는 등록비·화면 사용료·구독료만 냅니다.</li><li>개별 농가·어가의 위치·이름·연락처는 어떤 상품에도 넣지 않습니다. 가장 작은 단위는 리·읍면동입니다.</li></ul>'
+    write('/pro/', shell('/pro/', '업체와 기관을 위한 박씨팜 — 시세 한 장 구독, 업체 이름 화면, 지역 수요 지수 | 박씨팜', '사료·박스·도축·운송 업체와 보험·금융·지자체를 위한 상품: 산지 시세 한 장 구독, 우리 업체 이름 화면, 지역 수요·원가 지수, 공동구매 견적 참여.', b, '/og/pro.png'), '0.7')
+    write('/pro/thanks/', shell('/pro/thanks/', '등록되었습니다 | 박씨팜', '업체 등록 접수', '<h1 class="title">등록되었습니다</h1><p class="lead">확인 뒤 연락드립니다. 「우리 업체 이름 화면」을 고르셨으면 화면 주소를 함께 보내 드립니다. <a href="/pro/">업체·데이터 화면으로</a></p>', noindex=True))
+
+# ── 산지 시세 한 장(어너 배리 식) — 아침마다 다시 생성되는 한 장
+def sheet_page():
+    ek = PRICE.get('ekape') or []; rep = PRICE.get('pigRep') or []; ab = J('price/abattoir.json', {}); sig = SIG.get('items', []); tr = TRADE.get('items', []); buy = BUY.get('items', [])
+    d = PRICE.get('date') or TODAY
+    b = f'<p class="crumb"><a href="/">박씨팜</a> › 시세 한 장</p><h1 class="title">산지 시세 한 장 <small class="mini">{E(d)} 기준</small></h1><p class="lead">축·수산 가공·유통·사료 업체의 아침 회의용 한 장. 등급별 경락가와 공판장별 차이, 돈육 대표가격, 수입 단가, 구입가 중위값, 오늘의 이상 신호를 한 화면에. 매일 아침 자동으로 다시 만들어집니다.</p>'
+    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('경락가 ' + ('연동' if ek else '연동 전'), 'on' if ek else 'soon'), ('수입 단가 ' + ('연동' if tr else '연동 전'), 'on' if tr else 'soon'), ('위판 시세 연동 전', 'soon'), ('이상 신호 ' + (f'{len(sig)}건' if sig else '없음'), 'off' if sig else 'on')]) + '</div>'
+    b += '<h2>소·돼지 등급별 경락가</h2>'
+    if ek:
+        for sec in ek:
+            b += f'<h3>{E(sec["title"])}</h3><table class="t"><tr><th>등급</th><th class="num">전국 평균(원/㎏)</th><th class="num">전일 대비</th><th class="num">두수</th><th>공판장별(높은 순)</th></tr>'
+            for r in sec['rows']:
+                dd = r.get('d'); dc = 'ok' if (dd or 0) > 0 else 'bad' if (dd or 0) < 0 else ''
+                abs_ = sorted((r.get('ab') or {}).items(), key=lambda x: -x[1])
+                b += f'<tr><td>{E(r["g"])}</td><td class="num">{r["p"]:,}</td><td class="num {dc}">{("+" if (dd or 0) > 0 else "") + format(dd, ",") if dd is not None else "–"}</td><td class="num">{r.get("n") or "–"}</td><td class="mini">{E(" · ".join(f"{k} {v:,}" for k, v in abs_[:5]))}</td></tr>'
+            b += '</table>'
+        if rep: b += '<p class="mini">돈육 대표가격: ' + ' · '.join(f'{x["date"]} {x["kind"]} {x["p"]:,}원' for x in rep if x.get('p')) + '</p>'
+    else:
+        b += '<p>공공데이터포털 열쇠가 붙으면 이 자리에 전날 경락가가 등급별·공판장별로 들어옵니다. 지금은 표의 틀만 있습니다.</p>'
+    b += '<h2>수입 단가(관세청, 달러/㎏)</h2>'
+    if tr: b += '<table class="t"><tr><th>품목</th><th class="num">최근 달 단가</th><th class="num">수입량(톤)</th><th>비교</th></tr>' + ''.join(f'<tr><td>{E(it["name"])}</td><td class="num">{(it["rows"][-1]["usd_kg"] if it["rows"] else "–")}</td><td class="num">{(format(it["rows"][-1]["wgt_t"], ",") if it["rows"] else "–")}</td><td>{E(it["cmp"])}</td></tr>' for it in tr) + '</table>'
+    else: b += '<p>쇠고기·돼지고기·옥수수·대두박·어분·전복·김·넙치·새우. 열쇠가 붙으면 매달 3일 갱신.</p>'
+    b += '<h2>구입가 중위값(제보 5건 이상)</h2>'
+    if buy: b += '<table class="t"><tr><th>품목</th><th>지역</th><th class="num">중위 단가</th><th class="num">제보</th></tr>' + ''.join(f'<tr><td>{E(it["kind"])} · {E(it["item"])}</td><td>{E(it["area"])}</td><td class="num">{it["median"]:,}원/{E(it["unit"])}</td><td class="num">{it["n"]}</td></tr>' for it in buy[:12]) + '</table>'
+    else: b += '<p>아직 공개할 만큼 모이지 않았습니다. <a href="/buy/">구입가 시세판</a>에 제보가 쌓이면 품목·시군별 중위값이 여기 실립니다.</p>'
+    b += '<h2>오늘의 이상 신호</h2>'
+    if sig: b += '<ul>' + ''.join(f'<li><b>{E(i["level"])} · {E(i["kind"])}</b> {E(i["title"])} — {E(i["body"])}</li>' for i in sig) + '</ul>'
+    else: b += '<p>잡힌 신호가 없습니다(고수온·저수온, 경락가 급등락, 가축전염병).</p>'
+    b += '<h2>시험 발송 신청(업체·기관)</h2><p>아침마다 이 한 장을 전자우편으로 받습니다. 시험 기간은 무료이며, 유료 전환 전에 미리 안내드립니다. 농가는 신청 없이 이 화면을 그냥 보시면 됩니다.</p>'
+    b += form('sheet-sub', [('row', [('sel', '업종', '업종', True, ['사료 공장·대리점', '도축·가공', '유통·급식', '수산 가공·유통', '보험·금융', '지자체·협회·연구', '언론', '기타']), ('text', '상호', '상호·기관명', True, '')]), ('row', [('text', '전자우편', '받을 전자우편', True, ''), ('text', '관심품목', '관심 품목(선택)', False, '예: 한우, 돼지, 전복')]), ('tel', '연락처', '연락처(선택)', False)], '시험 발송 신청', '/sheet/thanks/')
+    b += '<p class="mini">출처: 축산물품질평가원 등급판정정보 · 관세청 수출입실적 · 국립해양조사원 실측 수온(해루낚 보관) · 박씨팜 구입가 제보. 숫자가 없는 칸은 연동 전입니다.</p>'
+    write('/sheet/', shell('/sheet/', f'산지 시세 한 장 — {d} | 박씨팜', '소·돼지 등급별·공판장별 경락가, 돈육 대표가격, 수입 단가, 구입가 중위값, 오늘의 이상 신호를 아침마다 한 장으로. 업체·기관 시험 발송 신청.', b, '/og/price.png'), '0.8')
+    write('/sheet/thanks/', shell('/sheet/thanks/', '신청되었습니다 | 박씨팜', '시세 한 장 시험 발송 신청 접수', '<h1 class="title">신청되었습니다</h1><p class="lead">다음 거래일 아침부터 보내 드립니다. <a href="/sheet/">시세 한 장으로</a></p>', noindex=True))
+
+# ── 우리 업체 이름 화면(부셸 식) — ?biz=상호&u=시도|시군 로 업체 이름이 붙은 농가용 화면
+def partner_page():
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 업체 화면</p><div id="pt-head"><h1 class="title"><span id="pt-biz">업체 이름</span>에서 드리는 오늘의 시세</h1><p class="lead"><span id="pt-area">시군</span> 농가를 위한 화면입니다. 오늘 경락가, 우리 시군 구입가 중위값, 공동구매 모집, 이상 신호를 한 번에. 자료는 박씨팜이 공공 자료와 농가 제보로 만듭니다.</p></div>'
+    b += '<div id="pt-sig"></div><h2>오늘 경락가</h2><div id="pt-price"><p class="mini">불러오는 중…</p></div>'
+    b += '<h2>우리 시군 구입가 중위값</h2><div id="pt-buy"></div>'
+    b += '<h2>우리 시군 공동구매</h2><div id="pt-gongu"></div>'
+    b += '<h2>이 화면은</h2><p>업체가 자기 농가에게 주는 화면입니다. 농가는 무료이고 업체가 사용료를 냅니다. 숫자는 업체가 아니라 박씨팜이 만들며, 업체는 숫자를 고칠 수 없습니다. 그래서 농가가 믿고 볼 수 있습니다. <a href="/pro/">우리 업체 화면 만들기 →</a></p>'
+    js = """<script>(function(){var P=%s;var q=new URLSearchParams(location.search);var biz=q.get('biz')||'예시 사료 대리점';var u=q.get('u')||'전남|고흥군';var sd=u.split('|')[0],sg=u.split('|')[1];var name=sd===sg?sd:sd+' '+sg;function $(s){return document.querySelector(s)}function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}$('#pt-biz').textContent=biz;$('#pt-area').textContent=name;document.title=biz+'에서 드리는 오늘의 시세 | 박씨팜';function get(f){return fetch(P+'/data/'+f).then(function(r){return r.ok?r.json():null}).catch(function(){return null})}
+Promise.all([get('price/latest.json'),get('buyprice.json'),get('gongu.json'),get('signals.json')]).then(function(r){var pr=r[0],buy=r[1],go=r[2],sg2=r[3];var h='';if(pr&&pr.ekape){pr.ekape.forEach(function(sec){h+='<h3>'+esc(sec.title)+' <span class="mini">'+esc(pr.date||'')+'</span></h3><table class="t"><tr><th>등급</th><th class="num">원/㎏</th><th class="num">전일 대비</th></tr>'+sec.rows.map(function(x){return '<tr><td>'+esc(x.g)+'</td><td class="num">'+x.p.toLocaleString('ko-KR')+'</td><td class="num">'+(x.d==null?'–':(x.d>0?'+':'')+x.d.toLocaleString('ko-KR'))+'</td></tr>'}).join('')+'</table>'})}else h='<p>경락가는 공공데이터 열쇠가 붙는 아침부터 들어옵니다. 지금은 틀만 있습니다.</p>';$('#pt-price').innerHTML=h;
+var bi=(buy&&buy.items||[]).filter(function(x){return x.area===name});$('#pt-buy').innerHTML=bi.length?'<table class="t"><tr><th>품목</th><th class="num">중위 단가</th><th class="num">제보</th></tr>'+bi.map(function(x){return '<tr><td>'+esc(x.kind)+' · '+esc(x.item)+'</td><td class="num">'+x.median.toLocaleString('ko-KR')+'원/'+esc(x.unit)+'</td><td class="num">'+x.n+'</td></tr>'}).join('')+'</table>':'<p>아직 '+esc(name)+' 제보가 5건 모이지 않았습니다. <a href="'+P+'/buy/">내 구입가 제보하고 성적표 받기 →</a></p>';
+var gi=(go&&go.items||[]).filter(function(x){return x.area===name});$('#pt-gongu').innerHTML=gi.length?'<table class="t"><tr><th>번호</th><th>품목</th><th class="num">목표</th><th class="num">모인 양</th><th>상태</th></tr>'+gi.map(function(x){return '<tr><td>'+esc(x.id)+'</td><td>'+esc(x.kind)+' · '+esc(x.item)+'</td><td class="num">'+esc(x.goal)+'</td><td class="num">'+esc(x.got)+'</td><td>'+esc(x.status)+'</td></tr>'}).join('')+'</table>':'<p>열린 모집이 없습니다. <a href="'+P+'/gongu/">사료·박스·자재 모집 열기 →</a></p>';
+var si=(sg2&&sg2.items||[]).filter(function(x){return x.area===u||x.area==='전국'});if(si.length)$('#pt-sig').innerHTML='<div class="note"><b>오늘의 이상 신호</b> '+si.map(function(x){return esc(x.kind)+' · '+esc(x.title)}).join(' / ')+'</div>';});})();</script>"""
+    write('/partner/', shell('/partner/', '우리 업체 이름이 붙은 오늘의 시세 | 박씨팜', '사료 대리점·도축장·공판장·수협이 자기 농가에게 주는 시세 화면. 오늘 경락가, 우리 시군 구입가 중위값, 공동구매, 이상 신호.', b, '/og/price.png', extra_head='', noindex=True) .replace('<footer class="foot">', js % (json.dumps(PREFIX), ) + '<footer class="foot">'))
 
 # ── 소개
 def about_page():
@@ -253,6 +296,7 @@ def about_page():
     b += '<tr><td>경계</td><td>통계청 통계지리정보서비스 시군 경계(2018), 광역시는 구·군 합침</td><td>161개 시군</td><td>–</td></tr>'
     b += '<tr><td>시장</td><td>축산물 공판장 13곳·가축시장 9곳(박씨팜 정리), 수협 위판장 63곳(지구별 조합), 공영도매시장 32곳</td><td>핀</td><td>확인 때마다</td></tr></table>'
     b += '<h2>지키는 것</h2><ul><li>개별 농가·어가의 위치와 이름은 싣지 않습니다. 가장 작은 단위는 리·읍면동입니다.</li><li>예시 숫자는 「예시」라고 씁니다. 확인 전 위치는 「위치 근사」로 표시합니다.</li><li>공공 자료의 출처를 밝히고, 이용 조건을 지킵니다.</li></ul>'
+    b += '<h2>해외에서 배운 것</h2><p>시세만 판 미국 어너 배리는 1858년부터 살아 있고, 생산자가 만든 캐틀팩스는 1968년부터, 수매업체가 농가에게 앱을 주는 부셸은 북미 1,200곳에서 쓰입니다. 반대로 거래·재고·물류까지 떠안은 곳(독일 아그란도, 캐나다 파머스 엣지, 인도네시아 이피셔리)은 몇 해 안에 무너졌습니다. 박씨팜은 앞쪽을 따릅니다 — 숫자만 다루고, 돈은 농가가 아니라 업체·기관이 냅니다.</p>'
     b += '<h2>앞으로</h2><ul><li>축산물품질평가원 경락가·실시간 경매, 농산물 도매시장 경락가, 수협 위판 시세 연동</li><li>지방행정 인허가(가축사육업·도축장·사료 공장) 리 단위 집계</li><li>도매시장·산지공판장 경락 원자료(산지 항목)로 시군별 실제 출하 품목·금액 순위 — 등록 수가 아닌 「팔린 돈」 기준</li><li>관세청 수출입실적으로 수입 단가 비교</li><li>카카오 바탕지도(확대 단계)</li></ul>'
     b += '<h2>연락</h2><p>자료 오류, 위치 정정, 제휴는 <a href="/pro/">업체 등록</a> 양식이나 <a href="/gongu/">모집판</a>의 양식으로 남겨 주세요.</p>'
     write('/about/', shell('/about/', '소개 — 자료 출처·갱신·원칙 | 박씨팜', '박씨팜이 쓰는 자료와 출처, 갱신 주기, 개별 농가 비공개 원칙.', b), '0.5')
@@ -362,5 +406,5 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); price_page(); buy_page(); gongu_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
+    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); partner_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
     print('글 화면', len(PAGES) + 1)
