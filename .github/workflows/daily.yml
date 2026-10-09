@@ -1,0 +1,48 @@
+# 아침 작업 흐름: 수집 → 글 화면·미리보기 생성 → 저장소에 기록 → 넷리파이에 올리기 → 색인 알림
+name: 아침 수집과 올리기
+on:
+  schedule:
+    - cron: '17 21 * * *'   # 한국 시간 06:17
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: daily
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+      GA_ID: ${{ secrets.GA_ID }}
+      NAVER_SITE_VERIFICATION: ${{ secrets.NAVER_SITE_VERIFICATION }}
+      KAKAO_JS_KEY: ${{ secrets.KAKAO_JS_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install pillow pyproj
+      - name: 경락가 수집(축산물품질평가원)
+        run: python tools/collect_ekape.py
+      - name: 인허가 수집(행정안전부) — 월요일 아침, 또는 손으로 실행했을 때
+        run: |
+          if [ "$(date -u +%u)" = "7" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then python tools/collect_license.py; else echo "월요일 아침(일요일 밤 UTC)에만 수집"; fi
+      - name: 양식 접수 반영(공동구매 모집판)
+        run: python tools/sync_forms.py
+      - name: 글 화면·사이트 지도·새 소식
+        run: python tools/build_pages.py
+      - name: 미리보기 그림
+        run: python tools/og.py
+      - name: 저장소에 기록
+        run: |
+          git config user.name "박씨네 아침 작업"
+          git config user.email "bot@bakssine.local"
+          git add -A site/data site/index.html tools/urls.txt private || true
+          git diff --cached --quiet || git commit -m "아침 수집 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git push || true
+      - name: 넷리파이에 올리기
+        if: ${{ env.NETLIFY_AUTH_TOKEN != '' && env.NETLIFY_SITE_ID != '' }}
+        run: npx --yes netlify-cli@17 deploy --prod --dir=site --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN" --message="아침 올리기 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+      - name: 색인 알림
+        run: python tools/indexnow.py

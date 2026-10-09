@@ -1,0 +1,317 @@
+# 박씨네 글 화면 생성기: 경락가·공동구매·데이터·소개·콘솔·시군 글·사이트 지도·새 소식·robots
+# 실행: python3 tools/build_pages.py  (저장소 뿌리에서)
+import json, os, re, datetime, html, urllib.parse, collections
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE = os.path.join(ROOT, 'site')
+BASE = 'https://bakssine.netlify.app'
+TODAY = datetime.date.today().isoformat()
+NOW = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
+
+def J(p, default=None):
+    fp = os.path.join(SITE, 'data', p)
+    if not os.path.exists(fp): return default
+    return json.load(open(fp, encoding='utf-8'))
+LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
+PRICE = J('price/latest.json', {}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
+YEARS = LS['years']
+E = html.escape
+def man(n):
+    if n is None: return '–'
+    if n >= 100000000: return f'{n / 100000000:.1f}억'.replace('.0억', '억')
+    if n >= 10000: return (f'{n / 10000:.0f}만' if n >= 1000000 else f'{n / 10000:.1f}만'.replace('.0만', '만'))
+    return f'{n:,.0f}' if float(n).is_integer() else f'{n:,.1f}'
+def uname(u): a, b = u.split('|'); return a if a == b else b
+def ufull(u): a, b = u.split('|'); return a + ' 전체' if a == b else a + ' ' + b
+def upath(u): a, b = u.split('|'); return f'/p/{a}/{b if a != b else a}/'
+
+# 구글 애널리틱스·네이버 서치어드바이저·카카오 열쇠: tools/config.json 또는 환경변수(GA_ID, NAVER_SITE_VERIFICATION, KAKAO_JS_KEY)
+CFG = {}
+if os.path.exists(os.path.join(ROOT, 'tools', 'config.json')): CFG = json.load(open(os.path.join(ROOT, 'tools', 'config.json'), encoding='utf-8'))
+GA = os.environ.get('GA_ID') or CFG.get('ga_id') or ''
+NAVER = os.environ.get('NAVER_SITE_VERIFICATION') or CFG.get('naver_verification') or ''
+KAKAO = os.environ.get('KAKAO_JS_KEY') or CFG.get('kakao_js_key') or ''
+def head_extra():
+    h = ''
+    if NAVER: h += f'<meta name="naver-site-verification" content="{html.escape(NAVER)}">\n'
+    if GA: h += f'<script async src="https://www.googletagmanager.com/gtag/js?id={html.escape(GA)}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){{dataLayer.push(arguments)}}gtag("js",new Date());gtag("config","{html.escape(GA)}",{{anonymize_ip:true}});</script>\n'
+    if KAKAO: h += f'<script>window.BK_CFG={{kakaoKey:"{html.escape(KAKAO)}"}};</script>\n'
+    return h
+def inject_index():
+    p = os.path.join(SITE, 'index.html'); s = open(p, encoding='utf-8').read()
+    s = re.sub(r'<!--head-extra-->.*?<!--/head-extra-->', '<!--head-extra-->' + head_extra() + '<!--/head-extra-->', s, flags=re.S)
+    open(p, 'w', encoding='utf-8').write(s)
+    st = json.load(open(os.path.join(SITE, 'data', 'status.json'), encoding='utf-8')) if os.path.exists(os.path.join(SITE, 'data', 'status.json')) else {}
+    st.setdefault('keys', {}).update({'ga': bool(GA), 'naver': bool(NAVER), 'kakao': bool(KAKAO)})
+    json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
+SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/gongu/', '공동구매'), ('/pro/', '데이터·업체'), ('/p/', '시군별'), ('/about/', '소개')]
+
+def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
+    url = BASE + path
+    nav = ''.join(f'<a href="{p}"{" aria-current=page" if p == path else ""}>{E(t)}</a>' for p, t in NAV)
+    ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ''
+    return f'''<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{E(title)}</title>
+<meta name="description" content="{E(desc)}">
+{'<meta name="robots" content="noindex">' if noindex else ''}
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="박씨네">
+<meta property="og:title" content="{E(title)}">
+<meta property="og:description" content="{E(desc)}">
+<meta property="og:url" content="{url}">
+<meta property="og:image" content="{BASE}{og or '/og/home.png'}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="박씨네 새 소식" href="/rss.xml">
+<link rel="icon" href="{ICON}">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/page.css">
+{head_extra()}{extra_head}{ld}
+</head>
+<body class="page">
+<header class="bar">
+  <a class="brand" href="/" aria-label="박씨네 처음 화면">{SEAL}<span class="word">박씨네</span></a>
+  <nav class="modes pagenav" aria-label="화면">{nav}</nav>
+</header>
+<main class="wrap">
+{body}
+<footer class="foot">
+  <p>박씨네 — 전국 시군별 가축 사육·양식 어장·대표 품목 지도. 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
+  <p><a href="/">지도</a><a href="/price/">경락가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
+</footer>
+</main>
+</body>
+</html>'''
+
+PAGES = []  # (path, lastmod, priority)
+def write(path, htmltext, prio='0.6'):
+    fp = os.path.join(SITE, path.strip('/'), 'index.html') if path.endswith('/') else os.path.join(SITE, path.strip('/'))
+    os.makedirs(os.path.dirname(fp), exist_ok=True)
+    open(fp, 'w', encoding='utf-8').write(htmltext)
+    if not path.endswith('.html') or path == '/404.html':
+        if path != '/404.html': PAGES.append((path, TODAY, prio))
+
+def form(name, fields, button, thanks):
+    h = f'<form class="form" name="{name}" method="POST" action="{thanks}" data-netlify="true" netlify-honeypot="bot-field"><input type="hidden" name="form-name" value="{name}"><p hidden><label>사람이면 비워 두세요 <input name="bot-field"></label></p>'
+    for f in fields:
+        if f[0] == 'row': h += '<div class="row">' + ''.join(field(x) for x in f[1]) + '</div>'
+        else: h += field(f)
+    h += f'<label class="agree"><input type="checkbox" name="동의" value="예" required> 적은 연락처는 이 신청의 연락 목적으로만 쓰고, 박씨네는 판매자·중개인이 아니며 거래의 당사자가 되지 않는다는 점에 동의합니다.</label>'
+    h += f'<button class="btn prime wide" type="submit">{E(button)}</button></form>'
+    return h
+def field(f):
+    kind, name, label = f[0], f[1], f[2]
+    req = ' required' if (len(f) > 3 and f[3]) else ''
+    if kind == 'text': return f'<label>{E(label)}<input type="text" name="{E(name)}"{req} placeholder="{E(f[4]) if len(f) > 4 else ""}"></label>'
+    if kind == 'tel': return f'<label>{E(label)}<input type="tel" name="{E(name)}"{req} placeholder="010-0000-0000" autocomplete="tel"></label>'
+    if kind == 'num': return f'<label>{E(label)}<input type="number" name="{E(name)}"{req} min="0" step="any" placeholder="{E(f[4]) if len(f) > 4 else ""}"></label>'
+    if kind == 'date': return f'<label>{E(label)}<input type="date" name="{E(name)}"{req}></label>'
+    if kind == 'area': return f'<label>{E(label)}<textarea name="{E(name)}" rows="4"{req} placeholder="{E(f[4]) if len(f) > 4 else ""}"></textarea></label>'
+    if kind == 'sel': return f'<label>{E(label)}<select name="{E(name)}"{req}>' + ''.join(f'<option>{E(o)}</option>' for o in f[4]) + '</select></label>'
+    return ''
+SIGUN_OPTS = sorted(set(ufull(u) for u in [g['properties']['u'] for g in J('units.json')['objects']['units']['geometries']]))
+
+# ── 경락가 화면
+def price_page():
+    ek = PRICE.get('ekape'); at = PRICE.get('at') or ''
+    b = '<p class="crumb"><a href="/">박씨네</a> › 경락가</p><h1 class="title">경락가 조회</h1><p class="lead">소·돼지는 축산물품질평가원 등급별 경락가, 농산물은 공영도매시장 경락가, 수산물은 수협 위판 시세. 연동창구가 붙는 순서대로 이 화면에 들어옵니다.</p>'
+    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('축산물품질평가원 등급별 경락가', 'on' if ek else 'soon'), ('공판장별 실시간 경매', 'soon'), ('농산물 도매시장 경락가', 'soon'), ('수협 위판 시세', 'soon')]) + '</div>'
+    b += '<h2>소·돼지 등급별 경락가</h2>'
+    if ek:
+        b += f'<p class="mini">축산물품질평가원 · {E(at)} 기준 · 원/㎏</p>'
+        for sec in ek:
+            b += f'<h3>{E(sec["title"])}</h3><table class="t"><tr><th>등급</th><th class="num">평균 경락가</th><th class="num">전일 대비</th><th class="num">두수</th></tr>'
+            for r in sec['rows']:
+                d = r.get('d'); dc = 'ok' if (d or 0) > 0 else 'bad' if (d or 0) < 0 else ''
+                b += f'<tr><td>{E(r["g"])}</td><td class="num">{r["p"]:,}</td><td class="num {dc}">{("+" if (d or 0) > 0 else "") + format(d, ",") if d is not None else "–"}</td><td class="num">{r.get("n", "–")}</td></tr>'
+            b += '</table>'
+    else:
+        b += '''<div class="note">공공데이터포털에서 받은 열쇠를 저장소 비밀값(DATA_GO_KR_KEY)에 넣으면 수집기가 아침마다 전날 경락가를 받아 이 표를 채웁니다. 아래는 표가 어떻게 보이는지 확인용 <span class="tag">예시 숫자</span>입니다.</div>
+<h3>한우 거세 <span class="tag">예시 숫자</span></h3><table class="t"><tr><th>등급</th><th class="num">평균 경락가(원/㎏)</th><th class="num">전일 대비</th><th class="num">두수</th></tr>
+<tr class="ex"><td>1++</td><td class="num">23,180</td><td class="num">+120</td><td class="num">예시</td></tr><tr class="ex"><td>1+</td><td class="num">21,040</td><td class="num">−40</td><td class="num">예시</td></tr><tr class="ex"><td>1</td><td class="num">19,350</td><td class="num">+85</td><td class="num">예시</td></tr><tr class="ex"><td>2</td><td class="num">16,220</td><td class="num">0</td><td class="num">예시</td></tr><tr class="ex"><td>3</td><td class="num">12,480</td><td class="num">−60</td><td class="num">예시</td></tr></table>
+<h3>돼지 탕박 <span class="tag">예시 숫자</span></h3><table class="t"><tr><th>등급</th><th class="num">평균 경락가(원/㎏)</th><th class="num">전일 대비</th><th class="num">두수</th></tr>
+<tr class="ex"><td>1+</td><td class="num">5,820</td><td class="num">+35</td><td class="num">예시</td></tr><tr class="ex"><td>1</td><td class="num">5,610</td><td class="num">+22</td><td class="num">예시</td></tr><tr class="ex"><td>2</td><td class="num">4,980</td><td class="num">−10</td><td class="num">예시</td></tr><tr class="ex"><td>등외</td><td class="num">3,900</td><td class="num">0</td><td class="num">예시</td></tr></table>'''
+    b += '<h2>공판장별 경매</h2><p>전국 축산물 공판장 13곳의 당일 경매는 축산물품질평가원 실시간 경매 창구(소·돼지, 등급별)로 받습니다. 열쇠가 연결되면 공판장을 고를 수 있는 표가 이 자리에 들어오고, 지도의 공판장 핀에서도 바로 보입니다.</p>'
+    b += '<table class="t"><tr><th>공판장</th><th>지역</th><th>연결</th></tr>' + ''.join(f'<tr><td>{E(m["name"])}</td><td>{E(m["sido"] + " " + m["sigun"])}</td><td class="wait">연동 전</td></tr>' for m in MK['items'] if m['type'] == '공판장') + '</table>'
+    b += '<h2>농산물 도매시장 경락가</h2><p>공영도매시장 32곳의 품목·등급별 경락가는 농림축산식품부 도매시장 통합 창구(농넷)로 받습니다. 지도의 <a href="/?mode=crop">농장 보기</a>에서 시군을 누르면 그 지역 대표 품목의 경락가가 함께 보이도록 준비하고 있습니다.</p>'
+    b += '<h2>수산물 위판 시세</h2><p>수협 위판장 63곳의 품종별 위판 시세는 수협중앙회 위판정보 창구로 받습니다. 지도의 <a href="/?mode=sea">어장 보기</a>에서 위판장을 누르면 보이게 됩니다.</p>'
+    b += '<h2>내 품목 가격 알림 받기</h2><p>품목과 지역을 적어 두면, 경락가가 들어오기 시작할 때 아침 보고에 함께 넣어 드립니다.</p>'
+    b += form('price-alert', [('row', [('sel', '갈래', '갈래', True, ['소', '돼지', '닭·오리', '농산물', '수산물']), ('text', '품목', '품목', True, '예: 한우 거세 1+ / 사과 부사 / 전복')]), ('sel', '지역', '지역(시군)', True, ['전국'] + SIGUN_OPTS), ('tel', '연락처', '연락처(휴대전화)', True), ('text', '메모', '참고(선택)', False, '예: 매주 화요일 출하')], '알림 신청', '/price/thanks/')
+    b += '<h2>자료 출처</h2><ul><li>축산물품질평가원 등급판정정보 — 등급별 경락가·공판장 실시간 경매(공공데이터포털, 하루 1,000건 한도)</li><li>농림축산식품부 도매시장 통합 창구(농넷) — 공영도매시장 경락가</li><li>수협중앙회 — 위판 시세</li></ul>'
+    write('/price/', shell('/price/', '경락가 조회 — 소·돼지 등급별, 도매시장, 위판 시세 | 박씨네', '축산물품질평가원 등급별 경락가, 공판장별 경매, 농산물 도매시장 경락가, 수협 위판 시세를 한 화면에서. 내 품목 가격 알림 신청.', b, '/og/price.png'), '0.8')
+    write('/price/thanks/', shell('/price/thanks/', '알림 신청이 접수되었습니다 | 박씨네', '경락가 알림 신청 접수', '<h1 class="title">알림 신청이 접수되었습니다</h1><p class="lead">경락가가 들어오기 시작하면 적어 주신 연락처로 안내드립니다. <a href="/price/">경락가 화면으로 돌아가기</a></p>', noindex=True))
+
+# ── 공동구매 모집판
+def gongu_page():
+    items = GONGU.get('items', [])
+    b = '<p class="crumb"><a href="/">박씨네</a> › 공동구매</p><h1 class="title">사료·자재 공동구매 모집판</h1><p class="lead">같은 시군 농가·어가끼리 모아서 사면 배합사료·양식 사료·비료·농자재를 더 싸게 받을 수 있습니다. 박씨네는 모집을 열고 참여자를 모아 드릴 뿐, 판매자나 중개인이 아닙니다.</p>'
+    b += '<div class="grid3"><div class="card"><h3>왜 같은 시군끼리인가</h3><p>사료는 운송비가 큰 몫입니다. 한 차에 실어 한 동선으로 돌면 그만큼 내려갑니다.</p></div><div class="card"><h3>지도와 이어집니다</h3><p>시군별 사육 마릿수·양식 면허 수를 보면 어디서 모집이 성립할지 먼저 압니다.</p></div><div class="card"><h3>돈은 박씨네를 거치지 않습니다</h3><p>모집이 성립하면 참여자와 공급처가 직접 계약합니다. 박씨네는 연락처만 전달합니다.</p></div></div>'
+    b += '<h2>지금 열려 있는 모집</h2>'
+    if items:
+        b += '<table class="t"><tr><th>번호</th><th>종류·품목</th><th>지역</th><th class="num">목표</th><th class="num">모인 양</th><th>마감</th><th>상태</th></tr>'
+        for it in items:
+            b += f'<tr><td>{E(it["id"])}</td><td>{E(it["kind"])} · {E(it["item"])}</td><td>{E(it["area"])}</td><td class="num">{E(str(it["goal"]))}</td><td class="num">{E(str(it.get("got", 0)))}</td><td>{E(it["due"])}</td><td class="{"ok" if it.get("status") == "성립" else "wait"}">{E(it.get("status", "모집 중"))}</td></tr>'
+        b += '</table>'
+    else:
+        b += '<div class="empty">아직 열린 모집이 없습니다. 첫 모집을 열어 주세요. 열리면 이 자리에 번호와 함께 올라갑니다.</div>'
+    b += '<h2>진행 절차</h2><ol class="steps"><li>모집 열기 — 종류·품목·규격·목표 수량·마감일을 적습니다. 하루 안에 번호를 붙여 모집판에 올립니다.</li><li>참여 신청 — 같은 시군 농가가 번호와 수량을 적어 신청합니다. 목표에 닿으면 「성립」으로 바뀝니다.</li><li>견적 받기 — 성립된 모집은 공급처(사료 공장·대리점·농자재상) 두세 곳에 견적을 받아 참여자 모두에게 보냅니다.</li><li>직접 계약 — 참여자가 공급처와 직접 계약하고 결제합니다. 박씨네는 돈을 받지 않습니다.</li></ol>'
+    b += '<h2>모집 열기</h2>' + form('gongu-open', [('row', [('sel', '종류', '종류', True, ['배합사료(소)', '배합사료(돼지)', '배합사료(닭·오리)', '조사료(볏짚·건초)', '양식 사료', '비료', '농자재(비닐·끈·상자)', '어구·양식 자재', '기타']), ('text', '품목규격', '품목·규격', True, '예: 비육 후기 25㎏ 포대')]), ('row', [('sel', '지역', '지역(시군)', True, SIGUN_OPTS), ('num', '목표수량', '목표 수량(포대·톤·개)', True, '예: 400')]), ('row', [('date', '마감일', '마감일', True), ('tel', '연락처', '연락처(휴대전화)', True)]), ('text', '이름', '이름 또는 농장 이름', True, '예: 박씨농장'), ('area', '설명', '참여자에게 알릴 내용(선택)', False, '예: 매달 1일 수령, 농장 앞 하차 가능')], '모집 열기', '/gongu/thanks/')
+    b += '<h2>참여 신청</h2>' + form('gongu-join', [('row', [('text', '모집번호', '모집 번호', True, '예: 공구-0001'), ('num', '수량', '참여 수량', True, '예: 40')]), ('row', [('sel', '지역', '지역(시군)', True, SIGUN_OPTS), ('tel', '연락처', '연락처(휴대전화)', True)]), ('text', '이름', '이름 또는 농장 이름', True, '')], '참여 신청', '/gongu/thanks/')
+    b += '<h2>자주 묻는 것</h2><h3>가격은 누가 정하나요</h3><p>공급처가 견적을 냅니다. 박씨네는 견적을 모아 비교해 보여 드릴 뿐입니다.</p><h3>수수료가 있나요</h3><p>농가 참여는 무료입니다. 공급처가 박씨네에 업체 등록(유료)을 하면 모집 성립 소식을 먼저 받습니다.</p><h3>개인정보는요</h3><p>연락처는 그 모집의 연락에만 쓰고, 모집이 끝나면 지웁니다. 지도에는 어떤 농가의 위치도 올리지 않습니다.</p>'
+    write('/gongu/', shell('/gongu/', '사료·자재 공동구매 모집판 — 같은 시군끼리 모아서 싸게 | 박씨네', '배합사료·양식 사료·비료·농자재를 같은 시군 농가끼리 모아 사는 모집판. 모집 열기와 참여 신청. 박씨네는 판매자가 아닙니다.', b, '/og/gongu.png'), '0.8')
+    write('/gongu/thanks/', shell('/gongu/thanks/', '접수되었습니다 | 박씨네', '공동구매 신청 접수', '<h1 class="title">접수되었습니다</h1><p class="lead">하루 안에 적어 주신 연락처로 안내드립니다. 모집은 번호를 붙여 <a href="/gongu/">모집판</a>에 올립니다.</p>', noindex=True))
+
+# ── 데이터·업체
+def pro_page():
+    # 면허 만료 연도 분포(어장 자료에서)
+    exp = collections.Counter()
+    adir = os.path.join(SITE, 'data', 'aqua')
+    for fn in os.listdir(adir):
+        for z in json.load(open(os.path.join(adir, fn), encoding='utf-8')):
+            if z.get('e') and z['k'] in 'PHY':
+                m = re.search(r'(20\d\d)', str(z['e']))
+                if m: exp[m.group(1)] += 1
+    years = sorted(exp)[:8]
+    b = '<p class="crumb"><a href="/">박씨네</a> › 데이터·업체</p><h1 class="title">데이터 상품과 업체 등록</h1><p class="lead">지도에 공개된 시군 집계는 무료입니다. 그 아래 단계, 리·읍면동 단위로 가공한 자료와 업체 알림은 유료로 준비합니다. 개별 농가·어가 핀은 어떤 상품에도 넣지 않습니다.</p>'
+    b += '<div class="grid3">'
+    b += '<div class="card on"><h3>무료 <span class="tag mute">지금</span></h3><p>시군별 사육 마릿수·농가 수(2018~2026), 양식 면허 수·면적, 대표 품목, 공판장·위판장·도매시장 위치, 경락가 조회.</p></div>'
+    b += '<div class="card"><h3>농가용 <span class="tag">준비 중</span></h3><p>내 시군의 리별 사료 수요 지도, 경락가·위판 시세 아침 알림, 공동구매 성립 알림, 면허 만료·재허가 일정 알림.</p><div class="pricebox"><b>월 구독</b><span>가격 확정 전</span></div></div>'
+    b += '<div class="card"><h3>업체용 <span class="tag">준비 중</span></h3><p>사료 공장·대리점·도축장·운송·수의·종묘·어구 업체의 지역 등록, 공동구매 성립 소식 우선 수신, 지역 수요 보고서.</p><div class="pricebox"><b>지역 등록</b><span>가격 확정 전</span></div></div></div>'
+    b += '<h2>준비 중인 가공 자료</h2><div class="grid2">'
+    b += '<div class="card"><h3>리별 사료 수요 지도</h3><p>지방행정 인허가(가축사육업) 자료의 리·읍면동 집계에 축종별 사료 환산 계수를 곱해, 한 달에 몇 톤이 어디서 필요한지 보여 줍니다. 공급처의 배송 동선 설계용.</p></div>'
+    b += '<div class="card"><h3>진입·이탈 지수</h3><p>인허가 이력(개업·폐업)과 사육규모 9년치로 시군·축종별 진입과 이탈 속도를 셉니다. 어디가 커지고 어디가 비는지, 축사 매물과 사료 수요가 함께 움직이는 곳.</p></div>'
+    b += '<div class="card"><h3>공판장별 가격차 보고</h3><p>같은 등급이 공판장마다 얼마나 다른지 주 단위로. 출하처를 바꿀 때 운송비와 비교할 수 있게.</p></div>'
+    b += f'<div class="card"><h3>양식 면허 만료 달력</h3><p>어장정보도의 면허 만료 연도를 시군·품종별로 셉니다. 재허가·시설 교체·종묘 수요가 몰리는 해를 미리 봅니다.</p><p class="mini" style="margin-top:8px">만료 연도별 면허 수(양식): ' + ' · '.join(f'{y}년 {exp[y]:,}건' for y in years) + '</p></div></div>'
+    b += '<h2>업체 등록</h2><p>지역과 업종을 적어 주시면 그 시군에서 공동구매가 성립할 때 먼저 알려 드립니다. 등록 자체는 지금 무료이며, 유료 전환 전에 미리 안내드립니다.</p>'
+    b += form('biz', [('row', [('sel', '업종', '업종', True, ['사료 공장', '사료 대리점', '조사료', '도축·가공', '운송', '동물병원·수의', '종축·종묘·종자', '어구·양식 자재', '비료·농자재', '보험·금융', '기타']), ('text', '상호', '상호', True, '')]), ('row', [('sel', '지역', '주된 지역(시군)', True, ['전국'] + SIGUN_OPTS), ('text', '담당', '담당자 이름', True, '')]), ('row', [('tel', '연락처', '연락처', True), ('text', '전자우편', '전자우편(선택)', False, '')]), ('area', '소개', '취급 품목과 배송 가능 지역', True, '예: 비육우 배합사료, 전남 서부 배송')], '업체 등록', '/pro/thanks/')
+    b += '<h2>원칙</h2><ul><li>개별 농가·어가의 위치·이름·연락처는 상품에 넣지 않습니다. 가장 작은 단위는 리·읍면동입니다.</li><li>공공 자료의 이용 조건(공공누리 제1유형, 출처 표시)을 지킵니다. 카카오 주소 변환 결과는 저장하지 않습니다.</li><li>숫자가 예시이면 「예시」라고 씁니다. 확인 전 위치는 「위치 근사」로 표시합니다.</li></ul>'
+    write('/pro/', shell('/pro/', '데이터 상품과 업체 등록 — 리별 사료 수요, 진입·이탈 지수, 면허 만료 달력 | 박씨네', '리별 사료 수요 지도, 진입·이탈 지수, 공판장별 가격차, 양식 면허 만료 달력. 사료·도축·운송 업체 지역 등록.', b, '/og/pro.png'), '0.7')
+    write('/pro/thanks/', shell('/pro/thanks/', '등록되었습니다 | 박씨네', '업체 등록 접수', '<h1 class="title">등록되었습니다</h1><p class="lead">확인 뒤 연락드립니다. <a href="/pro/">데이터·업체 화면으로</a></p>', noindex=True))
+
+# ── 소개
+def about_page():
+    b = '<p class="crumb"><a href="/">박씨네</a> › 소개</p><h1 class="title">박씨네는 무엇을 하나</h1><p class="lead">농장(식물)·어장(어류·패류)·동물농장(가축)을 한 지도에서 봅니다. 시군을 누르면 거기서 무엇을 얼마나 키우는지, 어디서 팔고, 오늘 얼마인지 나오게 만드는 중입니다.</p>'
+    b += '<h2>자료 출처와 갱신</h2><table class="t"><tr><th>보기</th><th>자료</th><th>단위</th><th>갱신</th></tr>'
+    b += '<tr><td>동물농장</td><td>가축위생방역지원본부 「전국 시군별 사육규모 현황」 35개 축종 (공공데이터포털, 공공누리 제1유형)</td><td>시군 · 2018~2026년 1월</td><td>해마다</td></tr>'
+    b += '<tr><td>어장</td><td>국립해양조사원 어장정보도 2025 (개방해) — 양식·마을어업·정치망 면허 구역 11,486곳</td><td>구역 · 시군 집계</td><td>해마다</td></tr>'
+    b += '<tr><td>농장</td><td>지리적표시 등록부 (국립농산물품질관리원·산림청·국립수산물품질관리원) 204건</td><td>시군</td><td>등록 때마다</td></tr>'
+    b += '<tr><td>경계</td><td>통계청 통계지리정보서비스 시군 경계(2018), 광역시는 구·군 합침</td><td>161개 시군</td><td>–</td></tr>'
+    b += '<tr><td>시장</td><td>축산물 공판장 13곳·가축시장 9곳(박씨네 정리), 수협 위판장 63곳(지구별 조합), 공영도매시장 32곳</td><td>핀</td><td>확인 때마다</td></tr></table>'
+    b += '<h2>지키는 것</h2><ul><li>개별 농가·어가의 위치와 이름은 싣지 않습니다. 가장 작은 단위는 리·읍면동입니다.</li><li>예시 숫자는 「예시」라고 씁니다. 확인 전 위치는 「위치 근사」로 표시합니다.</li><li>공공 자료의 출처를 밝히고, 이용 조건을 지킵니다.</li></ul>'
+    b += '<h2>앞으로</h2><ul><li>축산물품질평가원 경락가·실시간 경매, 농산물 도매시장 경락가, 수협 위판 시세 연동</li><li>지방행정 인허가(가축사육업·도축장·사료 공장) 리 단위 집계</li><li>농업경영체 통계로 시군별 재배면적·농가 수</li><li>카카오 바탕지도(확대 단계)</li></ul>'
+    b += '<h2>연락</h2><p>자료 오류, 위치 정정, 제휴는 <a href="/pro/">업체 등록</a> 양식이나 <a href="/gongu/">모집판</a>의 양식으로 남겨 주세요.</p>'
+    write('/about/', shell('/about/', '소개 — 자료 출처·갱신·원칙 | 박씨네', '박씨네가 쓰는 자료와 출처, 갱신 주기, 개별 농가 비공개 원칙.', b), '0.5')
+
+# ── 콘솔(공개 읽기 전용)
+def console_page():
+    st = STATUS
+    b = '<p class="crumb"><a href="/">박씨네</a> › 콘솔</p><h1 class="title">콘솔</h1><p class="lead">수집기·연동창구·양식 접수 상태. 이 화면은 읽기 전용이며 숫자는 아침 작업 흐름이 갱신합니다.</p>'
+    b += f'<p class="mini">마지막 생성: {E(st.get("built", NOW.strftime("%Y-%m-%d %H:%M")))} (한국 시간)</p>'
+    b += '<h2>연동창구·열쇠</h2><div class="statusbar">'
+    for k, t in [('data_go_kr', '공공데이터포털 열쇠'), ('kakao', '카카오 지도 열쇠'), ('telegram', '텔레그램 보고'), ('ga', '구글 애널리틱스'), ('naver', '네이버 서치어드바이저'), ('indexnow', '색인 알림(인덱스나우)')]:
+        v = (st.get('keys') or {}).get(k)
+        b += f'<span class="{"on" if v else "off"}"><i></i>{E(t)} {"연결" if v else "미연결"}</span>'
+    b += '</div>'
+    b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
+    cols = st.get('collectors') or {}
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('ekape_live', '축평원 실시간 경매'), ('license', '지방행정 인허가(가축사육업 등)'), ('wholesale', '도매시장 경락가'), ('wharf', '수협 위판 시세'), ('pages', '글 화면·사이트 지도·새 소식'), ('og', '미리보기 그림'), ('indexnow', '색인 알림')]:
+        c = cols.get(k) or {}
+        ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
+        b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
+    b += '</table>'
+    cnt = st.get('counts') or {}
+    b += '<h2>자료 규모</h2><dl class="kv">'
+    b += f'<dt>가축 축종</dt><dd>{len(LS["species"])}개 · {len(YEARS)}개 연도</dd><dt>양식 면허 구역</dt><dd>{sum(c["n"] for c in AQ["cells"]):,}곳 · {len(AQ["units"])}개 시군</dd><dt>지리적표시</dt><dd>{len([i for i in CR["items"] if not i["off"]])}건 · {len(CR["units"])}개 시군</dd><dt>핀</dt><dd>공판장·가축시장 {len(MK["items"])} · 위판장 {len(PL["wharfs"])} · 도매시장 {len(PL["markets"])}</dd>'
+    b += f'<dt>글 화면</dt><dd>{cnt.get("pages", "–")}</dd><dt>양식 접수</dt><dd>{E(str(cnt.get("forms", "넷리파이 양식 화면에서 확인")))}</dd></dl>'
+    b += '<h2>양식(접수함)</h2><p>모집 열기·참여 신청·업체 등록·가격 알림은 넷리파이 양식으로 받습니다. 접수 내용은 넷리파이 콘솔의 「양식」에서 보고, 모집판 반영은 data/gongu.json 을 고쳐 다시 올리면 됩니다.</p>'
+    write('/console/', shell('/console/', '콘솔 | 박씨네', '박씨네 수집기·열쇠·양식 상태', b, noindex=True))
+
+# ── 시군 글
+def sigun_pages():
+    units = [g['properties']['u'] for g in J('units.json')['objects']['units']['geometries']]
+    last = YEARS[-1]
+    # 시군별 가축 상위
+    ani = collections.defaultdict(list)
+    for s in LS['species']:
+        for u, r in s['d'].items():
+            y = r['y'][-1]
+            if y and y[1] > 0: ani[u].append((s['k'], y[0], y[1], s['w']))
+    for u in ani: ani[u].sort(key=lambda x: -x[2])
+    idx = collections.defaultdict(list)
+    for u in sorted(units):
+        sd = u.split('|')[0]; name = ufull(u)
+        a = ani.get(u, []); e = AQ['units'].get(u); c = CR['units'].get(u)
+        pins = [m for m in MK['items'] if m['sido'] == sd and (m['sigun'] in uname(u) or uname(u) in m['sigun'] + '시' + m['sigun'] + '군')] + [w for w in PL['wharfs'] if w['u'] == u] + [m for m in PL['markets'] if m['u'] == u]
+        parts = []
+        if a: parts.append('가축 ' + ', '.join(f'{x[0]} {man(x[2])}{x[3]}' for x in a[:3]))
+        if e: parts.append('양식 면허 ' + f'{e["n"]:,}건' + (' · ' + ', '.join(t[0] for t in e['top'][:2]) if e['top'] else ''))
+        if c: parts.append('대표 품목 ' + ', '.join(c['items'][:3]))
+        desc = f'{name} — ' + (' / '.join(parts) if parts else '사육·양식·지리적표시 기록 정리') + f'. {last}년 1월 기준 시군 집계, 개별 농가 위치는 싣지 않습니다.'
+        b = f'<p class="crumb"><a href="/">박씨네</a> › <a href="/p/">시군별</a> › {E(sd)}</p><h1 class="title">{E(name)}</h1><p class="lead">{E(desc)}</p>'
+        b += f'<p><a class="btn prime" href="/?u={urllib.parse.quote(u)}">지도에서 보기</a></p>'
+        b += '<h2>동물농장 — 무엇을 얼마나 키우나</h2>'
+        if a:
+            b += f'<table class="t"><tr><th>축종</th><th class="num">농가</th><th class="num">마릿수</th><th class="num">{YEARS[0]}년 대비 농가</th></tr>'
+            for k, h, n, w in a[:10]:
+                s = next(x for x in LS['species'] if x['k'] == k); r = s['d'][u]['y']
+                i0 = next((i for i, v in enumerate(r) if v and v[0] > 0), None)
+                ch = f'{(h / r[i0][0] - 1) * 100:+.0f}%' if i0 is not None and i0 < len(r) - 1 and r[i0][0] >= 10 else '–'
+                b += f'<tr><td><a href="/?sp={urllib.parse.quote(k)}&u={urllib.parse.quote(u)}">{E(k)}</a></td><td class="num">{h:,}호</td><td class="num">{n:,}{E(w)}</td><td class="num">{ch}</td></tr>'
+            b += f'</table><p class="mini">가축위생방역지원본부 사육규모 현황, {last}년 1월 기준.</p>'
+        else: b += '<p>이 시군의 가축 사육 기록이 없습니다.</p>'
+        b += '<h2>어장 — 양식 면허</h2>'
+        if e:
+            b += f'<p>양식 면허 <b>{e["n"]:,}건</b>, 면허 면적 <b>{man(e["ha"])}㏊</b>. 마을어장(어촌계) {e["v"][0]}곳 · {man(e["v"][1])}㏊' + (f', 정치망 {e["j"]}곳' if e['j'] else '') + '.</p>'
+            if e['top']: b += '<table class="t"><tr><th>품종</th><th class="num">면허</th><th class="num">면적</th></tr>' + ''.join(f'<tr><td><a href="/?mode=sea&sp={urllib.parse.quote(t[0])}&u={urllib.parse.quote(u)}">{E(t[0])}</a></td><td class="num">{t[1]:,}건</td><td class="num">{man(t[2])}㏊</td></tr>' for t in e['top']) + '</table><p class="mini">국립해양조사원 어장정보도 2025. 지도를 확대하면 면허 구역이 하나씩 보입니다.</p>'
+        else: b += '<p>이 시군에는 어장 면허 기록이 없습니다.</p>'
+        b += '<h2>농장 — 대표 판매 품목</h2>'
+        if c:
+            b += '<p>' + ', '.join(f'<a href="/?mode=crop&sp={urllib.parse.quote(i)}">{E(i)}</a>' for i in c['items']) + '</p>'
+            b += '<table class="t"><tr><th>등록 명칭</th><th>갈래</th><th>등록일</th></tr>' + ''.join(f'<tr><td>{E(x["name"])}</td><td>{E(x["cat"])} · {E(x["kind"])}</td><td>{E(x["date"])}</td></tr>' for x in c['list']) + '</table><p class="mini">지리적표시 등록부(2024년 4월). 재배면적·농가 수는 농업경영체 통계가 들어오는 대로 보탭니다.</p>'
+        else: b += '<p>아직 지리적표시로 등록된 품목이 없습니다.</p>'
+        b += '<h2>팔 곳 — 공판장·가축시장·위판장·도매시장</h2>'
+        if pins: b += '<ul>' + ''.join(f'<li><a href="/?mode={"sea" if p["type"] == "위판장" else "crop" if p["type"] == "도매시장" else "ani"}&pin={p["id"]}">{E(p["name"])}</a> <span class="mini">{E(p["type"])}{"" if p.get("verified") else " · 위치 근사"}</span></li>' for p in pins) + '</ul>'
+        else: b += '<p>이 시군 안에는 등록된 공판장·위판장·도매시장이 없습니다. 지도에서 이웃 시군의 시장을 보세요.</p>'
+        b += f'<p><a href="/gongu/">이 시군에서 사료·자재 공동구매 열기 →</a></p>'
+        ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': f'{name} 농장·어장·동물농장 현황', 'description': desc, 'url': BASE + upath(u), 'license': 'https://www.kogl.or.kr/info/license.do', 'creator': {'@type': 'Organization', 'name': '박씨네'}, 'spatialCoverage': name, 'temporalCoverage': f'{YEARS[0]}/{last}'}
+        write(upath(u), shell(upath(u), f'{name} 농장·어장·동물농장 — 가축 사육, 양식 면허, 대표 품목 | 박씨네', desc, b, f'/og/p/{sd}_{uname(u)}.png', jsonld=ld), '0.7')
+        idx[sd].append((u, name, a[0][0] if a else None, c['items'][0] if c and c['items'] else None))
+    b = '<p class="crumb"><a href="/">박씨네</a> › 시군별</p><h1 class="title">시군별 보기</h1><p class="lead">161개 시군의 가축 사육·양식 면허·대표 품목을 글로 정리했습니다. 시군을 누르면 자세히, 「지도에서 보기」를 누르면 지도로 갑니다.</p>'
+    b += '<div class="toc">' + ''.join(f'<a href="#{E(sd)}">{E(sd)}</a>' for sd in idx) + '</div><div class="sgrid">'
+    for sd, lst in idx.items():
+        b += f'<h3 id="{E(sd)}">{E(sd)}</h3>' + ''.join(f'<a href="{upath(u)}">{E(uname(u))}<span class="mini"> {E(" · ".join(x for x in [a, c] if x))}</span></a>' for u, name, a, c in lst)
+    b += '</div>'
+    write('/p/', shell('/p/', '시군별 농장·어장·동물농장 — 161개 시군 | 박씨네', '전국 161개 시군의 가축 사육, 양식 면허, 대표 판매 품목을 시군별로.', b), '0.7')
+
+def misc():
+    write('/404.html', shell('/404.html', '그런 화면이 없습니다 | 박씨네', '없는 화면', '<h1 class="title">그런 화면이 없습니다</h1><p class="lead">주소가 바뀌었거나 잘못 적힌 것 같습니다. <a href="/">지도로 돌아가기</a> · <a href="/p/">시군별 보기</a></p>', noindex=True))
+    # 사이트 지도
+    pages = [('/', TODAY, '1.0')] + PAGES
+    sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{BASE}{urllib.parse.quote(p)}</loc><lastmod>{d}</lastmod><priority>{pr}</priority></url>\n' for p, d, pr in pages) + '</urlset>\n'
+    open(os.path.join(SITE, 'sitemap.xml'), 'w', encoding='utf-8').write(sm)
+    open(os.path.join(SITE, 'robots.txt'), 'w', encoding='utf-8').write(f'User-agent: *\nAllow: /\nDisallow: /console/\nSitemap: {BASE}/sitemap.xml\n')
+    # 새 소식(갱신 기록)
+    news = J('news.json', [])
+    if not news:
+        news = [{'date': TODAY, 'title': '박씨네 문을 엽니다 — 동물농장·어장·농장 한 지도', 'url': '/', 'body': '전국 시군별 가축 사육(35개 축종, 2018~2026), 양식 면허 구역 11,486곳, 지리적표시 대표 품목 204건을 한 지도에 올렸습니다. 공판장·가축시장·수협 위판장·공영도매시장 위치와 경락가 조회, 공동구매 모집판을 함께 엽니다.'}]
+    rss = '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>박씨네 새 소식</title><link>' + BASE + '/</link><description>박씨네 지도·자료 갱신 소식</description><language>ko</language>\n'
+    for n in news[:50]:
+        rss += f'<item><title>{E(n["title"])}</title><link>{BASE}{n["url"]}</link><guid>{BASE}{n["url"]}#{n["date"]}</guid><pubDate>{datetime.datetime.strptime(n["date"], "%Y-%m-%d").strftime("%a, %d %b %Y 09:00:00 +0900")}</pubDate><description>{E(n["body"])}</description></item>\n'
+    rss += '</channel></rss>\n'
+    open(os.path.join(SITE, 'rss.xml'), 'w', encoding='utf-8').write(rss)
+    # 상태 갱신(글 화면 수)
+    st = STATUS; st['built'] = NOW.strftime('%Y-%m-%d %H:%M'); st.setdefault('counts', {})['pages'] = len(pages)
+    st.setdefault('collectors', {})['pages'] = {'ok': True, 'at': NOW.strftime('%Y-%m-%d %H:%M'), 'msg': f'{len(pages)}쪽'}
+    json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # 사이트 지도 목록(색인 알림용)
+    open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
+
+if __name__ == '__main__':
+    inject_index(); price_page(); gongu_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
+    print('글 화면', len(PAGES) + 1)
