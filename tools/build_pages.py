@@ -45,7 +45,8 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/gongu/', '공동구매'), ('/pro/', '데이터·업체'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/pro/', '데이터·업체'), ('/p/', '시군별'), ('/about/', '소개')]
+BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
     url = BASE + path
@@ -83,7 +84,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 {body}
 <footer class="foot">
   <p>박씨네 — 전국 시군별 가축 사육·양식 어장·대표 품목 지도. 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
-  <p><a href="/">지도</a><a href="/price/">경락가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
+  <p><a href="/">지도</a><a href="/price/">경락가</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
 </footer>
 </main>
 </body>
@@ -147,11 +148,31 @@ def price_page():
     write('/price/', shell('/price/', '경락가 조회 — 소·돼지 등급별, 도매시장, 위판 시세 | 박씨네', '축산물품질평가원 등급별 경락가, 공판장별 경매, 농산물 도매시장 경락가, 수협 위판 시세를 한 화면에서. 내 품목 가격 알림 신청.', b, '/og/price.png'), '0.8')
     write('/price/thanks/', shell('/price/thanks/', '알림 신청이 접수되었습니다 | 박씨네', '경락가 알림 신청 접수', '<h1 class="title">알림 신청이 접수되었습니다</h1><p class="lead">경락가가 들어오기 시작하면 적어 주신 연락처로 안내드립니다. <a href="/price/">경락가 화면으로 돌아가기</a></p>', noindex=True))
 
+# ── 구입가 시세판(옆집은 사료·종묘·자재를 얼마에 사나)
+BUY_KINDS = ['배합사료(소)', '배합사료(돼지)', '배합사료(닭·오리)', '조사료(볏짚·건초·사일리지)', '양식 사료(배합)', '양식 사료(생사료)', '종묘·치어', '종자·묘목', '비료', '농약·동물약품', '포장 박스·상자(농산물)', '스티로폼 상자·아이스팩(수산물)', '그물망·봉지·라벨', '농자재(비닐·끈·지주)', '어구·양식 자재', '기타']
+def buy_page():
+    items = BUY.get('items', []); n = BUY.get('n', 0)
+    b = '<p class="crumb"><a href="/">박씨네</a> › 구입가</p><h1 class="title">옆집은 얼마에 사나 — 원자료 구입가 시세판</h1><p class="lead">사료·종묘·비료·자재를 남들은 얼마에 사는지. 농가·어가가 익명으로 적어 준 구입가를 시군별 중위값으로 보여 줍니다. 제보하면 「내 가격은 우리 시군보다 몇 % 비싼지」 성적표를 바로 받습니다. 박씨네는 팔지도 사지도 않습니다.</p>'
+    b += '<div class="grid3"><div class="card"><h3>왜 중위값인가</h3><p>가장 싼 값·가장 비싼 값에 흔들리지 않게 가운데 값을 씁니다. 제보 5건이 모여야 숫자를 엽니다.</p></div><div class="card"><h3>누가 제보하나</h3><p>영수증·거래명세서 기준으로 농가·어가가 직접. 업체 홍보 가격은 받지 않습니다.</p></div><div class="card"><h3>무엇을 돌려주나</h3><p>제보자에게 시군 중위값 대비 내 가격 차이, 같은 품목 전국 흐름을 보냅니다.</p></div></div>'
+    b += '<h2>시군별 구입가 중위값</h2>'
+    if items:
+        b += '<table class="t"><tr><th>품목·규격</th><th>지역</th><th class="num">중위 단가</th><th class="num">제보</th><th>최근</th></tr>'
+        for it in items:
+            b += f'<tr><td>{E(it["kind"])} · {E(it["item"])}</td><td>{E(it["area"])}</td><td class="num">{it["median"]:,}원/{E(it["unit"])}</td><td class="num">{it["n"]}건</td><td>{E(it["last"])}</td></tr>'
+        b += f'</table><p class="mini">제보 {n}건 집계 · 5건 미만인 품목·시군은 숫자를 열지 않습니다.</p>'
+    else:
+        b += '<div class="empty">아직 공개할 만큼 모이지 않았습니다. 품목·시군별로 제보 5건이 모이면 중위값을 엽니다. 첫 제보를 남겨 주세요 — 제보자에게는 모이는 대로 먼저 알려 드립니다.</div>'
+    b += '<h2>내 구입가 제보하기</h2><p>연락처는 성적표와 알림에만 쓰고 공개하지 않습니다. 농장 이름도 받지 않습니다.</p>'
+    b += form('buy-report', [('row', [('sel', '종류', '종류', True, BUY_KINDS), ('text', '품목규격', '품목·규격', True, '예: 비육 후기 25㎏ 포대 / 전복 치패 2㎝ / 요소비료 20㎏')]), ('row', [('num', '단가', '단가(원)', True, '예: 14500'), ('sel', '단위', '단위', True, ['포대', '㎏', '톤', '마리', '개', '병', '롤', '기타'])]), ('row', [('sel', '지역', '지역(시군)', True, SIGUN_OPTS), ('sel', '구매처', '구매처 종류', True, ['농협·수협', '대리점', '공장 직거래', '온라인', '종묘장·육묘장', '기타'])]), ('row', [('date', '구입일', '구입일', True), ('sel', '결제', '결제 방식', False, ['현금·즉시', '외상(월말)', '외상(출하 후)', '기타'])]), ('tel', '연락처', '연락처(휴대전화, 성적표 받을 번호)', True), ('text', '메모', '참고(선택)', False, '예: 운송비 포함, 10포대 이상 할인')], '제보하고 성적표 받기', '/buy/thanks/')
+    b += '<h2>어떻게 쓰이나</h2><ol class="steps"><li>제보가 들어오면 품목·규격·시군별로 묶어 중위값을 냅니다(5건 이상).</li><li>제보자에게 「내 가격 vs 우리 시군 중위값」 차이를 문자로 보냅니다.</li><li>차이가 큰 시군은 <a href="/gongu/">공동구매 모집</a>으로 이어 줍니다. 업체 견적은 그때 받습니다.</li><li>집계값은 시군 단위로만 공개하고, 개별 제보는 공개하지 않습니다.</li></ol>'
+    write('/buy/', shell('/buy/', '옆집은 얼마에 사나 — 사료·종묘·비료·자재 구입가 시세판 | 박씨네', '사료·종묘·비료·농자재를 남들은 얼마에 사는지 시군별 중위값으로. 익명 제보하고 내 가격 성적표 받기.', b, '/og/buy.png'), '0.8')
+    write('/buy/thanks/', shell('/buy/thanks/', '제보가 접수되었습니다 | 박씨네', '구입가 제보 접수', '<h1 class="title">제보가 접수되었습니다</h1><p class="lead">같은 품목·시군 제보가 5건 모이면 중위값과 내 가격 차이를 문자로 보내 드립니다. <a href="/buy/">구입가 시세판으로</a></p>', noindex=True))
+
 # ── 공동구매 모집판
 def gongu_page():
     items = GONGU.get('items', [])
-    b = '<p class="crumb"><a href="/">박씨네</a> › 공동구매</p><h1 class="title">사료·자재 공동구매 모집판</h1><p class="lead">같은 시군 농가·어가끼리 모아서 사면 배합사료·양식 사료·비료·농자재를 더 싸게 받을 수 있습니다. 박씨네는 모집을 열고 참여자를 모아 드릴 뿐, 판매자나 중개인이 아닙니다.</p>'
-    b += '<div class="grid3"><div class="card"><h3>왜 같은 시군끼리인가</h3><p>사료는 운송비가 큰 몫입니다. 한 차에 실어 한 동선으로 돌면 그만큼 내려갑니다.</p></div><div class="card"><h3>지도와 이어집니다</h3><p>시군별 사육 마릿수·양식 면허 수를 보면 어디서 모집이 성립할지 먼저 압니다.</p></div><div class="card"><h3>돈은 박씨네를 거치지 않습니다</h3><p>모집이 성립하면 참여자와 공급처가 직접 계약합니다. 박씨네는 연락처만 전달합니다.</p></div></div>'
+    b = '<p class="crumb"><a href="/">박씨네</a> › 공동구매</p><h1 class="title">사료·박스·자재 공동구매 모집판</h1><p class="lead">같은 시군 농가·어가끼리 모아서 사면 배합사료·양식 사료·포장 박스·스티로폼 상자·비료·농자재를 더 싸게 받을 수 있습니다. 특히 포장 박스는 규격이 같고 부피가 커서 한 차로 모으는 효과가 가장 큽니다. 박씨네는 모집을 열고 참여자를 모아 드릴 뿐, 판매자나 중개인이 아닙니다.</p>'
+    b += '<div class="grid3"><div class="card"><h3>왜 같은 시군끼리인가</h3><p>사료·박스는 운송비가 큰 몫입니다. 한 차에 실어 한 동선으로 돌면 그만큼 내려갑니다. 박스는 같은 규격(5㎏·10㎏·15㎏ 상자)끼리 묶으면 인쇄판 비용도 나눕니다.</p></div><div class="card"><h3>지도와 이어집니다</h3><p>시군별 사육 마릿수·양식 면허 수를 보면 어디서 모집이 성립할지 먼저 압니다.</p></div><div class="card"><h3>돈은 박씨네를 거치지 않습니다</h3><p>모집이 성립하면 참여자와 공급처가 직접 계약합니다. 박씨네는 연락처만 전달합니다.</p></div></div>'
     b += '<h2>지금 열려 있는 모집</h2>'
     if items:
         b += '<table class="t"><tr><th>번호</th><th>종류·품목</th><th>지역</th><th class="num">목표</th><th class="num">모인 양</th><th>마감</th><th>상태</th></tr>'
@@ -161,7 +182,7 @@ def gongu_page():
     else:
         b += '<div class="empty">아직 열린 모집이 없습니다. 첫 모집을 열어 주세요. 열리면 이 자리에 번호와 함께 올라갑니다.</div>'
     b += '<h2>진행 절차</h2><ol class="steps"><li>모집 열기 — 종류·품목·규격·목표 수량·마감일을 적습니다. 하루 안에 번호를 붙여 모집판에 올립니다.</li><li>참여 신청 — 같은 시군 농가가 번호와 수량을 적어 신청합니다. 목표에 닿으면 「성립」으로 바뀝니다.</li><li>견적 받기 — 성립된 모집은 공급처(사료 공장·대리점·농자재상) 두세 곳에 견적을 받아 참여자 모두에게 보냅니다.</li><li>직접 계약 — 참여자가 공급처와 직접 계약하고 결제합니다. 박씨네는 돈을 받지 않습니다.</li></ol>'
-    b += '<h2>모집 열기</h2>' + form('gongu-open', [('row', [('sel', '종류', '종류', True, ['배합사료(소)', '배합사료(돼지)', '배합사료(닭·오리)', '조사료(볏짚·건초)', '양식 사료', '비료', '농자재(비닐·끈·상자)', '어구·양식 자재', '기타']), ('text', '품목규격', '품목·규격', True, '예: 비육 후기 25㎏ 포대')]), ('row', [('sel', '지역', '지역(시군)', True, SIGUN_OPTS), ('num', '목표수량', '목표 수량(포대·톤·개)', True, '예: 400')]), ('row', [('date', '마감일', '마감일', True), ('tel', '연락처', '연락처(휴대전화)', True)]), ('text', '이름', '이름 또는 농장 이름', True, '예: 박씨농장'), ('area', '설명', '참여자에게 알릴 내용(선택)', False, '예: 매달 1일 수령, 농장 앞 하차 가능')], '모집 열기', '/gongu/thanks/')
+    b += '<h2>모집 열기</h2>' + form('gongu-open', [('row', [('sel', '종류', '종류', True, ['배합사료(소)', '배합사료(돼지)', '배합사료(닭·오리)', '조사료(볏짚·건초)', '양식 사료', '비료', '포장 박스·상자(농산물)', '스티로폼 상자·아이스팩(수산물)', '그물망·봉지·라벨', '농자재(비닐·끈·지주)', '어구·양식 자재', '기타']), ('text', '품목규격', '품목·규격', True, '예: 비육 후기 25㎏ 포대')]), ('row', [('sel', '지역', '지역(시군)', True, SIGUN_OPTS), ('num', '목표수량', '목표 수량(포대·톤·개)', True, '예: 400')]), ('row', [('date', '마감일', '마감일', True), ('tel', '연락처', '연락처(휴대전화)', True)]), ('text', '이름', '이름 또는 농장 이름', True, '예: 박씨농장'), ('area', '설명', '참여자에게 알릴 내용(선택)', False, '예: 매달 1일 수령, 농장 앞 하차 가능')], '모집 열기', '/gongu/thanks/')
     b += '<h2>참여 신청</h2>' + form('gongu-join', [('row', [('text', '모집번호', '모집 번호', True, '예: 공구-0001'), ('num', '수량', '참여 수량', True, '예: 40')]), ('row', [('sel', '지역', '지역(시군)', True, SIGUN_OPTS), ('tel', '연락처', '연락처(휴대전화)', True)]), ('text', '이름', '이름 또는 농장 이름', True, '')], '참여 신청', '/gongu/thanks/')
     b += '<h2>자주 묻는 것</h2><h3>가격은 누가 정하나요</h3><p>공급처가 견적을 냅니다. 박씨네는 견적을 모아 비교해 보여 드릴 뿐입니다.</p><h3>수수료가 있나요</h3><p>농가 참여는 무료입니다. 공급처가 박씨네에 업체 등록(유료)을 하면 모집 성립 소식을 먼저 받습니다.</p><h3>개인정보는요</h3><p>연락처는 그 모집의 연락에만 쓰고, 모집이 끝나면 지웁니다. 지도에는 어떤 농가의 위치도 올리지 않습니다.</p>'
     write('/gongu/', shell('/gongu/', '사료·자재 공동구매 모집판 — 같은 시군끼리 모아서 싸게 | 박씨네', '배합사료·양식 사료·비료·농자재를 같은 시군 농가끼리 모아 사는 모집판. 모집 열기와 참여 신청. 박씨네는 판매자가 아닙니다.', b, '/og/gongu.png'), '0.8')
@@ -313,5 +334,5 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); price_page(); gongu_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
+    inject_index(); price_page(); buy_page(); gongu_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
     print('글 화면', len(PAGES) + 1)

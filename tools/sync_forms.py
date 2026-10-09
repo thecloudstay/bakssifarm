@@ -36,6 +36,22 @@ try:
         items.append({'id': gid, 'kind': d.get('종류', ''), 'item': d.get('품목규격', ''), 'area': d.get('지역', ''), 'goal': int(goal) if goal.is_integer() else goal, 'got': int(got) if got.is_integer() else got, 'due': due, 'status': st, 'note': (d.get('설명') or '')[:140], 'opened': s['created_at'][:10]})
     items = [it for it in items if it['status'] != '마감' or (now().date() - datetime.date.fromisoformat(it['opened'])).days < 60]
     jsave(os.path.join(DATA, 'gongu.json'), {'at': stamp(), 'items': items[::-1]}, indent=1)
+    # 구입가 제보 집계: 종류·품목·단위·시군별 중위값(5건 이상), 개별 제보·연락처는 공개하지 않음
+    import statistics
+    groups = {}
+    for s in subs.get('buy-report', []):
+        d = s.get('data', {})
+        try: price = float(d.get('단가') or 0)
+        except ValueError: continue
+        if price <= 0: continue
+        key = (d.get('종류', ''), (d.get('품목규격') or '').strip(), d.get('단위', ''), d.get('지역', ''))
+        groups.setdefault(key, []).append((price, s['created_at'][:10]))
+    rows = []
+    for (kind, item, unit, area), vals in groups.items():
+        if len(vals) < 5: continue
+        rows.append({'kind': kind, 'item': item, 'unit': unit, 'area': area, 'median': int(statistics.median(v[0] for v in vals)), 'n': len(vals), 'last': max(v[1] for v in vals)})
+    rows.sort(key=lambda r: (-r['n'], r['kind'], r['item']))
+    jsave(os.path.join(DATA, 'buyprice.json'), {'at': stamp(), 'n': len(subs.get('buy-report', [])), 'items': rows}, indent=1)
     cnt = {k: len(v) for k, v in subs.items()}
     p = os.path.join(DATA, 'status.json'); st = jload(p, {}); st.setdefault('counts', {})['forms'] = ' · '.join(f'{k} {v}' for k, v in cnt.items()) or '0'; jsave(p, st, indent=1)
     status('forms', True, f'모집 {len(items)}건 · 접수 {sum(cnt.values())}건')

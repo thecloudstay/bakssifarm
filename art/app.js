@@ -305,9 +305,10 @@
 
   /* ── 판: 공통 조각 */
   function linksBlock() {
-    return '<section class="sec more-in"><p class="eyebrow"><span>박씨네가 더 해 드리는 일</span></p><div class="cards">' +
-      '<a href="price/index.html"><b>경락가 조회</b><span>소·돼지 등급별 경락가, 농산물 도매시장·수협 위판 시세</span></a>' +
-      '<a href="gongu/index.html"><b>사료·자재 공동구매</b><span>같은 시군끼리 모아서 싸게. 모집판 열고 신청받기</span></a>' +
+    return '<section class="sec more-in"><p class="eyebrow"><span>농가가 가장 먼저 묻는 것</span></p><div class="cards">' +
+      '<a href="price/index.html"><b>오늘 경락가는 얼마?</b><span>소·돼지 등급별·공판장별 경락가, 도매시장·위판 시세</span></a>' +
+      '<a href="buy/"><b>옆집은 사료·종묘를 얼마에 사나?</b><span>익명 구입가 제보로 시군별 중위값, 내 가격 성적표</span></a>' +
+      '<a href="gongu/index.html"><b>같이 사면 얼마나 싸지나?</b><span>같은 시군끼리 사료·포장 박스·자재 공동구매 모집판</span></a>' +
       '<a href="pro/index.html"><b>데이터·업체 등록</b><span>리 단위 사료 수요 지도, 진입·이탈 지수, 업체 알리기</span></a></div></section>';
   }
   function kakaoLink(name) { return 'https://map.kakao.com/?q=' + encodeURIComponent(name); }
@@ -410,7 +411,7 @@
       if (!r) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>' + esc(S.sp) + '</small></h1><p class="read">이 시군에는 ' + esc(S.sp) + ' 사육 기록이 없습니다.</p></section>';
       else {
         var sum = summary(r.y, r.b, unitFull(S.sel), S.sp + ' · ' + YEARS[YEARS.length - 1] + '년 1월').replace('</section>', rankText(S.sel) + '</section>');
-        h += MOB.matches ? sum + boardHtml : boardHtml + sum;
+        h += boardHtml + sum;
         h += '<section class="sec"><p class="eyebrow"><span>' + YEARS[0] + '년부터 지금까지</span></p>' + trendSvg(r.y) + key + '</section>';
         h += scaleBlock(r.b);
       }
@@ -418,7 +419,7 @@
     } else {
       var nb = Object.keys(SP.d).reduce(function (acc, u) { var b = SP.d[u].b; if (!b) return acc; b.forEach(function (x, i) { acc[i] = acc[i] || [0, 0]; acc[i][0] += x[0]; acc[i][1] += x[1]; }); return acc; }, []);
       var sum2 = summary(SP.tot, nb, '전국 ' + S.sp, YEARS[YEARS.length - 1] + '년 1월 · ' + Object.keys(SP.d).length + '개 시군');
-      h += MOB.matches ? sum2 + boardHtml : boardHtml + sum2;
+      h += boardHtml + sum2;
       h += '<section class="sec"><p class="eyebrow"><span>' + YEARS[0] + '년부터 지금까지</span></p>' + trendSvg(SP.tot) + key + '</section>';
       var us = Object.keys(SP.d).filter(function (u) { return latest(u, 1) > 0; }).sort(function (a, b) { return latest(b, 1) - latest(a, 1); }).slice(0, 8);
       h += topList(S.sp + ' 많은 곳', SP.w, us, function (u) { return latest(u, 1); });

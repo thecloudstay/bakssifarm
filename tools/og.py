@@ -31,6 +31,7 @@ def man(n):
     return f'{n:,.0f}'
 card(os.path.join(OUT, 'home.png'), '농장·어장·동물농장 한 지도', [('가축 35개 축종 · 2018~2026년 시군별 사육 현황', None), ('양식 면허 구역 11,486곳 · 수협 위판장 63', None), ('지리적표시 대표 품목 204건 · 공영도매시장 32', None), ('공판장·가축시장 위치와 경락가 조회, 공동구매 모집판', MOSS)])
 card(os.path.join(OUT, 'price.png'), '경락가 조회', [('소·돼지 등급별 경락가 · 공판장별 경매', None), ('농산물 도매시장 경락가 · 수협 위판 시세', None), ('내 품목 가격 알림', MOSS)])
+card(os.path.join(OUT, 'buy.png'), '옆집은 얼마에 사나', [('사료 · 종묘 · 비료 · 자재 구입가 시세판', None), ('익명 제보 → 시군별 중위값 → 내 가격 성적표', None), ('박씨네는 팔지도 사지도 않습니다', MOSS)])
 card(os.path.join(OUT, 'gongu.png'), '사료·자재 공동구매 모집판', [('같은 시군 농가끼리 모아서 싸게', None), ('배합사료 · 양식 사료 · 비료 · 농자재', None), ('박씨네는 판매자가 아닙니다 — 모집과 연결만', MOSS)])
 card(os.path.join(OUT, 'pro.png'), '데이터 상품과 업체 등록', [('리별 사료 수요 지도 · 진입·이탈 지수', None), ('공판장별 가격차 · 양식 면허 만료 달력', None), ('사료·도축·운송·수의 업체 지역 등록', MOSS)])
 ani = collections.defaultdict(list)

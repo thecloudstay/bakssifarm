@@ -1,6 +1,8 @@
 https://bakssine.netlify.app/
 https://bakssine.netlify.app/price/
 https://bakssine.netlify.app/price/thanks/
+https://bakssine.netlify.app/buy/
+https://bakssine.netlify.app/buy/thanks/
 https://bakssine.netlify.app/gongu/
 https://bakssine.netlify.app/gongu/thanks/
 https://bakssine.netlify.app/pro/
