@@ -265,7 +265,7 @@
     } else {
       h += chip('farm', '대표 품목', KIND['과일']);
       h += chip('whole', '도매시장 <span class="n">' + PL.markets.length + '</span>', '#a8821a');
-      h += '<button type="button" class="chip wait" title="농업경영체 등록 통계·재배면적은 자료 받는 대로 시군 단위로 표시"><span class="dot"></span>재배면적·농가 수 <span class="n">곧 추가</span></button>';
+      h += '<button type="button" class="chip wait" title="도매시장·산지공판장 경락 원자료의 산지(출하 시군) 항목으로 시군×품목 12개월 거래금액을 집계해 칠합니다. 벼·보리처럼 농협 수매로 빠지는 품목은 뺍니다"><span class="dot"></span>실제 출하 금액(경락 기준) <span class="n">곧 추가</span></button>';
     }
     $('#layers').innerHTML = h;
     $('#layers').querySelectorAll('[data-l]').forEach(function (b) {
@@ -525,7 +525,7 @@
     if (S.sel) {
       var c = CR.units[S.sel];
       h += backBtn();
-      if (!c) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>농장</small></h1><p class="read">이 시군에는 아직 지리적표시로 등록된 품목이 없습니다. 재배면적·농가 수 자료가 들어오면 주력 작물을 보여 드립니다.</p></section>';
+      if (!c) h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>농장</small></h1><p class="read">이 시군에는 아직 지리적표시로 등록된 품목이 없습니다. 경락 원자료(산지 기준)가 쌓이면 실제 출하 금액 순위로 주력 품목을 보여 드립니다.</p></section>';
       else {
         h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>대표 판매 품목 · 지리적표시 ' + c.n + '건</small></h1>';
         h += kindChips(c.items, c.list);
@@ -542,7 +542,7 @@
         var cnt = {}; CR.items.forEach(function (it) { if (!it.off) cnt[it.kind] = (cnt[it.kind] || 0) + 1; });
         h += '<section class="sec"><h1 class="place">전국 대표 판매 품목<small>지리적표시 ' + CR.items.filter(function (i) { return !i.off; }).length + '건 · ' + Object.keys(CR.units).length + '개 시군</small></h1>';
         h += '<div class="cats big">' + CR.kinds.map(function (k) { return '<span><i style="background:' + KIND[k] + '"></i>' + esc(k) + ' <b>' + (cnt[k] || 0) + '</b></span>'; }).join('') + '</div>';
-        h += '<p class="read">시군을 누르면 그곳의 대표 품목과 등록 내역이 나옵니다. 재배면적·농가 수는 농업경영체 통계가 들어오는 대로 함께 보여 드립니다.</p></section>';
+        h += '<p class="read">시군을 누르면 그곳의 대표 품목과 등록 내역이 나옵니다. 색칠 기준은 등록 수가 아니라 실제 팔린 돈으로 바꿉니다. 도매시장·공판장 경락 원자료의 산지 항목이 쌓이는 대로 시군별 출하 금액 순위를 보여 드립니다.</p></section>';
         h += cropBoard();
         var us = Object.keys(CR.units).sort(function (a, b) { return CR.units[b].n - CR.units[a].n; }).slice(0, 8);
         h += topList('등록 품목 많은 시군', '건', us, function (u) { return CR.units[u].n; });
