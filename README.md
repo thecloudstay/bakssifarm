@@ -14,6 +14,10 @@
   - `build_crops.py` 지리적표시 → `data/crops.json`
   - `build_pins.py` 위판장·도매시장 핀 → `data/places.json`
   - `collect_ekape.py` 축산물품질평가원 경락가(열쇠 필요) → `data/price/`
+  - `collect_wholesale.py` 공영도매시장 정산 경락가 → `data/price/wholesale.json`
+  - `collect_origin.py` 낙찰 원산지 기준 시군×품목 실제 출하 금액 → `data/origin.json`(공개 집계), `private/origin/`
+  - `collect_trade.py` 관세청 수입 단가(매달 3일) → `data/trade.json`
+  - `collect_signals.py` 이상 신호(수온·급등락·전염병) → `data/signals.json`
   - `collect_license.py` 행정안전부 인허가(열쇠 필요) → `data/biz/`, `private/license/`
   - `sync_forms.py` 넷리파이 양식 접수 → `data/gongu.json`
   - `build_pages.py` 글 화면·사이트 지도·새 소식·robots·상태
