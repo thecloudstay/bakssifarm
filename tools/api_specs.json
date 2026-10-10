@@ -13,6 +13,7 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=004",
   "fetched": "2026-10-10"
  },
  {
@@ -61,6 +62,7 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000330",
   "fetched": "2026-10-10"
  },
  {
@@ -489,6 +491,7 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=009",
   "fetched": "2026-10-10"
  },
  {
@@ -505,6 +508,7 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20150827000000000463&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "fetched": "2026-10-10"
  },
  {
@@ -571,6 +575,62 @@
     "sido",
     "totalCount"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B553748/IntegrationCompanyService/getIntegrationCompanyList",
+     "sum": "축산물 HACCP 통합 인증업체 정보 조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "retunType",
+       "req": false,
+       "desc": "리턴타입",
+       "sample": "json"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "rnum": "레코드번호",
+      "appointno": "인증번호",
+      "issuedate": "최초인증일",
+      "issueenddate": "인증종료일",
+      "company": "회사명",
+      "ceoname": "대표자명",
+      "companyaddr": "주소",
+      "prdlstNm": "품목",
+      "sido": "시도",
+      "sgg": "시군구",
+      "brandnm": "대표브랜드명"
+     },
+     "full": "https://apis.data.go.kr/B553748/IntegrationCompanyService/getIntegrationCompanyList"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
