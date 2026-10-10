@@ -1,0 +1,25 @@
+# 연동창구 더 찾기 — 매달 1일 + 손으로 실행
+name: 연동창구 더 찾기
+on:
+  schedule:
+    - cron: '10 19 1 * *'
+  workflow_dispatch:
+    inputs:
+      debug: { description: '검색 화면 원문 저장(아무 값)', required: false }
+permissions:
+  contents: write
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: python tools/discover_apis.py
+        env:
+          DISC_DEBUG: ${{ github.event.inputs.debug }}
+      - run: |
+          git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
+          git add tools/api_discovered.json; git add -f tools/_debug 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "연동창구 더 찾기 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git pull --rebase -q && git push
