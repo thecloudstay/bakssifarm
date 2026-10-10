@@ -33,7 +33,7 @@
   var S = { mode: 'ani', sp: '한우', m: 'n', sel: null, pin: null, zone: null, layers: { farm: true, market: true, cattle: true, wharf: true, zone: true, whole: true } };
   var LS, AQ, CR, PL, MK, TOPO, FEAT, UNITS = {}, map, polyLayer, lblLayer, pinLayer, zoneLayer, bizLayer, breaks = [], YEARS, SP, CELLS = {};
   var PR = null, BIZ = null, BIZD = {}, SG = null, OR = null;   // OR: 실제 출하 금액(경락 원산지 기준)   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
-  var BIZN = { feed: '사료 공장', slaughter: '도축장', hatchery: '부화장', breeding: '종축장', vet: '동물병원', pharmacy: '동물약국' };
+  var BIZN = { feed: '사료 공장', slaughter: '도축장', hatchery: '부화장', breeding: '종축장', vet: '동물병원', pharmacy: '동물약국', ai_center: '인공수정소', vet_drug: '동물약품 도매', vet_equip: '동물 의료용구', milk: '집유장', processing: '축산 가공', packer: '식육 포장', manure_trans: '분뇨 수집운반', manure_fac: '분뇨 처리시설' };
   var ALL_SEA = { k: '모든 양식', g: '', all: true };
 
   /* ── 글자·숫자 */
@@ -263,7 +263,11 @@
       h += chip('farm', '사육 분포', RAMP[4]);
       h += chip('market', '공판장 <span class="n">' + nM + '</span>', '#a8821a');
       h += chip('cattle', '가축시장 <span class="n">' + nC + '</span>', '#ffffff', true);
-      if (BIZ && BIZ.layers && BIZ.layers.some(function (l) { return l.public; })) BIZ.layers.filter(function (l) { return l.public; }).forEach(function (l) { S.layers['biz_' + l.k] = S.layers['biz_' + l.k] || false; h += chip('biz_' + l.k, esc(BIZN[l.k] || l.name), '#68716a'); });
+      if (BIZ && BIZ.layers && BIZ.layers.some(function (l) { return l.public; })) {
+        var pubs = BIZ.layers.filter(function (l) { return l.public; }), on = pubs.filter(function (l) { return S.layers['biz_' + l.k]; }).length;
+        h += '<span class="bizwrap"><button type="button" class="chip" id="bizBtn" aria-expanded="false" aria-pressed="' + (on > 0) + '"><span class="dot" style="background:#68716a;border-radius:2px"></span>주변 업체 <span class="n">' + (on ? on + '/' : '') + pubs.length + '종</span></button><div class="bizpop" id="bizPop" hidden>' +
+          pubs.map(function (l) { return '<label><input type="checkbox" data-biz="' + l.k + '"' + (S.layers['biz_' + l.k] ? ' checked' : '') + '> ' + esc(BIZN[l.k] || l.name) + '</label>'; }).join('') + '</div></span>';
+      }
       else h += '<button type="button" class="chip wait" title="' + esc('공공데이터 키 연결 후 전국 좌표로 표시: ' + WAIT.map(function (w) { return w[0] + '(' + w[1] + ')'; }).join(', ')) + '"><span class="dot"></span>사료 공장·도축장 외 2종 <span class="n">곧 추가</span></button>';
     } else if (S.mode === 'sea') {
       h += chip('farm', '양식 분포', SEA[4]);
@@ -282,6 +286,11 @@
         if (k === 'farm') { restyle(); drawLabels(); drawLegend(); } else if (k === 'zone') { drawZones(); hint(); } else if (k.indexOf('biz_') === 0) drawBiz(); else drawPins();
       });
     });
+    var bb = $('#bizBtn');
+    if (bb) {
+      bb.addEventListener('click', function () { var p = $('#bizPop'); p.hidden = !p.hidden; bb.setAttribute('aria-expanded', !p.hidden); });
+      $('#bizPop').querySelectorAll('input[data-biz]').forEach(function (c) { c.addEventListener('change', function () { S.layers['biz_' + c.getAttribute('data-biz')] = c.checked; drawBiz(); var n = $('#bizPop').querySelectorAll('input:checked').length; bb.setAttribute('aria-pressed', n > 0); bb.querySelector('.n').textContent = (n ? n + '/' : '') + $('#bizPop').querySelectorAll('input').length + '종'; }); });
+    }
     $('#credit').textContent = mode().credit;
   }
   function chip(k, label, color, ring) {

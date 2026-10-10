@@ -360,6 +360,14 @@ def console_page():
     b += '<h2>자료 규모</h2><dl class="kv">'
     b += f'<dt>가축 축종</dt><dd>{len(LS["species"])}개 · {len(YEARS)}개 연도</dd><dt>양식 면허 구역</dt><dd>{sum(c["n"] for c in AQ["cells"]):,}곳 · {len(AQ["units"])}개 시군</dd><dt>지리적표시</dt><dd>{len([i for i in CR["items"] if not i["off"]])}건 · {len(CR["units"])}개 시군</dd><dt>핀</dt><dd>공판장·가축시장 {len(MK["items"])} · 위판장 {len(PL["wharfs"])} · 도매시장 {len(PL["markets"])}</dd>'
     b += f'<dt>글 화면</dt><dd>{cnt.get("pages", "–")}</dd><dt>양식 접수</dt><dd>{E(str(cnt.get("forms", "넷리파이 양식 화면에서 확인")))}</dd></dl>'
+    ap = J('apis.json', {'items': {}})
+    if ap.get('items'):
+        sm = ap.get('summary', {})
+        b += f'<h2>연동 대장 — 연동창구 {len(ap["items"])}건</h2><p class="mini">' + ' · '.join(f'{E(k)} {v}' for k, v in sm.items()) + f' · {E(ap.get("at", ""))}</p>'
+        order = {'정상': 0, '실패': 1, '빈 응답': 2, '전용 수집기': 3, '열쇠 대기': 4, '명세 없음': 5}
+        rows = sorted(ap['items'].items(), key=lambda kv: (order.get(kv[1].get('state'), 9), kv[1].get('dom', ''), kv[1].get('cat', '')))
+        b += '<table class="t"><tr><th>연동창구</th><th>갈래</th><th>상태</th><th class="num">건수</th><th>메모</th></tr>' + ''.join(
+            f'<tr><td>{E(v.get("title", ""))} <span class="mini">{E(k)}</span></td><td>{E(v.get("dom", ""))} · {E(v.get("cat", ""))}</td><td class="{"ok" if v.get("state") == "정상" else "bad" if v.get("state") == "실패" else "wait"}">{E(v.get("state", ""))}</td><td class="num">{v.get("n", "") if v.get("n") is not None else ""}</td><td class="mini">{E(v.get("msg", "") or v.get("at", ""))}</td></tr>' for k, v in rows) + '</table>'
     b += '<h2>양식(접수함)</h2><p>모집 열기·참여 신청·업체 등록·가격 알림은 넷리파이 양식으로 받습니다. 접수 내용은 넷리파이 콘솔의 「양식」에서 보고, 모집판 반영은 data/gongu.json 을 고쳐 다시 올리면 됩니다.</p>'
     write('/console/', shell('/console/', '콘솔 | 박씨팜', '박씨팜 수집기·열쇠·양식 상태', b, noindex=True))
 

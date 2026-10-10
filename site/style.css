@@ -288,3 +288,8 @@ body[data-mode="sea"] .top .bar2 span{background:#356f91}
   .sp{min-height:58px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.bizwrap{position:relative;pointer-events:auto}
+.bizpop{position:absolute;top:42px;left:0;z-index:600;background:var(--paper);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px rgba(30,38,33,.14);padding:8px 10px;display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:2px 12px;min-width:280px}
+.bizpop label{display:flex;align-items:center;gap:6px;font-size:14px;padding:6px 2px;cursor:pointer;white-space:nowrap}
+@media (max-width:760px){.bizpop{position:fixed;left:12px;right:12px;top:150px;min-width:0}}

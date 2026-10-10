@@ -14,6 +14,15 @@ SERVICES = [
     ('종축업', 'breeding_stock_businesses_v2', True, 'breeding'),
     ('동물병원', 'animal_hospitals', True, 'vet'),
     ('동물약국', 'animal_pharmacies', True, 'pharmacy'),
+    ('가축인공수정소', 'artificial_insemination_centers', True, 'ai_center'),
+    ('동물용의약품도매상', 'veterinary_drug_wholesalers', True, 'vet_drug'),
+    ('동물용의료용구판매업', 'veterinary_medical_equipment_sales', True, 'vet_equip'),
+    ('집유업', 'milk_collection', True, 'milk'),
+    ('축산가공업', 'livestock_processing', True, 'processing'),
+    ('식육포장처리업', 'meat_packers', True, 'packer'),
+    ('축산판매업', 'livestock_retail', False, 'retail'),
+    ('가축분뇨수집운반업', 'manure_collection_transport', True, 'manure_trans'),
+    ('가축분뇨배출시설관리업', 'manure_facility_management', True, 'manure_fac'),
 ]
 if not KEY:
     status('license', None, '열쇠 없음(DATA_GO_KR_KEY)'); print('열쇠 없음'); sys.exit(0)
