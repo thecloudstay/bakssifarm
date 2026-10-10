@@ -7,9 +7,28 @@ old = {}
 p_out = os.path.join(ROOT, 'api_specs.json')
 if os.path.exists(p_out):
     old = {x['id']: x for x in json.load(open(p_out, encoding='utf-8'))}
-def get(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (bakssifarm spec reader)', 'Accept-Language': 'ko'})
+def get(url, data=None):
+    body = urllib.parse.urlencode(data).encode() if data else None
+    req = urllib.request.Request(url, data=body, headers={'User-Agent': 'Mozilla/5.0 (bakssifarm spec reader)', 'Accept-Language': 'ko', 'X-Requested-With': 'XMLHttpRequest', 'Referer': 'https://www.data.go.kr/'})
     with urllib.request.urlopen(req, timeout=40) as r: return r.read().decode('utf-8', 'replace')
+import urllib.parse, html as H
+def cells(tr): return [re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', c))).strip() for c in re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', tr, re.S)]
+def parse_detail(h):
+    # 상세기능 조각: 요청주소·요청변수·출력결과 표
+    url = None
+    m = re.search(r'(https?://[A-Za-z0-9.\-]+(?::\d+)?/[A-Za-z0-9_/\-.]+)', H.unescape(h))
+    if m: url = m.group(1)
+    tables = re.findall(r'<table.*?</table>', h, re.S)
+    params, props = [], {}
+    for i, t in enumerate(tables):
+        rows = [cells(tr) for tr in re.findall(r'<tr.*?</tr>', t, re.S)]
+        head = ' '.join(rows[0]) if rows else ''
+        for r in rows[1:]:
+            if not r or not re.match(r'^[A-Za-z_][A-Za-z0-9_]*$', r[0]): continue
+            if '요청' in head or (not props and ('필수' in ' '.join(r) or len(r) >= 5) and i == 0):
+                params.append({'name': r[0], 'req': any(x in ('1', '필수', 'Y') for x in r[2:5]), 'desc': (r[1] if len(r) > 1 else '')[:40]})
+            else: props[r[0]] = (r[1] if len(r) > 1 else '')[:40]
+    return url, params, props
 def parse_swagger(html):
     m = re.search(r'const\s+swaggerJson\s*=\s*`(.*?)`\s*;', html, re.S)
     if not m: return None
@@ -51,6 +70,26 @@ for i, c in enumerate(cands):
         if sw and sw['ops']: rec['spec'] = sw; ok += 1
         else:
             rec['plain'] = parse_plain(html)
+            dpk = re.search(r'id="publicDataDetailPk"[^>]*value="([^"]+)"|name="publicDataDetailPk"[^>]*value="([^"]+)"|publicDataDetailPk" value="([^"]+)"', html)
+            dpk = next((g for g in (dpk.groups() if dpk else []) if g), None)
+            opts = re.findall(r'<option value="(\d+)"[^>]*>\s*([^<]*)', html.split('open_api_detail_select', 1)[-1][:20000]) if 'open_api_detail_select' in html else []
+            ops = []; host = ''
+            for sq, nm in opts[:6]:
+                try:
+                    dh = get('https://www.data.go.kr/tcs/dss/selectApiDetailFunction.do', {'oprtinSeqNo': sq, 'publicDataDetailPk': dpk})
+                    url, params, props = parse_detail(dh)
+                    if url:
+                        u = urllib.parse.urlparse(url); host = host or u.netloc
+                        ops.append({'path': u.path if u.netloc == host else url, 'sum': nm.strip()[:60], 'params': params, 'props': props, 'full': url})
+                except Exception as e: rec.setdefault('detail_err', str(e)[:80])
+                time.sleep(0.4)
+            if ops:
+                rec['spec'] = {'host': host, 'scheme': 'https', 'ops': ops, 'from': 'detail'}; ok += 1
+            elif not opts:
+                try:
+                    lk = json.loads(get('https://www.data.go.kr/tcs/dss/selectApiLinkUrl.do?' + urllib.parse.urlencode({'publicDataPk': c['id']})))
+                    if lk.get('linkUrl'): rec['external'] = lk['linkUrl']
+                except Exception: pass
             if os.environ.get('SPEC_DEBUG') and c['id'] in os.environ['SPEC_DEBUG'].split(','):
                 os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', c['id'] + '.html'), 'w', encoding='utf-8').write(html)
         rec['fetched'] = time.strftime('%Y-%m-%d')
