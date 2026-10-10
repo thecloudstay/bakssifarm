@@ -14,6 +14,7 @@
    "names": []
   },
   "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=004",
+  "link_pk": "3033749",
   "fetched": "2026-10-10"
  },
  {
@@ -30,6 +31,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=001",
+  "link_pk": "3033757",
   "fetched": "2026-10-10"
  },
  {
@@ -46,6 +49,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000016&service_ty=O",
+  "link_pk": "3034938",
   "fetched": "2026-10-10"
  },
  {
@@ -63,6 +68,7 @@
    "names": []
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000330",
+  "link_pk": "3037263",
   "fetched": "2026-10-10"
  },
  {
@@ -80,6 +86,7 @@
    "names": []
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151204000000000563&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=",
+  "link_pk": "3055523",
   "fetched": "2026-10-10"
  },
  {
@@ -131,6 +138,202 @@
     "wasQty",
     "yyyymm"
    ]
+  },
+  "spec": {
+   "host": "openapi.pqis.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi/service/plntQrantStats/importStats",
+     "sum": "수입식물검역통계",
+     "params": [
+      {
+       "name": "fromYYYYMM",
+       "req": false,
+       "desc": "조회기간년월",
+       "sample": "201409"
+      },
+      {
+       "name": "toYYYYMM",
+       "req": false,
+       "desc": "조회기간년월",
+       "sample": "201410"
+      },
+      {
+       "name": "nationCode",
+       "req": false,
+       "desc": "국가코드",
+       "sample": "402"
+      },
+      {
+       "name": "plantCode",
+       "req": false,
+       "desc": "식물코드",
+       "sample": "11110162"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "yyyymm": "년월",
+      "plantNm": "식물명",
+      "insCnt": "수입건수",
+      "insQty": "수입수량",
+      "qunNm": "단위명",
+      "natNm": "국가명",
+      "matNm": "수송구분명",
+      "hsCd": "HS 코드",
+      "antCnt": "소독건수",
+      "antQty": "소독수량",
+      "wasCnt": "폐기건수",
+      "wasQty": "폐기수량"
+     },
+     "full": "http://openapi.pqis.go.kr/openapi/service/plntQrantStats/importStats"
+    },
+    {
+     "path": "/openapi/service/plntQrantStats/exportStats",
+     "sum": "수출식물검역통계",
+     "params": [
+      {
+       "name": "fromYYYYMM",
+       "req": false,
+       "desc": "조회기간년월",
+       "sample": "201409"
+      },
+      {
+       "name": "toYYYYMM",
+       "req": false,
+       "desc": "조회기간년월",
+       "sample": "201410"
+      },
+      {
+       "name": "nationCode",
+       "req": false,
+       "desc": "국가코드",
+       "sample": "402"
+      },
+      {
+       "name": "plantCode",
+       "req": false,
+       "desc": "식물코드",
+       "sample": "11110162"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "yyyymm": "년월",
+      "plantNm": "식물명",
+      "insCnt": "수출건수",
+      "insQty": "수출수량",
+      "qunNm": "단위명",
+      "natNm": "국가명"
+     },
+     "full": "http://openapi.pqis.go.kr/openapi/service/plntQrantStats/exportStats"
+    },
+    {
+     "path": "/openapi/service/plntQrantStats/plantCode",
+     "sum": "식물코드",
+     "params": [
+      {
+       "name": "plantName",
+       "req": false,
+       "desc": "식물명",
+       "sample": "히카마종자"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "plantCode": "식물코드",
+      "plantKorName": "한글 식물명",
+      "plantEngName": "영문 식물명"
+     },
+     "full": "http://openapi.pqis.go.kr/openapi/service/plntQrantStats/plantCode"
+    },
+    {
+     "path": "/openapi/service/plntQrantStats/nationCode",
+     "sum": "국가코드",
+     "params": [
+      {
+       "name": "nationName",
+       "req": false,
+       "desc": "국가명",
+       "sample": "미국"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "nationCode": "국가코드",
+      "isoNationCode": "ISO 국가코드",
+      "nationKorName": "한글 국가명",
+      "nationEngName": "영문 국가명"
+     },
+     "full": "http://openapi.pqis.go.kr/openapi/service/plntQrantStats/nationCode"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -492,6 +695,7 @@
    "names": []
   },
   "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=009",
+  "link_pk": "15001668",
   "fetched": "2026-10-10"
  },
  {
@@ -509,6 +713,7 @@
    "names": []
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20150827000000000463&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15008409",
   "fetched": "2026-10-10"
  },
  {
@@ -525,6 +730,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=007",
+  "link_pk": "15009422",
   "fetched": "2026-10-10"
  },
  {
@@ -683,6 +890,61 @@
     "totalCount"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B553748/StoreCompanyListService/getStoreCompanyList",
+     "sum": "축산물 유통 HACCP 업체 조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "TEST_Key"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "retunType",
+       "req": false,
+       "desc": "리턴타입",
+       "sample": "json"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "rnum": "레코드번호",
+      "appointno": "인증번호",
+      "licenseno": "인증서번호",
+      "company": "회사명",
+      "businessnm": "업종",
+      "species": "품목",
+      "ceoname": "대표자명",
+      "sido": "시도",
+      "sgg": "시군구",
+      "issueenddate": "인증종료일"
+     },
+     "full": "https://apis.data.go.kr/B553748/StoreCompanyListService/getStoreCompanyList"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -699,6 +961,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000538",
+  "link_pk": "15109236",
   "fetched": "2026-10-10"
  },
  {
@@ -715,6 +979,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
+  "link_pk": "15109218",
   "fetched": "2026-10-10"
  },
  {
@@ -731,6 +997,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://marineweather.nmpnt.go.kr/serviceReq/serviceOpenApiIntro.do",
+  "link_pk": "15033708",
   "fetched": "2026-10-10"
  },
  {
@@ -747,6 +1015,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.khoa.go.kr/oceandata/openapi/openApiDetail.do?id=8&searchCondition=&searchKeyword=&pageNumber=5",
+  "link_pk": "15038992",
   "fetched": "2026-10-10"
  },
  {
@@ -824,6 +1094,94 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0180List/getselect0180List",
+     "sum": "연도별 총괄 어업생산통계 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "2021"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "resYear": "년도",
+      "totQty1": "총합계 생산량",
+      "liveQty1": "활어 합계 생산량",
+      "freshQty1": "선어 합계 생산량",
+      "freezeQty1": "냉동/냉장 합계 생산량",
+      "totAmt1": "총합계 생산금액",
+      "liveAmt1": "활어 합계 생산금액",
+      "freshAmt1": "선어 합계 생산금액",
+      "freezeAmt1": "냉동/냉장 합계 생산금액",
+      "totQty2": "총 일반해면 생산량",
+      "liveQty2": "활어 일반해면 생산량",
+      "freshQty2": "선어 일반해면 생산량",
+      "freezeQty2": "냉동/냉장 일반해면 생산량",
+      "totAmt2": "총 일반해면 생산금액",
+      "liveAmt2": "활어 일반해면 생산금액",
+      "freshAmt2": "선어 일반해면 생산금액",
+      "freezeAmt2": "냉동/냉장 일반해면 생산금액",
+      "totQty3": "총 천해양식 생산량",
+      "liveQty3": "활어 천해양식 생산량",
+      "freshQty3": "선어 천해양식 생산량",
+      "freezeQty3": "냉동/냉장 천해양식 생산량",
+      "totAmt3": "총 천해양식 생산금액",
+      "liveAmt3": "활어 천해양식 생산금액",
+      "freshAmt3": "선어 천해양식 생산금액",
+      "freezeAmt3": "냉동/냉장 천해양식 생산금액",
+      "totQty4": "총 내수면 생산량",
+      "liveQty4": "활어 내수면 생산량",
+      "freshQty4": "선어 내수면 생산량",
+      "freezeQty4": "냉동/냉장 내수면 생산량",
+      "totAmt4": "총 내수면 생산금액",
+      "liveAmt4": "활어 내수면 생산금액",
+      "freshAmt4": "선어 내수면 생산금액",
+      "freezeAmt4": "냉동/냉장 내수면 생산금액",
+      "totQty5": "총 원양어업 생산량",
+      "freezeQty5": "냉동/냉장 원양어업 생산금액",
+      "totAmt5": "총 원양어업 생산금액",
+      "freezeAmt5": "냉동/냉장 원양어업 생산금액"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0180List/getselect0180List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -840,6 +1198,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141120000000000358&service_ty=O",
+  "link_pk": "15050553",
   "fetched": "2026-10-10"
  },
  {
@@ -856,6 +1216,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000014&service_ty=O",
+  "link_pk": "15050565",
   "fetched": "2026-10-10"
  },
  {
@@ -872,6 +1234,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000020&service_ty=O",
+  "link_pk": "15052495",
   "fetched": "2026-10-10"
  },
  {
@@ -921,6 +1285,73 @@
     "zip"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0020List/getselect0020List",
+     "sum": "수협 산지조합 위판장 정보 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "csmtmktCode",
+       "req": false,
+       "desc": "위판장코드",
+       "sample": "344001"
+      },
+      {
+       "name": "csmtmktNm",
+       "req": false,
+       "desc": "위판장명",
+       "sample": "본점"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "csmtmktCode": "위판장코드",
+      "csmtmktNm": "위판장명",
+      "administzoneCode": "행정구역코드",
+      "zip": "우편번호",
+      "addr": "사업장주소",
+      "telNo": "전화번호",
+      "fxNum": "팩스번호",
+      "hmpgAdres": "홈페이지주소"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0020List/getselect0020List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -937,6 +1368,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.khoa.go.kr/oceanmap/main.do",
+  "link_pk": "15056545",
   "fetched": "2026-10-10"
  },
  {
@@ -1012,8 +1445,97 @@
     {
      "path": "/1480523/AqfmService/getAqfmInfo",
      "sum": "양식계 정보조회",
-     "params": [],
-     "props": {},
+     "params": [
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "resultType",
+       "req": false,
+       "desc": "결과형식",
+       "sample": "xml"
+      },
+      {
+       "name": "startYear",
+       "req": false,
+       "desc": "검색시작년도",
+       "sample": "2012"
+      },
+      {
+       "name": "endYear",
+       "req": false,
+       "desc": "검색종료년도",
+       "sample": "2014"
+      },
+      {
+       "name": "adivi_cd",
+       "req": false,
+       "desc": "행정구역코드",
+       "sample": "3017012200"
+      },
+      {
+       "name": "city_nm",
+       "req": false,
+       "desc": "시도 명",
+       "sample": "대전광역시"
+      },
+      {
+       "name": "citicoungu_nm",
+       "req": false,
+       "desc": "시군구 명",
+       "sample": "서구"
+      },
+      {
+       "name": "adivi_doung_nm",
+       "req": false,
+       "desc": "읍면동 명",
+       "sample": "오동"
+      },
+      {
+       "name": "adivi_ni_nm",
+       "req": false,
+       "desc": "리 명",
+       "sample": "옵션"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "num": "순번",
+      "year": "년도",
+      "cityNm": "시도",
+      "citicounguNm": "시군구",
+      "adiviDoungNm": "읍면동",
+      "adiviNiNm": "리",
+      "adiviCd": "행정구역코드",
+      "totalBizCnt": "총계업소수",
+      "totalFacilArea": "총계시설면적(m2)",
+      "totalFeedUseCnt": "총계사료사용량(kg/월)",
+      "cageBizCnt": "가두리업소수",
+      "cageFacilArea": "가두리시설면적(m2)",
+      "cageFeedUseCnt": "가두리사료사용량(kg/월)",
+      "rwtBizCnt": "유수식업소수",
+      "rwtFacilArea": "유수식시설면적(m2)",
+      "rwtFeedUseCnt": "유수식사료사용량(kg/월)",
+      "dffBizCnt": "도전양식업소수",
+      "dffFacilArea": "도전양식시설면적(m2)",
+      "dffFeedUseCnt": "도전양식사료사용량(kg/월)",
+      "ewtBizCnt": "지수식업소수",
+      "ewtFacilArea": "지수식시설면적(m2)",
+      "ewtFeedUseCnt": "지수식사료사용량(kg/월)",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수"
+     },
      "full": "https://apis.data.go.kr/1480523/AqfmService/getAqfmInfo"
     }
    ],
@@ -1071,6 +1593,81 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0070List/getselect0070List",
+     "sum": "수산물 품목별 수출입 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준년월",
+       "sample": "202201"
+      },
+      {
+       "name": "imxprtSeNm",
+       "req": false,
+       "desc": "수출입구분명",
+       "sample": "수입"
+      },
+      {
+       "name": "mprcExipitmNm",
+       "req": false,
+       "desc": "수출입품목명",
+       "sample": "실뱀장어"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "stdYymm": "기준년월",
+      "mprcExipitmCode": "수산물수출입품목코드",
+      "imxprtSeCode": "수출입구분코드",
+      "mprcExipitmNm": "수산물수출입품목명",
+      "imxprtSeNm": "수출입구분명",
+      "mprcExipitmLclasCode": "수산물수출입품목대분류코드",
+      "mprcExipitmMlsfcCode": "수산물수출입품목중분류코드",
+      "mprcExipitmSclasCode": "수산물수출입품목소분류코드",
+      "mprcExipitmDtlclfcCode": "수산물수출입품목세분류코드",
+      "mprcExipitmSn": "수산물수출입품목순번",
+      "imxprtWt": "수출입중량",
+      "imxprtDollarAmount": "수출입미화금액"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0070List/getselect0070List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1087,6 +1684,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000662&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15056599",
   "fetched": "2026-10-10"
  },
  {
@@ -1103,6 +1702,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=um000",
+  "link_pk": "15056608",
   "fetched": "2026-10-10"
  },
  {
@@ -1119,6 +1720,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.khoa.go.kr/oceanmap/main.do",
+  "link_pk": "15056666",
   "fetched": "2026-10-10"
  },
  {
@@ -1135,6 +1738,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.khoa.go.kr/oceanmap/main.do",
+  "link_pk": "15056719",
   "fetched": "2026-10-10"
  },
  {
@@ -1151,6 +1756,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000494&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15056723",
   "fetched": "2026-10-10"
  },
  {
@@ -1196,6 +1803,63 @@
     "type",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0220List/getselect0220List",
+     "sum": "양식어종수별 어가현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준년도",
+       "sample": "2021"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "name": "시도명",
+      "no1": "1개 어종",
+      "no2": "2개 어종",
+      "no3": "3개 어종",
+      "no4": "4개 어종",
+      "noSum": "합계"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0220List/getselect0220List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -1247,6 +1911,73 @@
     "zipCd"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/mtrace/dna/sampleGatherCompany",
+     "sum": "축산물DNA동일성검사 업소정보 조회",
+     "params": [
+      {
+       "name": "startYmd",
+       "req": true,
+       "desc": "시료채취시작일",
+       "sample": "20160101"
+      },
+      {
+       "name": "endYmd",
+       "req": true,
+       "desc": "시료채취종료일",
+       "sample": "20160111"
+      },
+      {
+       "name": "sampleTypeCd",
+       "req": false,
+       "desc": "시료구분코드",
+       "sample": "200"
+      },
+      {
+       "name": "localNm",
+       "req": false,
+       "desc": "시료채취 지역명",
+       "sample": "전라남도"
+      },
+      {
+       "name": "orgCd",
+       "req": false,
+       "desc": "기관코드",
+       "sample": "4820000"
+      },
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "sampleTypeCd": "시료구분코드",
+      "sampleTypeNm": "시료구분명",
+      "orgCd": "시료채취기관코드",
+      "orgNm": "시료채취기관명",
+      "gatherYmd": "시료채취연월일",
+      "gatherNm": "시료채취자",
+      "livestockCd": "축종코드",
+      "livestockNm": "축종명",
+      "corpNm": "사업장명",
+      "ceoNm": "채취업소대표자",
+      "telNo": "채취업소연락처",
+      "zipCd": "채취업소우편번호",
+      "addr": "채취업소주소",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/mtrace/dna/sampleGatherCompany"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1263,6 +1994,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000666&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15056813",
   "fetched": "2026-10-10"
  },
  {
@@ -1327,6 +2060,105 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0040List/getselect0040List",
+     "sum": "위판장별 위탁판매 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "20210101"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "옹진수산업협동조합"
+      },
+      {
+       "name": "csmtmktNm",
+       "req": false,
+       "desc": "위판장명",
+       "sample": "연안위판장(옹진)"
+      },
+      {
+       "name": "mprcStdCode",
+       "req": false,
+       "desc": "수산물 표준코드",
+       "sample": "620401"
+      },
+      {
+       "name": "mprcStdCodeNm",
+       "req": false,
+       "desc": "수산물 표준코드명",
+       "sample": "굴(참굴)"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "csmtDe": "위판일자",
+      "mxtrCode": "산지조합코드",
+      "mxtrNm": "산지조합명",
+      "csmtmktCode": "위판장코드",
+      "csmtmktNm": "위판장명",
+      "fshrCode": "어업코드",
+      "fshrNm": "어업명",
+      "prchasNo": "매수번호",
+      "prchasSn": "매수일련번호",
+      "mprcStdCode": "수산물표준코드",
+      "mprcStdCodeNm": "수산물표준코드명",
+      "kdfshSttusCode": "어종상태코드",
+      "kdfshSttusNm": "어종상태명",
+      "goodsStndrdCode": "상품규격코드",
+      "goodsStndrdNm": "상품규격명",
+      "goodsUnitCode": "삼품단위코드",
+      "goodsUnitNm": "상품단위명",
+      "orgplceSeCode": "원산지구분코드",
+      "orgplceSeNm": "원산지명",
+      "csmtQy": "위판수량",
+      "csmtWt": "위판중량",
+      "csmtUnqt": "위판단량",
+      "csmtUntpc": "위판단가",
+      "csmtAmount": "위판금액"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0040List/getselect0040List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1374,6 +2206,65 @@
     "type",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0210List/getselect0210List",
+     "sum": "양식방법별 어가현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준년도",
+       "sample": "2021"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "name": "시도명",
+      "no1": "해상가두리",
+      "no2": "육상수조식",
+      "no3": "축제식",
+      "no4": "해상+육상",
+      "no5": "해상+축제",
+      "no6": "육상+축제",
+      "noSum": "합계"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0210List/getselect0210List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -1430,6 +2321,85 @@
     "vaccineLastinjectionYmd"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/mtrace/breeding/cattle",
+     "sum": "소 및 쇠고기 개체정보",
+     "params": [
+      {
+       "name": "cattleNo",
+       "req": false,
+       "desc": "이력번호",
+       "sample": "410002046636437"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "abattCode": "도축장코드",
+      "butcheryPlaceNm": "도축장명",
+      "butcheryWeight": "도체중",
+      "processPlaceNm": "가공장",
+      "cattleNo": "개체식별번호",
+      "birthYmd": "출생연월일",
+      "lsTypeCd": "소의종류코드",
+      "lsTypeNm": "소의종류",
+      "sexCd": "성별코드",
+      "sexNm": "성별",
+      "vaccineLastinjectionYmd": "백신최종접종일",
+      "vaccineLastinjectionOrder": "백신최종접종차수",
+      "butcheryPlaceAddr": "도축장 주소",
+      "butcheryYmd": "도축연월일",
+      "inspectPassNm": "도축검사",
+      "qgradeNm": "육질등급명",
+      "farmNo": "농장번호",
+      "farmNm": "농장명",
+      "farmAddr": "농장주소",
+      "insfat": "근내지방도",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "flatEartagNo": "재귀표번호"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/mtrace/breeding/cattle"
+    },
+    {
+     "path": "/openapi-data/service/user/mtrace/breeding/cattleMove",
+     "sum": "소 이동정보",
+     "params": [
+      {
+       "name": "cattleNo",
+       "req": false,
+       "desc": "개체식별번호",
+       "sample": "410002046636437"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "cattleNo": "개체식별번호",
+      "farmerNm": "소유자",
+      "movePlace": "신고구분",
+      "moveYmd": "년월일",
+      "farmAddr": "사육지",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/mtrace/breeding/cattleMove"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1446,6 +2416,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000770",
+  "link_pk": "15056992",
   "fetched": "2026-10-10"
  },
  {
@@ -1490,6 +2462,119 @@
     "serviceKey"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/grade/confirm/issueNo",
+     "sum": "소,돼지 등급판정확인서 발급번호정보",
+     "params": [
+      {
+       "name": "animalNo",
+       "req": false,
+       "desc": "소돼지이력번호",
+       "sample": "160053500174"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "animalNo": "이력번호",
+      "judgeKindCd": "축종코드",
+      "judgeKindNm": "가축명",
+      "abattCode": "작업장코드",
+      "abattNm": "작업장명",
+      "abattDate": "도축일자",
+      "judgeDate": "판정일자",
+      "issueDate": "확인서발급일자",
+      "issueNo": "확인서발급번호",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "judgeSexNm": "성별"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/confirm/issueNo"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/confirm/cattleLotIssueNo",
+     "sum": "소 묶음번호 정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "lotNo",
+       "req": false,
+       "desc": "소묶음번호",
+       "sample": "L02005225971001"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "lotNo": "묶음번호",
+      "animalNo": "이력번호",
+      "judgeKindNm": "가축명",
+      "abattCode": "작업장코드",
+      "abattNm": "작업장명",
+      "abattDate": "도축일자",
+      "abattNo": "도축번호",
+      "gradeNm": "등급",
+      "judgeDate": "판정일자",
+      "issueDate": "확인서발급일자",
+      "issueNo": "확인서발급번호",
+      "judgeKindCd": "축종코드"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/confirm/cattleLotIssueNo"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/confirm/poultryIssueNo",
+     "sum": "가금산물 등급판정확인서 발급번호정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "animalNo",
+       "req": false,
+       "desc": "이력번호",
+       "sample": "222071100201"
+      },
+      {
+       "name": "issueYear",
+       "req": false,
+       "desc": "확인서발급년도",
+       "sample": "2022"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "animalNo": "이력번호",
+      "judgeKindCd": "축종코드",
+      "judgeKindNm": "가축명",
+      "abattCode": "작업장코드",
+      "abattNm": "작업장명",
+      "abattDate": "도축일자",
+      "judgeDate": "판정일자",
+      "issueDate": "확인서발급일자",
+      "issueNo": "확인서발급번호"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/confirm/poultryIssueNo"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1506,6 +2591,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=010",
+  "link_pk": "15057221",
   "fetched": "2026-10-10"
  },
  {
@@ -1522,6 +2609,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=002",
+  "link_pk": "15057367",
   "fetched": "2026-10-10"
  },
  {
@@ -1570,6 +2659,73 @@
     "xml",
     "zip"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0120List/getselect0120List",
+     "sum": "수협 산지조합 창고 정보 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "경인북부수산업협동조합"
+      },
+      {
+       "name": "wrhousNm",
+       "req": false,
+       "desc": "창고명",
+       "sample": "판매사업과(이용)"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "wrhousCode": "창고코드",
+      "wrhousNm": "창고명",
+      "telNo": "전화번호",
+      "fxNum": "팩스번호",
+      "zip": "우편번호",
+      "wrhousBassAdres": "창고주소1",
+      "wrhousDetailAdres": "창고주소2",
+      "Bldar": "연건평"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0120List/getselect0120List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -1621,6 +2777,85 @@
     "type",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0090List/getselect0090List",
+     "sum": "국가별 수산물 수출입 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준년월",
+       "sample": "202201"
+      },
+      {
+       "name": "nationNm",
+       "req": false,
+       "desc": "국가명",
+       "sample": "일본"
+      },
+      {
+       "name": "imxprtSeNm",
+       "req": false,
+       "desc": "수출입구분명",
+       "sample": "수입"
+      },
+      {
+       "name": "mprcExipitmNm",
+       "req": false,
+       "desc": "수출입품목명",
+       "sample": "클로렐라"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "stdYymm": "기준년월",
+      "nationCode": "국가코드",
+      "mprcExipitmCode": "수산물수출입품목코드",
+      "imxprtSeCode": "수출입구분코드",
+      "nationNm": "국가명",
+      "ecoblNm": "경제권명",
+      "mprcExipitmNm": "수산물수출입품목명",
+      "imxprtSeNm": "수출입구분명",
+      "imxprtWt": "수출입중량",
+      "imxprtDollarAmount": "수출입금액"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0090List/getselect0090List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -1690,6 +2925,123 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0030List/getselect0030List",
+     "sum": "일자별 위탁판매 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "20220101"
+      },
+      {
+       "name": "fromDt",
+       "req": false,
+       "desc": "조회시작일",
+       "sample": "20220101"
+      },
+      {
+       "name": "toDt",
+       "req": false,
+       "desc": "조회종료일",
+       "sample": "20220101"
+      },
+      {
+       "name": "mxtrCode",
+       "req": false,
+       "desc": "조합코드",
+       "sample": "317"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "서천군수산업협동조합"
+      },
+      {
+       "name": "arrCsmtmktCode",
+       "req": false,
+       "desc": "위판장코드 배열",
+       "sample": "317001"
+      },
+      {
+       "name": "mprcStdCodeNm",
+       "req": false,
+       "desc": "수산물 표준코드명",
+       "sample": "문어"
+      },
+      {
+       "name": "arrMprcStdCode",
+       "req": false,
+       "desc": "수산물표준코드배열",
+       "sample": "640407"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "csmtDe": "위판일자",
+      "mxtrCode": "산지조합코드",
+      "mxtrNm": "산지조합명",
+      "csmtmktCode": "위판장코드",
+      "csmtmktNm": "위판장명",
+      "fshrCode": "어업코드",
+      "fshrNm": "어업명",
+      "prchasNo": "매수번호",
+      "prchasSn": "매수일련번호",
+      "mprcStdCode": "수산물표준코드",
+      "mprcStdCodeNm": "수산물표준코드명",
+      "csmtQy": "위판수량",
+      "csmtWt": "위판중량",
+      "csmtUnqt": "위판단량",
+      "csmtUntpc": "위판단가",
+      "csmtAmount": "위판금액",
+      "kdfshSttusCode": "어종상태코드",
+      "kdfshSttusNm": "어종상태명",
+      "goodsStndrdCode": "상품규격코드",
+      "goodsStndrdNm": "상품규격명",
+      "goodsUnitCode": "삼품단위코드",
+      "goodsUnitNm": "삼품단위명",
+      "orgplceSeCode": "원산지구분코드",
+      "orgplceSeNm": "원산지구분명"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0030List/getselect0030List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1706,6 +3058,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000772",
+  "link_pk": "15057698",
   "fetched": "2026-10-10"
  },
  {
@@ -1772,6 +3126,107 @@
     "year"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1480523/StobrService/getStobrInfo",
+     "sum": "축산계 정보조회",
+     "params": [
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "resultType",
+       "req": false,
+       "desc": "결과형식",
+       "sample": "xml"
+      },
+      {
+       "name": "startYear",
+       "req": false,
+       "desc": "검색시작년도",
+       "sample": "2012"
+      },
+      {
+       "name": "endYear",
+       "req": false,
+       "desc": "검색종료년도",
+       "sample": "2014"
+      },
+      {
+       "name": "adivi_cd",
+       "req": false,
+       "desc": "행정구역코드",
+       "sample": "3017011700"
+      },
+      {
+       "name": "city_nm",
+       "req": false,
+       "desc": "시도 명",
+       "sample": "대전광역시"
+      },
+      {
+       "name": "citicoungu_nm",
+       "req": false,
+       "desc": "시군구 명",
+       "sample": "서구"
+      },
+      {
+       "name": "adivi_doung_nm",
+       "req": false,
+       "desc": "읍면동 명",
+       "sample": "흑석동"
+      },
+      {
+       "name": "adivi_ni_nm",
+       "req": false,
+       "desc": "리 명",
+       "sample": "옵션"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "num": "순번",
+      "year": "년도",
+      "cityNm": "시도",
+      "citicounguNm": "시군구",
+      "adiviDoungNm": "읍면동",
+      "adiviNiNm": "리",
+      "adiviCd": "행정구역코드",
+      "lstockKindNm": "축종",
+      "breeCnt": "사육두수",
+      "farmFamyCnt": "농가수",
+      "courtRuleDiv": "법적규제",
+      "personProcWaste": "가축분뇨 처리방법폐수처리방법",
+      "personProcSoomatt": "가축분뇨 처리방법고형물 처리방법",
+      "personPubProcTp": "가축분뇨 처리방법가축분뇨공공처리시설차집유형",
+      "personPubProcNm": "가축분뇨 처리방법가축분뇨공공처리시설처리시설명",
+      "personPubProcCnt": "가축분뇨 처리방법가축분뇨공공처리시설처리량",
+      "personConsgtTreatRuse": "가축분뇨 처리방법위탁처리량재활용",
+      "personConsgtTreatCnt": "가축분뇨 처리방법위탁처리량가축분뇨처리업",
+      "personGenerWaste": "가축분뇨발생량폐수",
+      "personGenerSoomatt": "가축분뇨발생량고형물",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수"
+     },
+     "full": "https://apis.data.go.kr/1480523/StobrService/getStobrInfo"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1788,6 +3243,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nongsaro.go.kr/portal/ps/psn/psnj/openApiLst.ps?menuId=PS65428&pageIndex=1&pageSize=&sLclasCode=&sText=%ED%91%9C%EC%A4%80%EC%82%AC%EB%A3%8C",
+  "link_pk": "15057808",
   "fetched": "2026-10-10"
  },
  {
@@ -1804,6 +3261,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000668&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15057879",
   "fetched": "2026-10-10"
  },
  {
@@ -1820,6 +3279,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000663&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15057886",
   "fetched": "2026-10-10"
  },
  {
@@ -1883,6 +3344,144 @@
     "tot_3Price"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/grade/auct/pigJejuGrade",
+     "sum": "제주 돼지도체 등급별 경락가격 정보 조회",
+     "params": [
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "경매시작일",
+       "sample": "20160120"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "경매종료일",
+       "sample": "20160120"
+      },
+      {
+       "name": "skinYn",
+       "req": true,
+       "desc": "돈피구분",
+       "sample": "Y"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키 (URL- Encode)"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "gradeCode": "등급코드",
+      "gradeName": "등급명",
+      "totPrice": "전체(소계) 가격",
+      "totCnt": "전체(소계) 두수",
+      "tot_1Price": "전체(암) 가격",
+      "tot_1Cnt": "전체(암) 두수",
+      "tot_2Price": "전체(수) 가격",
+      "tot_2Cnt": "전체(수) 두수",
+      "tot_3Price": "전체(거세) 가격",
+      "tot_3Cnt": "전체(거세) 두수",
+      "publicTotPrice": "일반돼지(소계) 가격",
+      "publicTotCnt": "일반돼지(소계) 두수",
+      "public_1Price": "일반돼지(암) 가격",
+      "public_1Cnt": "일반돼지(암) 두수",
+      "public_2Price": "일반돼지(수) 가격",
+      "public_2Cnt": "일반돼지(수) 두수",
+      "public_3Price": "일반돼지(거세) 가격",
+      "public_3Cnt": "일반돼지(거세) 두수",
+      "blackTotPrice": "흑돼지(소계) 가격",
+      "blackTotCnt": "흑돼지(소계) 두수",
+      "black_1Price": "흑돼지(암) 가격",
+      "black_1Cnt": "흑돼지(암) 두수",
+      "black_2Price": "흑돼지(수) 가격",
+      "black_2Cnt": "흑돼지(수) 두수",
+      "black_3Price": "흑돼지(거세)가격",
+      "black_3Cnt": "흑돼지(거세)두수"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/pigJejuGrade"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/auct/beefGrade",
+     "sum": "쇠고기 부분육 경락가격 조회",
+     "params": [
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "경매시작일",
+       "sample": "20160120"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "경매종료일",
+       "sample": "20160120"
+      },
+      {
+       "name": "abattCd",
+       "req": false,
+       "desc": "도매시장코드",
+       "sample": "0302"
+      },
+      {
+       "name": "sexCd",
+       "req": true,
+       "desc": "성별코드",
+       "sample": "1"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키 (URL- Encode)"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "cutmeatName": "부위명",
+      "hanAvg_0": "한우(1++등급)경락가격",
+      "hanAvg_1": "한우(1+등급)경락가격",
+      "hanAvg_2": "한우(1등급)경락가격",
+      "hanAvg_3": "한우(2등급)경락가격",
+      "hanAvg_4": "한우(3등급)경락가격",
+      "hanAvg_5": "한우(등외등급)경락가격",
+      "hanAvgT": "한우(소계)경락가격",
+      "yukAvg_0": "육우(1++등급)경락가격",
+      "yukAvg_1": "육우(1+등급)경락가격",
+      "yukAvg_2": "육우(1등급)경락가격",
+      "yukAvg_3": "육우(2등급)경락가격",
+      "yukAvg_4": "육우(3등급)경락가격",
+      "yukAvg_5": "육우(등외등급)경락가격",
+      "yukAvgT": "육우(소계)경락가격",
+      "han_0Cnt": "한우(1++등급) 박스수",
+      "han_1Cnt": "한우(1+등급) 박스수",
+      "han_2Cnt": "한우(1등급) 박스수",
+      "han_3Cnt": "한우(2등급) 박스수",
+      "han_4Cnt": "한우(3등급) 박스수",
+      "han_5Cnt": "한우(등외등급) 박스수",
+      "hanBoxCnt": "한우(소계) 박스수",
+      "yuk_0Cnt": "육우(1++등급) 박스수",
+      "yuk_1Cnt": "육우(1+등급) 박스수",
+      "yuk_2Cnt": "육우(1등급) 박스수",
+      "yuk_3Cnt": "육우(2등급) 박스수",
+      "yuk_4Cnt": "육우(3등급) 박스수",
+      "yuk_5Cnt": "육우(등외등급) 박스수",
+      "yukBoxCnt": "육우(소계) 박스수"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/beefGrade"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1939,6 +3538,78 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0200List/getselect0200List",
+     "sum": "시도별 수산가공품 생산고 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준년도",
+       "sample": "2021"
+      },
+      {
+       "name": "cityName",
+       "req": false,
+       "desc": "도시명",
+       "sample": "서울특별시"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "name": "시도명",
+      "no1": "냉동품",
+      "no2": "통조림품",
+      "no3": "연제품",
+      "no4": "소건품",
+      "no5": "연건품",
+      "no6": "자건품",
+      "no7": "해조제품",
+      "no8": "한천",
+      "no9": "조미가공품",
+      "no10": "어유분",
+      "no11": "염장품",
+      "no12": "염산품",
+      "no13": "수산피혁품",
+      "no14": "기타"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0200List/getselect0200List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1955,6 +3626,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000671&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15058005",
   "fetched": "2026-10-10"
  },
  {
@@ -2002,6 +3675,89 @@
     "type",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0060List/getselect0060List",
+     "sum": "수협 산지조합 위판장 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "202108"
+      },
+      {
+       "name": "mxtrCode",
+       "req": false,
+       "desc": "조합코드",
+       "sample": "317"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "서천군수산업협동조합"
+      },
+      {
+       "name": "csmtmktCode",
+       "req": false,
+       "desc": "위판장코드",
+       "sample": "317001"
+      },
+      {
+       "name": "csmtmktNm",
+       "req": false,
+       "desc": "위판장명",
+       "sample": "판매사업팀"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "csmtDe": "기준일자",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "csmtmktCode": "위판장코드",
+      "csmtmktNm": "위판장명",
+      "sCnt": "어선수",
+      "hCnt": "위탁인수",
+      "sAmt": "판매금액"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0060List/getselect0060List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -2060,6 +3816,79 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0190List/getselect0190List",
+     "sum": "품종별 수산가공품 생산량 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "2021"
+      },
+      {
+       "name": "cityName",
+       "req": false,
+       "desc": "도시명",
+       "sample": "서울특별시"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "name": "도시명",
+      "noSum": "합계",
+      "no1": "냉동품",
+      "no2": "통조림품",
+      "no3": "연제품",
+      "no4": "소건품",
+      "no5": "연건품",
+      "no6": "자건품",
+      "no7": "해조제품",
+      "no8": "한천",
+      "no9": "조미가공품",
+      "no10": "어유분",
+      "no11": "염장품",
+      "no12": "염신품",
+      "no13": "수산피혁품",
+      "no14": "기타"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0190List/getselect0190List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2076,6 +3905,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=011",
+  "link_pk": "15058183",
   "fetched": "2026-10-10"
  },
  {
@@ -2092,6 +3923,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.khoa.go.kr/oceanmap/main.do",
+  "link_pk": "15058246",
   "fetched": "2026-10-10"
  },
  {
@@ -2108,6 +3941,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=012",
+  "link_pk": "15058281",
   "fetched": "2026-10-10"
  },
  {
@@ -2124,6 +3959,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000500&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15058314",
   "fetched": "2026-10-10"
  },
  {
@@ -2140,6 +3977,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000773",
+  "link_pk": "15058324",
   "fetched": "2026-10-10"
  },
  {
@@ -2156,6 +3995,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000678&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15058568",
   "fetched": "2026-10-10"
  },
  {
@@ -2172,6 +4013,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000496&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15058595",
   "fetched": "2026-10-10"
  },
  {
@@ -2188,6 +4031,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=003",
+  "link_pk": "15058693",
   "fetched": "2026-10-10"
  },
  {
@@ -2204,6 +4049,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.khoa.go.kr/oceanmap/main.do",
+  "link_pk": "15058724",
   "fetched": "2026-10-10"
  },
  {
@@ -2301,6 +4148,528 @@
     "startYmd"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/grade/auct/cattle",
+     "sum": "축산물 도매시장 소도체 등급별 경락가격정보",
+     "params": [
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "경매시작일",
+       "sample": "20100501"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "경매종료일",
+       "sample": "20100530"
+      },
+      {
+       "name": "breedCd",
+       "req": true,
+       "desc": "품종",
+       "sample": "024001"
+      },
+      {
+       "name": "sexCd",
+       "req": true,
+       "desc": "성별",
+       "sample": "025001"
+      },
+      {
+       "name": "qgradeYn",
+       "req": true,
+       "desc": "등급구분",
+       "sample": "N"
+      },
+      {
+       "name": "defectIncludeYn",
+       "req": true,
+       "desc": "가격구분",
+       "sample": "Y"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "gradeType": "등급구분",
+      "startYmd": "시작일",
+      "endYmd": "종료일",
+      "gradeCd": "등급코드",
+      "gradeNm": "등급명",
+      "judgeBreedCd": "품종코드",
+      "judgeSexCd": "성별코드",
+      "judgeSexNm": "성별",
+      "qgradeYn": "육질등급구분",
+      "defectIncludeYn": "가격구분",
+      "c_0101Amt": "가격(농협서울)",
+      "c_0101Cnt": "두수(농협서울)",
+      "c_0320Amt": "가격(도드람)",
+      "c_0320Cnt": "두수(도드람)",
+      "c_0302Amt": "가격(협신식품)",
+      "c_0302Cnt": "두수(협신식품)",
+      "c_1301Amt": "가격(삼성식품)",
+      "c_1301Cnt": "두수(삼성식품)",
+      "c_0323Amt": "가격(농협부천)",
+      "c_0323Cnt": "두수(농협부천)",
+      "CCityAmt": "가격(수도권)",
+      "CCityCnt": "두수(수도권)",
+      "c_0513Amt": "가격(농협음성)",
+      "c_0513Cnt": "두수(농협음성)",
+      "c_1005Amt": "가격(김해축공)",
+      "c_1005Cnt": "두수(김해축공)",
+      "c_0202Amt": "가격(부경축공)",
+      "c_0202Cnt": "두수(부경축공)",
+      "c_0201Amt": "가격(동원산업)",
+      "c_0201Cnt": "두수(동원산업)",
+      "c_1201Amt": "가격(신흥산업)",
+      "c_1201Cnt": "두수(신흥산업)",
+      "c_0905Amt": "가격(농협고령)",
+      "c_0905Cnt": "두수(농협고령)",
+      "CEastAmt": "가격(영남권)",
+      "CEastCnt": "두수(영남권)",
+      "c_0714Amt": "가격(익산)",
+      "c_0714Cnt": "두수(익산)",
+      "c_0809Amt": "가격(농협나주)",
+      "c_0809Cnt": "두수(농협나주)",
+      "c_1401Amt": "가격(삼호축산)",
+      "c_1401Cnt": "두수(삼호축산)",
+      "CWestAmt": "가격(호남권)",
+      "CWestCnt": "두수(호남권)",
+      "c_1101Amt": "가격(제주축협)",
+      "c_1101Cnt": "두수(제주축협)",
+      "CTotAmt": "가격(전체)",
+      "CTotCnt": "두수(전체)",
+      "judgeBreedNm": "품종",
+      "c_0613Amt": "가격(관성)",
+      "c_0613Cnt": "두수(관성)",
+      "c_centerAmt": "가격(중부권)",
+      "c_centerCnt": "두수(중부권)",
+      "c_0616Amt": "가격(농협포크빌)",
+      "c_0616Cnt": "두수(농협포크빌)",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "c_1015Amt": "가격(창녕축공)",
+      "c_1015Cnt": "두수(창녕축공)",
+      "c_0918Amt": "가격(안동봉화)",
+      "c_0918Cnt": "두수(안동봉화)",
+      "c_0717Amt": "가격(중앙축산물도매시장)",
+      "c_0717Cnt": "두수(중앙축산물도매시장)"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/cattle"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/auct/cattleDetail",
+     "sum": "축산물 도매시장 소도체 1++등급 세부경락가격정보",
+     "params": [
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "경매시작일",
+       "sample": "20220204"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "경매종료일",
+       "sample": "20220204"
+      },
+      {
+       "name": "breedCd",
+       "req": true,
+       "desc": "품종",
+       "sample": "024001"
+      },
+      {
+       "name": "sexCd",
+       "req": true,
+       "desc": "성별",
+       "sample": "옵"
+      },
+      {
+       "name": "qgradeYn",
+       "req": true,
+       "desc": "등급구분",
+       "sample": "N"
+      },
+      {
+       "name": "defectIncludeYn",
+       "req": true,
+       "desc": "가격구분",
+       "sample": "옵"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스 인증키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "gradeType": "등급구분",
+      "startYmd": "시작일",
+      "endYmd": "종료일",
+      "gradeCd": "등급코드",
+      "gradeNm": "등급명",
+      "judgeBreedCd": "품종코드",
+      "judgeBreedNm": "품종",
+      "judgeSexCd": "성별코드",
+      "judgeSexNm": "성별",
+      "qgradeYn": "육질등급구분",
+      "defectIncludeYn": "가격구분",
+      "bmsNo": "근내지방도 번호",
+      "c_0101Amt": "가격(농협서울)",
+      "c_0101Cnt": "두수(농협서울)",
+      "c_0320Amt": "가격(도드람)",
+      "c_0320Cnt": "두수(도드람)",
+      "c_0302Amt": "가격(협신식품)",
+      "c_0302Cnt": "두수(협신식품)",
+      "c_1301Amt": "가격(삼성식품)",
+      "c_1301Cnt": "두수(삼성식품)",
+      "c_0323Amt": "가격(농협부천)",
+      "c_0323Cnt": "두수(농협부천)",
+      "CCityAmt": "가격(수도권)",
+      "CCityCnt": "두수(수도권)",
+      "c_0513Amt": "가격(농협음성)",
+      "c_0513Cnt": "두수(농협음성)",
+      "c_0613Amt": "가격(관성)",
+      "c_0613Cnt": "두수(관성)",
+      "c_0616Amt": "가격(농협포크빌)",
+      "c_0616Cnt": "두수(농협포크빌)",
+      "CCenterAmt": "가격(중부권)",
+      "CCenterCnt": "두수(중부권)",
+      "c_1005Amt": "가격(김해축공)",
+      "c_1005Cnt": "두수(김해축공)",
+      "c_0202Amt": "가격(부경축공)",
+      "c_0202Cnt": "두수(부경축공)",
+      "c_0201Amt": "가격(동원산업)",
+      "c_0201Cnt": "두수(동원산업)",
+      "c_1201Amt": "가격(신흥산업)",
+      "c_1201Cnt": "두수(신흥산업)",
+      "c_0905Amt": "가격(농협고령)",
+      "c_0905Cnt": "두수(농협고령)",
+      "CEastAmt": "가격(영남권)",
+      "CEastCnt": "두수(영남권)",
+      "c_0714Amt": "가격(익산)",
+      "c_0714Cnt": "두수(익산)",
+      "c_0809Amt": "가격(농협나주)",
+      "c_0809Cnt": "두수(농협나주)",
+      "c_1401Amt": "가격(삼호축산)",
+      "c_1401Cnt": "두수(삼호축산)",
+      "CWestAmt": "가격(호남권)",
+      "CWestCnt": "두수(호남권)",
+      "c_1101Amt": "가격(제주축협)",
+      "c_1101Cnt": "두수(제주축협)",
+      "CTotAmt": "가격(전체)",
+      "CTotCnt": "두수(전체)",
+      "c_1015Amt": "가격(해드림)",
+      "c_1015Cnt": "두수(해드림)",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "c_0717Amt": "가격(중앙축산물도매시장)",
+      "c_0717Cnt": "두수(중앙축산물도매시장)"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/cattleDetail"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/auct/cattleGrade",
+     "sum": "축산물 소도체 육질육량 등급별 경락가격정보",
+     "params": [
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "경매시작일",
+       "sample": "20100501"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "경매종료일",
+       "sample": "20100530"
+      },
+      {
+       "name": "breedCd",
+       "req": false,
+       "desc": "품종",
+       "sample": "024001"
+      },
+      {
+       "name": "sexCd",
+       "req": false,
+       "desc": "성별",
+       "sample": "025001"
+      },
+      {
+       "name": "qgradeYn",
+       "req": true,
+       "desc": "등급구분",
+       "sample": "Y"
+      },
+      {
+       "name": "defectIncludeYn",
+       "req": true,
+       "desc": "가격구분",
+       "sample": "Y"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "gradeType": "등급구분",
+      "startYmd": "경매시작일",
+      "endYmd": "경매종료일",
+      "gradeCd": "등급코드",
+      "gradeNm": "등급명",
+      "judgeBreedCd": "품종코드",
+      "judgeBreedNm": "품종",
+      "judgeSexCd": "성별코드",
+      "judgeSexNm": "성별",
+      "qgradeYn": "육질등급별가격여부",
+      "defectIncludeYn": "결함제외가격여부",
+      "c_0101Amt": "가격(농협서울)",
+      "c_0101Cnt": "두수(농협서울)",
+      "c_0320Amt": "가격(도드람)",
+      "c_0320Cnt": "두수(도드람)",
+      "c_0302Amt": "가격(협신식품)",
+      "c_0302Cnt": "두수(협신식품)",
+      "c_1301Amt": "가격(삼성식품)",
+      "c_1301Cnt": "두수(삼성식품)",
+      "c_0323Amt": "가격(농협부천)",
+      "c_0323Cnt": "두수(농협부천)",
+      "CCityAmt": "가격(수도권)",
+      "CCityCnt": "두수(수도권)",
+      "c_0513Amt": "가격(농협음성)",
+      "c_0513Cnt": "두수(농협음성)",
+      "c_1005Amt": "가격(김해축공)",
+      "c_1005Cnt": "두수(김해축공)",
+      "c_0202Amt": "가격(부경축공)",
+      "c_0202Cnt": "두수(부경축공)",
+      "c_0201Amt": "가격(동원산업)",
+      "c_0201Cnt": "두수(동원산업)",
+      "c_1201Amt": "가격(신흥산업)",
+      "c_1201Cnt": "두수(신흥산업)",
+      "c_0905Amt": "가격(농협고령)",
+      "c_0905Cnt": "두수(농협고령)",
+      "CEastAmt": "가격(영남권)",
+      "CEastCnt": "두수(영남권)",
+      "c_0714Amt": "가격(익산)",
+      "c_0714Cnt": "두수(익산)",
+      "c_0809Amt": "가격(농협나주)",
+      "c_0809Cnt": "두수(농협나주)",
+      "c_1401Amt": "가격(삼호축산)",
+      "c_1401Cnt": "두수(삼호축산)",
+      "CWestAmt": "가격(호남권)",
+      "CWestCnt": "두수(호남권)",
+      "c_1101Amt": "가격(제주축협)",
+      "c_1101Cnt": "두수(제주축협)",
+      "CTotAmt": "가격(전체)",
+      "CTotCnt": "두수(전체)",
+      "c_0613Amt": "가격(관성)",
+      "c_0613Cnt": "두수(관성)",
+      "c_centerAmt": "가격(중부권)",
+      "c_centerCnt": "두수(중부권)",
+      "c_0616Amt": "가격(농협포크빌)",
+      "c_0616Cnt": "두수(농협포크빌)",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "c_1015Amt": "가격(해드림)",
+      "c_1015Cnt": "두수(해드림)",
+      "c_0717Amt": "가격(중앙축산물도매시장)",
+      "c_0717Cnt": "두수(중앙축산물도매시장)"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/cattleGrade"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/auct/pigRepresentativePrice",
+     "sum": "돈육대표가격 현황",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일자",
+       "sample": "20250910"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일자",
+       "sample": "20250919"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "sumYmd": "집계일",
+      "sableGubn": "돈피구분",
+      "costAmt": "돈피지수"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/pigRepresentativePrice"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/confirm/pig",
+     "sum": "돼지 등급판정결과(확인서) 정보",
+     "params": [
+      {
+       "name": "issueNo",
+       "req": false,
+       "desc": "발급번호",
+       "sample": "0202-09280042"
+      },
+      {
+       "name": "issueDate",
+       "req": false,
+       "desc": "확인서발급일자",
+       "sample": "2017-09-28"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "issueNo": "발급번호",
+      "issueDate": "발급일자",
+      "judgeKindCd": "축종코드",
+      "judgeKindNm": "축종명",
+      "raterCode": "평가사코드",
+      "raterNm": "평가사명",
+      "abattCode": "도축장코드",
+      "mgrAbattNm": "도축장관리지원",
+      "abattAddr": "도축장주소",
+      "abattTelNo": "도축장전화번호",
+      "reqName": "요청자",
+      "reqRegNo": "요청사업자번호",
+      "reqComName": "요청사업장",
+      "reqAddr": "요청자주소",
+      "reqTelno": "요청자전화번호",
+      "judgeDate": "등급판정일자",
+      "abattNo2": "도축번호",
+      "gradeCd": "등급코드",
+      "gradeNm": "등급명",
+      "abattWeight": "도체중량",
+      "totalWeight": "총중량",
+      "totalIssueCnt": "확인서갯수",
+      "judgeSexNm": "성별",
+      "backFat": "등지방두께",
+      "pigNo": "돼지이력번호",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "costAmt": "경락가격",
+      "skinNm": "박피구분"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/confirm/pig"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/auct/cattleDetailPriceDetail",
+     "sum": "소도체 1++ 등급 세부경락가격 상세정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "abattCode",
+       "req": false,
+       "desc": "도매시장코드",
+       "sample": "0513"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "경매시작일",
+       "sample": "20230824"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "경매종료일",
+       "sample": "20230824"
+      },
+      {
+       "name": "breedCd",
+       "req": false,
+       "desc": "판정품종",
+       "sample": "024001"
+      },
+      {
+       "name": "sexCd",
+       "req": false,
+       "desc": "성별",
+       "sample": "025001"
+      },
+      {
+       "name": "defectIncludeYn",
+       "req": true,
+       "desc": "가격구분",
+       "sample": "N"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "gradeType": "등급구분",
+      "startYmd": "경매시작일",
+      "endYmd": "경매종료일",
+      "abattCode": "도매시장코드",
+      "abattNm": "도매시장명",
+      "gradeCd": "등급코드",
+      "gradeNm": "등급명",
+      "bmsnNo": "근내지방도",
+      "judgeBreedCd": "품종코드",
+      "judgeBreedNm": "품종",
+      "judgeSexCd": "성별코드",
+      "judgeSexNm": "성별",
+      "auctCnt": "경락두수",
+      "weight": "평균도체중",
+      "auctAmt": "평균가격",
+      "sumWeight": "거래중량",
+      "sumAuctAmt": "거래대금",
+      "minAuctAmt": "최저단가",
+      "maxAuctAmt": "최고단가",
+      "defectIncludeYn": "가격구분"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/auct/cattleDetailPriceDetail"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2317,6 +4686,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://www.khoa.go.kr/oceanmap/main.do",
+  "link_pk": "15058871",
   "fetched": "2026-10-10"
  },
  {
@@ -2333,6 +4704,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000669&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15058886",
   "fetched": "2026-10-10"
  },
  {
@@ -2430,8 +4803,88 @@
     {
      "path": "/openapi-data/service/user/animalTrace/traceNoSearch",
      "sum": "축산물이력정보조회",
-     "params": [],
-     "props": {},
+     "params": [
+      {
+       "name": "traceNo",
+       "req": false,
+       "desc": "이력(묶음)번호",
+       "sample": "L01709271277007"
+      },
+      {
+       "name": "optionNo",
+       "req": false,
+       "desc": "옵션번호",
+       "sample": "9"
+      },
+      {
+       "name": "corpNo",
+       "req": false,
+       "desc": "사업자 번호",
+       "sample": "1178522046"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "butcheryPlaceAddr": "도축장 주소",
+      "butcheryPlaceNm": "도축장명",
+      "butcheryYmd": "도축일자",
+      "cattleNo": "소 개체번호",
+      "corpNo": "사업자번호",
+      "farmAddr": "농장주소",
+      "gradeNm": "등급명",
+      "infoType": "조회정보",
+      "lotNo": "묶음번호",
+      "lsTypeNm": "소의 종류",
+      "traceNoType": "소/돼지/묶음 구분",
+      "inspectYn": "브루셀라 접종 유무",
+      "flatEartagNo": "재귀표번호",
+      "pigNo": "돼지 이력번호",
+      "processPlaceAddr": "포장처리업소 주소",
+      "processPlaceNm": "포장처리업소명",
+      "regYmd": "신고년월일",
+      "sexNm": "성별",
+      "vaccineorder": "구제역 백신접종 차수",
+      "regType": "신고구분",
+      "inspectPassYn": "위생검사 결과",
+      "injectionYmd": "구제역 백신접종일",
+      "farmUniqueNo": "농장식별번호",
+      "inspectDt": "브루셀라 접종일",
+      "injectiondayCnt": "구제역 백신접종경과일",
+      "monthDiff": "수입경과월",
+      "birthYmd": "출생일자",
+      "processYmd": "포장처리일자",
+      "farmerNm": "소유주",
+      "nationNm": "수입국가",
+      "inspectDesc": "질병유무",
+      "insfat": "근내지방도",
+      "farmNo": "농장번호",
+      "histNo": "이력번호",
+      "farmIdno": "농장식별번호",
+      "mngrNm": "농장경영자명",
+      "brdngEnvrnNm": "사육환경",
+      "lvindRgrfc": "축산업 등록번호",
+      "abattNm": "작업장명",
+      "add0R": "도축장 소재지",
+      "rceptDt": "도축일자",
+      "psexmYn": "도축검사결과",
+      "entrpNm": "업체 명",
+      "frmrNm": "농장 경영자 명",
+      "reqerEntrpNm": "신청인 업체 명",
+      "reqerEntrpAddr": "신청인 업체 주소",
+      "issueDt": "발급 일자",
+      "edygOvpstDt": "식용란 산란 일자",
+      "successYn": "선별검사결과",
+      "entrpAddr": "거래처 소재지",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "lsdYmd": "럼피스킨 최종접종일",
+      "weight": "도체중량"
+     },
      "full": "http://data.ekape.or.kr/openapi-data/service/user/animalTrace/traceNoSearch"
     }
    ],
@@ -2479,6 +4932,60 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0130List/getselect0130List",
+     "sum": "수협 산지조합 창고별 매출처 정보 조회보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "수산업협동조합중앙회"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "trddtCo": "매출처수"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0130List/getselect0130List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2521,6 +5028,61 @@
     "type",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0010List/getselect0010List",
+     "sum": "수협 산지조합 정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "산지조합명",
+       "sample": "경인북부수산업협동조합"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "mxtrNm": "산지조합명",
+      "mxtrCode": "산지조합코드",
+      "telNo": "전화번호",
+      "fxNum": "팩스번호"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0010List/getselect0010List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -2569,6 +5131,83 @@
     "wrhousNm",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0150List/getselect0150List",
+     "sum": "수협 산지조합 창고 품목별 재고 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "20220101"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "경인북부수산업협동조합"
+      },
+      {
+       "name": "wrhousNm",
+       "req": false,
+       "desc": "창고명",
+       "sample": "판매사업과(이용)"
+      },
+      {
+       "name": "mprcStdCodeNm",
+       "req": false,
+       "desc": "품목명",
+       "sample": "농어"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "stdrDe": "기준일자",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "wrhousCode": "창고코드",
+      "wrhousNm": "창고명",
+      "mprcStdCode": "수산물표준코드",
+      "mprcStdCodeNm": "수산물표준코드명",
+      "invntryQy": "재고량"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0150List/getselect0150List"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -2631,6 +5270,80 @@
     "totalCnt"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/grade/gradeinfo/egg",
+     "sum": "계란등급판정결과조회",
+     "params": [
+      {
+       "name": "eggshellNo",
+       "req": true,
+       "desc": "난각표시번호",
+       "sample": "1219U2EIQ4"
+      },
+      {
+       "name": "judgeYmd",
+       "req": false,
+       "desc": "등급판정일",
+       "sample": "20211220"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "5"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "인증키"
+      }
+     ],
+     "props": {
+      "eggshellNo": "난각표시번호",
+      "judgeYmd": "등급판정연월일",
+      "eggSpec": "계란스펙",
+      "dispGradeCd": "표시등급코드",
+      "dispGradeNm": "표시등급",
+      "eggDay": "일령",
+      "eggBreedNm": "품종",
+      "farmNm": "농장명",
+      "farmerNm": "생산농가(농장대표자)명",
+      "farmAddr": "농장주소",
+      "farmHomepage": "농장홈페이지",
+      "collectAbattCode": "집하장코드",
+      "collectAbattNm": "집하장명",
+      "collectAbattengNm": "집하장영문명",
+      "collectAbattAddr": "집하장주소",
+      "collectAbatttelNo": "집하장연락처",
+      "eggbrandCode": "계란브랜드코드",
+      "eggbrandFullNm": "계란브랜드전체명",
+      "eggbrandShortNm": "계란브랜드약어명",
+      "eggbrandIntroduce": "계란브랜드소개",
+      "eggbrandHomepage": "계란브랜드홈페이지",
+      "eggEtcInfo": "계란추가정보",
+      "numberOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCnt": "데이터 총 개수",
+      "collectAbattceoNm": "집하장대표자",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/gradeinfo/egg"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2675,6 +5388,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000673&filter_ty=O&getBack=G&sort_id=&s_da",
+  "link_pk": "15059314",
   "fetched": "2026-10-10"
  },
  {
@@ -2691,6 +5406,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000660&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15059357",
   "fetched": "2026-10-10"
  },
  {
@@ -2749,6 +5466,126 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0050List/getselect0050List",
+     "sum": "위판장별 어종별 위탁판매 집계 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "20220101"
+      },
+      {
+       "name": "fromDt",
+       "req": false,
+       "desc": "조회시작일",
+       "sample": "20220101"
+      },
+      {
+       "name": "toDt",
+       "req": false,
+       "desc": "조회종료일",
+       "sample": "20220101"
+      },
+      {
+       "name": "mxtrCode",
+       "req": false,
+       "desc": "조합코드",
+       "sample": "317"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "서천군수산업협동조합"
+      },
+      {
+       "name": "csmtmktCode",
+       "req": false,
+       "desc": "위판장코드",
+       "sample": "317001"
+      },
+      {
+       "name": "csmtmktNm",
+       "req": false,
+       "desc": "위판장명",
+       "sample": "판매사업팀"
+      },
+      {
+       "name": "mprcStdCode",
+       "req": false,
+       "desc": "수산물표준코드",
+       "sample": "640100"
+      },
+      {
+       "name": "mprcStdCodeNm",
+       "req": false,
+       "desc": "수산물표준코드명",
+       "sample": "갑오징어류"
+      },
+      {
+       "name": "arrMprcStdCode",
+       "req": false,
+       "desc": "수산물표준코드배열",
+       "sample": "640100"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "csmtDe": "기준일자",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "csmtmktCode": "위판장코드",
+      "csmtmktNm": "위판장명",
+      "mprcStdCode": "수산물표준코드",
+      "mprcStdCodeNm": "수산물표준코드명",
+      "goodsStndrdCode": "상품규격코드",
+      "goodsUnitCode": "상품단위코드",
+      "hghpc": "고가",
+      "lprc": "저가",
+      "kdfshSttusCode": "어종상태코드",
+      "kdfshSttusNm": "어종상태코드명",
+      "goodsStndrdNm": "상품규격명",
+      "goodsUnitNm": "상품단위명"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0050List/getselect0050List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2799,6 +5636,91 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0140List/getselect0140List",
+     "sum": "수협 산지조합 창고 품목별 입출고 현황 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "표시건수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지번호",
+       "sample": "1"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      },
+      {
+       "name": "baseDt",
+       "req": true,
+       "desc": "기준일자",
+       "sample": "20220101"
+      },
+      {
+       "name": "mxtrNm",
+       "req": false,
+       "desc": "조합명",
+       "sample": "인천수산업협동조합"
+      },
+      {
+       "name": "wrhousNm",
+       "req": false,
+       "desc": "창고명",
+       "sample": "이용가공팀(이용)"
+      },
+      {
+       "name": "mprcStdCodeNm",
+       "req": false,
+       "desc": "품목명",
+       "sample": "가재류"
+      },
+      {
+       "name": "wrhsdlvrSeName",
+       "req": false,
+       "desc": "입/출고 구분",
+       "sample": "출고"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "stdrDe": "기준일자",
+      "mprcStdCode": "수산물표준코드",
+      "mprcStdCodeNm": "수산물표준코드명",
+      "mxtrCode": "조합코드",
+      "mxtrNm": "조합명",
+      "wrhousCode": "창고코드",
+      "wrhousNm": "창고명",
+      "wrhsdlvrSeCode": "입출고구분코드",
+      "wrhsdlvrSeName": "입출고구분명",
+      "wrhsdlvrQy": "입출고수량"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0140List/getselect0140List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2815,6 +5737,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000664&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15059457",
   "fetched": "2026-10-10"
  },
  {
@@ -2831,6 +5755,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000497&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15059491",
   "fetched": "2026-10-10"
  },
  {
@@ -2847,6 +5773,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000667&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
+  "link_pk": "15059494",
   "fetched": "2026-10-10"
  },
  {
@@ -3018,6 +5946,188 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1160100/service/GetFishCoopInfoService/getFishCoopGeneInfo",
+     "sum": "수산업협동조합일반현황조회",
+     "params": [
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "resultType",
+       "req": false,
+       "desc": "결과형식",
+       "sample": "xml"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "공공데이터포털에서 받은 인증키"
+      },
+      {
+       "name": "title",
+       "req": false,
+       "desc": "타이틀",
+       "sample": "수협_일반현황_임직원현황"
+      },
+      {
+       "name": "basYm",
+       "req": false,
+       "desc": "기준년월",
+       "sample": "201512"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "title": "타이틀",
+      "basYm": "기준년월",
+      "crno": "법인등록번호",
+      "fncoCd": "금융회사코드",
+      "fncoNm": "금융회사명",
+      "xcsmCnt": "임직원수",
+      "xcsmDcd": "임직원구분코드",
+      "xcsmDcdNm": "임직원구분코드명"
+     },
+     "full": "https://apis.data.go.kr/1160100/service/GetFishCoopInfoService/getFishCoopGeneInfo"
+    },
+    {
+     "path": "/1160100/service/GetFishCoopInfoService/getFishCoopFinaInfo",
+     "sum": "수산업협동조합재무현황조회",
+     "params": [
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "resultType",
+       "req": false,
+       "desc": "결과형식",
+       "sample": "xml"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "공공데이터포털에서 받은 인증키"
+      },
+      {
+       "name": "title",
+       "req": false,
+       "desc": "타이틀",
+       "sample": "수협_재무현황_요약재무상태표(자산)"
+      },
+      {
+       "name": "basYm",
+       "req": false,
+       "desc": "기준년월",
+       "sample": "201812"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "title": "타이틀",
+      "astSmryStfnpsAcitAmt": "자산요약재무상태표계정과목금액",
+      "astSmryStfnpsAcitCd": "자산요약재무상태표계정과목코드",
+      "astSmryStfnpsAcitCdNm": "자산요약재무상태표계정과목코드명",
+      "astSmryStfnpsAcitCmpsRto": "자산요약재무상태표계정과목구성비율",
+      "basYm": "기준년월",
+      "crno": "법인등록번호",
+      "fncoCd": "금융회사코드",
+      "fncoNm": "금융회사명"
+     },
+     "full": "https://apis.data.go.kr/1160100/service/GetFishCoopInfoService/getFishCoopFinaInfo"
+    },
+    {
+     "path": "/1160100/service/GetFishCoopInfoService/getFishCoopKeyManaIndi",
+     "sum": "수산업협동조합주요경영지표조회",
+     "params": [
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "resultType",
+       "req": false,
+       "desc": "결과형식",
+       "sample": "xml"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "공공데이터포털에서 받은 인증키"
+      },
+      {
+       "name": "title",
+       "req": false,
+       "desc": "타이틀",
+       "sample": "수협_재무현황_여신건전성"
+      },
+      {
+       "name": "basYm",
+       "req": false,
+       "desc": "기준년월",
+       "sample": "201212"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "title": "타이틀",
+      "basYm": "기준년월",
+      "cdlSdnsItemAmt": "여신건전성항목금액",
+      "cdlSdnsItemCd": "여신건전성항목코드",
+      "cdlSdnsItemCdNm": "여신건전성항목코드명",
+      "crno": "법인등록번호",
+      "fncoCd": "금융회사코드",
+      "fncoNm": "금융회사명"
+     },
+     "full": "https://apis.data.go.kr/1160100/service/GetFishCoopInfoService/getFishCoopKeyManaIndi"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3034,6 +6144,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200713000000001391&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=201410120001&shareYn=",
+  "link_pk": "15061948",
   "fetched": "2026-10-10"
  },
  {
@@ -3050,6 +6162,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://ecvam.neins.go.kr/api/apiWrite.do",
+  "link_pk": "15062666",
   "fetched": "2026-10-10"
  },
  {
@@ -3066,6 +6180,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://ecvam.neins.go.kr/api/apiWrite.do",
+  "link_pk": "15062667",
   "fetched": "2026-10-10"
  },
  {
@@ -3082,6 +6198,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://ecvam.neins.go.kr/api/apiWrite.do",
+  "link_pk": "15063093",
   "fetched": "2026-10-10"
  },
  {
@@ -3098,6 +6216,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nongsaro.go.kr/portal/ps/psn/psnj/openApiLst.ps?menuId=PS65428&pageIndex=1&pageSize=&sLclasCode=&sText=%EA%B0%80%EC%B6%95%EB%B6%84%EB%87%A8+%ED%86%B5%ED%95%A9%EC%9E%90%EB%A3%8C+%EA%B2%8C%EC%8B%9C%ED%8C%90",
+  "link_pk": "15064109",
   "fetched": "2026-10-10"
  },
  {
@@ -3114,6 +6234,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=656&show_cnt=10&start_idx=1&svc_no=I1370&svc_type_cd=A",
+  "link_pk": "15064785",
   "fetched": "2026-10-10"
  },
  {
@@ -3130,6 +6252,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=656&show_cnt=10&start_idx=1&svc_no=I1350&svc_type_cd=A",
+  "link_pk": "15064786",
   "fetched": "2026-10-10"
  },
  {
@@ -3146,6 +6270,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=656&show_cnt=10&start_idx=1&svc_no=I1320&svc_type_cd=API_TYPE06",
+  "link_pk": "15064840",
   "fetched": "2026-10-10"
  },
  {
@@ -3162,6 +6288,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=656&show_cnt=10&start_idx=1&svc_no=I1300&svc_type_cd=API_TYPE06",
+  "link_pk": "15064844",
   "fetched": "2026-10-10"
  },
  {
@@ -3178,6 +6306,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=656&show_cnt=10&start_idx=1&svc_no=I1940&svc_type_cd=API_TYPE06",
+  "link_pk": "15064940",
   "fetched": "2026-10-10"
  },
  {
@@ -3226,6 +6356,70 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/service/TideEcoService/getTideEco",
+     "sum": "해양생태계 종합조사(갯벌생태분야) 정보조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키 (URL- Encode)"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "resultType",
+       "req": false,
+       "desc": "결과형식",
+       "sample": "xml"
+      },
+      {
+       "name": "SYEAR",
+       "req": false,
+       "desc": "조사년도",
+       "sample": "2018"
+      },
+      {
+       "name": "STNPNT_NO",
+       "req": false,
+       "desc": "정점번호",
+       "sample": "BS010101-1-2"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "num": "일련번호",
+      "syear": "조사년도",
+      "stnpntNo": "정점번호",
+      "la": "위도",
+      "lo": "경도",
+      "bsnsSeNm": "사업구분명",
+      "detailBsnsNm": "세부사업명"
+     },
+     "full": "https://apis.data.go.kr/1192000/service/TideEcoService/getTideEco"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3242,6 +6436,8 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20201005000000001393&service_ty=&filter_ty=O&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=&shareYn=",
+  "link_pk": "15069189",
   "fetched": "2026-10-10"
  },
  {
@@ -3286,6 +6482,325 @@
     "totalCount",
     "typeName"
    ]
+  },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/grade/poultry/nativechichen",
+     "sum": "토종닭 가격조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일",
+       "sample": "20050917"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일",
+       "sample": "20250918"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "modYmd": "발표일",
+      "typeName": "거래종류",
+      "agency": "대리점 가격",
+      "mart": "대규모점포 가격",
+      "franchise": "프랜차이즈 가격",
+      "average": "전체 가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/poultry/nativechichen"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/poultry/layingOldChicken",
+     "sum": "산란계(노계) 가격조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일",
+       "sample": "20200101"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일",
+       "sample": "20201231"
+      },
+      {
+       "name": "periodType",
+       "req": true,
+       "desc": "기간유형",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "stdDate": "기준일자",
+      "stYMD": "시작기준일",
+      "edYMD": "종료기준일",
+      "price": "산란계(노계) 가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/poultry/layingOldChicken"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/poultry/layingChicken",
+     "sum": "산란계(병아리) 가격조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일",
+       "sample": "20200101"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일",
+       "sample": "20201231"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "stdMonth": "기준월",
+      "price": "산란계(병아리) 가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/poultry/layingChicken"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/poultry/chickenSanji",
+     "sum": "육계(산지) 일일가격조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키 (URL Encode)"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일",
+       "sample": "20200103"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일",
+       "sample": "20200131"
+      },
+      {
+       "name": "type",
+       "req": true,
+       "desc": "거래종류",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "modYmd": "발표일",
+      "typeName": "거래종류",
+      "big": "육계 대 가격",
+      "medium": "육계 중 가격",
+      "small": "육계 소 가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/poultry/chickenSanji"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/poultry/chickenDomae",
+     "sum": "육계(도매) 일일가격조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키 (URL Encode)"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일",
+       "sample": "20200103"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일",
+       "sample": "20200131"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "modYmd": "발표일",
+      "typeName": "거래종류",
+      "franchise": "육계 프렌차이즈 가격",
+      "mart": "육계 마트 가격",
+      "agency": "육계 대리점 가격",
+      "avg": "육계 평균 가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/poultry/chickenDomae"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/poultry/egg",
+     "sum": "계란 일일가격조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키 (URL Encode)"
+      },
+      {
+       "name": "startYmd",
+       "req": false,
+       "desc": "시작일",
+       "sample": "20200103"
+      },
+      {
+       "name": "endYmd",
+       "req": false,
+       "desc": "종료일",
+       "sample": "20200131"
+      },
+      {
+       "name": "type",
+       "req": true,
+       "desc": "거래종류",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "1"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "modYmd": "발표일",
+      "typeName": "거래종류",
+      "verybig": "계란 왕 가격",
+      "special": "계란 특 가격",
+      "big": "계란 대 가격",
+      "medium": "계란 중 가격",
+      "small": "계란 소 가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/poultry/egg"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -3335,6 +6850,66 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/select0230List/getselect0230List",
+     "sum": "낚시 어선업 신고정보",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "fsboNo",
+       "req": false,
+       "desc": "어선번호",
+       "sample": "00100016261403"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "구분",
+       "sample": "xml"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "fsboNo": "어선번호",
+      "fsboNm": "어선명",
+      "fshNtNm": "신고 확인 번호",
+      "fsboTotTons": "총 톤수",
+      "fshryApvPermNm": "어업인허가 번호",
+      "shpmHangNm": "선적항",
+      "maxShcrNum": "최대 선원 수",
+      "maxPsrNum": "최대 승객 수",
+      "bsnStEndDt": "유효 기간"
+     },
+     "full": "https://apis.data.go.kr/1192000/select0230List/getselect0230List"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3351,6 +6926,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=661&show_cnt=10&start_idx=1&svc_no=I0610&svc_type_cd=API_TYPE06",
+  "link_pk": "15074310",
   "fetched": "2026-10-10"
  },
  {
@@ -3367,6 +6944,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=661&show_cnt=10&start_idx=1&svc_no=I1070&svc_type_cd=API_TYPE06",
+  "link_pk": "15074326",
   "fetched": "2026-10-10"
  },
  {
@@ -3383,6 +6962,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=661&show_cnt=10&start_idx=1&svc_no=I1090&svc_type_cd=API_TYPE06",
+  "link_pk": "15074328",
   "fetched": "2026-10-10"
  },
  {
@@ -3424,6 +7005,60 @@
     "wtem"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Tgcw15/getOpnTgcw15",
+     "sum": "연속정보 수온(15분) 속성조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "analsYmd",
+       "req": true,
+       "desc": "분석일자",
+       "sample": "20160130"
+      },
+      {
+       "name": "gridCd",
+       "req": false,
+       "desc": "격자번호",
+       "sample": "GR2_F2J14"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "analsYmd": "분석일자",
+      "gridCd": "격자번호",
+      "wtem": "수온"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Tgcw15/getOpnTgcw15"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3464,6 +7099,60 @@
     "totalCount",
     "wtem"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Tgcw3/getOpnTgcw3",
+     "sum": "연속정보 수온(3 분) 속성조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "analsYmd",
+       "req": true,
+       "desc": "분석일자",
+       "sample": "20160601"
+      },
+      {
+       "name": "gridCd",
+       "req": false,
+       "desc": "격자번호",
+       "sample": "GR3_G2I34_M"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 번호",
+      "totalCount": "전체 결과 수",
+      "analsYmd": "분석일자",
+      "gridCd": "격자번호",
+      "wtem": "수온"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Tgcw3/getOpnTgcw3"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -3554,6 +7243,96 @@
     "width"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Cstk1fct/getOpnCstk1fctWMS",
+     "sum": "연안 1KM 시설물 WMS 조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "srs",
+       "req": false,
+       "desc": "좌표체계",
+       "sample": "EPSG:5179"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "742021.1875,1454475.75,1392054"
+      },
+      {
+       "name": "width",
+       "req": false,
+       "desc": "너비",
+       "sample": "768"
+      },
+      {
+       "name": "height",
+       "req": false,
+       "desc": "높이",
+       "sample": "733"
+      }
+     ],
+     "props": {},
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Cstk1fct/getOpnCstk1fctWMS"
+    },
+    {
+     "path": "/1192000/apVhdService_Cstk1fct/getOpnCstk1fctWFS",
+     "sum": "연안 1KM 시설물 WFS 조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "742021.1875,1454475.75,1392054"
+      },
+      {
+       "name": "maxFeatures",
+       "req": false,
+       "desc": "응답 최대값",
+       "sample": "10"
+      },
+      {
+       "name": "sgg_nm",
+       "req": false,
+       "desc": "시군구명",
+       "sample": "강릉시"
+      }
+     ],
+     "props": {
+      "sgg_nm": "시군구명",
+      "sfm_incl_eaqt": "바다목장포함개수",
+      "aqcgrn_incl_eaqt": "양식장포함개수",
+      "sflr_wtrpp_incl_eaqt": "해저송수관포함개수",
+      "sflr_cable_incl_eaqt": "해서케이블포함개수",
+      "mfrst_lc_incl_eaqt": "바다숲위치포함개수",
+      "mfrst_fbnk_lc_incl_eaqt": "바다숲어초위치포함개수",
+      "xmpl_sfm_lc_incl_eaqt": "시범바다목장위치포함개수",
+      "xmpl_sfm_fbnk_lc_incl_eaqt": "시범바다목장어초위치포함개수",
+      "cst_sfm_lc_incl_eaqt": "연안바다목장위치포함개수",
+      "cst_sfm_fbnk_lc_incl_eaqt": "연안바다목장어초위치포함개수",
+      "geom": "공간정보"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Cstk1fct/getOpnCstk1fctWFS"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3600,6 +7379,96 @@
     "xmpl_sfm_lc_incl_eaqt"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Cstk3fct/getOpnCstk3fctWFS",
+     "sum": "연안 3KM 시설물 WFS조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "740249.375,1452236.0,1393847.5"
+      },
+      {
+       "name": "maxFeatures",
+       "req": false,
+       "desc": "응답 최대값",
+       "sample": "10"
+      },
+      {
+       "name": "sgg_nm",
+       "req": false,
+       "desc": "시군구명",
+       "sample": "강릉시"
+      }
+     ],
+     "props": {
+      "sgg_nm": "시군구명",
+      "sfm_incl_eaqt": "바다목장포함개수",
+      "aqcgrn_incl_eaqt": "양시장포함개수",
+      "sflr_wtrpp_incl_eaqt": "해저송수관포함개수",
+      "sflr_cable_incl_eaqt": "해저케이블포함개수",
+      "mfrst_lc_incl_eaqt": "바다숲위치포함개수",
+      "mfrst_fbnk_lc_incl_eaqt": "바다숲어초위치포함개수",
+      "xmpl_sfm_lc_incl_eaqt": "시범바다목장위치포함개수",
+      "xmpl_sfm_fbnk_lc_incl_eaqt": "시범바다목장어초위치포함개수",
+      "cst_sfm_lc_incl_eaqt": "연안바다목장위치포함개수",
+      "cst_sfm_fbnk_lc_incl_eaqt": "연안바다목장어초위치포함개수",
+      "geom": "공간정보"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Cstk3fct/getOpnCstk3fctWFS"
+    },
+    {
+     "path": "/1192000/apVhdService_Cstk3fct/getOpnCstk3fctWMS",
+     "sum": "연안 3KM 시설물 WMS조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "srs",
+       "req": false,
+       "desc": "좌표체계",
+       "sample": "EPSG:5179"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "740249.375,1452236.0,1393847.5"
+      },
+      {
+       "name": "width",
+       "req": false,
+       "desc": "너비",
+       "sample": "768"
+      },
+      {
+       "name": "height",
+       "req": false,
+       "desc": "높이",
+       "sample": "734"
+      }
+     ],
+     "props": {},
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Cstk3fct/getOpnCstk3fctWMS"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3635,6 +7504,96 @@
     "srs",
     "width"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Cstk5fct/getOpnCstk5fctWMS",
+     "sum": "연안 5km 시설물 WMS조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "srs",
+       "req": false,
+       "desc": "좌표체계",
+       "sample": "EPSG:5179"
+      },
+      {
+       "name": "bbox",
+       "req": true,
+       "desc": "검색 범위",
+       "sample": "751008,1465912.5,1294621.125,2"
+      },
+      {
+       "name": "width",
+       "req": true,
+       "desc": "너비",
+       "sample": "768"
+      },
+      {
+       "name": "height",
+       "req": true,
+       "desc": "높이",
+       "sample": "735"
+      }
+     ],
+     "props": {},
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Cstk5fct/getOpnCstk5fctWMS"
+    },
+    {
+     "path": "/1192000/apVhdService_Cstk5fct/getOpnCstk5fctWFS",
+     "sum": "연안 5km 시설물 WFS조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "738477.375,1449996.375,1395640"
+      },
+      {
+       "name": "maxFeatures",
+       "req": false,
+       "desc": "응답 최대값",
+       "sample": "10"
+      },
+      {
+       "name": "sggNm",
+       "req": false,
+       "desc": "시군구명",
+       "sample": "강릉시"
+      }
+     ],
+     "props": {
+      "sgg_nm": "시군구명",
+      "sfm_incl_eaqt": "바다목장포함개수",
+      "aqcgrn_incl_eaqt": "양식장포함개수",
+      "sflr_wtrpp_incl_eaqt": "해저송수관포함개수",
+      "sflr_cable_incl_eaqt": "해저케이블포함개수",
+      "mfrst_lc_incl_eaqt": "바다숲위치포함개수",
+      "mfrst_fbnk_lc_incl_eaqt": "바다숲어초위치포함개수",
+      "xmpl_sfm_lc_incl_eaqt": "시범바다목장위치포함개수",
+      "xmpl_sfm_fbnk_lc_incl_eaqt": "시범바다목장어초위치포함개수",
+      "cst_sfm_lc_incl_eaqt": "연안바다목장위치포함개수",
+      "cst_sfm_fbnk_lc_incl_eaqt": "연안바다목장어초위치포함개수",
+      "geom": "공간정보"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Cstk5fct/getOpnCstk5fctWFS"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -3677,6 +7636,54 @@
     "totalCount"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Tgpw15d1/getOpnTgpw15d1",
+     "sum": "지식정보 생산모델 해수면 수온 15분 격자 D+1 예측값 속성조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "gridCd",
+       "req": true,
+       "desc": "격자번호",
+       "sample": "GR2_G1E23"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "gridCd": "격자번호",
+      "prdnYmd": "예측 해수면 수온 예측 일자",
+      "prdnWtem": "예측 해수면 수온"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Tgpw15d1/getOpnTgpw15d1"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3717,6 +7724,54 @@
     "resultMsg",
     "totalCount"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Tgpw15d2/getOpnTgpw15d2",
+     "sum": "지식정보 생산모델 해수면 수온 15분 격자 D+2 예측값 속성조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "gridCd",
+       "req": true,
+       "desc": "격자번호",
+       "sample": "GR2_G1E23"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "gridCd": "격자번호",
+      "prdnYmd": "예측 해수면 수온 예측 일자",
+      "prdnWtem": "예측 해수면 수온"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Tgpw15d2/getOpnTgpw15d2"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -3759,6 +7814,54 @@
     "totalCount"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Tgpw3d1/getOpnTgpw3d1",
+     "sum": "지식정보 생산모델 해수면 수온 3분 격자 D+1 예측값 속정조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "gridCd",
+       "req": true,
+       "desc": "격자번호",
+       "sample": "GR3_G1E14_A"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "gridCd": "격자번호",
+      "prdnYmd": "예측 해수면 수온 예측 일자",
+      "prdnWtem": "예측 해수면 수온"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Tgpw3d1/getOpnTgpw3d1"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3800,6 +7903,54 @@
     "totalCount"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_Tgpw3d2/getOpnTgpw3d2",
+     "sum": "지식정보 생산모델 해수면 수온 3분 격자 D+2 예측값 속성조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 번호",
+       "sample": "1"
+      },
+      {
+       "name": "gridCd",
+       "req": true,
+       "desc": "격자번호",
+       "sample": "GR3_G1E14_A"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "numOfRows": "한 페이지 결과 수",
+      "pageNo": "페이지 수",
+      "totalCount": "데이터 총 개수",
+      "gridCd": "격자번호",
+      "prdnYmd": "예측 해수면 수온 예측 일자",
+      "prdnWtem": "예측 해수면 수온"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_Tgpw3d2/getOpnTgpw3d2"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3835,6 +7986,93 @@
     "srs",
     "width"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_OpzFh/getOpnOpzFhWMS",
+     "sum": "해양용도구역_어업활동 WMS조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "srs",
+       "req": false,
+       "desc": "좌표체계",
+       "sample": "EPSG:5179"
+      },
+      {
+       "name": "bbox",
+       "req": true,
+       "desc": "검색 범위",
+       "sample": "718918.25,1433106.875,1249928."
+      },
+      {
+       "name": "width",
+       "req": true,
+       "desc": "너비",
+       "sample": "768"
+      },
+      {
+       "name": "height",
+       "req": true,
+       "desc": "너비",
+       "sample": "654"
+      }
+     ],
+     "props": {},
+     "full": "https://apis.data.go.kr/1192000/apVhdService_OpzFh/getOpnOpzFhWMS"
+    },
+    {
+     "path": "/1192000/apVhdService_OpzFh/getOpnOpzFhWFS",
+     "sum": "해양용도구역_어업활동 WFS조회",
+     "params": [
+      {
+       "name": "ServiceKey",
+       "req": true,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "718918.25,1433106.875,1249928."
+      },
+      {
+       "name": "maxFeatures",
+       "req": false,
+       "desc": "응답 최대값",
+       "sample": "10"
+      },
+      {
+       "name": "ntfc_year",
+       "req": true,
+       "desc": "고시년도",
+       "sample": "2022"
+      },
+      {
+       "name": "area_id",
+       "req": false,
+       "desc": "지역아이디",
+       "sample": "0004"
+      }
+     ],
+     "props": {
+      "ntfc_year": "고시년도",
+      "area_id": "지역아이디",
+      "geom": "공간정보"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_OpzFh/getOpnOpzFhWFS"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -3887,6 +8125,79 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Colon09/voTubercholsisByType",
+     "sum": "대장암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      },
+      {
+       "name": "type",
+       "req": true,
+       "desc": "타입",
+       "sample": "xml"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Colon09/voTubercholsisByType"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3937,6 +8248,79 @@
     "wholPtCntDnmvl",
     "xml"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Kidney09/kiTubercholsisByType",
+     "sum": "신장암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      },
+      {
+       "name": "type",
+       "req": true,
+       "desc": "타입",
+       "sample": "xml"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Kidney09/kiTubercholsisByType"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -3989,6 +8373,79 @@
     "xml"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Lung09/luTubercholsisByType",
+     "sum": "폐암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": true,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "pageNo",
+       "req": true,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": true,
+       "desc": "한 페이지 결과 수",
+       "sample": "10"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      },
+      {
+       "name": "type",
+       "req": true,
+       "desc": "타입",
+       "sample": "xml"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Lung09/luTubercholsisByType"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4005,6 +8462,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000636&service_ty=O",
+  "link_pk": "15080637",
   "fetched": "2026-10-10"
  },
  {
@@ -4021,6 +8480,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nongsaro.go.kr/portal/ps/psn/psnj/openApiLst.ps?menuId=PS65428&pageIndex=1&pageSize=&sLclasCode=&sText=%EC%B6%95%EC%82%B0%ED%99%98%EA%B2%BD%EC%9E%90%EA%B0%80%EC%A7%84%EB%8B%A8",
+  "link_pk": "15086484",
   "fetched": "2026-10-10"
  },
  {
@@ -4070,6 +8531,79 @@
     "wholNcsDnmvl",
     "wholPtCntDnmvl"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Cholan09/chTubercholsisByType",
+     "sum": "담도암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "데이터 형식",
+       "sample": "xml, json"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Cholan09/chTubercholsisByType"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -4122,6 +8656,79 @@
     "wholPtCntDnmvl"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Liver09/lvTubercholsisByType",
+     "sum": "간암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "데이터 형식",
+       "sample": "xml, json"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Liver09/lvTubercholsisByType"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4173,6 +8780,79 @@
     "wholPtCntDnmvl"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Gastric09/gsTubercholsisByType",
+     "sum": "위암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "데이터 형식",
+       "sample": "xml, json"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Gastric09/gsTubercholsisByType"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4223,6 +8903,79 @@
     "wholPtCntDnmvl"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Prostate09/prTubercholsisByType",
+     "sum": "전립선암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "인증키",
+       "sample": "인증키"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "데이터 형식",
+       "sample": "xml, json"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Prostate09/prTubercholsisByType"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4262,6 +9015,88 @@
     "maxFeatures",
     "serviceKey"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS",
+     "sum": "수산자원 보호구역 WFS조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "882786.923130391,1588101.14708"
+      },
+      {
+       "name": "maxFeatures",
+       "req": false,
+       "desc": "응답 최대값",
+       "sample": "10"
+      },
+      {
+       "name": "fshrsr_pzn_nm",
+       "req": false,
+       "desc": "수산자원보호구역명",
+       "sample": "영광보전지역"
+      }
+     ],
+     "props": {
+      "fshrsrc_pzn_cd": "수산자원보호구역코드",
+      "fshrsrc_pzn_nm": "수산자원보호구역명",
+      "fshrsrc_pzn_ar": "수산자원보호구역면적",
+      "geom": "공간정보"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWFS"
+    },
+    {
+     "path": "/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWMS",
+     "sum": "수산자원 보호구역 WMS조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "srs",
+       "req": false,
+       "desc": "좌표체계",
+       "sample": "EPSG:5179"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "882786.923130391,1588101.14708"
+      },
+      {
+       "name": "width",
+       "req": false,
+       "desc": "너비",
+       "sample": "665"
+      },
+      {
+       "name": "height",
+       "req": false,
+       "desc": "높이",
+       "sample": "768"
+      }
+     ],
+     "props": {},
+     "full": "https://apis.data.go.kr/1192000/apVhdService_FshrsrcPzn/getOpnFshrsrcPznWMS"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -4306,6 +9141,94 @@
     "serviceKey",
     "swds_drywgt_mtr_km15_eaqt"
    ]
+  },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/1192000/apVhdService_MfrstFusn15km/getOpnMfrstFusn15kmWFS",
+     "sum": "인공어초 15KM 내 해조류 분포 WFS 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "753699.15453783,1468663.621753"
+      },
+      {
+       "name": "maxFeatures",
+       "req": false,
+       "desc": "응답 최대값",
+       "sample": "10"
+      },
+      {
+       "name": "fcl_yr",
+       "req": false,
+       "desc": "시설년도",
+       "sample": "2009"
+      }
+     ],
+     "props": {
+      "fcl_yr": "시설년도",
+      "mfrst_cfr_mim_wtdp": "바다숲주변최소수심",
+      "mfrst_cfr_mxm_wtdp": "바다숲주변최대수심",
+      "mfrst_shllw_mim_wtdp": "바다숲천소최소수심",
+      "mfrst_shllw_mxm_wtdp": "바다숲천소최대수심",
+      "blk_hgh": "산적높이",
+      "mfrst_fbnk_km15_eaqt": "바다숲어초 15KM 개수",
+      "mrec_entt_km15_cnt": "해양생태계개체 15KM tn",
+      "swds_drywgt_mtr_km15_eaqt": "해조류건중량자료 15KM 개수",
+      "geom": "공간정보"
+     },
+     "full": "https://apis.data.go.kr/1192000/apVhdService_MfrstFusn15km/getOpnMfrstFusn15kmWFS"
+    },
+    {
+     "path": "/1192000/apVhdService_MfrstFusn15km/getOpnMfrstFusn15kmWMS",
+     "sum": "인공어초 15KM 내 해조류 분포 WMS 조회",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "srs",
+       "req": false,
+       "desc": "좌표체계",
+       "sample": "EPSG:5179"
+      },
+      {
+       "name": "bbox",
+       "req": false,
+       "desc": "검색 범위",
+       "sample": "753699.15453783,1468663.621753"
+      },
+      {
+       "name": "width",
+       "req": false,
+       "desc": "너비",
+       "sample": "751"
+      },
+      {
+       "name": "height",
+       "req": false,
+       "desc": "높이",
+       "sample": "768"
+      }
+     ],
+     "props": {},
+     "full": "https://apis.data.go.kr/1192000/apVhdService_MfrstFusn15km/getOpnMfrstFusn15kmWMS"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
@@ -4358,6 +9281,79 @@
     "wholPtCntDnmvl"
    ]
   },
+  "spec": {
+   "host": "apis.data.go.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/B551172/Pancreatic09/pnTubercholsisByType",
+     "sum": "췌장암 라이브러리 환자 결핵 병력 여부",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "인증키"
+      },
+      {
+       "name": "type",
+       "req": false,
+       "desc": "페이지 번호",
+       "sample": "xml, json"
+      },
+      {
+       "name": "pageNo",
+       "req": false,
+       "desc": "페이지 수",
+       "sample": "1"
+      },
+      {
+       "name": "numOfRows",
+       "req": false,
+       "desc": "한 페이지 결과 수",
+       "sample": "1"
+      },
+      {
+       "name": "centerNm",
+       "req": false,
+       "desc": "대상 센터 명",
+       "sample": "국립암센터"
+      },
+      {
+       "name": "fromYear",
+       "req": false,
+       "desc": "연도(시작)",
+       "sample": "2010"
+      },
+      {
+       "name": "toYear",
+       "req": false,
+       "desc": "연도(종료)",
+       "sample": "2019"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메세지",
+      "pageNo": "페이지 수",
+      "numOfRows": "한 페이지 결과 수",
+      "totalCount": "데이터 총 개수",
+      "Items": "목록 리스트",
+      "centerNm": "대상 센터 이름",
+      "critYr": "기준년도",
+      "ptAge": "환자 연령",
+      "ptSexCd": "환자 성별 코드",
+      "statsTrgtNm": "통계 대상 명",
+      "ncsNmvl": "건수 분자 값",
+      "wholNcsDnmvl": "전체 건수 분자 값",
+      "ptCntNmvl": "환자 수 분자 값",
+      "wholPtCntDnmvl": "전체 환자 수 분모 값"
+     },
+     "full": "https://apis.data.go.kr/B551172/Pancreatic09/pnTubercholsisByType"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4374,6 +9370,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000752",
+  "link_pk": "15101698",
   "fetched": "2026-10-10"
  },
  {
@@ -4390,6 +9388,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=222",
+  "link_pk": "15101863",
   "fetched": "2026-10-10"
  },
  {
@@ -4629,6 +9629,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000071",
+  "link_pk": "15102408",
   "fetched": "2026-10-10"
  },
  {
@@ -4645,6 +9647,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151210000000000570",
+  "link_pk": "15102526",
   "fetched": "2026-10-10"
  },
  {
@@ -4661,6 +9665,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002114",
+  "link_pk": "15102748",
   "fetched": "2026-10-10"
  },
  {
@@ -4677,6 +9683,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002115",
+  "link_pk": "15102749",
   "fetched": "2026-10-10"
  },
  {
@@ -4693,6 +9701,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002112",
+  "link_pk": "15102819",
   "fetched": "2026-10-10"
  },
  {
@@ -4709,6 +9719,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220621000000002111",
+  "link_pk": "15103013",
   "fetched": "2026-10-10"
  },
  {
@@ -4859,6 +9871,46 @@
     "typeGbn"
    ]
   },
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/farm/farmUniqueNoSearch",
+     "sum": "농장식별번호 정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스 인증키",
+       "sample": "-"
+      },
+      {
+       "name": "farmUniqueNo",
+       "req": false,
+       "desc": "농장식별번호",
+       "sample": "403419"
+      },
+      {
+       "name": "typeGbn",
+       "req": false,
+       "desc": "축종구분",
+       "sample": "0022"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "typeGbn": "축종구분",
+      "farmUniqueNo": "농장식별번호",
+      "farmerNm": "농장경영자명",
+      "addr": "사육지 주소"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/farm/farmUniqueNoSearch"
+    }
+   ],
+   "from": "detail"
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4875,6 +9927,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002359",
+  "link_pk": "15109069",
   "fetched": "2026-10-10"
  },
  {
@@ -4891,6 +9945,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002331",
+  "link_pk": "15109070",
   "fetched": "2026-10-10"
  },
  {
@@ -4907,6 +9963,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002330",
+  "link_pk": "15109071",
   "fetched": "2026-10-10"
  },
  {
@@ -4923,6 +9981,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002329",
+  "link_pk": "15109072",
   "fetched": "2026-10-10"
  },
  {
@@ -4939,6 +9999,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002328",
+  "link_pk": "15109073",
   "fetched": "2026-10-10"
  },
  {
@@ -4955,6 +10017,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002327",
+  "link_pk": "15109074",
   "fetched": "2026-10-10"
  },
  {
@@ -4971,6 +10035,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002326",
+  "link_pk": "15109075",
   "fetched": "2026-10-10"
  },
  {
@@ -4987,6 +10053,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002325",
+  "link_pk": "15109076",
   "fetched": "2026-10-10"
  },
  {
@@ -5003,6 +10071,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
+  "link_pk": "15109218",
   "fetched": "2026-10-10"
  },
  {
@@ -5020,6 +10090,7 @@
    "names": []
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000535",
+  "link_pk": "15109239",
   "fetched": "2026-10-10"
  },
  {
@@ -5036,6 +10107,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=661&show_cnt=10&start_idx=1&svc_no=I1980",
+  "link_pk": "15111816",
   "fetched": "2026-10-10"
  },
  {
@@ -5220,6 +10293,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=014",
+  "link_pk": "15115752",
   "fetched": "2026-10-10"
  },
  {
@@ -5236,6 +10311,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=016",
+  "link_pk": "15116918",
   "fetched": "2026-10-10"
  },
  {
@@ -5252,6 +10329,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://meatwatch.go.kr/cs/wsm/selectWsrvIntrcnHtml.do",
+  "link_pk": "15118023",
   "fetched": "2026-10-10"
  },
  {
@@ -5268,6 +10347,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.smartfarmkorea.net/openApi/openApiList.do?menuId=M11040303",
+  "link_pk": "15121328",
   "fetched": "2026-10-10"
  },
  {
@@ -5284,6 +10365,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://apihub.kma.go.kr/apiList.do?seqApi=3&seqApiSub=249&apiMov=%ED%95%B4%EC%96%91%20%EC%A2%85%ED%95%A9",
+  "link_pk": "15126689",
   "fetched": "2026-10-10"
  },
  {
@@ -5645,6 +10728,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141127000000000364",
+  "link_pk": "15129484",
   "fetched": "2026-10-10"
  },
  {
@@ -5661,6 +10746,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=022",
+  "link_pk": "15130187",
   "fetched": "2026-10-10"
  },
  {
@@ -5821,6 +10908,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://apihub.kma.go.kr/urlRedirect.do?seqApi=3&seqApiSub=249&apiMov=%ED%95%B4%EC%96%91%20%EC%A2%85%ED%95%A9%20%EA%B4%80%EC%B8%A1%EC%9E%90%EB%A3%8C%20%EC%A1%B0%ED%9A%8C",
+  "link_pk": "15139440",
   "fetched": "2026-10-10"
  },
  {
@@ -5837,6 +10926,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://apihub.kma.go.kr/urlRedirect.do?seqApi=3&seqApiSub=318&apiMov=%ED%95%B4%EC%96%91%EA%B4%80%EC%B8%A1%20%EC%A7%80%EC%A0%90%EC%A0%95%EB%B3%B4%20%EC%A1%B0%ED%9A%8C",
+  "link_pk": "15139442",
   "fetched": "2026-10-10"
  },
  {
@@ -5853,6 +10944,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002459",
+  "link_pk": "15140583",
   "fetched": "2026-10-10"
  },
  {
@@ -6306,6 +11399,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20250221000000002664",
+  "link_pk": "15142145",
   "fetched": "2026-10-10"
  },
  {
@@ -6322,6 +11417,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=027",
+  "link_pk": "15142447",
   "fetched": "2026-10-10"
  },
  {
@@ -6338,6 +11435,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=028",
+  "link_pk": "15142448",
   "fetched": "2026-10-10"
  },
  {
@@ -6354,6 +11453,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=031",
+  "link_pk": "15142452",
   "fetched": "2026-10-10"
  },
  {
@@ -6370,6 +11471,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=034",
+  "link_pk": "15142456",
   "fetched": "2026-10-10"
  },
  {
@@ -6386,6 +11489,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=036",
+  "link_pk": "15142459",
   "fetched": "2026-10-10"
  },
  {
@@ -6402,6 +11507,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=037",
+  "link_pk": "15142460",
   "fetched": "2026-10-10"
  },
  {
@@ -6852,6 +11959,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=164",
+  "link_pk": "15149541",
   "fetched": "2026-10-10"
  },
  {
@@ -6868,6 +11977,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3328",
+  "link_pk": "15150280",
   "fetched": "2026-10-10"
  },
  {
@@ -6884,6 +11995,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=179",
+  "link_pk": "15150647",
   "fetched": "2026-10-10"
  },
  {
@@ -6900,6 +12013,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3377",
+  "link_pk": "15151924",
   "fetched": "2026-10-10"
  },
  {
@@ -6916,6 +12031,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3673",
+  "link_pk": "15153249",
   "fetched": "2026-10-10"
  },
  {
@@ -6932,6 +12049,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3674",
+  "link_pk": "15153301",
   "fetched": "2026-10-10"
  },
  {
@@ -9677,6 +14796,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://nifs.go.kr/openApi/actionOpenapiInfoList.do?contentsCd=04",
+  "link_pk": "15156746",
   "fetched": "2026-10-10"
  },
  {
@@ -9693,6 +14814,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://nifs.go.kr/openApi/actionOpenapiInfoList.do?contentsCd=07",
+  "link_pk": "15156749",
   "fetched": "2026-10-10"
  },
  {
@@ -9709,6 +14832,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20260306000000002986",
+  "link_pk": "15157584",
   "fetched": "2026-10-10"
  },
  {
@@ -9725,6 +14850,8 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20260306000000002987",
+  "link_pk": "15157585",
   "fetched": "2026-10-10"
  },
  {
