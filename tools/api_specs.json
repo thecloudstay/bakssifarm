@@ -654,7 +654,7 @@
     "year"
    ]
   },
-  "detail_err": "HTTP Error 500: Internal Server Error",
+  "detail_err": "404 \n\n\n\n\n\n\n <!doctype html>\n<html lang=\"ko\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-s",
   "fetched": "2026-10-10"
  },
  {
@@ -2059,7 +2059,7 @@
     "weight"
    ]
   },
-  "detail_err": "HTTP Error 500: Internal Server Error",
+  "detail_err": "404 \n\n\n\n\n\n\n <!doctype html>\n<html lang=\"ko\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-s",
   "fetched": "2026-10-10"
  },
  {
