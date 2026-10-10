@@ -41,13 +41,18 @@ def parse_plain(html):
     names = sorted(set(re.findall(r'<td[^>]*>\s*([a-zA-Z][A-Za-z0-9_]{1,40})\s*</td>', html)))
     return {'urls': urls[:20], 'names': names[:120]}
 out = []; ok = 0
+ONLY = os.environ.get('SPEC_ONLY', '')
 for i, c in enumerate(cands):
+    if ONLY and c['id'] not in ONLY.split(','): out.append(old.get(c['id'], c)); continue
     rec = dict(c)
     try:
         html = get(f'https://www.data.go.kr/data/{c["id"]}/openapi.do')
         sw = parse_swagger(html)
         if sw and sw['ops']: rec['spec'] = sw; ok += 1
-        else: rec['plain'] = parse_plain(html)
+        else:
+            rec['plain'] = parse_plain(html)
+            if os.environ.get('SPEC_DEBUG') and c['id'] in os.environ['SPEC_DEBUG'].split(','):
+                os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', c['id'] + '.html'), 'w', encoding='utf-8').write(html)
         rec['fetched'] = time.strftime('%Y-%m-%d')
     except Exception as e:
         rec = old.get(c['id'], rec); rec['err'] = str(e)[:120]
