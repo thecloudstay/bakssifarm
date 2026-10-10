@@ -8,6 +8,7 @@ import sys, os, re, json, datetime, collections, xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 KEY = env('DATA_GO_KR_KEY')
+FS_KEY = env('FOODSAFETY_KEY')  # 식품안전나라 열쇠(축산물 영업 허가대장·동물용 의약품·어류 질병 등)
 SPECS = jload(os.path.join(ROOT, 'tools', 'api_specs.json'), [])
 OWN = ('openapi-data/service/user/grade', 'B552845/katSale', 'B552845/katOrigin', '1741000/', '1192136/dtRecent')
 MAX_PAGES = int(env('API_MAX_PAGES', '20'))
@@ -53,12 +54,26 @@ for s in SPECS:
     ent = reg['items'].setdefault(sid, {})
     ent.update({'title': s['title'], 'dom': s['dom'], 'cat': s['cat'], 'host': host})
     if any(o in host for o in OWN): ent.update({'state': '전용 수집기'}); skip += 1; continue
-    if (not spec or not spec.get('ops')) and s.get('external'):
+    fs = re.search(r'foodsafetykorea\.go\.kr.*svc_no=(\w+)', s.get('external') or '')
+    if fs and not (spec and spec.get('ops')):
+        if not FS_KEY: ent.update({'state': '제공처 열쇠', 'link': s['external'], 'need': 'FOODSAFETY_KEY'}); skip += 1; continue
+        try:
+            rows = []; meta = None
+            for page in range(MAX_PAGES):
+                raw = get(f"http://openapi.foodsafetykorea.go.kr/api/{FS_KEY}/{fs.group(1)}/json/{page * 1000 + 1}/{page * 1000 + 1000}")
+                got, meta = items_of(raw); rows += got
+                if len(got) < 1000: break
+            spec = None; s = dict(s, _rows=rows)
+        except Exception as e:
+            ent.update({'state': '실패', 'at': stamp(), 'msg': str(e)[:140]}); fail += 1; continue
+    if (not spec or not spec.get('ops')) and s.get('external') and '_rows' not in s:
         ent.update({'state': '제공처 열쇠', 'link': s['external']}); skip += 1; continue
-    if not spec or not spec.get('ops'):
+    if '_rows' not in s and (not spec or not spec.get('ops')):
         ent.update({'state': '명세 없음', 'urls': (s.get('plain') or {}).get('urls', [])[:3]}); skip += 1; continue
-    if not KEY: ent.update({'state': '열쇠 대기'}); skip += 1; continue
+    if '_rows' not in s and not KEY: ent.update({'state': '열쇠 대기'}); skip += 1; continue
     try:
+      if '_rows' in s: rows = s['_rows']; meta = None
+      else:
         op = spec['ops'][0]; base = op.get('full') or (op['path'] if op['path'].startswith('http') else f"https://{host.rstrip('/')}{op['path']}")
         params = {'serviceKey': KEY, 'pageNo': 1, 'numOfRows': 1000}
         names = [p['name'] for p in op.get('params', []) if p.get('name')]
@@ -80,17 +95,17 @@ for s in SPECS:
             got, meta = items_of(get(base, params))
             rows += got
             if len(got) < 1000: break
-        fields = sorted({k for r in rows[:200] for k in r.keys()})
-        afield = next((f for f in fields if ADDR.search(f)), None)
-        sdf = next((f for f in fields if re.search(r'(city|ctpv|ctprvn|sido|SIDO|CTPV)', f) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
-        sgf = next((f for f in fields if re.search(r'(citicoungu|sgg|signgu|sigungu|SGG|SIGNGU|sigun)', f, re.I) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
-        if sdf and sgf: cnt = collections.Counter(to_unit(f"{r.get(sdf, '')} {r.get(sgf, '')}") for r in rows)
-        else: cnt = collections.Counter(to_unit(r.get(afield)) for r in rows) if afield else collections.Counter()
-        cnt.pop(None, None)
-        jsave(os.path.join(PRIVATE, 'api', sid + '.json'), {'at': stamp(), 'rows': rows[:5000]})
-        jsave(os.path.join(DATA, 'api', sid + '.json'), {'at': stamp(), 'title': s['title'], 'n': len(rows), 'fields': fields, 'by_unit': dict(cnt.most_common())})
-        ent.update({'state': '정상' if rows else '빈 응답', 'n': len(rows), 'at': stamp(), 'fields': len(fields), 'units': len(cnt), 'msg': (json.dumps(meta, ensure_ascii=False)[:120] if not rows else '')})
-        ok += 1
+      fields = sorted({k for r in rows[:200] for k in r.keys()})
+      afield = next((f for f in fields if ADDR.search(f)), None)
+      sdf = next((f for f in fields if re.search(r'(city|ctpv|ctprvn|sido|SIDO|CTPV)', f) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
+      sgf = next((f for f in fields if re.search(r'(citicoungu|sgg|signgu|sigungu|SGG|SIGNGU|sigun)', f, re.I) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
+      if sdf and sgf: cnt = collections.Counter(to_unit(f"{r.get(sdf, '')} {r.get(sgf, '')}") for r in rows)
+      else: cnt = collections.Counter(to_unit(r.get(afield)) for r in rows) if afield else collections.Counter()
+      cnt.pop(None, None)
+      jsave(os.path.join(PRIVATE, 'api', sid + '.json'), {'at': stamp(), 'rows': rows[:5000]})
+      jsave(os.path.join(DATA, 'api', sid + '.json'), {'at': stamp(), 'title': s['title'], 'n': len(rows), 'fields': fields, 'by_unit': dict(cnt.most_common())})
+      ent.update({'state': '정상' if rows else '빈 응답', 'n': len(rows), 'at': stamp(), 'fields': len(fields), 'units': len(cnt), 'msg': (json.dumps(meta, ensure_ascii=False)[:120] if not rows else '')})
+      ok += 1
     except Exception as e:
         ent.update({'state': '실패', 'at': stamp(), 'msg': str(e)[:140]}); fail += 1
 reg['at'] = stamp(); reg['total'] = len(SPECS)
