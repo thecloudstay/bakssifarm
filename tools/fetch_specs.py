@@ -20,20 +20,22 @@ def get(url, data=None):
 import urllib.parse, urllib.error, html as H
 def cells(tr): return [re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', c))).strip() for c in re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', tr, re.S)]
 def parse_detail(h):
-    # 상세기능 조각: 요청주소·요청변수·출력결과 표
+    # 상세기능 조각: 요청주소 + 요청변수 표 + 출력결과 표 (칸: 국문·영문·크기·구분·샘플·설명)
     url = None
-    m = re.search(r'(https?://[A-Za-z0-9.\-]+(?::\d+)?/[A-Za-z0-9_/\-.]+)', H.unescape(h))
+    m = re.search(r'요청주소.*?(https?://[A-Za-z0-9.\-]+(?::\d+)?/[A-Za-z0-9_/\-.]+)', H.unescape(re.sub(r'<[^>]+>', ' ', h)), re.S)
     if m: url = m.group(1)
-    tables = re.findall(r'<table.*?</table>', h, re.S)
+    cut = h.find('출력결과')
     params, props = [], {}
-    for i, t in enumerate(tables):
-        rows = [cells(tr) for tr in re.findall(r'<tr.*?</tr>', t, re.S)]
-        head = ' '.join(rows[0]) if rows else ''
-        for r in rows[1:]:
-            if not r or not re.match(r'^[A-Za-z_][A-Za-z0-9_]*$', r[0]): continue
-            if '요청' in head or (not props and ('필수' in ' '.join(r) or len(r) >= 5) and i == 0):
-                params.append({'name': r[0], 'req': any(x in ('1', '필수', 'Y') for x in r[2:5]), 'desc': (r[1] if len(r) > 1 else '')[:40]})
-            else: props[r[0]] = (r[1] if len(r) > 1 else '')[:40]
+    for part, kind in ((h[:cut] if cut > 0 else h, 'req'), (h[cut:] if cut > 0 else '', 'res')):
+        for t in re.findall(r'<table.*?</table>', part, re.S):
+            for tr in re.findall(r'<tr.*?</tr>', t, re.S):
+                cs = [x for x in cells(tr) if x != '']
+                if len(cs) < 2: continue
+                en = next((x for x in cs[:3] if re.match(r'^[A-Za-z_][A-Za-z0-9_]*$', x)), None)
+                if not en or en in ('항목명',): continue
+                ko = cs[0] if cs[0] != en else ''
+                if kind == 'req': params.append({'name': en, 'req': '필수' in ' '.join(cs) or ' 1 ' in ' ' + ' '.join(cs[2:4]) + ' ', 'desc': ko[:40], 'sample': cs[-2][:30] if len(cs) >= 4 else ''})
+                else: props[en] = ko[:40]
     return url, params, props
 def parse_swagger(html):
     m = re.search(r'const\s+swaggerJson\s*=\s*`(.*?)`\s*;', html, re.S)

@@ -60,6 +60,7 @@ for s in SPECS:
         op = spec['ops'][0]; base = f"https://{host.rstrip('/')}{op['path']}"
         params = {'serviceKey': KEY, 'pageNo': 1, 'numOfRows': 1000}
         names = [p['name'] for p in op.get('params', []) if p.get('name')]
+        if 'resultType' in names: params['resultType'] = 'json'
         if 'type' in names: params['type'] = 'json'
         if '_type' in names: params['_type'] = 'json'
         if 'returnType' in names: params['returnType'] = 'json'
@@ -67,6 +68,7 @@ for s in SPECS:
         for p in op.get('params', []):
             n = p.get('name') or ''
             if p.get('req') and n not in params and DATEP.search(n): params[n] = day
+            elif p.get('req') and n not in params and p.get('sample') and p['sample'] not in ('옵션', '필수'): params[n] = p['sample']
         rows = []; meta = None
         for page in range(1, MAX_PAGES + 1):
             params['pageNo'] = page
@@ -75,7 +77,10 @@ for s in SPECS:
             if len(got) < 1000: break
         fields = sorted({k for r in rows[:200] for k in r.keys()})
         afield = next((f for f in fields if ADDR.search(f)), None)
-        cnt = collections.Counter(to_unit(r.get(afield)) for r in rows) if afield else collections.Counter()
+        sdf = next((f for f in fields if re.search(r'(city|ctpv|ctprvn|sido|SIDO|CTPV)', f) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
+        sgf = next((f for f in fields if re.search(r'(citicoungu|sgg|signgu|sigungu|SGG|SIGNGU|sigun)', f, re.I) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
+        if sdf and sgf: cnt = collections.Counter(to_unit(f"{r.get(sdf, '')} {r.get(sgf, '')}") for r in rows)
+        else: cnt = collections.Counter(to_unit(r.get(afield)) for r in rows) if afield else collections.Counter()
         cnt.pop(None, None)
         jsave(os.path.join(PRIVATE, 'api', sid + '.json'), {'at': stamp(), 'rows': rows[:5000]})
         jsave(os.path.join(DATA, 'api', sid + '.json'), {'at': stamp(), 'title': s['title'], 'n': len(rows), 'fields': fields, 'by_unit': dict(cnt.most_common())})
