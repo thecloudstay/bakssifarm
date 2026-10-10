@@ -8,7 +8,8 @@ import sys, os, re, json, datetime, collections, xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 KEY = env('DATA_GO_KR_KEY')
-FS_KEY = env('FOODSAFETY_KEY')  # 식품안전나라 열쇠(축산물 영업 허가대장·동물용 의약품·어류 질병 등)
+FS_KEY = env('FOODSAFETY_KEY')
+MF_KEY = env('MAFRA_KEY')  # 농식품 공공데이터포털 열쇠(도축실적·부분육 경락·가축질병 등). 없으면 견본 열쇠(5건)로 연결만 확인  # 식품안전나라 열쇠(축산물 영업 허가대장·동물용 의약품·어류 질병 등)
 SPECS = jload(os.path.join(ROOT, 'tools', 'api_specs.json'), [])
 OWN = ('openapi-data/service/user/grade', 'B552845/katSale', 'B552845/katOrigin', '1741000/', '1192136/dtRecent')
 MAX_PAGES = int(env('API_MAX_PAGES', '20'))
@@ -66,6 +67,22 @@ for s in SPECS:
             spec = None; s = dict(s, _rows=rows)
         except Exception as e:
             ent.update({'state': '실패', 'at': stamp(), 'msg': str(e)[:140]}); fail += 1; continue
+    grids = (s.get('ext_hint') or {}).get('grids') or []
+    if grids and 'mafra.go.kr' in (s.get('external') or '') and not (spec and spec.get('ops')):
+        try:
+            rows = []; meta = None; k = MF_KEY or 'sample'
+            for page in range(MAX_PAGES if MF_KEY else 1):
+                a = page * 1000 + 1; z = page * 1000 + (1000 if MF_KEY else 5)
+                got, meta = items_of(get(f"http://211.237.50.150:7080/openapi/{k}/json/{grids[0]}/{a}/{z}")); rows += got
+                if len(got) < 1000: break
+            if not MF_KEY:
+                ent.update({'state': '제공처 열쇠', 'link': s['external'], 'need': 'MAFRA_KEY', 'msg': f'견본 열쇠로 연결 확인 {len(rows)}건' if rows else '견본 열쇠 응답 없음', 'at': stamp()}); skip += 1; continue
+            spec = None; s = dict(s, _rows=rows)
+        except Exception as e:
+            ent.update({'state': '실패' if MF_KEY else '제공처 열쇠', 'link': s.get('external'), 'at': stamp(), 'msg': str(e)[:140]})
+            if MF_KEY: fail += 1
+            else: skip += 1
+            continue
     if (not spec or not spec.get('ops')) and s.get('external') and '_rows' not in s:
         ent.update({'state': '제공처 열쇠', 'link': s['external']}); skip += 1; continue
     if '_rows' not in s and (not spec or not spec.get('ops')):
