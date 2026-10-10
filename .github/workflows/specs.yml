@@ -22,6 +22,6 @@ jobs:
           SPEC_DEBUG: ${{ github.event.inputs.debug }}
       - run: |
           git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
-          git add tools/api_specs.json tools/_debug || true
+          git add tools/api_specs.json; git add -f tools/_debug 2>/dev/null || true
           git diff --cached --quiet || git commit -m "연동창구 명세 갱신 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           git pull --rebase -q && git push
