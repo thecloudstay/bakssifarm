@@ -53,7 +53,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/pro/', '업체·데이터'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
@@ -268,6 +268,19 @@ def sheet_page():
     b += '<h2>수입 단가(관세청, 달러/㎏)</h2>'
     if tr: b += '<table class="t"><tr><th>품목</th><th class="num">최근 달 단가</th><th class="num">수입량(톤)</th><th>비교</th></tr>' + ''.join(f'<tr><td>{E(it["name"])}</td><td class="num">{(it["rows"][-1]["usd_kg"] if it["rows"] else "–")}</td><td class="num">{(format(it["rows"][-1]["wgt_t"], ",") if it["rows"] else "–")}</td><td>{E(it["cmp"])}</td></tr>' for it in tr) + '</table>'
     else: b += '<p>쇠고기·돼지고기·옥수수·대두박·어분·전복·김·넙치·새우. 열쇠가 붙으면 매달 3일 갱신.</p>'
+    km = EXTRA['kamis'].get('rows') or []
+    b += '<h2>소매·도매 가격(축산·수산, 농산물유통정보)</h2>'
+    if km:
+        b += '<table class="t"><tr><th>구분</th><th>품목</th><th>단위</th><th class="num">어제</th><th class="num">1주 전</th><th class="num">1년 전</th></tr>' + ''.join(f'<tr><td>{E(r["구분"])}</td><td>{E(r["품목"])} {E(r.get("품종") or "")} {E(r.get("등급") or "")}</td><td>{E(r.get("단위") or "")}</td><td class="num">{E(r.get("당일") or "–")}</td><td class="num">{E(r.get("1주전") or "–")}</td><td class="num">{E(r.get("1년전") or "–")}</td></tr>' for r in km[:40]) + '</table>'
+    else: b += '<p>산지 경락가와 소비자 가격의 차이(유통 마진)를 보는 칸입니다. 농산물유통정보 열쇠가 붙으면 축산·수산 부류 소매·도매 가격이 매일 들어옵니다.</p>'
+    fx = EXTRA['fx']; oil = EXTRA['oil']
+    if fx.get('원/달러') or oil.get('today'):
+        b += '<h2>원가 바탕 — 환율·기름값</h2><dl class="kv">'
+        if fx.get('원/달러'): b += f'<dt>원/달러</dt><dd>{fx["원/달러"][-1][1]:,.1f} ({E(fx["원/달러"][-1][0])})</dd>'
+        if fx.get('원/100엔'): b += f'<dt>원/100엔</dt><dd>{fx["원/100엔"][-1][1]:,.1f}</dd>'
+        for o in oil.get('today') or []:
+            if any(k in (o.get('유종') or '') for k in ('경유', '등유')): b += f'<dt>{E(o["유종"])}</dt><dd>{E(o["값"])}원/ℓ (전일 {E(o.get("전일대비"))})</dd>'
+        b += '</dl><p class="mini">수입 사료 원료·수입 축수산물 원가는 환율로, 어선·하우스·축사 난방 원가는 경유·등유 값으로 움직입니다.</p>'
     b += '<h2>구입가 중위값(제보 5건 이상)</h2>'
     if buy: b += '<table class="t"><tr><th>품목</th><th>지역</th><th class="num">중위 단가</th><th class="num">제보</th></tr>' + ''.join(f'<tr><td>{E(it["kind"])} · {E(it["item"])}</td><td>{E(it["area"])}</td><td class="num">{it["median"]:,}원/{E(it["unit"])}</td><td class="num">{it["n"]}</td></tr>' for it in buy[:12]) + '</table>'
     else: b += '<p>아직 공개할 만큼 모이지 않았습니다. <a href="/buy/">구입가 시세판</a>에 제보가 쌓이면 품목·시군별 중위값이 여기 실립니다.</p>'
@@ -333,11 +346,50 @@ def about_page():
     b += '<tr><td>농장</td><td>지리적표시 등록부 (국립농산물품질관리원·산림청·국립수산물품질관리원) 204건</td><td>시군</td><td>등록 때마다</td></tr>'
     b += '<tr><td>경계</td><td>통계청 통계지리정보서비스 시군 경계(2018), 광역시는 구·군 합침</td><td>161개 시군</td><td>–</td></tr>'
     b += '<tr><td>시장</td><td>축산물 공판장 13곳·가축시장 9곳(박씨팜 정리), 수협 위판장 63곳(지구별 조합), 공영도매시장 32곳</td><td>핀</td><td>확인 때마다</td></tr></table>'
+    b += f'<p>그 밖에 가축·어장·농장·유통에 닿는 공공 연동창구 {len(APIS.get("items", {})):,}건을 매일 부릅니다. 목록과 상태는 <a href="/data/">자료 대장</a>에 있습니다.</p>'
     b += '<h2>지키는 것</h2><ul><li>개별 농가·어가의 위치와 이름은 싣지 않습니다. 가장 작은 단위는 리·읍면동입니다.</li><li>예시 숫자는 「예시」라고 씁니다. 확인 전 위치는 「위치 근사」로 표시합니다.</li><li>공공 자료의 출처를 밝히고, 이용 조건을 지킵니다.</li></ul>'
     b += '<h2>해외에서 배운 것</h2><p>시세만 판 미국 어너 배리는 1858년부터 살아 있고, 생산자가 만든 캐틀팩스는 1968년부터, 수매업체가 농가에게 앱을 주는 부셸은 북미 1,200곳에서 쓰입니다. 반대로 거래·재고·물류까지 떠안은 곳(독일 아그란도, 캐나다 파머스 엣지, 인도네시아 이피셔리)은 몇 해 안에 무너졌습니다. 박씨팜은 앞쪽을 따릅니다 — 숫자만 다루고, 돈은 농가가 아니라 업체·기관이 냅니다.</p>'
     b += '<h2>앞으로</h2><ul><li>축산물품질평가원 경락가·실시간 경매, 농산물 도매시장 경락가, 수협 위판 시세 연동</li><li>지방행정 인허가(가축사육업·도축장·사료 공장) 리 단위 집계</li><li>도매시장·산지공판장 경락 원자료(산지 항목)로 시군별 실제 출하 품목·금액 순위 — 등록 수가 아닌 「팔린 돈」 기준</li><li>관세청 수출입실적으로 수입 단가 비교</li><li>카카오 바탕지도(확대 단계)</li></ul>'
     b += '<h2>연락</h2><p>자료 오류, 위치 정정, 제휴는 <a href="/pro/">업체 등록</a> 양식이나 <a href="/gongu/">모집판</a>의 양식으로 남겨 주세요.</p>'
     write('/about/', shell('/about/', '소개 — 자료 출처·갱신·원칙 | 박씨팜', '박씨팜이 쓰는 자료와 출처, 갱신 주기, 개별 농가 비공개 원칙.', b), '0.5')
+
+# ── 자료 대장(공개) — 박씨팜이 연동하는 공공 자료 전부를 영역·갈래별로
+APIS = J('apis.json', {'items': {}})
+APISUM = {}
+_ad = os.path.join(SITE, 'data', 'api')
+if os.path.isdir(_ad):
+    for fn in os.listdir(_ad):
+        try: APISUM[fn[:-5]] = json.load(open(os.path.join(_ad, fn), encoding='utf-8'))
+        except Exception: pass
+EXTRA = {k: J('extra/' + k + '.json', {}) for k in ('kamis', 'fx', 'oil', 'kosis_livestock', 'usda_beef')}
+STATE_WORD = {'정상': ('연동 중', 'on'), '빈 응답': ('연동 중(어제 자료 없음)', 'on'), '전용 수집기': ('연동 중', 'on'), '열쇠 대기': ('열쇠 들어오면 바로', 'soon'), '제공처 열쇠': ('제공처 열쇠 필요', 'soon'), '실패': ('점검 중', 'off'), '명세 없음': ('명세 확인 중', 'soon')}
+def data_page():
+    it = APIS.get('items', {})
+    doms = ['동물농장', '어장', '농장', '공통']
+    cats = ['시세·거래', '수출입', '질병·이상', '환경·관측', '업체·인허가', '사육·생산', '원가']
+    cnt = collections.Counter(STATE_WORD.get(v.get('state'), ('?', ''))[0] for v in it.values())
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 자료 대장</p><h1 class="title">자료 대장 — 박씨팜이 연동하는 공공 자료</h1>'
+    b += f'<p class="lead">가축·어장·농장과 그 유통에 닿는 공공 연동창구 <b>{len(it):,}건</b>을 모았습니다. 공공데이터포털 낱말 검색 140여 개로 훑고, 관련 없는 것(반려동물·관광·교통 등)을 걸러 낸 목록입니다. 매일 아침 자동으로 부르고, 개별 사업장 자료는 시군 집계로만 공개합니다.</p>'
+    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(k)} {cnt.get(k, 0):,}</span>' for k, c in [('연동 중', 'on'), ('열쇠 들어오면 바로', 'soon'), ('제공처 열쇠 필요', 'soon'), ('점검 중', 'off')] if cnt.get(k)) + '</div>'
+    b += '<div class="toc">' + ''.join(f'<a href="#d-{d}">{d}</a>' for d in doms) + '</div>'
+    for d in doms:
+        rows = [(k, v) for k, v in it.items() if (v.get('dom') or '공통') == d]
+        if not rows: continue
+        b += f'<h2 id="d-{d}">{d} <small class="mini">{len(rows)}건</small></h2>'
+        for c in cats + sorted({v.get('cat') for k, v in rows} - set(cats)):
+            rr = sorted([x for x in rows if x[1].get('cat') == c], key=lambda x: (STATE_WORD.get(x[1].get('state'), ('', ''))[1] != 'on', x[1].get('title', '')))
+            if not rr: continue
+            b += f'<h3>{E(c or "기타")} <small class="mini">{len(rr)}</small></h3><table class="t"><tr><th>자료</th><th>상태</th><th class="num">건수</th><th class="num">시군</th></tr>'
+            for k, v in rr:
+                w, cl = STATE_WORD.get(v.get('state'), (v.get('state', ''), ''))
+                sm = APISUM.get(k) or {}
+                title = re.sub(r'^[^_]*_', '', v.get('title', '')) or v.get('title', '')
+                org = v.get('title', '').split('_')[0] if '_' in v.get('title', '') else ''
+                b += f'<tr><td>{E(title)}<span class="mini"> {E(org)}</span></td><td class="{"ok" if cl == "on" else "bad" if cl == "off" else "wait"}">{E(w)}</td><td class="num">{format(v["n"], ",") if v.get("n") else ""}</td><td class="num">{len(sm.get("by_unit") or {}) or ""}</td></tr>'
+            b += '</table>'
+    b += '<h2>업체·기관이 이 자료로 받을 수 있는 것</h2><ul><li>원자료를 매일 정리한 <a href="/sheet/">산지 시세 한 장</a>(경락·도매·소매·수입 단가·출하 예약·이상 신호)</li><li>시군·축종별 집계 파일(업체·인허가 수, 출하 금액, 사육 규모 변화)</li><li>특정 자료의 맞춤 묶음 — <a href="/pro/">업체 등록</a>에서 「지역 수요 보고서」를 고르세요.</li></ul>'
+    b += '<p class="mini">출처: 공공데이터포털, 식품안전나라, 국립수산물품질관리원, 농식품 공공데이터포털, 한국농수산식품유통공사 농산물유통정보, 한국은행, 한국석유공사 오피넷, 통계청, 미국 농무부. 각 자료의 이용 조건을 따릅니다.</p>'
+    write('/data/', shell('/data/', f'자료 대장 — 가축·어장·농장 공공 자료 {len(it):,}건 | 박씨팜', f'박씨팜이 연동하는 가축·어장·농장·유통 공공 자료 {len(it):,}건. 경락가·도매·소매·수입·도축·위판·질병·인허가·관측 자료를 영역·갈래별로.', b), '0.6')
 
 # ── 콘솔(공개 읽기 전용)
 def console_page():
@@ -351,7 +403,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
@@ -420,6 +472,9 @@ def sigun_pages():
         b += '<h2>팔 곳 — 공판장·가축시장·위판장·도매시장</h2>'
         if pins: b += '<ul>' + ''.join(f'<li><a href="/?mode={"sea" if p["type"] == "위판장" else "crop" if p["type"] == "도매시장" else "ani"}&pin={p["id"]}">{E(p["name"])}</a> <span class="mini">{E(p["type"])}{"" if p.get("verified") else " · 위치 근사"}</span></li>' for p in pins) + '</ul>'
         else: b += '<p>이 시군 안에는 등록된 공판장·위판장·도매시장이 없습니다. 지도에서 이웃 시군의 시장을 보세요.</p>'
+        ex = sorted(((k, sm) for k, sm in APISUM.items() if (sm.get('by_unit') or {}).get(u)), key=lambda x: -x[1]['by_unit'][u])
+        if ex:
+            b += '<h2>공공 자료로 본 이 시군 — 업체·시설·기록 수</h2><table class="t"><tr><th>자료</th><th class="num">이 시군</th><th class="num">전국</th></tr>' + ''.join(f'<tr><td>{E(re.sub(r"^[^_]*_", "", sm.get("title", "")))}</td><td class="num">{sm["by_unit"][u]:,}</td><td class="num">{sm.get("n", 0):,}</td></tr>' for k, sm in ex[:25]) + '</table><p class="mini">공공데이터포털 연동창구를 매일 불러 주소·시군 항목으로 센 값. 개별 업체 이름은 싣지 않습니다. <a href="/data/">자료 대장 →</a></p>'
         b += f'<p><a href="/gongu/">이 시군에서 사료·자재 공동구매 열기 →</a></p>'
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': f'{name} 농장·어장·동물농장 현황', 'description': desc, 'url': BASE + upath(u), 'license': 'https://www.kogl.or.kr/info/license.do', 'creator': {'@type': 'Organization', 'name': '박씨팜'}, 'spatialCoverage': name, 'temporalCoverage': f'{YEARS[0]}/{last}'}
         write(upath(u), shell(upath(u), f'{name} 농장·어장·동물농장 — 가축 사육, 양식 면허, 대표 품목 | 박씨팜', desc, b, f'/og/p/{sd}_{uname(u)}.png', jsonld=ld), '0.7')
@@ -455,5 +510,5 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
+    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); data_page(); console_page(); misc()
     print('글 화면', len(PAGES) + 1)
