@@ -12,15 +12,22 @@ WORDS = ('축산 가축 한우 육우 젖소 돼지 양돈 한돈 닭 가금 계
 JAR = urllib.request.HTTPCookieProcessor(); OP = urllib.request.build_opener(JAR)
 def get(url):
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko'})
-    with OP.open(req, timeout=40) as r: return r.read().decode('utf-8', 'replace')
+    with OP.open(req, timeout=15) as r: return r.read().decode('utf-8', 'replace')
 found = {}
+if os.environ.get('DISC_WORDS'): WORDS = os.environ['DISC_WORDS'].split(',')
+T0 = time.time(); LOG = []
+def save():
+    json.dump(sorted(found.values(), key=lambda x: -len(x['words'])), open(os.path.join(ROOT, 'api_discovered.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(LOG, open(os.path.join(ROOT, 'api_discover_log.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 DEBUG = os.environ.get('DISC_DEBUG')
 for w in WORDS:
+    if time.time() - T0 > 1500: LOG.append('시간 초과로 멈춤'); break
     for dtype, pat in (('API', r'/data/(\d+)/(openapi|standard)\.do'),):
         for page in range(1, 6):
             q = urllib.parse.urlencode({'dType': dtype, 'keyword': w, 'perPage': 100, 'currentPage': page, 'sort': ''})
+            t1 = time.time()
             try: h = get('https://www.data.go.kr/tcs/dss/selectDataSetList.do?' + q)
-            except Exception as e: print('실패', w, e); break
+            except Exception as e: LOG.append([w, page, '실패', str(e)[:80], round(time.time() - t1, 1)]); print('실패', w, e, flush=True); break
             if DEBUG and w == '축산' and page == 1:
                 os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', 'search.html'), 'w', encoding='utf-8').write(h)
             n = 0
@@ -35,7 +42,9 @@ for w in WORDS:
                 if i in cands: continue
                 e = found.setdefault(i, {'id': i, 'title': title, 'org': re.sub(r'<[^>]+>|\s+', ' ', org.group(1)).strip() if org else '', 'kind': m.group(2), 'words': []})
                 if w not in e['words']: e['words'].append(w)
+            LOG.append([w, page, n, len(h), round(time.time() - t1, 1)]); print(w, page, n, len(h), flush=True)
             time.sleep(0.4)
             if n < 100: break
-json.dump(sorted(found.values(), key=lambda x: -len(x['words'])), open(os.path.join(ROOT, 'api_discovered.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    save()
+save()
 print('새로 찾은 연동창구', len(found))

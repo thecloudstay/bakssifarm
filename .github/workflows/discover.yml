@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       debug: { description: '검색 화면 원문 저장(아무 값)', required: false }
+      words: { description: '이 낱말만(쉼표)', required: false }
 permissions:
   contents: write
 jobs:
@@ -16,10 +17,13 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: python tools/discover_apis.py
+        timeout-minutes: 30
+        continue-on-error: true
         env:
           DISC_DEBUG: ${{ github.event.inputs.debug }}
+          DISC_WORDS: ${{ github.event.inputs.words }}
       - run: |
           git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
-          git add tools/api_discovered.json; git add -f tools/_debug 2>/dev/null || true
+          git add tools/api_discovered.json tools/api_discover_log.json; git add -f tools/_debug 2>/dev/null || true
           git diff --cached --quiet || git commit -m "연동창구 더 찾기 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           git pull --rebase -q && git push
