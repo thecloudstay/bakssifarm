@@ -83,6 +83,8 @@ for i, c in enumerate(cands):
             for sq, nm in opts[:6]:
                 try:
                     dh = get('https://www.data.go.kr/tcs/dss/selectApiDetailFunction.do', {'oprtinSeqNo': sq, 'publicDataDetailPk': dpk, 'publicDataPk': c['id']})
+                    if os.environ.get('SPEC_DEBUG') and c['id'] in os.environ['SPEC_DEBUG'].split(','):
+                        os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', c['id'] + '_' + sq + '.html'), 'w', encoding='utf-8').write(dh)
                     url, params, props = parse_detail(dh)
                     if url:
                         u = urllib.parse.urlparse(url); host = host or u.netloc
