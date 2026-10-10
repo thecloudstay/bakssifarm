@@ -79,6 +79,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000330",
   "link_pk": "3037263",
+  "ext_hint": {
+   "grids": [
+    "Grid_20141226000000000174_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20141226000000000174_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141226000000000174_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -97,6 +106,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151204000000000563&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=",
   "link_pk": "3055523",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151204000000000316_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151204000000000316_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151204000000000316_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -724,6 +742,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20150827000000000463&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15008409",
+  "ext_hint": {
+   "grids": [
+    "Grid_20150827000000000225_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20150827000000000225_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20150827000000000225_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -973,6 +1000,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000538",
   "link_pk": "15109236",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151127000000000313_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151127000000000313_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151127000000000313_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -991,6 +1027,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
   "link_pk": "15109218",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151128000000000315_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151128000000000315_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151128000000000315_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1215,6 +1260,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141120000000000358&service_ty=O",
   "link_pk": "15050553",
+  "ext_hint": {
+   "grids": [
+    "Grid_20141119000000000080_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20141119000000000080_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000080_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1233,6 +1287,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000014&service_ty=O",
   "link_pk": "15050565",
+  "ext_hint": {
+   "grids": [
+    "Grid_20141119000000000068_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20141119000000000068_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000068_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1251,6 +1314,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000020&service_ty=O",
   "link_pk": "15052495",
+  "ext_hint": {
+   "grids": [
+    "Grid_20141119000000000062_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20141119000000000062_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000062_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1701,6 +1773,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000662&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15056599",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1774,6 +1850,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000494&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15056723",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151028000000000247_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151028000000000247_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000247_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2012,6 +2097,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000666&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15056813",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -2434,6 +2523,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000770",
   "link_pk": "15056992",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151214000000000337_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151214000000000337_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151214000000000337_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3076,6 +3174,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000772",
   "link_pk": "15057698",
+  "ext_hint": {
+   "grids": [
+    "Grid_20160127000000000341_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20160127000000000341_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20160127000000000341_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3289,6 +3396,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000668&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15057879",
+  "ext_hint": {
+   "grids": [
+    "Grid_20161213000000000413_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20161213000000000413_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161213000000000413_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3307,6 +3423,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000663&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15057886",
+  "ext_hint": {
+   "grids": [
+    "Grid_20161213000000000408_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20161213000000000408_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161213000000000408_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3654,6 +3779,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000671&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15058005",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -3987,6 +4116,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000500&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15058314",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4005,6 +4138,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000773",
   "link_pk": "15058324",
+  "ext_hint": {
+   "grids": [
+    "Grid_20160127000000000343_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20160127000000000343_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20160127000000000343_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4023,6 +4165,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000678&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15058568",
+  "ext_hint": {
+   "grids": [
+    "Grid_20161216000000000428_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20161216000000000428_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000428_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4041,6 +4192,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000496&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15058595",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151028000000000249_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151028000000000249_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000249_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -4732,6 +4892,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000669&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15058886",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -5416,6 +5580,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000673&filter_ty=O&getBack=G&sort_id=&s_da",
   "link_pk": "15059314",
+  "ext_hint": {
+   "grids": [
+    "Grid_20161216000000000423_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20161216000000000423_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000423_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -5434,6 +5607,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000660&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15059357",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -5765,6 +5942,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000664&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15059457",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -5783,6 +5964,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000497&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15059491",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151028000000000250_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151028000000000250_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000250_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -5801,6 +5991,15 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000667&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
   "link_pk": "15059494",
+  "ext_hint": {
+   "grids": [
+    "Grid_20161213000000000412_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20161213000000000412_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161213000000000412_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -6172,6 +6371,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200713000000001391&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=201410120001&shareYn=",
   "link_pk": "15061948",
+  "ext_hint": {
+   "grids": [
+    "Grid_20200713000000000605_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20200713000000000605_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20200713000000000605_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -6482,6 +6690,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20201005000000001393&service_ty=&filter_ty=O&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=&shareYn=",
   "link_pk": "15069189",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -8508,6 +8720,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000636&service_ty=O",
   "link_pk": "15080637",
+  "ext_hint": {
+   "grids": [
+    "Grid_20161206000000000387_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20161206000000000387_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161206000000000387_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9416,6 +9637,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000752",
   "link_pk": "15101698",
+  "ext_hint": {
+   "grids": [
+    "Grid_20170111000000000494_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20170111000000000494_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20170111000000000494_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9685,6 +9915,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000071",
   "link_pk": "15102408",
+  "ext_hint": {
+   "grids": [
+    "Grid_20141119000000000025_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20141119000000000025_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000025_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9703,7 +9942,8 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151210000000000570",
   "link_pk": "15102526",
-  "fetched": "2026-10-10"
+  "fetched": "2026-10-10",
+  "err": "<urlopen error _ssl.c:993: The handshake operation timed out>"
  },
  {
   "id": "15102748",
@@ -9721,6 +9961,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002114",
   "link_pk": "15102748",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220621000000000618_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220621000000000618_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000618_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9739,6 +9988,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002115",
   "link_pk": "15102749",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220621000000000619_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220621000000000619_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000619_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9757,6 +10015,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002112",
   "link_pk": "15102819",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220621000000000616_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220621000000000616_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000616_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9775,6 +10042,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220621000000002111",
   "link_pk": "15103013",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220621000000000615_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220621000000000615_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000615_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9983,6 +10259,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002359",
   "link_pk": "15109069",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220826000000000650_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220826000000000650_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000650_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10001,6 +10286,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002331",
   "link_pk": "15109070",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220824000000000642_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220824000000000642_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000642_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10019,6 +10313,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002330",
   "link_pk": "15109071",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220824000000000641_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220824000000000641_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000641_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10037,6 +10340,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002329",
   "link_pk": "15109072",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220824000000000640_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220824000000000640_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000640_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10055,6 +10367,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002328",
   "link_pk": "15109073",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220823000000000638_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220823000000000638_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000638_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10073,6 +10394,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002327",
   "link_pk": "15109074",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220823000000000637_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220823000000000637_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000637_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10091,6 +10421,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002326",
   "link_pk": "15109075",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220823000000000636_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220823000000000636_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000636_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10109,6 +10448,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002325",
   "link_pk": "15109076",
+  "ext_hint": {
+   "grids": [
+    "Grid_20220823000000000635_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20220823000000000635_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000635_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10127,6 +10475,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
   "link_pk": "15109218",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151128000000000315_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151128000000000315_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151128000000000315_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10145,6 +10502,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000535",
   "link_pk": "15109239",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151125000000000310_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151125000000000310_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151125000000000310_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10812,6 +11178,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141127000000000364",
   "link_pk": "15129484",
+  "ext_hint": {
+   "grids": [
+    "Grid_20151029000000000265_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151029000000000265_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151029000000000265_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -11028,6 +11403,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002459",
   "link_pk": "15140583",
+  "ext_hint": {
+   "grids": [
+    "Grid_20240625000000000653_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20240625000000000653_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000653_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -11483,6 +11867,15 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20250221000000002664",
   "link_pk": "15142145",
+  "ext_hint": {
+   "grids": [
+    "Grid_20250220000000000671_1"
+   ],
+   "apis": [
+    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20250220000000000671_1/1/5",
+    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20250220000000000671_1/1/5"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -14928,6 +15321,12 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20260306000000002986",
   "link_pk": "15157584",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "https://www.hanwooai.co.kr:7080/api/v1/inseminations"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -14946,6 +15345,12 @@
   },
   "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20260306000000002987",
   "link_pk": "15157585",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "https://www.hanwooai.co.kr:7080/api/v1/inseminations/weekly"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
