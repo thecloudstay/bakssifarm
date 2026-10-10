@@ -10,9 +10,13 @@ WORDS = ('축산 가축 한우 육우 젖소 돼지 양돈 한돈 닭 가금 계
          '조류인플루엔자 아프리카돼지열병 재해보험 농작물재해 농지 귀농 유통 로컬푸드 친환경 우수농산물 지리적표시 산림 임산물 표고 밤 '
          '면세유 어업인 농업인 농업경영체 축산농가 가축분뇨 퇴비 액비 악취 축사 양식장 어장 해역 갯벌 해양환경 기상 날씨 관측 예보').split()
 JAR = urllib.request.HTTPCookieProcessor(); OP = urllib.request.build_opener(JAR)
-def get(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko'})
-    with OP.open(req, timeout=15) as r: return r.read().decode('utf-8', 'replace')
+def get(url, to=60):
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko;q=0.9',
+                                               'Accept': 'text/html,application/xhtml+xml,*/*;q=0.8', 'Referer': 'https://www.data.go.kr/tcs/dss/selectDataSetList.do'})
+    with OP.open(req, timeout=to) as r: return r.read().decode('utf-8', 'replace')
+try: get('https://www.data.go.kr/')
+except Exception as e: print('첫 화면 실패', e)
+PER = int(os.environ.get('DISC_PER', '40'))
 found = {}
 if os.environ.get('DISC_WORDS'): WORDS = os.environ['DISC_WORDS'].split(',')
 T0 = time.time(); LOG = []
@@ -24,7 +28,7 @@ for w in WORDS:
     if time.time() - T0 > 1500: LOG.append('시간 초과로 멈춤'); break
     for dtype, pat in (('API', r'/data/(\d+)/(openapi|standard)\.do'),):
         for page in range(1, 6):
-            q = urllib.parse.urlencode({'dType': dtype, 'keyword': w, 'perPage': 100, 'currentPage': page, 'sort': ''})
+            q = urllib.parse.urlencode({'dType': dtype, 'keyword': w, 'perPage': PER, 'currentPage': page, 'sort': ''})
             t1 = time.time()
             try: h = get('https://www.data.go.kr/tcs/dss/selectDataSetList.do?' + q)
             except Exception as e: LOG.append([w, page, '실패', str(e)[:80], round(time.time() - t1, 1)]); print('실패', w, e, flush=True); break
@@ -44,7 +48,7 @@ for w in WORDS:
                 if w not in e['words']: e['words'].append(w)
             LOG.append([w, page, n, len(h), round(time.time() - t1, 1)]); print(w, page, n, len(h), flush=True)
             time.sleep(0.4)
-            if n < 100: break
+            if n < PER: break
     save()
 save()
 print('새로 찾은 연동창구', len(found))
