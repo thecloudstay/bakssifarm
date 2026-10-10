@@ -25,9 +25,9 @@ def save():
     json.dump(LOG, open(os.path.join(ROOT, 'api_discover_log.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 DEBUG = os.environ.get('DISC_DEBUG')
 for w in WORDS:
-    if time.time() - T0 > 1500: LOG.append('시간 초과로 멈춤'); break
+    if time.time() - T0 > 2600: LOG.append('시간 초과로 멈춤'); break
     for dtype, pat in (('API', r'/data/(\d+)/(openapi|standard)\.do'),):
-        for page in range(1, 6):
+        for page in range(1, 9):
             q = urllib.parse.urlencode({'dType': dtype, 'keyword': w, 'perPage': PER, 'currentPage': page, 'sort': ''})
             t1 = time.time()
             try: h = get('https://www.data.go.kr/tcs/dss/selectDataSetList.do?' + q)
@@ -35,16 +35,16 @@ for w in WORDS:
             if DEBUG and w == '축산' and page == 1:
                 os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', 'search.html'), 'w', encoding='utf-8').write(h)
             n = 0
-            for li in re.split(r'<li[ >]', h):
-                m = re.search(pat, li)
+            def tx(x): return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', '', x or ''))).strip()
+            for li in h.split('class="apply-result-item"')[1:]:
+                m = re.search(r'<a href="/data/(\d+)/(openapi|standard)\.do">(.*?)</a>', li, re.S)
                 if not m: continue
-                i = m.group(1)
-                t = re.search(r'<span class="title">(.*?)</span>', li, re.S)
-                title = re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', '', t.group(1)))).strip() if t else ''
-                org = re.search(r'제공기관</span>\s*<span[^>]*>(.*?)</span>', li, re.S)
-                n += 1
+                i = m.group(1); n += 1
                 if i in cands: continue
-                e = found.setdefault(i, {'id': i, 'title': title, 'org': re.sub(r'<[^>]+>|\s+', ' ', org.group(1)).strip() if org else '', 'kind': m.group(2), 'words': []})
+                sm = re.search(r'apply-result-summary">(.*?)</span>', li, re.S)
+                og = re.search(r'<strong>제공기관</strong>(.*?)</li>', li, re.S)
+                cat = re.search(r'krds-badge small bg-light-secondary">(.*?)</span>', li)
+                e = found.setdefault(i, {'id': i, 'title': tx(m.group(3)), 'org': tx(og.group(1)) if og else '', 'cat': tx(cat.group(1)) if cat else '', 'kind': m.group(2), 'sum': tx(sm.group(1))[:200] if sm else '', 'words': []})
                 if w not in e['words']: e['words'].append(w)
             LOG.append([w, page, n, len(h), round(time.time() - t1, 1)]); print(w, page, n, len(h), flush=True)
             time.sleep(0.4)
