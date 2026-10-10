@@ -1,0 +1,506 @@
+
+
+
+
+
+
+
+ 
+
+
+	<div class="data-info-tit">
+		<h2>
+			
+				
+					거래년월, 축종코드를 통해 축종코드, 품목명, 품목코드, 부위명, 부위 재고량을 조회하는 서비스
+				
+				
+			
+		</h2>
+	</div>
+
+<div class="data-report-group">
+	
+		<div class="data-report">
+			<h4>API 기본 정보</h4>
+			<div class="line-box type2">
+				<ul class="info-ul">
+					<li>
+						<strong class="key">활용승인 절차</strong>
+						<div class="value">
+							개발단계 :
+							
+								
+									자동승인
+									
+								
+								
+							
+							/ 운영단계 :
+							
+								
+									자동승인
+									
+								
+								
+							
+						</div>
+					</li>
+					<li>
+						<strong class="key">신청 가능 트래픽</strong>
+						<div class="value">
+							
+								
+								
+									개발계정 : 1,000
+									/ 운영계정 : 활용사례 등록시 신청하면 트래픽 증가 가능
+								
+							
+						</div>
+					</li>
+					<li>
+						<strong class="key">요청주소</strong>
+						<div class="value">
+							
+								
+								
+									
+								
+							
+						</div>
+					</li>
+					<li>
+						<strong class="key">서비스 URL</strong>
+						<div class="value">
+							
+								
+								
+									http://data.ekape.or.kr/openapi-data/service/user/grade/LPStock
+								
+							
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+	
+
+		
+		
+			<div class="data-report">
+				<h4>요청변수(Request Parameter)</h4>
+				<div class="krds-table-wrap m-table">
+					<table class="tbl col bg data">
+						<caption>해당 오픈API의 요청변수(Request Parameter) 항목에 대한 표로, 국문항목명, 영문 항목명, 항목크기, 항목구분, 샘플데이터, 항목 설명순으로 나열됩니다.</caption>
+						<colgroup>
+							<col style="width: 15%;">
+							<col style="width: 18%;">
+							<col style="width: 10%;">
+							<col style="width: 10%;">
+							<col style="width: 13%;">
+							<col>
+						</colgroup>
+						<thead>
+						<tr>
+							<th scope="col">항목명(국문)</th>
+							<th scope="col">항목명(영문)</th>
+							<th scope="col">항목크기</th>
+							<th scope="col">항목구분</th>
+							<th scope="col">샘플데이터</th>
+							<th scope="col">항목설명</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+							
+							
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="서비스키">서비스키</td>
+											<td data-paramtr-nm="serviceKey">serviceKey</td>
+											<td data-paramtr-size="100" class="just-pc">100</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="-" class="just-pc">-</td>
+											<td data-paramtr-dc="공공데이터포털에서 받은 인증키" >공공데이터포털에서 받은 인증키</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="거래연도">거래연도</td>
+											<td data-paramtr-nm="standYyyy">standYyyy</td>
+											<td data-paramtr-size="6" class="just-pc">6</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="2023" class="just-pc">2023</td>
+											<td data-paramtr-dc="거래연도" >거래연도</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="거래월">거래월</td>
+											<td data-paramtr-nm="standMm">standMm</td>
+											<td data-paramtr-size="2" class="just-pc">2</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="8" class="just-pc">8</td>
+											<td data-paramtr-dc="거래월" >거래월</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="축종코드">축종코드</td>
+											<td data-paramtr-nm="judgeKind">judgeKind</td>
+											<td data-paramtr-size="4" class="just-pc">4</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="4301" class="just-pc">4301</td>
+											<td data-paramtr-dc="축종코드(소:4301, 돼지: 4304)" >축종코드(소:4301, 돼지: 4304)</td>
+										</tr>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+							
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="data-report">
+				<h4>출력결과(Response Element)</h4>
+				<div class="krds-table-wrap m-table">
+					<table class="tbl col bg data">
+						<caption>해당 오픈API의 출력결과(Response Element) 항목에 대한 표로, 국문항목명, 영문 항목명, 항목크기, 항목구분, 샘플데이터, 항목 설명순으로 나열됩니다.</caption>
+						<colgroup>
+							<col style="width: 15%;">
+							<col style="width: 18%;">
+							<col style="width: 10%;">
+							<col style="width: 10%;">
+							<col style="width: 13%;">
+							<col>
+						</colgroup>
+						<thead>
+						<tr>
+							<th scope="col">항목명(국문)</th>
+							<th scope="col">항목명(영문)</th>
+							<th scope="col">항목크기</th>
+							<th scope="col">항목구분</th>
+							<th scope="col">샘플데이터</th>
+							<th scope="col">항목설명</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+							
+							
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+										<tr>
+											<td>결과코드</td>
+											<td>resultCode</td>
+											<td class="just-pc">2</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">00</td>
+											<td>결과코드</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>결과메시지</td>
+											<td>resultMsg</td>
+											<td class="just-pc">50</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">NORMAL SERVICE</td>
+											<td>결과메시지</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>날짜구분</td>
+											<td>standYm</td>
+											<td class="just-pc">8</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">2023년02월</td>
+											<td>날짜구분(거래년월)</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>축종명</td>
+											<td>judgeKindNm</td>
+											<td class="just-pc">4</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">소</td>
+											<td>축종명(소, 돼지)</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>축종코드</td>
+											<td>judgeKind</td>
+											<td class="just-pc">4</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">4301</td>
+											<td>축종코드(소:4301, 돼지: 4304)</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 돼지 안심</td>
+											<td>livestockPart_1</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">104822</td>
+											<td>소 돼지 안심</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 돼지 등심</td>
+											<td>livestockPart_2</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">515495</td>
+											<td>소 돼지 등심</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 채끝 돼지 전지</td>
+											<td>livestockPart_3</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">162819</td>
+											<td>소 채끝 돼지 전지</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 목심 돼지 후지</td>
+											<td>livestockPart_4</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">573142</td>
+											<td>소 목심 돼지 후지</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 앞다리 돼지 삼겹살</td>
+											<td>livestockPart_5</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">551348</td>
+											<td>소 앞다리 돼지 삼겹살</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 우둔 돼지 목심</td>
+											<td>livestockPart_6</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">367722</td>
+											<td>소 우둔 돼지 목심</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 설도 돼지 갈비</td>
+											<td>livestockPart_7</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">845723</td>
+											<td>소 설도 돼지 갈비</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 사태 돼지 특수부위</td>
+											<td>livestockPart_8</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">570619</td>
+											<td>소 사태 돼지 특수부위</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 갈비 돼지 잡육</td>
+											<td>livestockPart_9</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">1861590</td>
+											<td>소 갈비 돼지 잡육</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 양지</td>
+											<td>livestockPart_10</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">540876</td>
+											<td>소 양지</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 특수부위</td>
+											<td>livestockPart_11</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">298494</td>
+											<td>소 특수부위</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소 잡육</td>
+											<td>livestockPart_12</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">516057</td>
+											<td>소 잡육</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>재고량 합계</td>
+											<td>totStock</td>
+											<td class="just-pc">20</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">6908708</td>
+											<td>재고량 합계</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>단위</td>
+											<td>unit</td>
+											<td class="just-pc">4</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">kg</td>
+											<td>단위(소: kg, 돼지: ton)</td>
+										</tr>
+									
+								
+							
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+		
+	
+</div>
+
+
+<script type="text/javascript">
+
+	const apiObj = {
+		fn_selectApiDetailFunction: function() {
+			let dataObj = {};
+			dataObj.oprtinSeqNo = $("#open_api_detail_select").val();
+			dataObj.publicDataDetailPk	= $("#publicDataDetailPk").val();
+			dataObj.publicDataPk	= $("#publicDataPk").val();
+			
+			// 국가 중점 표준데이터인 경우 피케이가 변경돼야함.
+// 			if ($("#natCoreDataSe").val() === "Y") {
+// 				dataObj.publicDataPk	= $("#stdPublicDataPk").val();
+// 			}
+			
+			$.ajax({
+				url		: "/tcs/dss/selectApiDetailFunction.do",
+				method	: "post",
+				data	: dataObj,
+				
+				success	: function(data) {
+					$(".data-info-tit").remove();
+					$(".data-report-group").remove();
+					$("#apiDetailFunctionDiv").append(data);
+				}
+			})
+		},
+		
+		fn_goApplyReq: function() {
+			var mberId = "";
+			
+			if (fn_empty(mberId)) {
+				
+				if (confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) {
+					location.href = "/uim/login/loginView.do";
+					return;
+				} else {
+					return;
+				}
+			}
+			
+			location.href="/tcs/dss/redirectDevAcountRequestForm.do?publicDataPk=" + $("#publicDataPk").val();
+		}
+	}
+</script>

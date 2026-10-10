@@ -1,0 +1,519 @@
+
+
+
+
+
+
+
+ 
+
+
+	<div class="data-info-tit">
+		<h2>
+			
+				
+					①확인서발급일자, 확인서발급번호를 통해 검수(소비)일자, 납품업체사업자번호, 납품업체명, 확인서발급일자, 확인서발급번호, 가축코드, 가축명 등를 조회하는 ②소 검수(소비)확인정보 조회 기능
+				
+				
+			
+		</h2>
+	</div>
+
+<div class="data-report-group">
+	
+		<div class="data-report">
+			<h4>API 기본 정보</h4>
+			<div class="line-box type2">
+				<ul class="info-ul">
+					<li>
+						<strong class="key">활용승인 절차</strong>
+						<div class="value">
+							개발단계 :
+							
+								
+									자동승인
+									
+								
+								
+							
+							/ 운영단계 :
+							
+								
+									자동승인
+									
+								
+								
+							
+						</div>
+					</li>
+					<li>
+						<strong class="key">신청 가능 트래픽</strong>
+						<div class="value">
+							
+								
+								
+									개발계정 : 1,000
+									/ 운영계정 : 활용사례 등록시 신청하면 트래픽 증가 가능
+								
+							
+						</div>
+					</li>
+					<li>
+						<strong class="key">요청주소</strong>
+						<div class="value">
+							
+								
+								
+									
+								
+							
+						</div>
+					</li>
+					<li>
+						<strong class="key">서비스 URL</strong>
+						<div class="value">
+							
+								
+								
+									http://data.ekape.or.kr/openapi-data/service/user/confirm/cattleCoustomer
+								
+							
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+	
+
+		
+		
+			<div class="data-report">
+				<h4>요청변수(Request Parameter)</h4>
+				<div class="krds-table-wrap m-table">
+					<table class="tbl col bg data">
+						<caption>해당 오픈API의 요청변수(Request Parameter) 항목에 대한 표로, 국문항목명, 영문 항목명, 항목크기, 항목구분, 샘플데이터, 항목 설명순으로 나열됩니다.</caption>
+						<colgroup>
+							<col style="width: 15%;">
+							<col style="width: 18%;">
+							<col style="width: 10%;">
+							<col style="width: 10%;">
+							<col style="width: 13%;">
+							<col>
+						</colgroup>
+						<thead>
+						<tr>
+							<th scope="col">항목명(국문)</th>
+							<th scope="col">항목명(영문)</th>
+							<th scope="col">항목크기</th>
+							<th scope="col">항목구분</th>
+							<th scope="col">샘플데이터</th>
+							<th scope="col">항목설명</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+							
+							
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="확인서발급일자">확인서발급일자</td>
+											<td data-paramtr-nm="issueDate">issueDate</td>
+											<td data-paramtr-size="8" class="just-pc">8</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="20160519" class="just-pc">20160519</td>
+											<td data-paramtr-dc="검수확인서 발급일자" >검수확인서 발급일자</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="확인서발급번호">확인서발급번호</td>
+											<td data-paramtr-nm="issueNo">issueNo</td>
+											<td data-paramtr-size="15" class="just-pc">15</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="1005-05190332" class="just-pc">1005-05190332</td>
+											<td data-paramtr-dc="검수확인서 발급번호" >검수확인서 발급번호</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td data-paramtr-kor-nm="서비스키">서비스키</td>
+											<td data-paramtr-nm="serviceKey">serviceKey</td>
+											<td data-paramtr-size="100" class="just-pc">100</td>
+											<td data-paramtr-division="필" class="just-pc">필</td>
+											<td data-paramtr-bass-value="-" class="just-pc">-</td>
+											<td data-paramtr-dc="공공데이터포털에서 받은 인증키" >공공데이터포털에서 받은 인증키</td>
+										</tr>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+							
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="data-report">
+				<h4>출력결과(Response Element)</h4>
+				<div class="krds-table-wrap m-table">
+					<table class="tbl col bg data">
+						<caption>해당 오픈API의 출력결과(Response Element) 항목에 대한 표로, 국문항목명, 영문 항목명, 항목크기, 항목구분, 샘플데이터, 항목 설명순으로 나열됩니다.</caption>
+						<colgroup>
+							<col style="width: 15%;">
+							<col style="width: 18%;">
+							<col style="width: 10%;">
+							<col style="width: 10%;">
+							<col style="width: 13%;">
+							<col>
+						</colgroup>
+						<thead>
+						<tr>
+							<th scope="col">항목명(국문)</th>
+							<th scope="col">항목명(영문)</th>
+							<th scope="col">항목크기</th>
+							<th scope="col">항목구분</th>
+							<th scope="col">샘플데이터</th>
+							<th scope="col">항목설명</th>
+						</tr>
+						</thead>
+						<tbody>
+						
+							
+							
+								
+									
+								
+									
+								
+									
+								
+									
+										<tr>
+											<td>소의종류</td>
+											<td>judgeBreedNm</td>
+											<td class="just-pc">100</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">한우</td>
+											<td>소의종류</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>성별코드</td>
+											<td>judgeSexCd</td>
+											<td class="just-pc">6</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">025001</td>
+											<td>408001 암408002 수408003 거세408004 기타(프리마틴등)</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>성별</td>
+											<td>judgeSexNm</td>
+											<td class="just-pc">100</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">암</td>
+											<td>성별</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>등급코드</td>
+											<td>gradeCd</td>
+											<td class="just-pc">6</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">029008</td>
+											<td>029001 1++A029002 1++B029003 1++C029004 1+A029005 1+B029006 1+C029007 1A029008 1B029009 1C029010 2A029011 2B029012 2C029013 3A029014 3B029015 3C029016 등외029017 1++029018 1+029019 1029020 2029021 3029030 A029031 B029032 C029033 D02</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>육질등급명</td>
+											<td>qgradeNm</td>
+											<td class="just-pc">100</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">1</td>
+											<td>등급명</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>부위코드</td>
+											<td>cutmeatCd</td>
+											<td class="just-pc">2</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">10</td>
+											<td>부위코드</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>부위명</td>
+											<td>cutmeatNm</td>
+											<td class="just-pc">100</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">양지</td>
+											<td>부위명</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>부위중량</td>
+											<td>cutmeatWeight</td>
+											<td class="just-pc">8.2</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">4</td>
+											<td>부위중량</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>개체식별번호</td>
+											<td>cattleNo</td>
+											<td class="just-pc">14</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">002307192164</td>
+											<td>개체식별번호</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>검수(소비)업체사업자번호</td>
+											<td>applyRegNo</td>
+											<td class="just-pc">10</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">6098304067</td>
+											<td>검수(소비)업체사업자번호</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>검수(소비)업체명</td>
+											<td>applyComNm</td>
+											<td class="just-pc">100</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">창원중앙여자고등학교</td>
+											<td>검수(소비)업체명</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>검수(소비)일자</td>
+											<td>confirmDate</td>
+											<td class="just-pc">10</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">2016-05-26</td>
+											<td>검수(소비)일자</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>납품업체사업자번호</td>
+											<td>supplyRegNo</td>
+											<td class="just-pc">10</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">6060528058</td>
+											<td>납품업체사업자번호</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>납품업체명</td>
+											<td>supplyComNm</td>
+											<td class="just-pc">100</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">명성상사</td>
+											<td>납품업체명</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>확인서발급일자</td>
+											<td>issueDate</td>
+											<td class="just-pc">10</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">2016-05-19</td>
+											<td>확인서발급일자</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>확인서발급번호</td>
+											<td>issueNo</td>
+											<td class="just-pc">15</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">1005-05190332</td>
+											<td>확인서발급번호</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>가축코드</td>
+											<td>judgeKindCd</td>
+											<td class="just-pc">6</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">023001</td>
+											<td>023001 소023001 돼지</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>가축명</td>
+											<td>judgeKindNm</td>
+											<td class="just-pc">200</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">소</td>
+											<td>가축명</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>소의종류코드</td>
+											<td>judgeBreedCd</td>
+											<td class="just-pc">6</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">024001</td>
+											<td>024001 한우024001 젖소024001 육우024001 교잡우</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>결과코드</td>
+											<td>resultCode</td>
+											<td class="just-pc">2</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">00</td>
+											<td>결과코드</td>
+										</tr>
+									
+								
+									
+										<tr>
+											<td>결과메시지</td>
+											<td>resultMsg</td>
+											<td class="just-pc">50</td>
+											<td class="just-pc">필</td>
+											<td class="just-pc">OK</td>
+											<td>결과메시지</td>
+										</tr>
+									
+								
+							
+						
+						</tbody>
+					</table>
+				</div>
+			</div>
+		
+	
+</div>
+
+
+<script type="text/javascript">
+
+	const apiObj = {
+		fn_selectApiDetailFunction: function() {
+			let dataObj = {};
+			dataObj.oprtinSeqNo = $("#open_api_detail_select").val();
+			dataObj.publicDataDetailPk	= $("#publicDataDetailPk").val();
+			dataObj.publicDataPk	= $("#publicDataPk").val();
+			
+			// 국가 중점 표준데이터인 경우 피케이가 변경돼야함.
+// 			if ($("#natCoreDataSe").val() === "Y") {
+// 				dataObj.publicDataPk	= $("#stdPublicDataPk").val();
+// 			}
+			
+			$.ajax({
+				url		: "/tcs/dss/selectApiDetailFunction.do",
+				method	: "post",
+				data	: dataObj,
+				
+				success	: function(data) {
+					$(".data-info-tit").remove();
+					$(".data-report-group").remove();
+					$("#apiDetailFunctionDiv").append(data);
+				}
+			})
+		},
+		
+		fn_goApplyReq: function() {
+			var mberId = "";
+			
+			if (fn_empty(mberId)) {
+				
+				if (confirm("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동하시겠습니까?")) {
+					location.href = "/uim/login/loginView.do";
+					return;
+				} else {
+					return;
+				}
+			}
+			
+			location.href="/tcs/dss/redirectDevAcountRequestForm.do?publicDataPk=" + $("#publicDataPk").val();
+		}
+	}
+</script>

@@ -183,7 +183,6 @@
     "unit"
    ]
   },
-  "detail_err": "<urlopen error _ssl.c:993: The handshake operation timed out>",
   "spec": {
    "host": "data.ekape.or.kr",
    "scheme": "https",
@@ -338,6 +337,49 @@
       "avgYearPrc": "평년가격"
      },
      "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/consumerPriceMonth"
+    },
+    {
+     "path": "/openapi-data/service/user/confirm/fowlCoustomer",
+     "sum": "닭 검수(소비)확인정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "issueDate",
+       "req": false,
+       "desc": "확인서발급일자",
+       "sample": "2021-08-31"
+      },
+      {
+       "name": "issueNo",
+       "req": false,
+       "desc": "확인서발급번호",
+       "sample": "0382-08310001"
+      }
+     ],
+     "props": {
+      "applyRegNo": "검수(소비)업체사업자번호",
+      "applyComNm": "검수(소비)업체명",
+      "confirmDate": "검수(소비)일자",
+      "supplyRegNo": "납품업체사업자번호",
+      "supplyComNm": "납품업체명",
+      "issueDate": "확인서발급일자",
+      "issueNo": "확인서발급번호",
+      "judgeKindCd": "가축코드",
+      "judgeKindNm": "가축명",
+      "gradeCd": "등급코드",
+      "gradeNm": "등급명",
+      "cutmeatCd": "부위코드",
+      "cutmeatNm": "부위명",
+      "cutmeatWeight": "부위중량",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/confirm/fowlCoustomer"
     },
     {
      "path": "/openapi-data/service/user/confirm/cattleCoustomer",
