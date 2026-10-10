@@ -53,7 +53,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/sheet/', '시세 한 장'), ('/pro/', '업체·데이터'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/pro/', '업체·데이터'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
@@ -272,6 +272,36 @@ def sheet_page():
     write('/sheet/', shell('/sheet/', f'산지 시세 한 장 — {d} | 박씨팜', '소·돼지 등급별·공판장별 경락가, 돈육 대표가격, 수입 단가, 구입가 중위값, 오늘의 이상 신호를 아침마다 한 장으로. 업체·기관 시험 발송 신청.', b, '/og/price.png'), '0.8')
     write('/sheet/thanks/', shell('/sheet/thanks/', '신청되었습니다 | 박씨팜', '시세 한 장 시험 발송 신청 접수', '<h1 class="title">신청되었습니다</h1><p class="lead">다음 거래일 아침부터 보내 드립니다. <a href="/sheet/">시세 한 장으로</a></p>', noindex=True))
 
+
+# ── 두당·칸당 수익 계산기(내 수익은 얼마) — 입력은 이 기기에만 저장, 경락가는 최신값 자동
+def calc_page():
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 수익 계산기</p><h1 class="title">내 수익은 얼마 — 두당 수익 계산기</h1><p class="lead">내 숫자를 넣으면 한 마리(한 칸)당 남는 돈이 바로 나옵니다. 경락가는 최신 공판장 값을 자동으로 넣고, 공판장별 값으로 바꿔 「어디로 실으면 두당 얼마 더」도 봅니다. 넣은 숫자는 이 기기에만 남고 박씨팜으로 보내지지 않습니다.</p>'
+    b += '<div class="note">기본값은 화면 확인용 <span class="tag">예시 숫자</span>입니다. 내 농장 숫자로 바꿔 쓰세요.</div>'
+    b += '<div class="toc" id="ctab"><a href="#" data-t="hanwoo">한우 비육</a><a href="#" data-t="pig">돼지 비육</a><a href="#" data-t="sea">양식(칸당)</a></div>'
+    b += '<div class="grid2"><form class="form calc" id="cform" onsubmit="return false"></form><div><div class="card on" id="cout"></div><div class="card" id="cab" style="margin-top:12px"></div></div></div>'
+    b += '<h2>계산 방식</h2><ul><li>한우: 도체중 = 출하 체중 × 도체율, 판매액 = 도체중 × 경락가(원/㎏). 비용 = 송아지값 + 월 사료비 × 사육 개월 + 기타(약품·전기·출하비).</li><li>돼지: 두당 판매액 = 지육(㎏) × 탕박 경락가. 사료비 = (출하 체중 − 입식 체중) × 사료 요구율 × 사료 단가.</li><li>양식: 칸(줄·틀)당 수확량 × 위판 단가 − 종묘·사료·인건·시설 상각.</li><li>공판장별 차이는 축산물품질평가원 등급별 경락가의 공판장 항목을 씁니다(열쇠 연결 뒤).</li></ul>'
+    b += '<p><a href="/buy/">내 사료·종묘 구입가를 제보하면 우리 시군 중위값과 비교한 성적표를 받습니다 →</a></p>'
+    js = """<script>(function(){var P=%s;var M={
+hanwoo:{t:'한우 거세 비육',f:[['calf','송아지 구입가(원/두)',3500000],['months','사육 개월',22],['feed','월 사료비(원/두)',240000],['etc','기타 비용(원/두)',600000],['wt','출하 체중(㎏)',780],['yield','도체율(%%)',59],['price','경락가(원/㎏, 1+ 기준)',21040]],k:'한우 거세',g:'1+'},
+pig:{t:'돼지 비육(두당)',f:[['piglet','자돈 구입가 또는 생산비(원/두)',120000],['inw','입식 체중(㎏)',30],['outw','출하 체중(㎏)',116],['fcr','사료 요구율',2.9],['feedp','사료 단가(원/㎏)',620],['etc','기타 비용(원/두)',45000],['carc','지육(㎏)',88],['price','탕박 경락가(원/㎏)',5610]],k:'돼지 탕박',g:'1'},
+sea:{t:'양식(한 칸·한 줄당)',f:[['harv','수확량(㎏/칸)',350],['unit','위판 단가(원/㎏)',32000],['seed','종묘비(원/칸)',2400000],['feed','사료·먹이비(원/칸)',3200000],['labor','인건비(원/칸)',1500000],['facil','시설 상각(원/칸/년)',800000],['etc','기타(원/칸)',400000]]}};
+var T='hanwoo',PR=null,AB=null,ST={};try{ST=JSON.parse(localStorage.getItem('bk_calc')||'{}')}catch(e){}
+function v(k){var e=document.getElementById('c_'+k);return e?parseFloat(e.value)||0:0}function won(n){return Math.round(n).toLocaleString('ko-KR')+'원'}
+function draw(){var m=M[T];var h='<h3 style="margin-top:0">'+m.t+'</h3>';m.f.forEach(function(x){var val=(ST[T]&&ST[T][x[0]]!=null)?ST[T][x[0]]:x[2];if(x[0]==='price'&&PR&&!(ST[T]&&ST[T].price!=null)){var sec=(PR.ekape||[]).filter(function(s){return s.title===m.k})[0];if(sec){var r=sec.rows.filter(function(r){return r.g===m.g})[0];if(r)val=r.p}}h+='<label>'+x[1]+'<input type="number" step="any" id="c_'+x[0]+'" value="'+val+'"></label>'});h+='<button type="button" class="btn" id="creset">예시 값으로 되돌리기</button>';document.getElementById('cform').innerHTML=h;document.querySelectorAll('#cform input').forEach(function(i){i.addEventListener('input',calc)});document.getElementById('creset').onclick=function(){delete ST[T];save();draw()};
+document.querySelectorAll('#ctab a').forEach(function(a){a.style.background=a.getAttribute('data-t')===T?'var(--moss-soft)':''});calc()}
+function save(){try{localStorage.setItem('bk_calc',JSON.stringify(ST))}catch(e){}}
+function calc(){var m=M[T];ST[T]={};m.f.forEach(function(x){ST[T][x[0]]=v(x[0])});save();var rev,cost,unit='두',rows=[];
+if(T==='hanwoo'){var carc=v('wt')*v('yield')/100;rev=carc*v('price');cost=v('calf')+v('feed')*v('months')+v('etc');rows=[['도체중',Math.round(carc)+'㎏'],['판매액',won(rev)],['비용',won(cost)],['월당 남는 돈',won((rev-cost)/Math.max(1,v('months')))]]}
+else if(T==='pig'){var feedc=(v('outw')-v('inw'))*v('fcr')*v('feedp');rev=v('carc')*v('price');cost=v('piglet')+feedc+v('etc');rows=[['사료비',won(feedc)],['판매액',won(rev)],['비용',won(cost)],['100두 출하 시',won((rev-cost)*100)]]}
+else{unit='칸';rev=v('harv')*v('unit');cost=v('seed')+v('feed')+v('labor')+v('facil')+v('etc');rows=[['판매액',won(rev)],['비용',won(cost)],['손익분기 단가',won(cost/Math.max(1,v('harv')))+'/㎏']]}
+var pf=rev-cost;document.getElementById('cout').innerHTML='<h3>'+unit+'당 남는 돈</h3><div class="big" style="color:'+(pf>=0?'var(--moss)':'var(--brick)')+'">'+won(pf)+'</div><p>이익률 '+(rev?Math.round(pf/rev*1000)/10:0)+'%%</p><dl class="kv">'+rows.map(function(r){return '<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>'}).join('')+'</dl>';
+var ab=document.getElementById('cab');if(T==='sea'){ab.innerHTML='<h3>위판장별 비교</h3><p>수협 위판 시세가 연결되면 위판장마다 같은 품종 단가를 넣어 「어디 위판장이 칸당 얼마 더」를 보여 드립니다.</p>';return}
+var g=AB&&AB.cattle?AB.cattle:null;if(T==='hanwoo'&&g){var list=Object.keys(g).map(function(k){return [k,g[k]['1+']||g[k]['1']||0]}).filter(function(x){return x[1]}).sort(function(a,b){return b[1]-a[1]});var carc2=v('wt')*v('yield')/100;ab.innerHTML='<h3>공판장별로 실으면(1+ 기준)</h3><table class="t"><tr><th>공판장</th><th class="num">원/㎏</th><th class="num">두당 차이</th></tr>'+list.map(function(x){return '<tr><td>'+x[0]+'</td><td class="num">'+x[1].toLocaleString('ko-KR')+'</td><td class="num">'+won((x[1]-v('price'))*carc2)+'</td></tr>'}).join('')+'</table><p class="mini">운송비를 빼고 비교하세요. '+AB.date+' 축산물품질평가원.</p>'}
+else ab.innerHTML='<h3>공판장별로 실으면</h3><p>공판장별 경락가가 연결되면 「어느 공판장이 두당 얼마 더」를 이 자리에 순위로 보여 드립니다(같은 날·같은 등급 기준, 운송비 별도).</p>'}
+document.querySelectorAll('#ctab a').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();T=a.getAttribute('data-t');draw()})});
+Promise.all([fetch(P+'/data/price/latest.json').then(function(r){return r.ok?r.json():null}).catch(function(){return null}),fetch(P+'/data/price/abattoir.json').then(function(r){return r.ok?r.json():null}).catch(function(){return null})]).then(function(r){PR=r[0]&&r[0].ekape?r[0]:null;AB=r[1]&&r[1].cattle?r[1]:null;var q=new URLSearchParams(location.search);if(M[q.get('t')])T=q.get('t');draw()})})();</script>"""
+    write('/calc/', shell('/calc/', '두당 수익 계산기 — 한우·돼지·양식, 공판장별 두당 차이 | 박씨팜', '한우 비육·돼지 비육·양식 칸당 수익을 내 숫자로 계산. 최신 경락가 자동 입력, 공판장별로 실으면 두당 얼마 더 받는지 비교.', b, '/og/price.png').replace('<footer class="foot">', js % (json.dumps(PREFIX),) + '<footer class="foot">'), '0.8')
+
 # ── 우리 업체 이름 화면(부셸 식) — ?biz=상호&u=시도|시군 로 업체 이름이 붙은 농가용 화면
 def partner_page():
     b = '<p class="crumb"><a href="/">박씨팜</a> › 업체 화면</p><div id="pt-head"><h1 class="title"><span id="pt-biz">업체 이름</span>에서 드리는 오늘의 시세</h1><p class="lead"><span id="pt-area">시군</span> 농가를 위한 화면입니다. 오늘 경락가, 우리 시군 구입가 중위값, 공동구매 모집, 이상 신호를 한 번에. 자료는 박씨팜이 공공 자료와 농가 제보로 만듭니다.</p></div>'
@@ -406,5 +436,5 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); partner_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
+    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); console_page(); misc()
     print('글 화면', len(PAGES) + 1)
