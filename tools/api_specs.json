@@ -654,6 +654,7 @@
     "year"
    ]
   },
+  "detail_err": "HTTP Error 500: Internal Server Error",
   "fetched": "2026-10-10"
  },
  {
@@ -2058,6 +2059,7 @@
     "weight"
    ]
   },
+  "detail_err": "HTTP Error 500: Internal Server Error",
   "fetched": "2026-10-10"
  },
  {
@@ -4640,6 +4642,7 @@
    "urls": [],
    "names": []
   },
+  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000535",
   "fetched": "2026-10-10"
  },
  {
