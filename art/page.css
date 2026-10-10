@@ -74,3 +74,7 @@ table.t tr.ex td{color:var(--faint)}
 .pagenav a{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:8px;font-size:14.5px;color:var(--mute);font-weight:580;text-decoration:none}
 .pagenav a[aria-current="page"]{background:var(--paper);color:var(--ink);font-weight:700;box-shadow:0 0 0 1px var(--line),0 1px 2px rgba(30,38,33,.06)}
 @media (max-width:760px){.pagenav{margin-left:auto;overflow-x:auto;scrollbar-width:none;max-width:70%}.pagenav a{height:32px;padding:0 9px;font-size:13.5px;white-space:nowrap}}
+.form.calc{border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.form.calc label{grid-template-columns:1fr 150px;align-items:center;display:grid;gap:10px;font-weight:560}
+.form.calc input{text-align:right}
+@media (max-width:760px){.form.calc label{grid-template-columns:1fr 120px}}

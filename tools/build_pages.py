@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
+PRICE = J('price/latest.json', {}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -393,6 +393,9 @@ def sigun_pages():
             b += f'<p>양식 면허 <b>{e["n"]:,}건</b>, 면허 면적 <b>{man(e["ha"])}㏊</b>. 마을어장(어촌계) {e["v"][0]}곳 · {man(e["v"][1])}㏊' + (f', 정치망 {e["j"]}곳' if e['j'] else '') + '.</p>'
             if e['top']: b += '<table class="t"><tr><th>품종</th><th class="num">면허</th><th class="num">면적</th></tr>' + ''.join(f'<tr><td><a href="/?mode=sea&sp={urllib.parse.quote(t[0])}&u={urllib.parse.quote(u)}">{E(t[0])}</a></td><td class="num">{t[1]:,}건</td><td class="num">{man(t[2])}㏊</td></tr>' for t in e['top']) + '</table><p class="mini">국립해양조사원 어장정보도 2025. 지도를 확대하면 면허 구역이 하나씩 보입니다.</p>'
         else: b += '<p>이 시군에는 어장 면허 기록이 없습니다.</p>'
+        o = ORIG.get('units', {}).get(u)
+        if o:
+            b += '<h2>농장 — 실제로 팔린 품목(도매시장 낙찰 금액)</h2><table class="t"><tr><th>품목</th><th>갈래</th><th class="num">금액(최근 ' + str(len(ORIG.get('months', []))) + '개월)</th></tr>' + ''.join(f'<tr><td>{E(x[0])}</td><td>{E(x[2])}</td><td class="num">{man(x[1])}원</td></tr>' for x in o['top']) + '</table><p class="mini">한국농수산식품유통공사 경매원천정보, 원산지 기준. 농협 수매 품목 제외.</p>'
         b += '<h2>농장 — 대표 판매 품목</h2>'
         if c:
             b += '<p>' + ', '.join(f'<a href="/?mode=crop&sp={urllib.parse.quote(i)}">{E(i)}</a>' for i in c['items']) + '</p>'

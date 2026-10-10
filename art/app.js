@@ -32,7 +32,7 @@
 
   var S = { mode: 'ani', sp: '한우', m: 'n', sel: null, pin: null, zone: null, layers: { farm: true, market: true, cattle: true, wharf: true, zone: true, whole: true } };
   var LS, AQ, CR, PL, MK, TOPO, FEAT, UNITS = {}, map, polyLayer, lblLayer, pinLayer, zoneLayer, bizLayer, breaks = [], YEARS, SP, CELLS = {};
-  var PR = null, BIZ = null, BIZD = {}, SG = null;   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
+  var PR = null, BIZ = null, BIZD = {}, SG = null, OR = null;   // OR: 실제 출하 금액(경락 원산지 기준)   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
   var BIZN = { feed: '사료 공장', slaughter: '도축장', hatchery: '부화장', breeding: '종축장', vet: '동물병원', pharmacy: '동물약국' };
   var ALL_SEA = { k: '모든 양식', g: '', all: true };
 
@@ -77,6 +77,12 @@
       var x = SP.units[u]; if (!x) return null;
       return (S.m === 'n' ? x[0] : x[1]) || null;
     }
+    if (S.m === 's') {
+      var o = OR && OR.units[u]; if (!o) return null;
+      if (SP.all) return o.amt || null;
+      var hit = o.top.filter(function (x) { return x[0].indexOf(SP.k) >= 0 || SP.k.indexOf(x[0]) >= 0; })[0];
+      return hit ? hit[1] : null;
+    }
     var c2 = CR.units[u]; if (!c2) return null;
     if (SP.all) return S.m === 'k' ? c2.main : c2.n;
     return c2.items.indexOf(SP.k) >= 0 ? (S.m === 'k' ? SP.kind : c2.list.filter(function (x) { return x.name.indexOf(SP.k) >= 0; }).length) : null;
@@ -84,6 +90,7 @@
   function unitKeys() {
     if (S.mode === 'ani') return Object.keys(SP.d);
     if (S.mode === 'sea') return Object.keys(SP.all ? AQ.units : SP.units);
+    if (S.m === 's' && OR) return Object.keys(OR.units);
     return Object.keys(CR.units).filter(function (u) { return SP.all || CR.units[u].items.indexOf(SP.k) >= 0; });
   }
   function computeBreaks() {
@@ -105,6 +112,7 @@
     var v = val(u); if (v == null) return '자료 없음';
     if (S.mode === 'ani') return S.m === 'c' ? '농가 ' + pct(v) : S.m === 'n' ? man(v) + SP.w : man(v) + '호';
     if (S.mode === 'sea') return S.m === 'v' ? '마을어장 ' + man(v) + '곳' : S.m === 'n' ? '면허 ' + man(v) + '건' : man(v) + '㏊';
+    if (S.m === 's') return '출하 ' + man(v) + '원';
     if (S.m === 'k') return SP.all ? '대표 ' + v + ' · ' + CR.units[u].items.slice(0, 3).join(', ') : SP.k;
     return '등록 ' + v + '건';
   }
@@ -265,7 +273,7 @@
     } else {
       h += chip('farm', '대표 품목', KIND['과일']);
       h += chip('whole', '도매시장 <span class="n">' + PL.markets.length + '</span>', '#a8821a');
-      h += '<button type="button" class="chip wait" title="도매시장·산지공판장 경락 원자료의 산지(출하 시군) 항목으로 시군×품목 12개월 거래금액을 집계해 칠합니다. 벼·보리처럼 농협 수매로 빠지는 품목은 뺍니다"><span class="dot"></span>실제 출하 금액(경락 기준) <span class="n">곧 추가</span></button>';
+      if (!OR) h += '<button type="button" class="chip wait" title="도매시장·산지공판장 경락 원자료의 산지(출하 시군) 항목으로 시군×품목 12개월 거래금액을 집계해 칠합니다. 벼·보리처럼 농협 수매로 빠지는 품목은 뺍니다"><span class="dot"></span>실제 출하 금액(경락 기준) <span class="n">곧 추가</span></button>';
     }
     $('#layers').innerHTML = h;
     $('#layers').querySelectorAll('[data-l]').forEach(function (b) {
@@ -296,6 +304,7 @@
     var unit, title;
     if (S.mode === 'ani') { unit = S.m === 'n' ? SP.w : '호'; title = S.sp + ' ' + (S.m === 'n' ? '마릿수' : '농가 수') + ' · ' + YEARS[YEARS.length - 1] + '년 1월'; }
     else if (S.mode === 'sea') { unit = S.m === 'n' ? '건' : S.m === 'a' ? '㏊' : '곳'; title = S.m === 'v' ? '마을어장(어촌계) 수' : (SP.all ? '양식 ' : SP.k + ' 양식 ') + (S.m === 'n' ? '면허 수' : '면적'); }
+    else if (S.m === 's') { unit = '원'; title = (SP.all ? '' : SP.k + ' ') + '실제 출하 금액(도매시장 낙찰, 최근 ' + OR.months.length + '개월)'; }
     else { unit = '건'; title = (SP.all ? '지리적표시' : SP.k) + ' 등록 수'; }
     var lo = breaks[0], hi = breaks[breaks.length - 1];
     el.innerHTML = '<h3>' + esc(title) + '</h3><div class="sw">' + R.map(function (c) { return '<span style="background:' + c + '"></span>'; }).join('') +
@@ -308,6 +317,7 @@
     return '<section class="sec more-in"><p class="eyebrow"><span>농가가 가장 먼저 묻는 것</span></p><div class="cards">' +
       '<a href="price/index.html"><b>오늘 경락가는 얼마?</b><span>소·돼지 등급별·공판장별 경락가, 도매시장·위판 시세</span></a>' +
       '<a href="buy/"><b>옆집은 사료·종묘를 얼마에 사나?</b><span>익명 구입가 제보로 시군별 중위값, 내 가격 성적표</span></a>' +
+      '<a href="calc/"><b>내 수익은 한 마리당 얼마?</b><span>최신 경락가 자동 입력, 공판장별로 실으면 두당 얼마 더</span></a>' +
       '<a href="gongu/index.html"><b>같이 사면 얼마나 싸지나?</b><span>같은 시군끼리 사료·포장 박스·자재 공동구매 모집판</span></a>' +
       '<a href="sheet/"><b>산지 시세 한 장</b><span>등급별·공판장별 경락가, 수입 단가, 이상 신호를 아침마다 한 장으로</span></a>' +
       '<a href="pro/index.html"><b>업체이신가요?</b><span>우리 업체 이름이 붙은 시세 화면을 농가에게 — 농가는 무료, 업체가 냅니다</span></a></div></section>';
@@ -521,6 +531,13 @@
       return '<button type="button" class="chipk" data-sp="' + esc(it) + '"><i style="background:' + KIND[k] + '"></i>' + esc(it) + '</button>';
     }).join('') + '</div>';
   }
+  function orBlock(u) {
+    var o = OR && OR.units[u]; if (!o) return '';
+    var mx = o.top[0] ? o.top[0][1] : 1;
+    return '<section class="sec"><p class="eyebrow"><span>실제로 팔린 품목(도매시장 낙찰 금액)</span><span>최근 ' + OR.months.length + '개월</span></p><ol class="top">' + o.top.map(function (x, i) {
+      return '<li data-sp="' + esc(x[0]) + '" tabindex="0"><span class="no">' + (i + 1) + '</span><span class="nm">' + esc(x[0]) + (x[2] ? ' <small>' + esc(x[2]) + '</small>' : '') + '</span><span class="v">' + man(x[1]) + '원</span><span class="bar2"><span style="width:' + (x[1] / mx * 100).toFixed(1) + '%"></span></span></li>';
+    }).join('') + '</ol><p class="mini">한국농수산식품유통공사 경매원천정보의 원산지 기준. 농협 수매 품목(쌀·보리·콩)은 뺐습니다.</p></section>';
+  }
   function cropPanel() {
     var h = '';
     if (S.sel) {
@@ -531,6 +548,7 @@
         h += '<section class="sec"><h1 class="place">' + esc(unitFull(S.sel)) + '<small>대표 판매 품목 · 지리적표시 ' + c.n + '건</small></h1>';
         h += kindChips(c.items, c.list);
         h += '<p class="read">' + esc(unitName(S.sel)) + ' 하면 ' + c.items.slice(0, 3).join(', ') + '. 등록 품목을 누르면 같은 품목을 가진 다른 시군이 지도에 보입니다.</p></section>';
+        h += orBlock(S.sel);
         h += '<section class="sec"><p class="eyebrow"><span>등록 내역</span><span>등록일</span></p><ul class="reg">' + c.list.map(function (x) { return '<li><span><i style="background:' + KIND[x.kind] + '"></i>' + esc(x.name) + ' <small>' + esc(x.cat) + '</small></span><span class="dt">' + esc(x.date.slice(0, 7).replace('-', '.')) + '</span></li>'; }).join('') + '</ul></section>';
       }
       var ms = PL.markets.filter(function (m) { return m.u === S.sel; });
@@ -701,6 +719,8 @@
     if (!keep) { S.sel = null; S.pin = null; S.zone = null; }
     var ms = mode().measures.map(function (m) { return m[0]; }); if (!keep || ms.indexOf(S.m) < 0) S.m = ms.indexOf(S.m) >= 0 && keep ? S.m : ms[0];
     var first = speciesList()[0]; SP = findSpecies(S.sp) || first; S.sp = SP.k; $('#pickName').textContent = S.sp;
+    if (k === 'crop' && OR && OR.units && !MODES.crop.measures.some(function (m) { return m[0] === 's'; })) MODES.crop.measures.unshift(['s', '출하 금액']);
+    if (k === 'crop' && OR && (!keep || !new URLSearchParams(location.search).get('m'))) S.m = 's';
     drawSeg(); computeBreaks(); restyle(); drawLabels(); drawPins(); drawZones(); drawBiz(); drawLayers(); drawLegend(); hint(); renderPanel();
     document.title = '박씨팜 ' + mode().name + ' — ' + S.sp + ' 지도';
   }
@@ -729,10 +749,10 @@
   /* ── 시작 */
   function get(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
   function opt(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json')])
+  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json'), opt('data/origin.json')])
     .then(function (res) {
       LS = res[0]; TOPO = res[1]; MK = res[2]; AQ = res[3]; CR = res[4]; PL = res[5]; YEARS = LS.years;
-      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9];
+      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9]; OR = res[10] && res[10].units ? res[10] : null;
       FEAT = topojson.feature(TOPO, TOPO.objects.units);
       var q = new URLSearchParams(location.search);
       S.mode = MODES[q.get('mode')] ? q.get('mode') : 'ani';
