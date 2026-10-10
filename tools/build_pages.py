@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -157,6 +157,12 @@ def price_page():
 <tr class="ex"><td>1+</td><td class="num">5,820</td><td class="num">+35</td><td class="num">예시</td></tr><tr class="ex"><td>1</td><td class="num">5,610</td><td class="num">+22</td><td class="num">예시</td></tr><tr class="ex"><td>2</td><td class="num">4,980</td><td class="num">−10</td><td class="num">예시</td></tr><tr class="ex"><td>등외</td><td class="num">3,900</td><td class="num">0</td><td class="num">예시</td></tr></table>'''
     b += '<h2>공판장별 경매</h2><p>전국 축산물 공판장 13곳의 당일 경매는 축산물품질평가원 실시간 경매 창구(소·돼지, 등급별)로 받습니다. 열쇠가 연결되면 공판장을 고를 수 있는 표가 이 자리에 들어오고, 지도의 공판장 핀에서도 바로 보입니다.</p>'
     b += '<table class="t"><tr><th>공판장</th><th>지역</th><th>연결</th></tr>' + ''.join(f'<tr><td>{E(m["name"])}</td><td>{E(m["sido"] + " " + m["sigun"])}</td><td class="wait">연동 전</td></tr>' for m in MK['items'] if m['type'] == '공판장') + '</table>'
+    if WH.get('items'):
+        b += f'<h2>공영도매시장 경락가 — {E(WH.get("date", ""))}</h2><p class="mini">한국농수산식품유통공사 정산정보 · 거래 금액 큰 품목 순 · ㎏ 단위 거래만 ㎏당 값 계산</p><table class="t"><tr><th>품목</th><th>갈래</th><th class="num">원/㎏</th><th class="num">거래 금액</th><th>비싸게 받은 도매시장</th></tr>'
+        for it in WH['items'][:40]:
+            top = [m for m in it['markets'] if m[1]][:3]
+            b += f'<tr><td>{E(it["item"])}</td><td>{E(it["grp"])}</td><td class="num">{format(it["won_kg"], ",") if it["won_kg"] else "–"}</td><td class="num">{man(it["amt"])}원</td><td class="mini">{E(" · ".join(f"{m[0]} {m[1]:,}" for m in sorted(top, key=lambda x: -x[1])))}</td></tr>'
+        b += '</table>'
     b += '<h2>농산물 도매시장 경락가</h2><p>공영도매시장 32곳의 품목·등급별 경락가는 농림축산식품부 도매시장 통합 창구(농넷)로 받습니다. 지도의 <a href="/?mode=crop">농장 보기</a>에서 시군을 누르면 그 지역 대표 품목의 경락가가 함께 보이도록 준비하고 있습니다.</p>'
     b += '<h2>수산물 위판 시세</h2><p>수협 위판장 63곳의 품종별 위판 시세는 수협중앙회 위판정보 창구로 받습니다. 지도의 <a href="/?mode=sea">어장 보기</a>에서 위판장을 누르면 보이게 됩니다.</p>'
     b += '<h2>수입 단가와 비교</h2>'
@@ -257,6 +263,8 @@ def sheet_page():
         if rep: b += '<p class="mini">돈육 대표가격: ' + ' · '.join(f'{x["date"]} {x["kind"]} {x["p"]:,}원' for x in rep if x.get('p')) + '</p>'
     else:
         b += '<p>공공데이터포털 열쇠가 붙으면 이 자리에 전날 경락가가 등급별·공판장별로 들어옵니다. 지금은 표의 틀만 있습니다.</p>'
+    if WH.get('items'):
+        b += '<h2>공영도매시장 상위 품목</h2><table class="t"><tr><th>품목</th><th class="num">원/㎏</th><th class="num">거래 금액</th></tr>' + ''.join(f'<tr><td>{E(it["item"])}</td><td class="num">{format(it["won_kg"], ",") if it["won_kg"] else "–"}</td><td class="num">{man(it["amt"])}원</td></tr>' for it in WH['items'][:15]) + '</table>'
     b += '<h2>수입 단가(관세청, 달러/㎏)</h2>'
     if tr: b += '<table class="t"><tr><th>품목</th><th class="num">최근 달 단가</th><th class="num">수입량(톤)</th><th>비교</th></tr>' + ''.join(f'<tr><td>{E(it["name"])}</td><td class="num">{(it["rows"][-1]["usd_kg"] if it["rows"] else "–")}</td><td class="num">{(format(it["rows"][-1]["wgt_t"], ",") if it["rows"] else "–")}</td><td>{E(it["cmp"])}</td></tr>' for it in tr) + '</table>'
     else: b += '<p>쇠고기·돼지고기·옥수수·대두박·어분·전복·김·넙치·새우. 열쇠가 붙으면 매달 3일 갱신.</p>'
