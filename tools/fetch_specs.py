@@ -98,10 +98,15 @@ for i, c in enumerate(cands):
             if ops:
                 rec['spec'] = {'host': host, 'scheme': 'https', 'ops': ops, 'from': 'detail'}; ok += 1
             elif not opts:
-                try:
-                    lk = json.loads(get('https://www.data.go.kr/tcs/dss/selectApiLinkUrl.do?' + urllib.parse.urlencode({'publicDataPk': c['id']})))
-                    if lk.get('linkUrl'): rec['external'] = lk['linkUrl']
-                except Exception: pass
+                # 바로가기(링크형): 표준데이터는 다른 번호로 연결됨 → 화면의 fn_goUrlLink('번호') 를 우선
+                lpk = re.search(r"fn_goUrlLink\('(\d+)'\)", html)
+                for pk in dict.fromkeys([lpk.group(1) if lpk else c['id'], c['id']]):
+                    try:
+                        lk = json.loads(get('https://www.data.go.kr/tcs/dss/selectApiLinkUrl.do?' + urllib.parse.urlencode({'publicDataPk': pk})))
+                        if isinstance(lk, str): lk = json.loads(lk)
+                        if lk.get('linkUrl'): rec['external'] = lk['linkUrl']; rec['link_pk'] = pk; break
+                        rec['link_err'] = str(lk.get('errorDc') or lk)[:120]
+                    except Exception as e: rec['link_err'] = str(e)[:120]
             if os.environ.get('SPEC_DEBUG') and c['id'] in os.environ['SPEC_DEBUG'].split(','):
                 os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', c['id'] + '.html'), 'w', encoding='utf-8').write(html)
         rec['fetched'] = time.strftime('%Y-%m-%d')
