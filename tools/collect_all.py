@@ -53,11 +53,13 @@ for s in SPECS:
     ent = reg['items'].setdefault(sid, {})
     ent.update({'title': s['title'], 'dom': s['dom'], 'cat': s['cat'], 'host': host})
     if any(o in host for o in OWN): ent.update({'state': '전용 수집기'}); skip += 1; continue
+    if (not spec or not spec.get('ops')) and s.get('external'):
+        ent.update({'state': '제공처 열쇠', 'link': s['external']}); skip += 1; continue
     if not spec or not spec.get('ops'):
         ent.update({'state': '명세 없음', 'urls': (s.get('plain') or {}).get('urls', [])[:3]}); skip += 1; continue
     if not KEY: ent.update({'state': '열쇠 대기'}); skip += 1; continue
     try:
-        op = spec['ops'][0]; base = f"https://{host.rstrip('/')}{op['path']}"
+        op = spec['ops'][0]; base = op.get('full') or (op['path'] if op['path'].startswith('http') else f"https://{host.rstrip('/')}{op['path']}")
         params = {'serviceKey': KEY, 'pageNo': 1, 'numOfRows': 1000}
         names = [p['name'] for p in op.get('params', []) if p.get('name')]
         if 'resultType' in names: params['resultType'] = 'json'
@@ -65,6 +67,9 @@ for s in SPECS:
         if '_type' in names: params['_type'] = 'json'
         if 'returnType' in names: params['returnType'] = 'json'
         if 'dataType' in names: params['dataType'] = 'JSON'
+        for p in op.get('params', []):
+            if re.search(r'(re?tu?rn|result|data)_?type', p.get('name') or '', re.I) and str(p.get('sample', '')).lower() == 'json': params[p['name']] = 'json'
+        if 'ServiceKey' in names: params['ServiceKey'] = params.pop('serviceKey')
         for p in op.get('params', []):
             n = p.get('name') or ''
             if p.get('req') and n not in params and DATEP.search(n): params[n] = day

@@ -364,7 +364,7 @@ def console_page():
     if ap.get('items'):
         sm = ap.get('summary', {})
         b += f'<h2>연동 대장 — 연동창구 {len(ap["items"])}건</h2><p class="mini">' + ' · '.join(f'{E(k)} {v}' for k, v in sm.items()) + f' · {E(ap.get("at", ""))}</p>'
-        order = {'정상': 0, '실패': 1, '빈 응답': 2, '전용 수집기': 3, '열쇠 대기': 4, '명세 없음': 5}
+        order = {'정상': 0, '실패': 1, '빈 응답': 2, '전용 수집기': 3, '열쇠 대기': 4, '제공처 열쇠': 5, '명세 없음': 6}
         rows = sorted(ap['items'].items(), key=lambda kv: (order.get(kv[1].get('state'), 9), kv[1].get('dom', ''), kv[1].get('cat', '')))
         b += '<table class="t"><tr><th>연동창구</th><th>갈래</th><th>상태</th><th class="num">건수</th><th>메모</th></tr>' + ''.join(
             f'<tr><td>{E(v.get("title", ""))} <span class="mini">{E(k)}</span></td><td>{E(v.get("dom", ""))} · {E(v.get("cat", ""))}</td><td class="{"ok" if v.get("state") == "정상" else "bad" if v.get("state") == "실패" else "wait"}">{E(v.get("state", ""))}</td><td class="num">{v.get("n", "") if v.get("n") is not None else ""}</td><td class="mini">{E(v.get("msg", "") or v.get("at", ""))}</td></tr>' for k, v in rows) + '</table>'

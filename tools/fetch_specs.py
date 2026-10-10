@@ -109,6 +109,16 @@ for i, c in enumerate(cands):
                     except Exception as e: rec['link_err'] = str(e)[:120]
             if os.environ.get('SPEC_DEBUG') and c['id'] in os.environ['SPEC_DEBUG'].split(','):
                 os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', c['id'] + '.html'), 'w', encoding='utf-8').write(html)
+        if rec.get('external'):
+            # 제공처 화면에서 부르는 주소 단서 모으기(농식품 공공데이터: Grid_… 번호, 그 밖: api 들어간 주소)
+            try:
+                eh = get(rec['external'])
+                grids = sorted(set(re.findall(r'Grid_\d+_\d+', eh)))
+                apis = sorted(set(u for u in re.findall(r'https?://[A-Za-z0-9.\-:]+/[A-Za-z0-9_/\-.{}]*', eh) if re.search(r'api', u, re.I) and not u.endswith(('.js', '.css', '.png', '.gif', '.jpg'))))[:15]
+                rec['ext_hint'] = {'grids': grids[:10], 'apis': apis}
+                if os.environ.get('SPEC_DEBUG') and (c['id'] in os.environ['SPEC_DEBUG'].split(',') or 'ext' in os.environ['SPEC_DEBUG'].split(',')):
+                    os.makedirs(os.path.join(ROOT, '_debug'), exist_ok=True); open(os.path.join(ROOT, '_debug', c['id'] + '_ext.html'), 'w', encoding='utf-8').write(eh)
+            except Exception as e: rec['ext_err'] = str(e)[:120]
         rec['fetched'] = time.strftime('%Y-%m-%d')
     except Exception as e:
         rec = old.get(c['id'], rec); rec['err'] = str(e)[:120]
