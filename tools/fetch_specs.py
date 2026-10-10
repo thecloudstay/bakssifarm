@@ -78,11 +78,11 @@ for i, c in enumerate(cands):
             rec['plain'] = parse_plain(html)
             dpk = re.search(r'id="publicDataDetailPk"[^>]*value="([^"]+)"|name="publicDataDetailPk"[^>]*value="([^"]+)"|publicDataDetailPk" value="([^"]+)"', html)
             dpk = next((g for g in (dpk.groups() if dpk else []) if g), None)
-            opts = re.findall(r'<option value="(\d+)"[^>]*>\s*([^<]*)', html.split('open_api_detail_select', 1)[-1][:20000]) if 'open_api_detail_select' in html else []
+            opts = re.findall(r'<option value="(\d+)"[^>]*>\s*([^<]*?)\s*</option>', html.split('open_api_detail_select', 1)[-1][:20000]) if 'open_api_detail_select' in html else []
             ops = []; host = ''
             for sq, nm in opts[:6]:
                 try:
-                    dh = get('https://www.data.go.kr/tcs/dss/selectApiDetailFunction.do', {'oprtinSeqNo': sq, 'publicDataDetailPk': dpk})
+                    dh = get('https://www.data.go.kr/tcs/dss/selectApiDetailFunction.do', {'oprtinSeqNo': sq, 'publicDataDetailPk': dpk, 'publicDataPk': c['id']})
                     url, params, props = parse_detail(dh)
                     if url:
                         u = urllib.parse.urlparse(url); host = host or u.netloc
