@@ -77,6 +77,7 @@
    "urls": [],
    "names": []
   },
+  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151204000000000563&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=",
   "fetched": "2026-10-10"
  },
  {
@@ -181,6 +182,254 @@
     "totStock",
     "unit"
    ]
+  },
+  "detail_err": "<urlopen error _ssl.c:993: The handshake operation timed out>",
+  "spec": {
+   "host": "data.ekape.or.kr",
+   "scheme": "https",
+   "ops": [
+    {
+     "path": "/openapi-data/service/user/grade/LPStock",
+     "sum": "축산물 재고동향",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      },
+      {
+       "name": "standYyyy",
+       "req": false,
+       "desc": "거래연도",
+       "sample": "2023"
+      },
+      {
+       "name": "standMm",
+       "req": false,
+       "desc": "거래월",
+       "sample": "8"
+      },
+      {
+       "name": "judgeKind",
+       "req": false,
+       "desc": "축종코드",
+       "sample": "4301"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "standYm": "날짜구분",
+      "judgeKindNm": "축종명",
+      "judgeKind": "축종코드",
+      "livestockPart_1": "소 돼지 안심",
+      "livestockPart_2": "소 돼지 등심",
+      "livestockPart_3": "소 채끝 돼지 전지",
+      "livestockPart_4": "소 목심 돼지 후지",
+      "livestockPart_5": "소 앞다리 돼지 삼겹살",
+      "livestockPart_6": "소 우둔 돼지 목심",
+      "livestockPart_7": "소 설도 돼지 갈비",
+      "livestockPart_8": "소 사태 돼지 특수부위",
+      "livestockPart_9": "소 갈비 돼지 잡육",
+      "livestockPart_10": "소 양지",
+      "livestockPart_11": "소 특수부위",
+      "livestockPart_12": "소 잡육",
+      "totStock": "재고량 합계",
+      "unit": "단위"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/LPStock"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/consumerPriceDaily",
+     "sum": "일자별 축산물소비자가격 정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스 인증키",
+       "sample": "필"
+      },
+      {
+       "name": "standYmd",
+       "req": false,
+       "desc": "기준일자",
+       "sample": "20220630"
+      },
+      {
+       "name": "judgeKind",
+       "req": false,
+       "desc": "축종코드",
+       "sample": "4301"
+      },
+      {
+       "name": "itemCd",
+       "req": false,
+       "desc": "품목코드",
+       "sample": "21"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "standYmd": "날짜구분(날짜/평년)",
+      "grdNm": "구분명(등급/원산지)",
+      "judgeKindNm": "축종명",
+      "judgeKind": "축종코드",
+      "itemNm": "품목명",
+      "itemCd": "품목코드",
+      "ntslPrc": "평균가격",
+      "maxPrc": "최대가격",
+      "minPrc": "최소가격",
+      "regionPrc1": "서울가격",
+      "regionPrc2": "부산가격",
+      "regionPrc3": "대구가격",
+      "regionPrc4": "인천가격",
+      "regionPrc5": "광주가격",
+      "regionPrc6": "대전가격",
+      "regionPrc7": "울산가격",
+      "regionPrc8": "세종가격",
+      "regionPrc9": "경기가격",
+      "regionPrc10": "강원가격",
+      "regionPrc11": "충북가격",
+      "regionPrc12": "충남가격",
+      "regionPrc13": "전북가격",
+      "regionPrc14": "전남가격",
+      "regionPrc15": "경북가격",
+      "regionPrc16": "경남가격",
+      "regionPrc17": "제주가격",
+      "unit": "단위"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/consumerPriceDaily"
+    },
+    {
+     "path": "/openapi-data/service/user/grade/consumerPriceMonth",
+     "sum": "월별 축산물소비자가격 정보",
+     "params": [
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스 인증키",
+       "sample": "필"
+      },
+      {
+       "name": "standYm",
+       "req": false,
+       "desc": "기준월",
+       "sample": "202208"
+      },
+      {
+       "name": "judgeKind",
+       "req": false,
+       "desc": "축종코드",
+       "sample": "4301"
+      }
+     ],
+     "props": {
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지",
+      "judgeKind": "축종코드",
+      "judgeKindNm": "축종명",
+      "itemNm": "품목명",
+      "itemCd": "품목코드",
+      "grdNm": "구분명",
+      "unit": "단위",
+      "ntslPrc": "가격",
+      "avgYearPrc": "평년가격"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/grade/consumerPriceMonth"
+    },
+    {
+     "path": "/openapi-data/service/user/confirm/cattleCoustomer",
+     "sum": "소 검수(소비)확인정보",
+     "params": [
+      {
+       "name": "issueDate",
+       "req": false,
+       "desc": "확인서발급일자",
+       "sample": "20160519"
+      },
+      {
+       "name": "issueNo",
+       "req": false,
+       "desc": "확인서발급번호",
+       "sample": "1005-05190332"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "judgeBreedNm": "소의종류",
+      "judgeSexCd": "성별코드",
+      "judgeSexNm": "성별",
+      "gradeCd": "등급코드",
+      "qgradeNm": "육질등급명",
+      "cutmeatCd": "부위코드",
+      "cutmeatNm": "부위명",
+      "cutmeatWeight": "부위중량",
+      "cattleNo": "개체식별번호",
+      "applyRegNo": "검수(소비)업체사업자번호",
+      "applyComNm": "검수(소비)업체명",
+      "confirmDate": "검수(소비)일자",
+      "supplyRegNo": "납품업체사업자번호",
+      "supplyComNm": "납품업체명",
+      "issueDate": "확인서발급일자",
+      "issueNo": "확인서발급번호",
+      "judgeKindCd": "가축코드",
+      "judgeKindNm": "가축명",
+      "judgeBreedCd": "소의종류코드",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/confirm/cattleCoustomer"
+    },
+    {
+     "path": "/openapi-data/service/user/confirm/pigCoustomer",
+     "sum": "돼지 검수(소비)확인정보",
+     "params": [
+      {
+       "name": "issueDate",
+       "req": false,
+       "desc": "확인서발급일자",
+       "sample": "2013-10-01"
+      },
+      {
+       "name": "issueNo",
+       "req": false,
+       "desc": "확인서발급번호",
+       "sample": "0915-10010034"
+      },
+      {
+       "name": "serviceKey",
+       "req": false,
+       "desc": "서비스키",
+       "sample": "-"
+      }
+     ],
+     "props": {
+      "applyRegNo": "검수(소비)업체사업자번호",
+      "applyComNm": "검수(소비)업체명",
+      "confirmDate": "검수(소비)일자",
+      "supplyRegNo": "납품업체사업자번호",
+      "supplyComNm": "납품업체명",
+      "issueDate": "확인서발급일자",
+      "issueNo": "확인서발급번호",
+      "judgeKindCd": "가축코드",
+      "judgeKindNm": "가축명",
+      "cutmeatCd": "부위코드",
+      "cutmeatNm": "부위명",
+      "cutmeatWeight": "부위중량",
+      "resultCode": "결과코드",
+      "resultMsg": "결과메시지"
+     },
+     "full": "http://data.ekape.or.kr/openapi-data/service/user/confirm/pigCoustomer"
+    }
+   ],
+   "from": "detail"
   },
   "fetched": "2026-10-10"
  },
