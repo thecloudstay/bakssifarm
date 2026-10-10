@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="naver-site-verification" content="1a051e16a3d0e06663a1514821bf2a73d7bcc65b">
+	<meta name="keyword" content="국토환경성평가지도, 국토환경성평가, 국토, 환경, 국토환경성, 지도, 법제적, 평가등급, 평가항목, 자연환경, 물환경, 토지이용, 농림, 환경생태적, ECVAM">
+	<meta name="description" content="국토환경성평가지도 ECVAM (Environmental Conservation Value Assessment Map)는 국토의 환경적 가치를 종합적으로 평가하여 환경적 중요도에 따라 5개 등급으로 구분하고 생채를 달리 표시하여 알기 쉽게 작성한 지도이다">
+	<!-- WA : 52page -->
+	<title>오픈API-신청</title>
+	<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR" rel="stylesheet">
+	<link rel="stylesheet" href="/assets/css/user/homepage/owl.carousel.css">
+	<link rel="stylesheet" href="/assets/css/user/homepage/reset.css">
+	<link rel="stylesheet" href="/assets/css/user/homepage/default.css?v=20241212">
+	<link rel="stylesheet" href="/assets/css/user/homepage/sub.css?v=20241212">
+		<link rel="stylesheet" href="/assets/css/user/homepage/sub03.css?v=20241212">
+	<link rel="stylesheet" href="/assets/css/user/homepage/devAdd.css?v=20240624">
+
+<!-- 	<script src="/assets/js/common/library/jquery-1.12.4.min.js"></script> -->
+	<script src="/assets/js/common/library/jquery-3.7.1.min.js"></script>
+	<script src="/assets/js/common/library/jquery-migrate-1.4.1.min.js"></script>
+	<script src="/assets/js/user/owl.carousel.min.js"></script>
+	<script src="/assets/js/user/homepage/default.js?v=20240904"></script>
+	<script src="/assets/js/common/library/ajax/ajaxCommon.js"></script>
+	<script src="/assets/js/user/userCommon.js?v=20241212"></script>
+	<!-- <script src="/js/common.js"></script> -->
+	<script src="/assets/js/user/layoutCommon.js"></script>
+	
+	<!-- 등급통계 차트 및 js 추가 -->
+	<!-- 응용통계 js 추가 -240906  -->
+	<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script>
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		
+	/* 	let userLanguage = navigator.language || navigator.userLanguage;
+		//userLanguage = "en-US","ja-JP", "zh-CN"
+		//userLanguage = "ja-JP"
+		
+		if(userLanguage != "zh-CN" && userLanguage != "zh-TW"){
+			userLanguage = userLanguage.split('-')[0];
+		}
+		
+	  	function googleTranslateElementInit() {
+		   new google.translate.TranslateElement({
+		      pageLanguage: 'ko',
+		      includedLanguages : 'ko,en,ja,es,zh-CN',
+		    }, 'google_translate_element');
+		    setTimeout(function(){
+		     let select = document.querySelector('select.goog-te-combo');
+		      select.value =  userLanguage; 
+		      select.dispatchEvent(new Event('change'));
+		    },1000)
+		  } */
+
+	</script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-EL9LFJKNZP"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				gtag('js', new Date());
+				gtag('config', 'G-EL9LFJKNZP');
+			</script>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+    
+	<script>
+		var ecvamNeinsDomain = 'https://ecvam.neins.go.kr';
+		var ecvamKeiDomain = 'https://ecvam.neins.go.kr';
+		var webgisNeinsDomain = 'https://webgis.neins.go.kr';
+		var webgisKeiDomain = 'https://webgis.kei.re.kr';
+		var vWorldDomain = 'https://webgis.neins.go.kr';
+		var vWorldkeys = vworldUrl();
+		var vWorldSearchUrl = 'https://api.vworld.kr/req/search?';
+		var vWorldSearchDataUrl = 'https://api.vworld.kr/req/data?';
+		var vWorldSearchAdresUrl = 'https://api.vworld.kr/req/address?';
+		var proxyUrl = '/proxy.do?url=';
+		var mobileDomain = 'https://mecvam.neins.go.kr/';
+		var mediaMatchMedia = '768';
+		
+		var popupCallEl;
+		
+		$(document).ready(function() {
+			if ($("ul.gnb").length > 0 && $("ul.ft_gnb").length > 0) {
+				var ftGnb = $("ul.gnb").clone();
+
+				$(ftGnb).find(".depth2").attr("class", "ft_depth2");
+				$(".ft_gnb").append($(ftGnb).html());
+			}
+		});
+		
+		$(document).ready(function(){
+			$(".btn_service").click(function () {
+				$(this).toggleClass('on');
+				
+				const $this = $(this);
+		        
+				if ($this.hasClass('on')) {
+		            $this.attr('aria-expanded', 'true');
+		        } else {
+		            $this.attr('aria-expanded', 'false');
+		        }
+			});
+		});
+		
+		$('.srch input').click(function(e){
+			e.stopPropagation(); // 클릭 이벤트가 상위로 전파되지 않도록 함
+			$('.srch_result_div').stop().slideDown();
+			$('.srch').addClass('over');
+		});
+		
+		// 문서의 다른 부분을 클릭했을 때 검색 결과를 숨김
+		$(document).on('click', function(e){
+			if(!$(e.target).closest('.srch').length) {
+				$('.srch_result_div').stop().slideUp();
+				$('.srch').removeClass('over');
+			}
+		});
+/* 		// WA : 50,51 page
+		function skipNavClickHandler(objId) {
+			if(objId == 'nav'){
+				$('#nav .gnb>li>a:eq(0)').focus();
+				$('html, body').animate({scrollTop: $("#nav").offset().top}, 1000);
+			}else if(objId == 'container') {
+				$("#container").attr('tabindex', '0').focus();
+				$('html, body').animate({scrollTop: $("#container").offset().top}, 1000);
+			}
+		}
+		 */
+	</script>
+	
+		
+	<!-- Google Tag Manager -->
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-TDBPTJS8');</script>
+	<!-- End Google Tag Manager -->
+	
+	
+	
+	<style>
+		.apply_form_02 .inform_write_table #apply_domain {
+		    width: 572px;
+		}
+	</style>
+	<script>
+		$(document).ready(function(){
+
+			// 메시지 체크(등록, 수정 성공 시)
+			if ('' != '') {
+				alert('');
+				document.location.href = "/api/apiWrite.do";
+			}
+		});
+
+		// URL 중복체크
+		function overlap_check() {
+			if ($("#apply_domain").val() == "") {
+				alert("사용URL을 입력하시기 바랍니다.");
+				return;
+			}
+
+			var url = "/api/overlapCheckDomain.ajax";
+			var params = $('#form').serialize();
+
+			fnAjax(url, params, "json", success_domain, error);
+		}
+
+		// URL 중복체크 ajax성공시
+		function success_domain(result) {
+			$("#overlapCheck").val(result.flag);
+
+			if (result.flag == "N") {
+				alert(result.message);
+			} else {
+				if (confirm(result.message)) {
+					$("#apply_domain").attr("readonly", true);
+				} else {
+					$("#overlapCheck").val("N");
+					$("#apply_domain").attr("readonly", false);
+				}
+			}
+		}
+
+		// 오픈 API 신청
+		function fn_write() {
+
+			if (!$('#tAgree').is(':checked')) {
+				alert('이용약관에 동의하시기 바랍니다');
+				$('#tAgree').focus();
+				return;
+			}
+			if (!$('#pAgree').is(':checked')) {
+				alert('개인정보 수집 및 이용에 대한 안내에 동의하시기 바랍니다.')
+				$('#pAgree').focus();
+				return;
+			}
+			if ($("#name").val() == "") {
+				alert("이름을 입력하시기 바랍니다.");
+				return;
+			}
+			if ($("#email").val() == "") {
+				alert("email을 입력하시기 바랍니다.");
+				return;
+			}
+			if (validateEmail($("#email").val()) == false) {
+				alert("올바른 이메일 형식이 아닙니다.");
+				return;
+			}
+			if ($("#job").val() == "") {
+				alert("직업을 선택하시기 바랍니다.");
+				return;
+			}
+			if ($("#usepurpose").val() == "") {
+				alert("사용목적을 선택하시기 바랍니다.");
+				return;
+			}
+			if ($("#apply_domain").val() == "") {
+				alert("사용URL을 입력하시기 바랍니다.");
+				return;
+			}
+			if ($("#overlapCheck").val() == "N" || $("#overlapCheck").val() == "") {
+				alert("사용URL 중복체크를 하시기 바랍니다.");
+				return;
+			}
+
+			$("#form").attr("method", "post");
+			$("#form").attr("action", "/api/apiWriteProc.do");
+			$("#form").submit();
+		}
+
+		// 이메일 형식 검사
+		function validateEmail(email) {
+			var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+			return re.test(email);
+		}
+	</script>
+
+</head>
+<body>
+	<!-- 건너뛰기 링크 -->
+	<div id="skip_nav" class="skip_nav">
+		<ul>
+			<li><a href="#mainservice">본문 바로가기</a></li>
+		</ul>
+	</div> 
+	<!-- 전자정부 공식웹사이트 안내영역 -->
+	<!-- <div class="ev_cont">
+		<p class="ev_logo">
+			<span class="ev_text">이 누리집은 대한민국 공식 전자정부 누리집입니다.</span>
+		</p>
+	</div> -->
+	<div id="wrap">
+		<!-- header - 시작 -->
+		<header id="header" class="sub_header">
+			<div class="inner">
+				<h1 id="logo">
+					<a href="/main.do" title="홈 바로가기" onclick="gtag('event', '국토환경성평가지도 홈 바로가기', {'event_category':'국토환경성평가지도 홈 바로가기', 'event_label':'국토환경성평가지도 홈 바로가기'})"><img src="/assets/images/homepage/logo2.png" alt="기후에너지환경부 국토환경성평가지도"></a>
+				</h1>
+				<nav id="nav">
+					<ul class="gnb">
+						<li>
+								<a href="javascript:goMenu('0','1000000','/contents/contents02.do');"
+									onclick="gtag('event', '국토환경성평가지도 메뉴클릭', {'event_category':'국토환경성평가지도 메뉴클릭', 'event_label':'국토환경성평가지도 메뉴클릭'})">
+									 국토환경성평가지도</a>
+								<ul class="depth2">
+								<li>
+								<!-- 국토환경성평가지도 개요 -->
+								<a href="javascript:goMenu('1000000','1002000','/contents/contents02.do');" 
+									onclick="gtag('event', '국토환경성평가지도 개요', {'event_category':'국토환경성평가지도 개요', 'event_label':'국토환경성평가지도 개요'});">
+									개요</a>
+								</li>
+								<li>
+								<!-- 국토환경성평가지도 평가방법 -->
+								<a href="javascript:goMenu('1000000','1003000','/contents/contents03.do');" 
+									onclick="gtag('event', '국토환경성평가지도 평가방법', {'event_category':'국토환경성평가지도 평가방법', 'event_label':'국토환경성평가지도 평가방법'});">
+									평가방법</a>
+								</li>
+								<li>
+								<!-- 국토환경성평가지도 활용방법 -->
+								<a href="javascript:goMenu('1000000','1004000','/contents/contents04.do');" 
+									onclick="gtag('event', '국토환경성평가지도 활용방법', {'event_category':'국토환경성평가지도 활용방법', 'event_label':'국토환경성평가지도 활용방법'});">
+									활용방법</a>
+								</li>
+								<li>
+								<!-- 국토환경성평가지도 다운로드 -->
+								<a href="javascript:goMenu('1000000','1005000','/contents/doyupList.do');" 
+									onclick="gtag('event', '국토환경성평가지도 다운로드', {'event_category':'국토환경성평가지도 다운로드', 'event_label':'국토환경성평가지도 다운로드'});">다운로드</a>
+								</li>
+								<li>
+								<!-- 국토환경성평가지도 등급통계 -->
+								<a href="javascript:goMenu('1000000','1006000','/contents/rating.do');" 
+									onclick="gtag('event', '국토환경성평가지도 등급통계', {'event_category':'국토환경성평가지도 등급통계', 'event_label':'국토환경성평가지도 등급통계'});">등급통계</a>
+								</li>
+								<li>
+								<!-- 국토환경성평가지도 응용통계 -->
+								<a href="javascript:goMenu('1000000','1007000','/contents/apldStatistics.do');" 
+									onclick="gtag('event', '국토환경성평가지도 응용통계', {'event_category':'국토환경성평가지도 응용통계', 'event_label':'국토환경성평가지도 응용통계'});">응용통계</a>
+								</li>
+								</ul>
+								</li>
+								<li>
+								<!-- 자료제공서비스 메뉴클릭 -->
+									<a href="javascript:goMenu('0','2000000','dataNeinsGoKr');" 
+										onclick="gtag('event', '자료제공서비스 메뉴클릭', {'event_category':'자료제공서비스 메뉴클릭', 'event_label':'자료제공서비스 메뉴클릭'})" title="새창 열기">
+										자료제공서비스</a>
+									<ul class="depth2">
+								<li>
+								<!-- 서비스 개요 -->
+								<a href="javascript:goMenu('2000000','2001000','dataNeinsGoKrInfo');" 
+									onclick="gtag('event', '서비스 소개', {'event_category':'서비스 소개', 'event_label':'서비스 소개'});" title="새창 열기">서비스 소개<img alt="새창으로 연결" src="/assets/images/homepage/icon_newopen2.png" class="newopenIcon"></a>
+								</li>
+								<li>
+								<!-- 공간환경계획 수립사례 -->
+								<a href="javascript:goMenu('2000000','2002000','dataNeinsGoKrUtil');" 
+									onclick="gtag('event', '환경계획 정보', {'event_category':'환경계획 정보', 'event_label':'환경계획 정보'});" title="새창 열기">환경계획 정보<img alt="새창으로 연결" src="/assets/images/homepage/icon_newopen2.png" class="newopenIcon"></a>
+								</li>
+								<li>
+								<!-- 서비스 연결 -->
+								<a href="javascript:goMenu('2000000','2004000','dataNeinsGoKrMain');" 
+									onclick="gtag('event', '환경공간 정보', {'event_category':'환경공간 정보', 'event_label':'환경공간 정보'});" title="새창 열기">환경공간 정보<img alt="새창으로 연결" src="/assets/images/homepage/icon_newopen2.png" class="newopenIcon"></a>
+								</li>
+								<li>
+								<!-- 서비스 연결 -->
+								<a href="javascript:goMenu('2000000','2005000','dataNeinsNotice');" 
+									onclick="gtag('event', '환경계획 자료실', {'event_category':'환경계획 자료실', 'event_label':'환경계획 자료실'});" title="새창 열기">환경계획 자료실<img alt="새창으로 연결" src="/assets/images/homepage/icon_newopen2.png" class="newopenIcon"></a>
+								</li>
+								</ul>
+								</li>
+								<li>
+								<!-- 오픈API 메뉴클릭 -->
+									<a href="javascript:goMenu('0','4000000','/api/apiContents02.do');" 
+											onclick="gtag('event', '오픈API 메뉴클릭', {'event_category':'오픈API 메뉴클릭', 'event_label':'오픈API 메뉴클릭'})">
+											오픈API</a>
+									<ul class="depth2">
+								<li>
+								<!-- 오픈API 사용안내 -->
+								<a href="javascript:goMenu('4000000','4002000','/api/apiContents02.do');" 
+									onclick="gtag('event', '오픈API 사용안내', {'event_category':'오픈API 사용안내', 'event_label':'오픈API 사용안내'});">사용안내</a>
+								</li>
+								<li>
+								<!-- 오픈API 신청 -->
+								<a href="javascript:goMenu('4000000','4003000','/api/apiWrite.do');" 
+									onclick="gtag('event', '오픈API 신청', {'event_category':'오픈API 신청', 'event_label':'오픈API 신청'});">신청</a>
+								</li>
+								<li>
+								<!-- 오픈API 신청현황 -->
+								<a href="javascript:goMenu('4000000','4004000','/api/apiKeyConfirm.do');" 
+									onclick="gtag('event', '오픈API 신청현황', {'event_category':'오픈API 신청현황', 'event_label':'오픈API 신청현황'});">신청현황</a>
+								</li>
+								<li>
+								<!-- 오픈API 가이드 -->
+								<a href="javascript:goMenu('4000000','4005000','/api/apiGuide.do');" 
+									onclick="gtag('event', '오픈API 가이드', {'event_category':'오픈API 가이드', 'event_label':'오픈API 가이드'}); ">가이드</a>
+								</li>
+								</ul>
+								</li>
+								<li>
+								<!-- 알림정보 메뉴클릭 -->
+									<a href="javascript:goMenu('0','3000000','/board/notice/noticeList.do');" 
+											onclick="gtag('event', '알림정보 메뉴클릭', {'event_category':'알림정보 메뉴클릭', 'event_label':'알림정보 메뉴클릭'})" style="width: 79px;">
+											알림정보</a>
+									<ul class="depth2">
+								<li>
+								<!-- 알림정보 공지사항 -->
+								<a href="javascript:goMenu('3000000','3001000','/board/notice/noticeList.do');" 
+									onclick="gtag('event', '알림정보 공지사항', {'event_category':'알림정보 공지사항', 'event_label':'알림정보 공지사항'});">공지사항</a>
+								</li>
+								<li>
+								<!-- 알림정보 FAQ -->
+								<a href="javascript:goMenu('3000000','3002000','/board/faq/faqList.do');" 
+									onclick="gtag('event', '알림정보 FAQ', {'event_category':'알림정보 FAQ', 'event_label':'알림정보 FAQ'});">FAQ</a>
+								</li>
+								<li>
+								<!-- 알림정보 문의사항 -->
+								<a href="javascript:goMenu('3000000','3003000','/board/qna/qnaWrite.do');" 
+									onclick="gtag('event', '알림정보 문의사항', {'event_category':'알림정보 문의사항', 'event_label':'알림정보 문의사항'});">문의사항</a>
+								</li>
+								<li>
+								<!-- 알림정보 자료실 -->
+								<a href="javascript:goMenu('3000000','3005000','/board/data/dataList.do');" 
+									onclick="gtag('event', '알림정보 자료실', {'event_category':'알림정보 자료실', 'event_label':'알림정보 자료실'});">자료실</a>
+								</li>
+								<li>
+								<!-- 알림정보 교육영상 -->
+									<a href="javascript:goMenu('3000000','3006000','dataNeinsGoGuide');"
+									   onclick="gtag('event', '알림정보 교육영상', {'event_category':'알림정보 교육영상', 'event_label':'알림정보 교육영상'});" title = "새창 열기">교육영상<img alt="새창으로 연결" src="/assets/images/homepage/icon_newopen2.png" class="newopenIcon"></a>
+									
+								</li>
+								</ul>
+								</li>
+							</ul>
+				</nav>
+				<!-- 20181204 - 주요서비스 버튼으로 수정 - 시작 -->
+				<div class="hd_service">
+					<a href="#" class="btn_service" title="주요 서비스" aria-expanded="false" target="_blank" onclick="gtag('event', '주요서비스', {'event_category':'주요서비스', 'event_label':'주요서비스'})">주요 서비스
+						<svg width="10" height="6" viewBox="0 0 8.707 5.061">
+							<path id="arrow" d="M0,0,4,4,0,8" transform="translate(0.354 4.707) rotate(-90)" fill="none" stroke="#515771" stroke-width="1"/>
+						</svg>
+					</a>
+					<div class="service_list">
+						<ul>
+							<li><a href="javascript:goGisMap2('analysis');"  onclick="gtag('event', '주요서비스 – 평가등급 확인', {'event_category':'주요서비스 – 평가등급 확인', 'event_label':'주요서비스 – 평가등급 확인'})">평가등급 확인</a></li>
+							<li><a href="javascript:goMenu('0','2000000','/contents/doyupList.do');" onclick="gtag('event', '주요서비스 – 다운로드', {'event_category':'주요서비스 – 다운로드', 'event_label':'주요서비스 – 다운로드'})">다운로드</a></li>
+							<li><a href="javascript:goGisMap2('pastYear');" onclick="gtag('event', '주요서비스 – 과거자료조회', {'event_category':'주요서비스 – 과거자료조회', 'event_label':'주요서비스 – 과거자료조회'})">과거자료조회</a></li>
+							<li><a href="javascript:goGisMap2('envLoc');" onclick="gtag('event', '주요서비스 - 환경입지분석', {'event_category':'주요서비스 - 환경입지분석', 'event_label':'주요서비스 - 환경입지분석'})">환경입지분석</a></li>
+							<li><a href="javascript:goGisMap2('airWater');" onclick="gtag('event', '주요서비스 - 대기/물환경 정보조회', {'event_category':'주요서비스 - 대기/물환경 정보조회', 'event_label':'주요서비스 - 대기/물환경 정보조회'})">대기·물환경 정보조회</a></li>
+							<li><a href="javascript:window.open('https://www.neins.go.kr');" onclick="gtag('event', '주요서비스 - 국토환경정보센터', {'event_category':'주요서비스 - 국토환경정보센터', 'event_label':'주요서비스 - 국토환경정보센터'})">국토환경정보센터</a></li>
+							<li><a href="javascript:window.open('https://data.neins.go.kr');" onclick="gtag('event', '주요서비스 - 자료제공서비스', {'event_category':'주요서비스 - 자료제공서비스', 'event_label':'주요서비스 - 자료제공서비스'})">자료제공서비스</a></li>
+						</ul>
+						<!-- <a href="#" class="btn_service_close">닫기</a> -->
+					</div>
+				</div>
+				<!-- 20181204 - 주요서비스 버튼으로 수정 - 끝 -->
+				<!-- <div id="google_translate_element" style="height: 30px; position: absolute; top: 27px; right: -180px;"></div> -->
+			</div>
+			<!-- <div class="depth2_box">
+				<div class="inner">
+					<em>국토환경성평가지도는,</em>
+					<span>국토의 환경정보를 종합·과학적으로<br>평가하여 보전·개발 계획 수립 등에<br>활용할 수 있도록 제공하는 환경정보<br>포털입니다. </span>
+				</div>
+			</div> -->
+			<div class="depth2_box">
+				<div class="inner">
+					<div class="depth2_ex"><!-- 2001 -->
+						<em>국토환경성평가지도는,</em>
+						<span>
+							국토의 환경정보를<br>
+							종합적·과학적으로 평가하여<br>
+							보전·개발 계획 수립 등에<br>
+							활용할 수 있도록 제공하는<br>
+							환경정보 포털입니다.
+						</span>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- header - 끝 -->
+
+		<!-- container - 시작 -->
+		<div id="container">
+			
+	<!-- sub_visual 공통 - 시작 -->
+	<div class="sub_visual open_api_bg">
+		<div class="inner">
+			<script>
+		$(document).ready(function() {
+
+			if ($(".sub_visual").length > 0) {
+
+				var snbDepth2TitType1 = $.trim($(".sub_visual .sub_info h2").text());
+
+				if (snbDepth2TitType1 != null && snbDepth2TitType1.length > 0) {
+					$(".snb_depth2_tit.type1").text(snbDepth2TitType1);
+				}
+
+				var currentUrl = location.pathname;
+				var snbDepth2Type2A = $(".snb_depth2.type2 li a");
+				var snbDepth2TitType2 = "";
+
+				currentUrl = currentUrl.replace(/list.do/gi, "");
+				currentUrl = currentUrl.replace(/view.do/gi, "");
+				currentUrl = currentUrl.replace(/modify.do/gi, "");
+				currentUrl = currentUrl.replace(/write.do/gi, "");
+
+				for (var i = 0; i < snbDepth2Type2A.length; i++) {
+
+					var url = $(snbDepth2Type2A).eq(i).attr("href");
+					url = url.replace(/list.do/gi, "");
+					url = url.replace(/view.do/gi, "");
+					url = url.replace(/modify.do/gi, "");
+					url = url.replace(/write.do/gi, "");
+
+					if (currentUrl == url) {
+						$(".snb_depth2_tit.type2").text($.trim($(snbDepth2Type2A).eq(i).text()));
+						break;
+					}
+				}
+			}
+			$(".snb_depth2_tit").off('click');
+			
+			$(".snb_depth2_tit").on('click', function(e) {
+		        e.preventDefault(); 
+		        
+		        const $this = $(this);
+		        const $targetMenu = $this.next('.snb_depth2');
+
+		        $this.toggleClass('on');
+		        
+		        $targetMenu.slideToggle(200);
+
+		        const isExpanded = $this.hasClass('on');
+		        $this.attr('aria-expanded', isExpanded);
+		    });
+			
+			$('.snb_depth2').hide();
+		    $('.snb_depth2_tit').attr('aria-expanded', 'false').removeClass('on');
+		});
+	</script>
+
+	<div class="sub_info">
+		<h2>오픈API</h2>
+				<span>국가환경성평가지도와 관련된 오픈API를 제공합니다.</span>
+			</div>
+
+		<ul class="snb">
+			<!-- WA : 7page alt수정 -->
+			<li><a href="/main.do" title="홈으로 이동"><img src="/assets/images/homepage/snb_home.png" alt="홈"></a></li>
+			<li>
+				<a href="#" style="width:175px;" class="snb_depth2_tit type1" aria-expanded="false"></a>
+					<ul class="snb_depth2">
+						<li><a href="/contents/contents02.do">국토환경성평가지도</a></li>
+						<li><a href="javascript:goMenu('2000000','2001000','dataNeinsGoKrInfo');">자료제공서비스 <img alt="새창으로 연결" src="/assets/images/homepage/icon_newopen.png" style="position: absolute;  margin-left:2px; margin-top:11px; width: 18px; height: 18px;"></a></li>
+						<li><a href="/api/apiContents02.do">오픈API</a></li>
+						<li><a href="/board/notice/noticeList.do">알림정보</a></li>
+					</ul>
+				</li>
+			<li>
+				<a href="#" style="width:auto;" class="snb_depth2_tit type2" aria-expanded="false"></a>
+						<ul class="snb_depth2 type2">
+							<!-- <li><a href="/api/apiContents01.do">소개</a></li> -->
+							<li><a href="/api/apiContents02.do">사용안내</a></li>
+							<li><a href="/api/apiWrite.do">신청</a></li>
+							<li><a href="/api/apiKeyConfirm.do">신청현황</a></li>
+							<li><a href="/api/apiGuide.do">가이드</a></li>
+						</ul>
+					</li>
+		</ul>
+	<div class="sub_tit">
+				<h3 id="mainservice">오픈API 신청</h3>
+			</div>
+		</div>
+	</div>
+	<!-- sub_visual 공통 - 끝 -->
+
+	<!-- sub_cont - 시작 -->
+	<div class="apply_form">
+		<div class="inner">
+			<div class="apply_form_01">
+				<div class="apply_form_privacy">
+					<h4>이용약관</h4>
+					<!-- WA : 43 page -->
+					<div class="privacy_info" tabindex="0">
+						국토환경성평가지도 시스템 이용약관<br>
+						<br> 제 1 장 총칙<br> 제 1 조 (목적)<br> 본 약관은 국토환경성평가지도
+						시스템에서 제공하는 API 서비스(이하 "서비스")의 이용조건 및 절차, 이용자와 국토환경성평가지도 시스템의 권리,
+						의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.<br>
+						<br> 제 2 조 (약관의 효력과 변경)<br> 1. 국토환경성평가지도 시스템은 귀하가 본 약관
+						내용에 동의하는 경우, 국토환경성평가지도 시스템의 서비스 제공 행위 및 귀하의 서비스 사용 행위에 본 약관이 우선적으로
+						적용됩니다.<br> 2. 국토환경성평가지도 시스템은 본 약관을 사전 고지 없이 변경할 수 있고, 변경된 약관은
+						국토환경성평가지도 시스템 내에 공지하거나 e-mail을 통해 이용자에게 공지하며, 공지와 동시에 그 효력이 발생됩니다.
+						이용자가 변경된 약관에 동의하지 않는 경우, 이용자는 한국환경연구원 국토환경정보센터에 개인정보 삭제를 요청 할
+						수 있으며 계속 사용의 경우는 약관 변경에 대한 동의로 간주됩니다.<br>
+						<br> 제 3 조 (약관 외 준칙)<br> 이 약관에 명시되지 않은 사항은 정보통신망 이용촉진 및
+						정보보호 등에 관한 법률, 전기통신기본법, 전기통신사업법 등 관계법령과 개인정보처리방침, 행정자치부가 별도로 정한 지침
+						등의 규정에 따릅니다.<br>
+						<br> 제 4 조 (용어의 정의)<br> 본 약관에서 사용하는 용어의 정의는 다음과 같습니다.<br>
+						<br> 1. 이용자 : 국토환경성평가지도 시스템에 개인 정보를 제공하여 API 신청을 한 자로서
+						국토환경성평가지도 시스템에서 제공하는 서비스를 계속해서 이용할 수 있는 자. <br> 2. 성함 : 이용자의
+						식별과 서비스 이용을 위하여 이용자가 설정한 이름.<br> 3. 이메일 : 이용자와 성함이 일치하는지를 확인하고
+						통신상의 자신의 비밀보호를 위하여 이용자 자신이 기입한 메일주소.<br> 4. 신청 : 국토환경성평가지도
+						시스템에서 제공하는 신청 양식에 해당 정보를 기입하고, 본 약관에 동의하여 서비스 이용계약을 완료시키는 행위. <br>
+						<br> 제 2 장 서비스 제공 및 이용<br> 제 5 조 (이용계약의 성립)<br> 신청자는
+						온라인으로 국토환경성평가지도 시스템에서 제공하는 오픈 API 신청 양식에 따라 신청정보(개인정보)를 기입한 후 이 약관에
+						동의한다는 의사 표시를 함으로써 오픈 API KEY을 신청합니다. 국토환경성평가지도 시스템은 이러한 신청에 있어,
+						전자우편주소를 통해 본인인증을 요청한 후 신청자가 본인인증을 한 경우에 한하여 API KEY를 발급합니다. <br>
+						<br> 제 6 조 (개인정보 사용에 대한 동의)<br> 1. API 신청시 입력한 개인정보는 개인정보
+						보호법에 의해 보호됩니다. <br> 2. 국토환경성평가지도 시스템은 서비스 제공과 관련해서 수집된 이용자의
+						신상정보를 본인의 승낙 없이 제3자에게 누설, 배포하지 않습니다. 단, 다른 법률의 규정에 의해 국가기관의 요구가 있는
+						경우, 범죄에 대한 수사상의 목적이 있거나 정보통신윤리위원회의 요청이 있는 경우 또는 기타 관계법령에서 정한 절차에 따른
+						요청이 있는 경우, 귀하가 국토환경성평가지도 시스템에 제공한 개인정보를 스스로 공개한 경우에는 그러하지 않습니다. <br>
+						3. 본 약관에 따라 API를 신청 하는 것은, 국토환경성평가지도 시스템 API 신청 시 기재한 개인정보를 수집,
+						이용하는 것에 동의하는 것으로 간주됩니다. <br>
+						<br> 제 7 조 (사용자의 정보 보안)<br> 1. 신청자가 국토환경성평가지도 시스템 API 신청
+						절차를 완료하는 순간부터 귀하는 입력한 정보의 비밀을 유지할 책임이 있으며, 이용자의 성함과 이메일을 사용하여 발생하는
+						모든 결과에 대한 책임은 이용자 본인에게 있습니다. <br> 2. 성함과 이메일에 관한 모든 관리의 책임은
+						이용자에게 있으며, 이용자의 성함나 이메일이 부정하게 사용되었다는 사실을 발견한 경우에는 즉시 국토환경성평가지도 시스템에
+						신고하여야 합니다. 신고를 하지 않음으로 인한 모든 책임은 이용자 본인에게 있습니다. <br> 3. 이용자는
+						국토환경성평가지도 시스템 서비스의 사용 종료 시 마다 정확히 접속을 종료해야 하며, 정확히 종료하지 아니함으로써 제3자가
+						귀하에 관한 정보를 이용하게 되는 등의 결과로 인해 발생하는 손해 및 손실에 대하여 국토환경성평가지도 시스템은 책임을
+						부담하지 아니합니다.<br>
+						<br> 제 8 조 (서비스의 중지)<br> 1. 국토환경성평가지도 시스템은 이용자가 본 약관의 내용에
+						위배되는 행동을 한 경우, 임의로 서비스 사용을 제한 및 중지할 수 있습니다.<br>
+						<br> 제 9 조 (서비스의 변경 및 해지)<br> 1. 국토환경성평가지도 시스템은 귀하가 서비스를
+						이용하여 기대하는 손익이나 서비스를 통하여 얻은 자료로 인한 손해에 관하여 책임을 지지 않으며, 이용자가 본 서비스에
+						게재한 정보, 자료, 사실의 신뢰도, 정확성 등 내용에 관하여는 책임을 지지 않습니다. <br> 2.
+						국토환경성평가지도 시스템은 서비스 이용과 관련하여 신청자에게 발생한 손해 중 신청자의 고의, 과실에 의한 손해에 대하여
+						책임을 부담하지 아니합니다.<br>
+						<br> 제 3 장 의무 및 책임<br> 제 10 조 (국토환경성평가지도 시스템의 의무)<br>
+
+						1. 국토환경성평가지도 시스템은 이용자의 개인 신상 정보를 전자정부법에 따른 업무처리상의 목적이나 본인의 승낙 없이
+						타인에게 누설, 배포하지 않습니다. 다만, 전기통신관련법령 등 관계법령에 의하여 관계 국가기관 등의 요구가 있는 경우에는
+						그러하지 아니합니다.<br>
+						<br> 제 11 조 (신청자 의무)<br> 1. API 신청 시에 요구되는 정보는 정확하게 기입하여야
+						하며 자신의 성함 및 이메일을 제3자에게 이용하게 해서는 안 됩니다. <br> 2. 이용자은 국토환경성평가지도
+						시스템의 사전 승낙 없이 서비스를 이용하여 어떠한 영리행위도 할 수 없습니다.<br>
+						<br> 제 4 장 기타<br> 제 12 조 (손해배상)<br> 국토환경성평가지도 시스템은
+						서비스와 관련하여 이용자에게 어떠한 손해가 발생하더라도 국토환경성평가지도 시스템이 고의로 행한 범죄행위를 제외하고 이에
+						대하여 책임을 부담하지 아니합니다.<br> 제 13 조 (면책조항)<br> 1. 국토환경성평가지도
+						시스템은 이용자나 제3자에 의해 표출된 의견을 승인하거나 반대하거나 수정하지 않습니다. 국토환경성평가지도 시스템은 어떠한
+						경우라도 이용자가 서비스에 담긴 정보에 의존해 얻은 이득이나 입은 손해에 대해 책임이 없습니다. <br> 2.
+						국토환경성평가지도 시스템은 이용자 간 또는 이용자와 제3자간에 서비스를 매개로 하여 물품거래 혹은 금전적 거래 등과
+						관련하여 어떠한 책임도 부담하지 아니하고, 이용자가 서비스의 이용과 관련하여 기대하는 이익에 관하여 책임을 부담하지
+						않습니다.<br>
+						<br> 제 14 조 (재판관할)<br> 국토환경성평가지도 시스템과 이용자 간에 발생한 서비스 이용에
+						관한 분쟁에 대하여는 대한민국 법을 적용하며, 본 분쟁으로 인한 소는 대한민국의 법원에 제기합니다.<br>
+						<br> 부 칙<br> (시행일) 본 약관은 2017년 1월 1일부터 시행됩니다.<br>
+					</div>
+					<div class="privacy_agree">
+						<input type="radio" name="tagree" id="tAgree">
+						<label for="tAgree" title = "이용약관 동의합니다.">동의합니다.</label>
+						<input type="radio" name="tagree" id="tDisagree">
+						<label for="tDisagree" title = "이용약관 동의하지 않습니다.">동의하지 않습니다.</label>
+					</div>
+				</div>
+				<div class="apply_form_privacy">
+					<h4>개인정보 수집 및 이용에 대한 안내</h4>
+					<!-- WA : 43 page -->
+					<div class="privacy_info" tabindex="0">
+						개인정보 수집 및 이용에 대한 안내<br>
+						<br> 한국환경연구원(이하 “KEI”)은 개인정보보호법 등 관련법령에 의거하여, 개인정보를 수집 ·
+						이용함에 있어서 정보 주체로 부터의 이용 동의 여부를 사전에 고지하고 있습니다. 정보주체가 되는 이용자께서는 아래 내용을
+						확인하시고, 동의 여부를 선택하여 주시기 바랍니다.<br>
+						<br> 1. 개인정보의 수집 및 이용목적<br> - KEI는 오픈API 서비스를 위한 목적으로
+						개인정보를 처리합니다.<br>
+						<br> 2. 수집하는 개인정보의 항목<br> - 개인정보 수집 항목(필수) : 성함, 이메일 주소<br>
+						<br> 3. 개인정보의 보유 및 이용기간<br> 1) 보유근거 : 정보주체의 동의<br>
+						2) 수집경로 : 온라인 접수 (e-mail발송)<br> 3) 보유기간 : 2년<br>
+						※ 보유기간이 경과한 개인정보는 국토환경성평가지도 개인정보처리방침 제7조에 의거하여 종료일로부터 지체 없이 파기합니다.
+						<br><br> 4. 동의를 거부할 권리 및 동의 거부에 따른 안내<br> - 이용자는 본 안내에 따른
+						개인정보 수집에 대하여 거부할 권리가 있습니다.<br> - 본 개인정보 수집에 대하여 거부하시는 경우,
+						오픈API 서비스 신청이 이루어지지 않음에 따라 연구원의 오픈API 관련 서비스를 이용하실 수 없습니다.<br>
+						<br> 5. 개인정보의 제3자 제공에 관한 사항<br> - 수집된 개인정보는 이용자의 동의 없이
+						제3자에게 제공하지 않습니다.<br>
+					</div>
+					<div class="privacy_agree">
+						<input type="radio" name="pagree" id="pAgree">
+						<label for="pAgree" title = "개인정보 수집 및 이용 동의합니다.">동의합니다.</label>
+						<input type="radio" name="pagree" id="pDisagree">
+						<label for="pDisagree" title = "개인정보 수집 및 이용 동의 않습니다.">동의하지 않습니다.</label>
+					</div>
+				</div>
+				<div class="privacy_all">
+					<input type="checkbox" id="allAgree" class="form_input_check">
+					<label for="allAgree" class="form_check_txt" title = "모든 약관에 동의합니다.">모든 약관에 동의합니다.</label>
+				</div>
+			</div>
+			<div class="apply_form_02">
+				<h4>오픈API 신청</h4>
+
+				<form id="form" name="form" method="post">
+					<input type="hidden" id="overlapCheck" name="overlapCheck" value="N" >
+
+					<div class="inform_write_table">
+						<table>
+							<caption>오픈API 신청</caption>
+							<colgroup>
+								<col style="width:156px">
+								<col>
+							</colgroup>
+							<tbody>
+								<tr>
+									<th scope="row"><label for="name">이름</label></th>
+									<td><input type="text" id="name" name="name" placeholder="이름을 입력하시기 바랍니다." required></td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="email">E-mail 입력</label></th>
+									<td><input type="email" id="email" name="email" placeholder="E-mail을 입력해주세요." required></td>
+								</tr>
+								<tr>
+									<th scope="row">직업</th>
+									<td>
+										<input type="radio" id="job_1" name="job" value="JO001"  checked  ><label title="공무원" for="job_1">공무원</label>
+										<input type="radio" id="job_2" name="job" value="JO002"  ><label title="연구원" for="job_2">연구원</label>
+										<input type="radio" id="job_3" name="job" value="JO003"  ><label title="일반회사원" for="job_3">일반회사원</label>
+										<input type="radio" id="job_4" name="job" value="JO004"  ><label title="시민단체" for="job_4">시민단체</label>
+										<input type="radio" id="job_5" name="job" value="JO005"  ><label title="학생" for="job_5">학생</label>
+										<input type="radio" id="job_6" name="job" value="JO006"  ><label title="기타" for="job_6">기타</label>
+										</td>
+								</tr>
+								<tr>
+									<th scope="row">사용목적</th>
+									<td>
+										<input type="radio" id="usepurpose_1" name="usepurpose" value="SO001"  checked  ><label title="사전환경성검토" for="usepurpose_1">사전환경성검토</label>
+										<input type="radio" id="usepurpose_2" name="usepurpose" value="SO002"  ><label title="환경영향평가" for="usepurpose_2">환경영향평가</label>
+										<input type="radio" id="usepurpose_3" name="usepurpose" value="SO003"  ><label title="환경정책" for="usepurpose_3">환경정책</label>
+										<input type="radio" id="usepurpose_4" name="usepurpose" value="SO004"  ><label title="도시계획" for="usepurpose_4">도시계획</label>
+										<input type="radio" id="usepurpose_5" name="usepurpose" value="SO005"  ><label title="학술연구" for="usepurpose_5">학술연구</label>
+										<input type="radio" id="usepurpose_6" name="usepurpose" value="SO006"  ><label title="홍보자료" for="usepurpose_6">홍보자료</label>
+										<input type="radio" id="usepurpose_7" name="usepurpose" value="SO007"  ><label title="기초환경자료수집" for="usepurpose_7">기초환경자료수집</label>
+										<input type="radio" id="usepurpose_8" name="usepurpose" value="SO008"  ><label title="기타" for="usepurpose_8">기타</label>
+										</td>
+								</tr>
+								<tr>
+									<th scope="row"><label for="apply_domain">사용 URL</label></th>
+									<td>
+										<input type="text" id="apply_domain" name="apply_domain" title="사용URL" placeholder="사용할 URL을 입력하시기 바랍니다." required>
+										<a href="javascript:overlap_check();" id="api_overlap">중복확인</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<span class="apiApplication_notice">* TMS API 신청시 사용 URL은 QGIS로 작성</span>
+					</div>
+					<div class="inform_write_bottom">
+						<a href="javascript:fn_write();" class="btn_apply_submit">신청하기</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- sub_cont - 끝 -->
+
+		</div>
+		<!-- container - 끝 -->
+
+		<!-- footer - 시작 -->
+		<footer id="footer">
+			<div class="inner">
+				<div class="ft_left">
+					<!-- WA:6page alt수정 -->
+					<div class="ft_logo"><a href="/main.do" class="ft_logo" title="홈 바로가기"><img src="/assets/images/homepage/ft_logo.png" alt="기후에너지환경부 국토환경성평가지도"></a></div>
+					<p class="ft_address">세종특별자치시 시청대로 370 세종국책연구단지 B동(과학·인프라동)<br>한국환경연구원 8층-11층</p>
+					<div class="ft_tel">
+						<dl>
+							<dt>지도 및 등급 관련 문의 - 국토관리연구실</dt>
+							<dd>044-415-7406, 7426</dd>
+						</dl>
+						<dl>
+							<dt>시스템 이용방법 문의 - 기술지원팀</dt>
+							<dd>070-5066-1086</dd>
+						</dl>
+					</div>
+					<ul class="ft_policy">
+						<li><a href="/guide/personalInfo.do" class="on">개인정보처리방침</a></li>
+						<li><a href="/email/emailUnauthorize.do">이메일주소 무단수집거부</a></li>
+					</ul>
+					<p class="ft_copy">Copyright © 2018 국토환경성평가지도 All right Reserved.</p>
+				</div>
+				<div class="ft_right">
+					<ul class="ft_gnb"></ul>
+					<!-- 20181204 - 푸터로고 추가 - 시작 -->
+					<div class="ft_logo_list">
+						<a href="https://www.mcee.go.kr/home/web/main.do" target="_blank" title="새창 열기" style="margin: 6px;"><img src="/assets/images/homepage/ft_logo2.png" alt="기후에너지환경부">기후에너지환경부 바로가기</a>
+<!-- 						<a href="main.do" title="새창 열기" style="margin: 22px 6px 0 0; color: #b7b7b7; font-size: 10px; text-decoration: none; font-weight: bold;"> 기후에너지환경부</a>
+ -->						<a href="https://www.kei.re.kr/" target="_blank" title="새창 열기" style="margin: 7px;margin-right: -18px;"><img src="/assets/images/homepage/ft_logo3.png" alt="KEI 한국환경연구원">한국환경연구원 바로가기</a>
+						<!-- <a title="pdf 파일보기" href="/assets/images/homepage/wa_ecvam.pdf" target="_blank"><img class="wa" alt="(사)한국장애인단체총연합회 한국웹접근성인증평가원 웹 접근성 우수사이트 인증마크(WA인증마크)" src="/assets/images/homepage/wa.png?v=250106" width="88" height="57"></a> -->
+						<a title="새창 열기" href="/assets/images/homepage/wa_ecvam.pdf" target="_blank"><img class="wa" alt="(사)한국장애인단체총연합회 한국웹접근성인증평가원 웹 접근성 우수사이트 인증마크(WA인증마크)" src="/assets/images/homepage/wa.png?v=250106" width="88" height="57"></a>
+					</div>
+					<!-- 20181204 - 푸터로고 추가 - 끝 -->
+				</div>
+			</div>
+		</footer>
+		<!-- footer - 끝 -->
+
+		<!-- 메뉴관련  form -->
+		<form id="menuFrm" name="menuFrm" method="post">
+			<input type="hidden" name="menuNo" id="menuNo" value="">
+			<input type="hidden" name="upperNo" id="upperNo" value="">
+			<input type="hidden" name="menuUrl" id="menuUrl" value="">
+		</form>
+		<!-- GIS페이지 이동1111 -->
+		<form id="frm" name="frm" method="post">
+		<input type="hidden" id="gubun" name="gubun"> 
+		<input type="hidden" name="zoomLevel" id="zoomLevel">
+		<input type="hidden" id="juso" name="juso"> 
+		<input type="hidden" id="searchX" name="x">
+		<input type="hidden" id="searchY" name="y"> 
+		<input type="hidden" id="pnu" name="pnu">
+		</form>
+		
+		<form id="contPop" name="contPop" method="post">
+			<input type="hidden" id="popTypeName" name="popTypeName" >
+		</form>
+	</div>
+</body>
+</html>

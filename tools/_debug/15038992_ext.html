@@ -1,0 +1,906 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="robots" content="all" /> 
+	<meta name="robots" content="index, nofollow" />
+	
+	<link rel="stylesheet" type="text/css" href="/oceandata/css/lib/jquery/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="/oceandata/css/lib/ol6/ol.css">
+	<link rel="stylesheet" type="text/css" href="/oceandata/css/khoa/portal/member/common/reset.css">
+	<link rel="stylesheet" type="text/css" href="/oceandata/css/khoa/portal/openapi/openapi.css">
+	<link rel="stylesheet" type="text/css" href="/oceandata/css/khoa/portal/main/intro.css">
+	
+	<script src="/oceandata/js/lib/bootstrap/bootstrap.min.js"></script>
+	<script src="/oceandata/js/lib/bootstrap/bootstrap.bundle.min.js"></script>
+	<script src="/oceandata/js/lib/jquery/jquery-3.7.1.js"></script>
+	<script src="/oceandata/js/lib/jquery/jquery-ui.js"></script>
+	<script src="/oceandata/js/lib/ol6/ol.js"></script>
+	<script src="/oceandata/js/lib/proj4/proj4.min.js"></script>
+
+    
+        
+    
+    <script type="text/javascript">
+        (function() {
+            // 모든 페이지에서 공통으로 참조 가능한 전역 객체
+            window.ENV = {
+                IS_PRODUCT: true, // getIsProd() 또는 isProd() 호출
+                ACTIVE_PROFILE: "prod" // getActiveProfile() 호출
+            };
+
+            // 운영 환경이 아닐 때만 디버깅용으로 콘솔에 출력
+            if (!window.ENV.IS_PRODUCT) {
+                console.log("[ENV DEBUG] Current Profile:", window.ENV.ACTIVE_PROFILE);
+            }
+        })();
+    </script>
+    
+    <!-- nLogger 공통 라이브러리 호출 및 실행 -->	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- nLogger 라이브러리 로드 및 실행 -->
+<script type="text/javascript" src="/oceandata/js/lib/nlogger/nlogger.js"></script>
+<script type="text/javascript">
+    if (window.ENV.ACTIVE_PROFILE === 'prod') {
+        // 운영 환경일 때 실행될 수 있도록
+        nLogger.configure({
+            nth_service_id : "oceandata",
+            nth_logging_url_base_http : "http://www.khoa.go.kr/nlog",
+            nth_logging_url_base_https : "https://www.khoa.go.kr/nlog"
+        });
+        nLogger.log();
+    }
+</script>
+	
+	<script src="/oceandata/js/khoa/portal/common/sub.js"></script>
+	<script src="/oceandata/js/khoa/portal/openapi/openapi.js"></script>
+	<script src="/oceandata/js/khoa/portal/member/common/khoa.js"></script>
+	
+	<title>바다누리 해양정보 서비스</title>
+	
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+  
+  <style>
+    /* 기존 loca_Wrap UI 유지 */
+    .loca_Wrap > ul {
+      display: flex;
+    }
+    .location > .home {
+      display: block; 
+      width: 80px; 
+      background: none;
+    }
+    .location > li {
+      position: relative; 
+      float: left; 
+      height: 60px; 
+      border-right: 1px solid #e1e1e1;  
+      background: url('/oceandata/images/khoa/portal/common/arr_u01.png') 95% 50% no-repeat;  
+    }
+    .location > li.one,
+    .location > li.two,
+    .location > li.three {
+      padding-left: 30px; 
+      width: calc(100% / 3); 
+      max-width: 300px;
+    }
+    .location > li > a {
+      width: auto; 
+      line-height: 60px; 
+      font-size: 18px;
+      display: inline-block;
+    }
+    .location > li > ul {
+      margin: 0; 
+      padding: 0;
+    }
+    .location > li > ul > li > a {
+      padding: 15px 0 15px 10px;  
+      font-size: 18px;
+      display: block;
+    }
+    .location:after {
+      content:""; 
+      display:block; 
+      clear:both;
+    }
+    
+	.table_col_wrap {
+		max-height: 600px;  /* 원하는 높이로 설정 */
+		overflow-y: auto;   /* 세로 스크롤 활성화 */
+	}
+
+	.table_col {
+		width: 100%;
+		border-collapse: collapse;
+	}
+
+	.table_col th, .table_col td {
+		padding: 10px;
+		border: 1px solid #ddd;
+		text-align: center;
+	}
+
+	#response {
+		white-space: pre-wrap;   /* 줄바꿈 유지 */
+		word-break: break-word;  /* 긴 문자열 강제 줄바꿈 */
+		overflow: auto;          /* 내부 스크롤 */
+		max-height: 650px;       /* 원하는 높이로만 조절 */
+	}
+  </style>
+
+</head>
+<body>
+	<!-- include로 공통처리 (header) -->
+	<div class="wrap">
+ 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 오픈API/다운로드/정보마당/서비스 소개 헤더-->
+<header class="header">
+    <div class="headerin">
+        <!-- 로고 -->
+        <h1 class="logo">
+            <a href="https://www.khoa.go.kr/" target="_blank" class="logo_1">
+                국립해양조사원
+            </a>
+            <a href="/oceandata/main.do" class="logo_2">
+                바다누리 해양정보 서비스
+            </a>
+        </h1>
+        
+        <!-- PC -->
+        <nav class="gnb_pc">
+            <ul>
+            	<!-- 서비스 소개 -->
+                <li class="d1">
+                    <a class="m" href="/oceandata/intro.do">
+                        서비스 소개
+                    </a>
+                </li>
+            
+            	<!-- 해양정보 -->
+                <li class="d1">
+                    <a class="m" href="/oceandata/oceaninfo/map.do">
+                        해양정보
+                    </a>
+                </li>
+                
+                <!-- 오픈API -->
+                <li class="d1">
+                    <a class="m" href="/oceandata/openapi/overview.do">
+                        오픈API
+                    </a>
+<!--                     <div class="sub"> -->
+<!--                         <ul> -->
+<!--                             <li> -->
+
+
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li> -->
+
+
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                             <li> -->
+
+
+<!--                                 </a> -->
+<!--                             </li> -->
+<!--                         </ul> -->
+<!--                     </div> -->
+                </li>
+                
+                <!-- 다운로드 -->
+                <li class="d1">
+                    <a class="m" href="/oceandata/service/reference/distribution.do">
+                        내려받기
+                    </a>
+                </li>
+                
+                <!-- 정보마당 -->
+                <li class="d1">
+                    <a class="m" href="/oceandata/information/board/boardNoticeList.do">
+                        정보마당
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- MOBILE -->
+        <div class="gnb_m">
+            <a class="btn_clode_m">닫기</a>
+            <div class="top_menu01">
+                
+                    <ul>
+                        <li>
+                            <a href="/oceandata/common/login.do">
+                                로그인
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/oceandata/member/join.do">
+                                회원가입
+                            </a>
+                        </li>
+                    </ul>
+                
+                
+            </div>
+            <div class="side_in">
+                <nav class="m_gnb">
+                    <ul>
+                        <li class="d1">
+                            <a href="#" class="m">
+                                해양정보
+                            </a>
+                            <div class="sub">
+                                <ul>
+                                    <li>
+                                        <a href="/oceandata/oceaninfo/map.do">
+                                            해양정보
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="d1">
+                            <a href="#" class="m">
+                                오픈API
+                            </a>
+                            <div class="sub">
+                                <ul>
+                                    <li>
+                                        <a href="/oceandata/openapi/overview.do">
+                                            오픈API란
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/oceandata/openapi/guidelines.do">
+                                            오픈API
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/oceandata/openapi/odmi/apiGuideline.do">
+                                            국가중점 오픈API
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="d1">
+                            <a href="#" class="m">
+                                내려받기
+                            </a>
+                            <div class="sub">
+                                <ul>
+                                    <li>
+                                        <a href="/oceandata/service/reference/distribution.do">
+                                            내려받기
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="d1">
+                            <a class="m" href="#">
+                                정보마당
+                            </a>
+                        </li>
+                        <li class="d1">
+                            <a href="#" class="m">
+                                서비스 소개
+                            </a>
+                            <div class="sub">
+                                <ul>
+                                    <li>
+                                        <a href="/oceandata/intro.do">
+                                            서비스 소개
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+     
+        <!-- LOGIN/JOIN/LOGOUT -->
+        <div class="login">
+            <div class="login_Wrap">
+                
+                    <ul>
+                        <li>
+                            <a href="/oceandata/common/login.do">
+                                로그인
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/oceandata/member/join.do">
+                                회원가입
+                            </a>
+                        </li>
+                    </ul>
+                
+                
+            </div>
+            <a class="btn_menu_m" href="#">모바일 메뉴 열기</a>
+        </div>
+    </div>
+    <div class="subBg"></div>
+</header>
+ 		
+  <p id="skipnav"><a href="#container">본문바로가기</a></p>
+
+	<div class="pop_bg" style="display: none;"></div>
+  
+	<!-- 관측소목록 POP-->
+	<div class="pop_wrap view_2" style="display:none; width: 1200px; height: 760px; top:1700px; ">
+	  <h3>
+		요청변수(Request Parameters)    
+		<a class="sbtn_close">닫기</a>            
+	  </h3>
+	  <div class="pop_cont">  
+
+		<div class="table_col_wrap mt20">
+		  <table class="table_col">
+			<caption>요청변수(Request Parameters)  조회 - 관측소 번호,해역 명,위도,경도</caption>
+			<colgroup>
+			  <col width="25%">
+			  <col width="25%">
+			  <col width="25%">
+			  <col width="25%">
+			</colgroup>
+			<thead>
+			  <tr>
+				<th>관측소 번호</th>
+				<th>관측소 명</th>
+				<th>위도</th>
+				<th>경도</th>
+			  </tr>
+			</thead>
+			<tbody id="tbodyObservatoryList">
+			</tbody>
+		  </table>
+		</div>
+	  </div>
+	</div>
+	<!-- //관측소목록 POP-->
+  
+  <main id="container">
+    <!-- visual_wrap 영역 -->
+    <div class="visual_wrap visual_01">
+
+			<div class="visual_in">
+				<h2>오픈API</h2>
+				<p class="s_h2">해양 정보 관측 및 예측 통합 국가중점 Open API</p>
+
+				<!-- sub_nav -->
+				<div class="sub_nav">
+					<ul>
+						<li><a href="/oceandata/openapi/overview.do">오픈 API란?</a></li>
+						<li><a href="/oceandata/openapi/odmi/apiGuideline.do">활용 가이드라인</a></li>
+						<li><a href="/oceandata/openapi/odmi/odmiApiList.do" class="on">오픈 API 목록</a></li>
+					</ul>
+				</div>
+				<!-- //sub_nav -->
+			</div>
+    </div>
+    
+    <div class="content">
+
+		<div class="detail_wrap">
+
+			  <div class="board_detail_head" id="title">
+			  </div>
+
+			  <div class="board_detail_body">
+
+				<!-- 기본 -->
+				<div class="common_box">
+				  <ul>
+					<li>
+					  <span class="title">URL</span>
+					  <span class="s_tit" id="url"></span>
+					</li>
+					<li>
+					  <span class="title">설명</span>
+					  <span class="s_tit" id="desc"></span>
+					</li>
+					<li>
+					  <span class="title">API 키워드</span>
+					  <span class="s_tit" id="keywords"></span>
+					</li>
+					<li>
+					  <span class="title">API 유형</span>
+					  <span class="s_tit" id="type"></span></li>
+					  <li>
+						<span class="title">API 수정일</span>
+						<span class="s_tit" id="modifyDt"></span>
+					  </li>
+					  <li>
+						<span class="title">갱신주기</span>
+						<span class="s_tit" id="modifyCycle"></span>
+					  </li>
+					</ul>
+				  </div>
+				  <!-- // 기본 -->
+
+
+				  <div class="board_detail_table">
+					<p>요청 메시지 명세</p>
+					<div class="table_col_blue_wrap">
+					  <table class="table_col_blue">
+					   <caption>요청 메시지 명세에 대한 정보 - 항목명(영문),항목명(국문),항목 설명,비고</caption>
+					   <colgroup>
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+					  </colgroup>
+					  <thead>
+						<tr>
+						  <th>항목명(영문)</th>
+						  <th>항목명(국문)</th>
+						  <th>샘플데이터</th>
+						  <th>비고</th>
+						</tr>
+					  </thead>
+					  <tbody id="tbodyReqParam">
+					  </tbody>
+					</table>
+				  </div>
+				</div>
+
+				<div class="board_detail_table">
+				  <p>응답 메시지 명세</p>
+				  <div class="table_col_blue_wrap">
+					<table class="table_col_blue" id="tableResParam1">
+					  <caption>응답 메시지 명세에 대한 정보 - 항목명(영문),항목명(국문),샘플데이터,항목 설명,비고</caption>
+					  <colgroup>
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+						<col width="25%">
+					  </colgroup>
+					  <thead>
+						<tr>
+						  <th>항목명(영문)</th>
+						  <th>항목명(국문)</th>
+						  <th>샘플데이터</th>
+						  <th>비고</th>
+						</tr>
+					  </thead>
+					  <tbody id="tbodyResParam1">
+					  </tbody">
+					</table>
+
+					<table class="table_col_blue" id="tableResParam2" style="display:none">
+					  <caption>응답 메시지 명세에 대한 정보 - 항목명(영문),항목명(국문),샘플데이터,항목 설명,비고</caption>
+					  <colgroup>
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+					  </colgroup>
+					  <thead>
+						<tr>
+						  <th>항목명(영문)</th>
+						  <th>항목명(국문)</th>
+						  <th>관측소 종류</th>
+						  <th>샘플데이터</th>
+						  <th>비고</th>
+						</tr>
+					  </thead>
+					  <tbody id="tbodyResParam2">
+					  </tbody">
+					</table>
+
+				  </div>
+				</div>
+				
+				<section id="observatory">         
+					<p class="body_txt">관측소 목록</p>
+					<div class="sec_area mt10">※ 본 API를 제공하는 관측소목록을 조회할 수 있습니다.  <a class="btn_sblue">관측소 목록보기</a></div>
+				</section>
+
+				<section>       
+					<p class="body_txt">REST(URL)</p>
+					<div class="sec_area mt10" id="reqUrl"></div>
+				</section>
+				
+				<section>       
+					<p class="body_txt">응답메시지 ( JSON )</p>
+					<div class="sec_area mt10" id="response">
+					</div>
+				</section>
+				
+				
+				
+			  </div>
+			</div>
+		</div>
+	</main>
+	
+	<script type="text/javascript">
+	
+	
+		$(document).ready(function(){
+			
+			// 팝업 닫기
+			$('.sbtn_close').on('click', function() {
+				$('.pop_wrap, .pop_bg').css('display', 'none');
+				$('body, html').css('overflow', ''); // 원래 상태로 복구
+			});
+
+			// 팝업 보이기
+			$('.btn_sblue').on('click', function() {
+				$('.view_2, .pop_bg').css('display', 'flex');
+				$('.wrap').css('height', 'auto'); // 스크롤 막기
+				$('.wrap').css('position', 'relative'); 
+			});
+			
+			fn_getOpenApiInfo();
+		});
+
+		function getUrlParams() {
+			var params = {};
+			var queryString = window.location.search.substring(1); // '?' 이후 문자열
+			var regex = /([^&=]+)=([^&]*)/g;
+			var match;
+			while (match = regex.exec(queryString)) {
+				params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
+			}
+			return params;
+		}
+		
+		var urlParams = getUrlParams();
+		var searchKeyword = urlParams.searchKeyword || "";
+		var pageNumber = urlParams.pageNumber || "";
+		var searchCondition = urlParams.searchCondition || "";
+		
+		// 뒤로 가기 버튼 클릭 시 popstate 이벤트를 이용하여 목록 페이지로 이동하도록 처리
+		history.pushState(null, null, window.location.href);
+		window.onpopstate = function(event) {
+		    window.location.href = "/oceandata/openapi/odmi/odmiApiList.do?searchKeyword="+
+		    						encodeURIComponent(searchKeyword) +
+		                           "&currentPageNo=" + pageNumber + 
+		                           "&searchCondition="+	encodeURIComponent(searchCondition);
+		};
+		/*
+		history.pushState(null, null, window.location.href);
+		window.onpopstate = function(event) {
+		    window.location.href = "/oceandata/openapi/openApiList.do?searchword=" +
+		                           encodeURIComponent(searchword) +
+		                           "&pageNumber=" + pageNumber;
+		};*/
+		
+		function fn_getOpenApiInfo() {
+	        $.ajax({
+	            type: "POST",
+	            url: "/oceandata/openapi/getOpenApiInfo.do",
+	            dataType: "json",
+	            data : {
+	                id : "8"
+	            },
+	            success: function(data) {
+	                if (data.openapiinfoDetail) {
+	                    fn_setOpenapiinfoDetail(data.openapiinfoDetail);
+	                    fn_setOpenapiinfoReqParamTable(data.openapiinfoDetail);
+	                    fn_setOpenapiinfoResParamTable(data.openapiinfoDetail);
+	                    fn_setOpenapiinfoSample(data.openapiinfoDetail);
+	                    fn_setObservatoryTable(data.observatoryList);
+	                } else {
+	                    console.error("openapiinfoDetail 데이터가 없습니다.");
+	                }
+	            },
+	            error: function(xhr, ajaxSetting, thrownError) {
+	                console.error("Ajax 요청 실패:", thrownError);
+	            }
+	        });
+	    }
+
+		// 상세정보 입력
+		function fn_setOpenapiinfoDetail(openapiinfoDetail) {
+
+//			$("#title").html(openapiinfoDetail.title);
+			$("#title").html(
+				'<h2>' + openapiinfoDetail.title + '</h2>' +
+				'<a class="btn_sample" href="/oceandata/openapi/openApiKey.do">인증키발급/관리</a>'
+			);
+
+			$("#url").text(openapiinfoDetail.url);
+			$("#desc").text(openapiinfoDetail.desc);
+			$("#keywords").text(openapiinfoDetail.keywords);
+			$("#type").text(openapiinfoDetail.type);
+			$("#modifyDt").text(openapiinfoDetail.modifyDt);
+			$("#modifyCycle").text(openapiinfoDetail.modifyCycle);
+			
+			if (openapiinfoDetail.observatoryType == null || openapiinfoDetail.observatoryType == ""){
+				 $("#observatory").hide();
+			}
+
+		}
+		
+		// 요청 메시지 명세 표 채우기
+		function fn_setOpenapiinfoReqParamTable(openapiinfoDetail) {
+			var tableBody = $("#tbodyReqParam");
+			tableBody.empty();
+			
+			if (openapiinfoDetail.reqParam && 
+				openapiinfoDetail.reqParam.fields && 
+				openapiinfoDetail.reqParam.fields.length > 0) {
+				
+				$.each(openapiinfoDetail.reqParam.fields, function(index, field) {
+					var row = "<tr>";
+					row += "<td>" + field.nameEng + "</td>";
+					row += "<td>" + field.nameKor + "</td>";
+					row += "<td>" + field.sampleData + "</td>";
+					row += "<td>" + field.remarks + "</td>";
+					row += "</tr>";
+					tableBody.append(row);
+				});
+			} else {
+				tableBody.append("<tr><td colspan='4'>데이터가 없습니다.</td></tr>");
+			}
+		}
+
+		// 응답 메시지 명세 표 채우기
+		function fn_setOpenapiinfoResParamTable(openapiinfoDetail) {
+		  // id 가 문자열 "2"인 경우(조위관측소 최신관측 데이터)에만 5컬럼 테이블 사용
+		  if (openapiinfoDetail.id === "2") {
+			$("#tableResParam1").hide();
+			$("#tableResParam2").show();
+			var tb2 = $("#tbodyResParam2").empty();
+
+			  if (!openapiinfoDetail?.resParam?.fields?.length) {
+				  return;
+			  }
+
+			openapiinfoDetail.resParam.fields.forEach(function(field) {
+			  // remarks 를 콤마로 분리
+			  var parts = (field.remarks || "").split(",", 2);
+			  var obsType = parts[0] || "";
+			  var remark  = parts[1] || "";
+			  var row = "<tr>"
+				+ "<td>" + field.nameEng + "</td>"
+				+ "<td>" + field.nameKor + "</td>"
+				+ "<td>" + obsType + "</td>"
+				+ "<td>" + field.sampleData + "</td>"
+				+ "<td>" + remark + "</td>"
+				+ "</tr>";
+			  tb2.append(row);
+			});
+		  } else {
+			$("#tableResParam2").hide();
+			$("#tableResParam1").show();
+			var tb1 = $("#tbodyResParam1").empty();
+			  if (!openapiinfoDetail?.resParam?.fields?.length) {
+				  return;
+			  }
+			openapiinfoDetail.resParam.fields.forEach(function(field) {
+			  var row = "<tr>"
+				+ "<td>" + field.nameEng + "</td>"
+				+ "<td>" + field.nameKor + "</td>"
+				+ "<td>" + field.sampleData + "</td>"
+				+ "<td>" + field.remarks + "</td>"
+				+ "</tr>";
+			  tb1.append(row);
+			});
+		  }
+		}
+
+		// 샘플 입력
+		function fn_setOpenapiinfoSample(openapiinfoDetail) {
+			if (openapiinfoDetail.sample) {
+				// REST URL 샘플 채우기
+				$("#reqUrl").text(openapiinfoDetail.sample.reqUrl);
+
+				// 응답 메시지 샘플 채우기
+				const obj = JSON.parse(openapiinfoDetail.sample.response);
+				const pretty = JSON.stringify(obj, null, 2);
+				$("#response").text(pretty);
+			} else {
+				$("#reqUrl").text("데이터가 없습니다.");
+				$("#response").text("데이터가 없습니다.");
+			}
+		}
+		
+		// 관측소 목록 표 채우기
+		function fn_setObservatoryTable(observatoryList) {
+			var tableBody = $("#tbodyObservatoryList");
+			tableBody.empty();
+
+			if (observatoryList && observatoryList.length > 0) {
+				// 'name' 기준으로 오름차순 정렬
+				observatoryList.sort(function(a, b) {
+					return a.name.localeCompare(b.name);  // 문자열을 기준으로 정렬
+				});
+
+				// 데이터를 테이블에 추가
+				$.each(observatoryList, function(index, observatory) {
+					var row = "<tr>";
+					row += "<td>" + observatory.id + "</td>";  // 관측소 번호
+					row += "<td>" + observatory.name + "</td>";  // 관측소 명
+					row += "<td>" + observatory.lat + "</td>";  // 위도
+					row += "<td>" + observatory.lon + "</td>";  // 경도
+					row += "</tr>";
+					tableBody.append(row);
+				});
+			} else {
+				// 데이터가 없을 경우 메시지 출력
+				tableBody.append("<tr><td colspan='4'>관측소 목록이 없습니다.</td></tr>");
+			}
+		}
+		
+		
+	</script>
+  
+  <!-- jQuery -->
+  <script type="text/javascript" src='/oceandata/js/lib/jquery/jquery-3.7.1.js'></script>
+  <!-- 외부 JS 파일 include: contentMenu.js -->
+  <script src="/oceandata/js/khoa/portal/common/contentMenu.js"></script>
+
+ 		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer class="footer_PC">
+	<div class="footer_in">
+		<p class="f_logo">
+			<a href="https://www.khoa.go.kr/" target="_blank" class="logo_1">
+				국립해양조사원
+			</a> 
+			<a href="/oceandata/main.do" class="logo_2">
+				바다누리 해양정보 서비스
+			</a>
+		</p>
+
+		<div class="f_txt">
+			<ul>
+				<li>
+					<a href="http://www.khoa.go.kr/kcom/cnt/selectContentsPage.do?cntId=66200000" target="_blank">
+						개인정보 처리방침
+					</a>
+				</li>
+				<li>
+					<a href="http://www.khoa.go.kr/kcom/cnt/selectContentsPage.do?cntId=66300000" target="_blank">
+						홈페이지저작권 보호정책
+					</a>
+				</li>
+				<li>
+					<a href="http://www.khoa.go.kr/kcom/cnt/selectContentsPage.do?cntId=23405000" target="_blank">
+						민원서비스헌장 알림
+					</a>
+				</li>
+			</ul>
+			<p class="address_t">
+				주소 : (49111) 부산광역시 영도구 해양로 351 (동삼동 1162)
+				<br> TEL: 051-400-4400 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FAX : 051-400-4191 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				보이는 ARS
+				: 1588-9822
+			</p>
+			<p class="copy">(C) 2025 BY KOREA HYDROGRAPHIC AND OCEANOGRAPHIC AGENCY. ALL RIGHTS RESERVED.</p>
+		</div>
+
+	</div>
+</footer>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,2131 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+
+
+
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+  <script src="/js/jquery-1.11.1.min.js"></script>
+
+  <link rel="stylesheet" href="/css/header_footer.css;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1">
+  <link rel="stylesheet" href="/css/basic.css;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1">
+  <link rel="stylesheet" href="/css/breakpoint.css;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1">
+<title>데이터 목록 상세 | 재난안전데이터공유플랫폼</title>
+<meta name="description"
+	content="재난안전데이터 공유 플랫폼에서는 원하는 데이터를 찾을 수 있도록 기능을 제공합니다. 찾고 싶은 데이터명을 입력하여 데이터명과 일치하는 재난안전데이터를 찾을 수 있습니다.">
+<meta name="keywords" content="재난안전데이터, 공공데이터, 재난, 풍수해, 오픈데이터, 안전데이터">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.safetydata.go.kr/">
+<meta property="og:title" content="재난안전데이터공유플랫폼">
+<meta property="og:description"
+	content="재난안전데이터 공유 플랫폼에서는 원하는 데이터를 찾을 수 있도록 기능을 제공합니다. 찾고 싶은 데이터명을 입력하여 데이터명과 일치하는 재난안전데이터를 찾을 수 있습니다.">
+<meta property="og:site_name" content="재난안전데이터공유플랫폼">
+<meta property="og:locale" content="ko_KR">
+<link rel="stylesheet" href="/css/swiper-bundle.css" />
+<script src="/js/swiper-bundle.js"></script>
+<link href="/css//tabulator.min.css" rel="stylesheet">
+<script type="text/javascript"
+	src="https://unpkg.com/tabulator-tables@6.2.1/dist/js/tabulator.min.js"></script>
+<!--추가사항-->
+<link rel="stylesheet" href="/css/header_footer.css">
+<!-- / 추가사항-->
+<script src="/js/circle-progress.min.js"></script>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/css/common.css" />
+
+
+<!--zes. responsive-style.css 추가 -->
+<link rel="stylesheet" href="/css/responsive-style.css">
+<!--zes. zes-script.js 추가 -->
+<script src="/js/zes-script.js"></script>
+<!-- 2025.02.18 mjh 로컬에서 화면 늦게 열려서 주석처리함 -->
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<!-- 10.24 table css 복붙 -->
+<style>
+.flex-wrap {
+	display: flex;
+	justify-content: center;
+}
+
+.csv-table {
+	overflow-x: scroll;
+}
+
+.csv-table table {
+	background-color: #FFFFFF;
+	border-collapse: collapse;
+	white-space: nowrap;
+}
+
+.csv-table td {
+	border: 1px solid #000000;
+	word-break: break-all;
+}
+</style>
+
+<link rel="stylesheet" href="/css/datepicker.css">
+<script src="/js/datepicker.js"></script>
+<script src="/js/datepicker.ko.js"></script>
+
+<style>
+.txt2-num {
+	position: relative;
+	width: 42px;
+	height: 42px;
+	margin-top: 7px;
+}
+
+.txt2-num:after {
+	content: '㎍/㎥';
+	position: absolute;
+	top: 43%;
+	transform: translateY(-50%);
+	right: -30px;
+	font-size: 12px;
+	font-weight: 400;
+	color: #4F4F4F;
+	letter-spacing: -0.04em;
+}
+
+.txt2-num>canvas {
+	
+}
+
+.txt2-num>strong {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 14px;
+	transform: translate(-50%, -50%);
+	letter-spacing: -0.03em;
+	font-weight: 400;
+}
+
+.flex, .flex-inline, .flex-center, .flex-both, .flex-both-start,
+	.flex-start, .flex-end, .flex-list, .flex-col.alignItems {
+	align-items: center;
+}
+</style>
+
+</head>
+
+<body>
+	<!--추가사항-->
+
+	<!-- 헤더 -->
+	<!-- <header data-include="header.html"></header> -->
+	<div class="header_bg"></div>
+	<header id="header">
+		
+
+
+
+
+
+
+
+
+<!-- skipnavigation -->
+<div class="skipnavigation">
+	<a href="#Gocut" onclick="handleScrollMain()"><span>본문 바로가기</span></a>
+	<a href="#gnb"><span>주 메뉴 바로가기</span></a>
+</div>
+<!-- / skipnavigation -->
+<!-- 250826 header main, sub 위치 변경 및 div 추가 -->
+<div style="display: flex;">
+<div class="header-main">
+	<div class="wrapper flex-both">
+		<h1 class="logo">
+			<a href="/">
+				<img src="/images/main/logo.png;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="재난안전데이터공유플랫폼">
+				<img src="/images/main/logo_black.png;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="재난안전데이터공유플랫폼">
+			</a>
+		</h1>
+		<nav class="flex-center">
+			<ul class="gnb flex-both-start" id="gnb">
+				
+					<li class="gnb-item">
+					
+						
+							<a href="javascript:;" >데이터 찾기</a>
+						
+						
+					
+						<ul class="gnb-item__sub">
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/disaster-data/list2" class="subMenu">데이터 목록</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/disaster-data/isuData" class="subMenu">많이 찾는 데이터</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/disaster-data/dataMap" class="subMenu">데이터 맵</a>
+									</li>
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+							<!-- 여기 의견 등록자 SN 작성 -->
+							
+						</ul>
+					</li>
+				
+					<li class="gnb-item">
+					
+						
+							<a href="javascript:;" >데이터 공유</a>
+						
+						
+					
+						<ul class="gnb-item__sub">
+							
+								
+							
+								
+							
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/shareData_1/applyDataPage" class="subMenu">데이터 제공신청</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/shareData_3" class="subMenu">나의 데이터 공유</a>
+									</li>
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+							<!-- 여기 의견 등록자 SN 작성 -->
+							
+						</ul>
+					</li>
+				
+					<li class="gnb-item">
+					
+						
+							<a href="javascript:;" >데이터 활용</a>
+						
+						
+					
+						<ul class="gnb-item__sub">
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/disaster-data/specializedService" class="subMenu">특화서비스</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/dataUtilization_1" class="subMenu">활용 사례</a>
+									</li>
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+							<!-- 여기 의견 등록자 SN 작성 -->
+							
+						</ul>
+					</li>
+				
+					<li class="gnb-item">
+					
+						
+							<a href="javascript:;" >재난상황 데이터</a>
+						
+						
+					
+						<ul class="gnb-item__sub">
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/disaster-data/disasterBoard" class="subMenu">안전관리일일상황</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/disaster-data/disasterNotification" class="subMenu">재난 문자</a>
+									</li>
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+							<!-- 여기 의견 등록자 SN 작성 -->
+							
+						</ul>
+					</li>
+				
+					<li class="gnb-item">
+					
+						
+							<a href="javascript:;" >이용 안내</a>
+						
+						
+					
+						<ul class="gnb-item__sub">
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/notice" class="subMenu">공지사항</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/faq" class="subMenu">FAQ</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/contact" class="subMenu">문의하기</a>
+									</li>
+								
+							
+								
+									<li class="gnb-item__sub-item">
+										<a href="/userGuide/intro" class="subMenu">이용가이드</a>
+									</li>
+								
+							
+							<!-- 여기 의견 등록자 SN 작성 -->
+							
+						</ul>
+					</li>
+				
+				
+			</ul>
+		</nav>
+	</div>
+</div>
+<div class="header-sub">
+	<div class="wrapper flex-end">
+		
+		<div class="header-sub__menu">
+			
+				
+					<a href="/loginPage;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" >
+						<div class="img_bx">
+							<img src="/images/main/login_icon.svg;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="">
+							<img src="/images/main/login_icon_b.svg;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="">
+						</div>
+						<p>로그인</p>
+					</a>
+					<a href="/registMember_1;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" >
+						<div class="img_bx">
+							<img src="/images/main/sign_icon.svg;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="">
+							<img src="/images/main/sign_icon_b.svg;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="">
+						</div>
+						<p>회원가입</p>
+					</a>
+				
+				
+			
+			<a href="/siteMap;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" >
+				<div class="img_bx">
+					<img src="/images/main/site_icon.svg;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="">
+					<img src="/images/main/site_icon_b.svg;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="">
+				</div>
+				<p>사이트맵</p>
+			</a>
+		</div>
+	</div>
+</div>
+</div>
+<script>
+	/* 헤더 */
+	// 스크롤 이벤트
+	window.addEventListener('scroll', function () {
+		const headerBg = document.querySelector('.header_bg');
+		const header = document.querySelector('#header');
+		if (window.scrollY !== 0) {
+			headerBg.classList.add('scrolled');
+			header.classList.add('scrolled');
+		} else {
+			headerBg.classList.remove('scrolled');
+			header.classList.remove('scrolled');
+		}
+	});
+
+	// .gnb-item__sub-item a 요소에 click 이벤트 리스너 추가
+	document.querySelectorAll('.gnb-item__sub-item a').forEach(function (anchor) {
+		anchor.addEventListener('click', function () {
+			document.querySelectorAll('.gnb-item').forEach(function (item) {
+				item.classList.remove('hover'); // 모든 .gnb-item에서 hover 클래스 제거
+			});
+			this.closest('.gnb-item').classList.add('hover'); // 클릭된 항목의 부모 .gnb-item에 hover 클래스 추가
+		});
+	});
+
+	// 헤더 호버 이벤트
+	const header = document.querySelector('header');
+	let isFocus = false;
+	let isHover = false;
+
+	header.addEventListener('focusin', function () {
+		isFocus = true;
+		document.querySelector('.header_bg').classList.add('hover');
+	});
+
+	header.addEventListener('focusout', function () {
+		isFocus = false;
+		if (!isHover && !isFocus) {
+			document.querySelector('.header_bg').classList.remove('hover');
+		}
+	});
+
+	header.addEventListener('mouseenter', function () {
+		isHover = true;
+		document.querySelector('.header_bg').classList.add('hover');
+	});
+
+	header.addEventListener('mouseleave', function () {
+		isHover = false;
+		if (!isHover && !isFocus) {
+			document.querySelector('.header_bg').classList.remove('hover');
+		}
+	});
+
+	//헤더 애니메이션 효과
+	// header 요소에 mouseover 및 focusin 이벤트 리스너 추가
+	header.addEventListener("mouseover", function () {
+		isHover = true;
+		document.body.classList.add("on");
+	});
+
+	// header 요소에서 mouseleave 및 focusout 이벤트 리스너 추가
+	header.addEventListener("mouseleave", function () {
+		isHover = false;
+		if (!isHover && !isFocus) {
+			document.body.classList.remove("on");
+		}
+	});
+
+	header.addEventListener("focusin", function () {
+		isFocus = true;
+		document.body.classList.add("on");
+	});
+
+	header.addEventListener("focusout", function () {
+		isFocus = false;
+		if (!isHover && !isFocus) {
+			document.body.classList.remove("on");
+		}
+	});
+
+	// sub_body 클래스
+	document.addEventListener("DOMContentLoaded", function () {
+		if (window.location.pathname !== '/') {
+			document.body.classList.add('sub_body');
+		}
+		
+	    const links = document.querySelectorAll("a");
+		let homeLink = null;
+	    for (const link of links) {
+	        if (link.textContent.trim() === "홈" && link.getAttribute("href") === "/") {
+	        	homeLink = link;
+	            break; // 첫 번째만 적용
+	        }
+	    }
+	    if (homeLink) {
+			const existing = document.getElementById("Gocut");
+			if(existing){
+	        	existing.removeAttribute("id");
+			}
+			homeLink.id = "Gocut";
+	    }
+
+
+		
+	});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 11-21 본문바로가기 맨 아래로 이동기능 -->
+<script>
+	function handleScrollMain() {
+		window.scrollTo({
+			top:document.body.scrollHeight,
+			left:0,
+			behavior:"smooth"
+		})
+	}
+</script>
+
+
+<!-- 임시게시판 숨김 -->
+<!-- <script>
+
+ 	if(location.pathname ==='/noticeTemp'){
+		alert('접근할 수 없는 페이지입니다.');
+		location.replace('/');
+	}
+</script> -->
+	</header>
+
+	
+
+
+
+
+
+
+
+<!--zes. mob 버전  gnb 해당 html 통으로 추가-->
+
+<div class="only-mob mob-header">
+	<!-- skipnavigation -->
+	<div class="skipnavigation">
+		<a href="https://www.safetydata.go.kr/#Gocut" onclick="handleScrollMain()"> <span>본문 바로가기</span>
+		</a> <a href="javascript:void(0);" onclick="handleScrollMain()"> <span>주
+            메뉴 바로가기</span>
+	</a>
+	</div>
+	<!-- / skipnavigation -->
+	<nav class="mgnb">
+		<div class="logo">
+			<a href="/">
+				<img src="/images/main/logo_black.png;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1" alt="재난안전데이터공유플랫폼 로고">
+			</a>
+		</div>
+		<div>
+			<a href="#" class="mmenu menu-icon" id="openMmenu"><span></span></a>
+		</div>
+	</nav>
+	<!--mob gnb-->
+	<div class="for_mob mob_allMenu" style="visibility: hidden;">
+		<div class="menu_header">
+			<div class="login-header">
+				<div class="login-header__list">
+					
+						
+							<a href="/loginPage">로그인</a>
+							<a href="/registMember_1">회원가입</a>
+						
+						
+					
+				</div>
+				<a href="#" class="mmenu menu-icon close cff" id="closeMmenu"><span></span></a>
+			</div>
+			<div class="search_box">
+				<div class="mnue_search_area">
+					<!--검색 start-->
+					<form id="mob-search-container" action="/disaster-data/totalSearch;jsessionid=9AAADDCE19C1398D8A70C6B1F6444C5E.was1">
+						<div class="search-box-mob" id="search-box2">
+							<label for="m_query" class="blind">검색어</label>
+							<input type="text" id="m_query" name="query" title="찾으시는 데이터를 검색해 주세요"
+								   placeholder="찾으시는 데이터를 검색해주세요">
+							<button type="submit" class="btn-srch-mob" onclick="clickSearch()">검색하기</button>
+						</div>
+					</form>
+					<!--검색 end-->
+				</div>
+			</div>
+		</div>
+		<div class="contents" role="tablist">
+			<ul class="mDepth1">
+				
+					<li class="on">
+					
+						
+							<a href="javascript:;" tabindex="4">데이터 찾기</a>
+						
+						
+					
+						<div class="mDepth2">
+							<ul class="menu_list">
+								
+									
+										<li>
+											<a href="/disaster-data/list2" target="_self" title="페이지 이동">데이터 목록</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/disaster-data/isuData" target="_self" title="페이지 이동">많이 찾는 데이터</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/disaster-data/dataMap" target="_self" title="페이지 이동">데이터 맵</a>
+										</li>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+								
+							</ul>
+						</div>
+					</li>
+				
+					<li class="">
+					
+						
+							<a href="javascript:;" tabindex="4">데이터 공유</a>
+						
+						
+					
+						<div class="mDepth2">
+							<ul class="menu_list">
+								
+									
+								
+									
+								
+									
+								
+									
+										<li>
+											<a href="/shareData_1/applyDataPage" target="_self" title="페이지 이동">데이터 제공신청</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/shareData_3" target="_self" title="페이지 이동">나의 데이터 공유</a>
+										</li>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+								
+							</ul>
+						</div>
+					</li>
+				
+					<li class="">
+					
+						
+							<a href="javascript:;" tabindex="4">데이터 활용</a>
+						
+						
+					
+						<div class="mDepth2">
+							<ul class="menu_list">
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+										<li>
+											<a href="/disaster-data/specializedService" target="_self" title="페이지 이동">특화서비스</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/dataUtilization_1" target="_self" title="페이지 이동">활용 사례</a>
+										</li>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+								
+							</ul>
+						</div>
+					</li>
+				
+					<li class="">
+					
+						
+							<a href="javascript:;" tabindex="4">재난상황 데이터</a>
+						
+						
+					
+						<div class="mDepth2">
+							<ul class="menu_list">
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+										<li>
+											<a href="/disaster-data/disasterBoard" target="_self" title="페이지 이동">안전관리일일상황</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/disaster-data/disasterNotification" target="_self" title="페이지 이동">재난 문자</a>
+										</li>
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+								
+							</ul>
+						</div>
+					</li>
+				
+					<li class="">
+					
+						
+							<a href="javascript:;" tabindex="4">이용 안내</a>
+						
+						
+					
+						<div class="mDepth2">
+							<ul class="menu_list">
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+								
+									
+										<li>
+											<a href="/notice" target="_self" title="페이지 이동">공지사항</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/faq" target="_self" title="페이지 이동">FAQ</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/contact" target="_self" title="페이지 이동">문의하기</a>
+										</li>
+									
+								
+									
+										<li>
+											<a href="/userGuide/intro" target="_self" title="페이지 이동">이용가이드</a>
+										</li>
+									
+								
+								
+							</ul>
+						</div>
+					</li>
+				
+			</ul>
+		</div>
+	</div>
+	<!--//mob-->
+</div>
+
+
+<script>
+	const mobAllMenu = $(".mob_allMenu");
+	const body = $("body");
+	const mMenuDepth1Items = $('.mob_allMenu .contents .mDepth1 > li');
+	const mDepth2Links = $('.mob_allMenu .mDepth2 a');
+	const mDepth1Links = $('.mob_allMenu .mDepth1 a');
+
+	mobAllMenu.css("visibility", "hidden");
+
+	function clickSearch() {
+		location.href = '/disaster-data/totalSerach?query=' + $('#m_query').val();
+	}
+
+	function openMenu() {
+		body.addClass('menuOpen');
+		mobAllMenu.css("visibility", "visible");
+		return false;
+	}
+
+	function closeMenu() {
+		body.removeClass('menuOpen');
+		mobAllMenu.css("visibility", "hidden");
+		// preTabActionEl.focus();
+		return false;
+	}
+
+	function handleEscape(event) {
+		if (event.key === 'Escape' && body.hasClass('menuOpen')) {
+			body.removeClass('menuOpen');
+			// preTabActionEl.focus();
+		}
+	}
+
+	mMenuDepth1Items.click(function (e) {
+		e.preventDefault();
+		mMenuDepth1Items.removeClass('on');
+		$(this).addClass('on');
+	});
+
+	mDepth2Links.click(function () {
+		mDepth2Links.removeClass('action');
+		$(this).addClass('action');
+		window.location = $(this).attr('href');
+	});
+
+	mDepth1Links.click(function () {
+		mDepth1Links.removeClass('action');
+		$(this).addClass('action');
+		window.location = $(this).attr('href');
+	});
+
+	$('#openMmenu').on('click', openMenu);
+	$('#closeMmenu').on('click', closeMenu);
+	$(document).keydown(handleEscape);
+</script>
+
+
+<!--// zes. mob 버전  gnb 추가-->
+
+	<!-- 헤더 -->
+	<div class="blank"></div>
+	<div class="wrapper">
+		<div class="breadcrumb-nav">
+			<nav>
+				<ul>
+					<li class="home"><a href="/">홈</a></li>
+					<li><a>데이터 찾기</a></li>
+					<li><a href="/disaster-data/list2" class="link">데이터 목록</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<!-- / 추가사항-->
+	<div class="data-list">
+		<div class="top-info PosiR">
+			<h2 class="top-info__title" id="Gocut">
+				데이터 <span class="top-info__title--color">상세</span>
+			</h2>
+			<div class="top-info__desc">관련 데이터의 상세 내용을 확인할 수 있습니다.</div>
+			<div class="top-view-bar flex-end Posi01">
+				<ul class="sns-link-list">
+					<li><a href="javascript:void(0)" onclick="clip()" id="clip">URL복사<img
+							src="/img/ico/ico_duplication.png" alt=""></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="data-list__card Padding">
+			<div class="card__inner">
+				<div class="card__left">
+					<div class="card__title">
+						가축전염병발생통계
+					</div>
+					<div class="card__desc Font">
+						<p>
+						
+						</p>
+					</div>
+					<div class="card__info Margin">
+						<div class="card__info-item">
+							등록일 |
+							2025-01-14 18:55:12
+						</div>
+						<div class="card__info-item">조회수 | 507</div>
+						<div class="card__info-item">호출횟수 | 
+						
+
+
+    
+    
+    
+    
+        
+    
+							
+51</div>
+					</div>
+					<p class="card__infoText">다운로드는 조회된 데이터 중 첫 100건만 제공합니다, 그외의
+						데이터 연계는 오픈 API를 이용해주세요</p>
+				</div>
+
+				<div class="card__right">
+					<div class="card__bookmark" style="display: flex;">
+						찜
+						
+						<!-- 						<img src="img/bookmark_1.svg" alt=""> -->
+					</div>
+					<div style="display: flex;" class="card__btnbox">
+						<!-- <button class="ghost MediumBt mr-10" onclick="location.href='javascript:openPop();' ">오류신고 및 문의</button> -->
+						
+						
+						<button class="solid LargeBt" id="fileDataDownload3328">샘플 다운로드</button>
+							<script>
+								$(function(){
+									$("#fileDataDownload3328").on("click", function(){
+										$.ajax({
+											url: "/disaster-data/downloadData",
+											type: "POST",
+											contentType: 'application/json',
+											data: JSON.stringify({ dataSn: 3328 }),
+											success: function(response) {
+												var utf8BOM = '\ufeff';  // UTF-8 BOM
+												var blob = new Blob([utf8BOM +response],  { type: 'text/csv; charset=utf-8' });
+												var link = document.createElement('a');
+												link.href = URL.createObjectURL(blob);
+												link.download = `가축전염병발생통계.csv`;
+												link.click();
+											},
+											error: function() {
+												alert('데이터 조회 권한이 없습니다. 관리자에게 문의하세요');
+											}
+										});
+										
+										
+										
+										
+										
+										
+										
+									})
+								});
+							</script>
+						<iframe id="ifrm" name="ifrm" style="display: none;" title="다운로드"></iframe>
+						
+						
+							<!--zes. 이용신청 버튼추가 -->
+							<button class="solid LargeBt apply-btn"
+								onclick="location.href='/share-data/shareData_1?dataSn='+3328;">이용신청</button>
+						
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="hr"></div>
+
+
+		<div class="tab">
+			<div class="tab__inner">
+				<!-- <div data-sn="3328" data-type="fileData" class="tab__button detail-btn tab__button--active" ><a href="javascript:;">파일데이터</a></div>
+        <div data-sn="3328" data-type="openApi" class="tab__button detail-btn"><a href="javascript:;">오픈 API</a></div>
+        <div data-sn="3328" data-type="previewData" class="tab__button detail-btn"><a href="javascript:;">미리보기</a></div> -->
+				
+					<div class="tableCall">
+						<a href="javascript:;" data-sn="3328"
+							data-type="openApi" class="tab__button detail-btn tab__button--active">오픈 API</a>
+					</div>
+				
+				<div class="tableCall">
+					<a href="javascript:;" data-sn="3328"
+						data-type="fileData"
+						class="tab__button detail-btn">파일데이터</a>
+				</div>
+				
+					<div class="tableCall">
+						<a href="javascript:;" data-sn="3328"
+						   data-type="previewData" class="tab__button detail-btn">미리보기</a>
+					</div>
+					
+				
+			</div>
+			<!-- <ul class="tab-text-bt mr-20">
+            <li class="tab-bt"><a href="javascript:openPop();">오류신고 및 문의</a></li>
+        </ul> -->
+		</div>
+
+		<div class="tab">
+			<h3 id="tabTitle">파일데이터</h3>
+		</div>
+		
+		<div class="data-list__desc-box">
+			<h3 class="data-list__title">제공 방식</h3>
+			<div class="desc-box__content" id="descriptionBox">
+				재난안전데이터 공유 플랫폼에서는 재난관리책임기관 등으로부터 수집·연계된 데이터를 오픈API(RestAPI 기반의
+				JSON/XML)로 변환하여 제공합니다.<br> 오픈API를 활용하기 위해서는 공유플랫폼 회원 가입 및 활용
+				신청이 필요하며, 활용 관련 문의는 '이용안내/문의하기'를 참고하시기 바랍니다.<br> 데이터 자체에 대한 문의는
+				아래 데이터 담당부서 전화번호로 연락하여 주시기 바랍니다.<br> 오픈 API는 이용신청을 통해 이용하실수
+				있습니다. <br>
+				이용허락범위는 데이터 제공기관이 공공기관인 경우, 공공누리의 제3유형에 해당하며, 민간기관 또는 유관기관인 경우에는 공공누리의 제4유형에 해당합니다.
+				<br>[참고] 공공누리 유형안내 (<a href="https://www.kogl.or.kr/info/license.do" target="_blank"  title="">https://www.kogl.or.kr/info/license.do</a>)
+			</div>
+		</div>
+		<br>
+		<div class="tab-container data-reviewList" id="review" hidden="hidden">
+			<h3 class="data-list__title">데이터 공지사항</h3>
+			<div id="reviewCon"></div>
+		</div>
+		<!-- 원문 미리보기 로직구현 -->
+		<form action="/docview" method="POST" name="frm" target="바로보기문서뷰어">
+			<input type="hidden" name="fileSn" value="0">
+			<!-- 2023.10.31 첨부파일 유무에 따라 바로보기 버튼 온오프 -->
+			
+
+			<!-- 2023.10.31 메뉴얼첨부파일 유무에 따라 바로보기 버튼 온오프 -->
+			
+		</form>
+
+		<!-- 		<div class="data-list__desc-box" id="searchParams" hidden="hidden"> -->
+		<!-- 			<h3 class="data-list__title">데이터 조건별 검색</h3> -->
+		<!-- 			<div class="desc-box__content flexC"> -->
+		
+		
+		
+		
+		<!-- 				<div class="DayCalander"> -->
+		<!-- 					<img src="/img/Vector.svg" alt="달력" /> <input type="text" -->
+		<!-- 						class="content__input" title="시작일" name="dateFrom" -->
+		<!-- 						data-language="en" placeholder="시작일" -->
+		
+		<!-- 					<span class="content__bullet">~</span> <input type="text" -->
+		<!-- 						class="content__input" title="종료일" name="dateTo" -->
+		<!-- 						data-language="en" placeholder="종료일" -->
+		
+		<!-- 				</div> -->
+		<!-- 				<div class="SerchBox"> -->
+		<!-- 					<input type="text" class="input-text Serch" title="검색" -->
+		<!-- 						name="keyword" placeholder="검색어를 입력해주세요." /> -->
+		<!-- 					<div class="fl-right"> -->
+		<!-- 						<button type="button" class="ghost MediumBt" id="search">검색</button> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 				<div class="btn-wrap"> -->
+		<!-- 					<button type="button" class="solid LargeBt mL127" -->
+		<!-- 						id="downloadFiltered">데이터 다운로드</button> -->
+		<!-- 				</div> -->
+		<!-- 			</div> -->
+		<!-- 		</div> -->
+
+		<div id="dataListTable" class="data-list__table"></div>
+
+		<!--zes. 데이터 후기/데이터 문의 추가-->
+		<div class="tab-container data-reviewList" id="Qna" hidden="hidden">
+			<h3 class="data-list__title">데이터 문의 & 오류신고</h3>
+			<div id="qnaCon"></div>
+		</div>
+<!-- 		<div class="tab-container data-reviewList" id="reviewAndQna" -->
+<!-- 			hidden="hidden"> -->
+<!-- 			<div class="tabList data-reviewList-tab"> -->
+<!-- 				<button class="tabBtn" id="tab1" aria-selected="true" -->
+<!-- 					aria-controls="reviewCon" role="tab">데이터후기</button> -->
+<!-- 				<button class="tabBtn" id="tab2" aria-selected="false" -->
+<!-- 					aria-controls="qnaCon" role="tab">데이터 문의 & 오류신고</button> -->
+<!-- 			</div> -->
+
+<!-- 			<div id="reviewCon" class="tab-panel" role="tabpanel" -->
+<!-- 				aria-labelledby="tab1" aria-hidden="false"></div> -->
+<!-- 			<div id="qnaCon" class="tab-panel" role="tabpanel" -->
+<!-- 				aria-labelledby="tab2" aria-hidden="true"></div> -->
+
+<!-- 		</div> -->
+		<div class="flex-end mt32">
+			<button class="ghost MediumBt" onclick="goList();">목록</button>
+		</div>
+	</div>
+
+	<!--오류신고 및 문의 팝업입니다.-->
+	<div class="modalPOPW" hidden="hidden" tabindex="-1">
+		<div class="modalPOP width1200">
+			<div class="delet_btn">
+				<a href="javascript:deletePop();"><img src="/img/delet.svg"
+					alt="닫기"></a>
+			</div>
+			<div class="pop_title">오류신고 및 문의</div>
+			<div class="popline">-</div>
+			<div class="data-list__desc-box PDgo">
+				<div class="data-list__title flex-both">
+					<span>등록</span> <span class="data-list__info-text"><span
+						class="color-blue">*</span> 표시는 필수 입력항목입니다.</span>
+				</div>
+				<div class="form-wrap type1">
+					<form class="form request-info-form" action="/errorSttemnt/add"
+						method="post" id="errorFrm">
+						<div class="field-box alignItemsC">
+							<div class="field-label">등록자명</div>
+							<div class="field">
+								<p>
+									
+								</p>
+							</div>
+						</div>
+						<div class="field-box">
+							<div class="field-label">이메일</div>
+							<div class="field">
+								<p>
+									
+								</p>
+							</div>
+						</div>
+						<div class="field-box">
+							<div class="field-label">오류 데이터명</div>
+							<div class="field">
+								<p>
+									가축전염병발생통계
+								</p>
+								<input type="hidden" name="dclrDtinSn"
+									value="3328">
+							</div>
+						</div>
+						<div class="field-box">
+							<div class="field-label">
+								신고유형구분 <span class="color-red">*</span>
+							</div>
+							<div class="field">
+								<select style="max-width: 300px;" name="dclrTypeSe"
+									id="dclrTypeSe" class="select">
+									<option value="">선택</option>
+									<option value="api">오픈API</option>
+									<option value="page">홈페이지</option>
+									<option value="etc">기타</option>
+								</select>
+							</div>
+						</div>
+						<div class="field-box">
+							<div class="field-label">
+								내용<span class="color-red">*</span>
+							</div>
+							<div class="field">
+								<textarea
+									style="min-height: 150px; background-position: 95% 50%;"
+									class="textarea" id="errorDtlCn" name="cn"
+									placeholder="개발한 서비스에 대한 개요, 서비스 대상, 목적 등에 대해 간단한 설명을 해주세요." aria-label="개발한 서비스에 대한 개요, 서비스 대상, 목적 등에 대해 간단한 설명을 해주세요."></textarea>
+								<div class="info-wrap">
+									<p class="info-text font13">
+										*게시판 내용 및 첨부파일 내에 개인정보(주민등록번호, 성명, 연락처 등)가 포함되지 않도록 주의하십시오.<br>
+										신청 및 제안 해주신 내용에 대해서는 신속하게 처리하여 처리결과를 이메일로 알려 드리고 있으니, 처리 결과
+										알림을 제공 받기 위해서 이메일을 정확하게 입력해주시기 바랍니다.
+									</p>
+								</div>
+							</div>
+						</div>
+						
+<div class="field-box">
+	<div class="field-label">
+		자동등록방지
+		<span class="color-red">*</span>
+	</div>
+	<div class="field flex-list">
+		<div class="auto-reg-prevent-wrap">
+			<img src="" class="captcha_img" alt="자동등록방지 보안문자">
+			<div class="captcha_snd" style="display: none;" title="자동등록방지 보안음성"></div>
+			<div class="btn-control-wrap flex-col">
+			 <a href="#none" role="button" title="자동등록방지 문자 새로고침" class="btn-refresh" onclick="javaScript:getCaptchaImage();"><span class="sr-only">자동등록방지 문자 새로고침</span> </a>
+                  <a href="#none" role="button" title="자동등록방지 음성 듣기" class="btn-speaker" onclick="javaScript:getCaptchaSound();"><span class="sr-only">자동등록방지 음성으로 듣기</span></a>
+			</div>
+		</div>
+		<input title="보안문자를 입력하세요." name="captchaAnswer" id="captchaAnswer" type="text" class="input-text large"  placeholder="보안문자를 입력하세요.">
+	</div>
+</div>
+<script src="/js/captcha/captcha.js"></script>
+
+					</form>
+				</div>
+				<div class="fl-right mt-20">
+					<button type="button" class="solid MediumBt"
+						onclick="errorInsert()">신고</button>
+					<button type="button" onclick="deletePop()" class="ghost MediumBt">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--추가사항-->
+
+	<!-- 푸터 -->
+	<!-- <footer data-include="footer.html"></footer> -->
+	<footer id="footer">
+		
+<div class="container">
+    <div class="left">
+        <div class="logo_bx">
+            <img src="/images/main/logo.png" alt="재난안전데이터공유플랫폼">
+        </div>
+    </div>
+    <div class="right">
+    <div style="display: flex; justify-content: space-between;">
+        <ul class="term_list">
+            <li>
+                <a href="/utztnTrms">이용약관</a>
+            </li>
+            <li>
+                <a href="/personalInfoPolicy">개인정보처리방침</a>
+            </li>
+        </ul>
+        <div>
+        	<label for="selectSite" class="sr-only">관련사이트 선택</label>
+        	<select class="select" id="selectSite" style="width: 150px">
+        		<option value="site">관련사이트</option>
+        		<option value="https://mois.go.kr">행정안전부</option>
+        		<option value="https://www.safekorea.go.kr">국민안전24</option>
+        	</select>
+        	<button type="button" id="openSiteBtn" class="ghost MediumBt" title="새 창 이동">이동</button>
+        </div>
+        </div>
+        <div class="inner">
+            <div class="left">
+                <p>
+                <span>
+                  (30112) 세종특별자치시 도움6로 42(어진동)
+                </span>
+                 <span>
+                  재난안전데이터과 044-205-4467
+                </span>
+                 <span>
+                   문의처&Helpdesk : 044-205-8461, 8462
+                </span>
+                </p>
+                <p>
+                    ⓒ 행정안전부. All rights reserved.
+                </p>
+            </div>
+            <div class="right">
+                <a href="http://www.wa.or.kr/board/list.asp?BoardID=0006" target="_blank" title="새창">
+                    <img src="/images/main/wa_mark3.png"
+                         alt="(사)한국장애인단체총연합회 한국웹접근성인증평가원 웹 접근성 우수사이트 인증마크(WA인증마크) | 과학기술정보통신부 WEB 접근성, 한국웹접근성인증평가원 2026.09.23~2027.09.22">
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //푸터 슬라이드 효과
+    $(".f-slide__remote .btn-prev").click(function () {
+        $(".f-slide__slider").css({left: "-270px"}).prepend($(".f-slide__slider li:last-child")).animate({left: "0"}, 300);
+    });
+
+    $(".f-slide__remote .btn-next").click(function () {
+        $(".f-slide__slider").animate({left: "-=270px"}, 300, function () {
+            $(this).append($(".f-slide__slider li:first-child")).css({left: "0"});
+        })
+    });
+
+    //푸터 슬라이드 컨트롤 화살표
+    $(".f-slide__remote__btn").on("mouseover focusin", function () {
+        $(this).children("img").attr("src", "/img/ico/ico_arrow_remote_w.png");
+    });
+    $(".f-slide__remote__btn").on("mouseleave focusout", function () {
+        $(this).children("img").attr("src", "/img/ico/ico_arrow_remote.png");
+    });
+
+    // console.log($(window).height())
+    // console.log(window.screen.height)
+    /*
+    if(document.body.clientHeight < window.screen.height) {
+        const footer = document.querySelector("footer");
+        footer.classList.add("fixed")
+    }
+     */
+     
+     $("#openSiteBtn").on("click", function(){
+    	let url = $("#selectSite").val();
+    	
+    	if(url ==='site' || !url){
+    		alert("관련사이트를 선택해주세요.")
+   		 return;
+   	 }
+   	 
+   	 window.open(url,'_blank');
+     });
+     
+</script>
+  
+<script src="/js/common/clip.js">
+
+</script>
+	</footer>
+	<!-- 푸터 -->
+
+	<!-- disaster-data 10.24 -->
+	<script>
+  		const detailBtns = document.querySelectorAll(".detail-btn");
+  		const dataListTable = document.getElementById("dataListTable");
+  		const fileDataConTents = document.getElementById("fileDataConTents");
+  		function ajax(url, type, data, success) {
+  			$.ajax({
+  				url : url,
+  				data : data,
+  				dataType : "json",
+  				type : type,
+  				success : success
+  			})
+  		}
+  		
+  		function errorInsert(){
+  			
+  			if('' == ''){
+  				alert('로그인 후 사용가능합니다.');
+  				return false;
+  			}
+  			
+  			if($('#errorDtlCn').val() == ''){
+  				alert('내용을 입력해주세요.');
+  				$('#errorDtlCn').focus();
+  				return false;
+  			}
+  			
+  			if(!$('#dclrTypeSe > option:selected').val()) {
+  				alert('신고유형구분을 선택해주세요.');
+  				$('#dclrTypeSe').focus();
+  				return false;
+  			}
+  			
+  			if(!checkCaptcha()) {
+  				return;
+  			};
+  			
+  			$('#errorFrm').submit();
+  		}
+
+  		function handleClickPreview(event)
+  		{
+  			const dataSn = event.target.dataset.sn;
+  			
+  			if(!dataSn) {
+  				return;
+  			}
+
+  			$('#searchParams').show();
+  			$('#searchDec').show();
+  			$('#fileDataConTents').hide();
+  			// $('#metaDownload').off('click');
+  			// $('#metaDownload').hide();
+  			
+  			dataListTable.innerHTML = '';
+
+  			$('#dataListTable').css('height',300);
+  			$('#dataListTable').css('margin-top',0);
+  			
+  			// 로딩바
+  			openLoadingWithMask("dataListTable");
+  			
+  			$.ajax
+  			({
+  				url : "/disaster-data/previewFilteredDataTable",
+  				type : "POST",
+  				data : {dataSn: dataSn},
+  				dataType : "html",
+  				success : function (resultVal)
+  				{
+  					if($(resultVal).filter('#filteredDataTable').length){
+  						$('#dataListTable').html(resultVal);
+  	                      
+  					}else{
+  						dataListTable.innerHTML = '접근 권한 부재 또는 내부 시스템 오류로 데이터를 정상적으로 수신하지 못했습니다.<br />포털 관리자에게 문의해 주시기 바랍니다.';
+  					}
+  					
+  				},
+  				error : function (e) {
+  					dataListTable.innerHTML = '접근 권한 부재 또는 내부 시스템 오류로 데이터를 정상적으로 수신하지 못했습니다.<br />포털 관리자에게 문의해 주시기 바랍니다.';
+  					closeLoadingWithMask();
+  				},
+  				complete : function (e) {
+  					// 스타일 적용 삭제
+  					$('#dataListTable').removeAttr('style');
+  					closeLoadingWithMask();
+  				}
+  			});
+  			// var p = $('#descriptionBox').text('재난안전데이터 공유 플랫폼에서는 최근 6개월의 재난안전데이터 미리보기가 가능하며, 데이터를 조건별(날짜, 키워드 등)로 검색할 수 있습니다.');
+  			var p = $('#descriptionBox').text('재난안전데이터 공유 플랫폼에서는 재난안전데이터 미리보기가 가능하며, 최대 100건까지 조회가 됩니다.\n필수 입력 항목이 있는 경우, 미리보기 기능이 제공되지 않습니다.\n미리보기 데이터는 최신데이터가 아닙니다. \n데이터 확인 용도로만 사용해 주시기 바랍니다.');
+  			p.html(p.html().replace(/\n/g, '<br/>'));
+  		}
+  		
+  		
+  		function handleClickPreviewChart(event)
+  		{
+  			const dataSn = event.target.dataset.sn;
+  			
+  			if(!dataSn) {
+  				return;
+  			}
+
+  			$('#searchParams').show();
+  			$('#searchDec').show();
+  			$('#fileDataConTents').hide();
+  			// $('#metaDownload').off('click');
+  			// $('#metaDownload').hide();
+  			
+  			dataListTable.innerHTML = '';
+
+  			$('#dataListTable').css('margin-top',0);
+  			
+  			// 로딩바
+  			openLoadingWithMask("dataListTable");
+  			
+  			$.ajax
+  			({
+  				url : "/disaster-data/previewFilteredDataChart",
+  				type : "POST",
+  				data : {dataSn: dataSn},
+  				dataType : "html",
+  				success : function (resultVal)
+  				{
+  					if($(resultVal) != null){
+						  $('#dataListTable').html(resultVal);
+						  // 행정안전부_긴급재난문자 차트 수정
+						  if(dataSn == 228) {
+							  $('#filter-field option[value=SN]').remove();
+							  $('#filter-field option[value=CRT_DT]').remove();
+							  $('#filter-field option[value=MSG_CN]').remove();
+							  $('#filter-field option[value=EMRG_STEP_NM]').remove();
+							  $('#filter-field option[value=REG_YMD]').remove();
+							  $('#filter-field option[value=MDFCN_YMD]').remove();
+							  $('#filter-field option[value=RCPTN_RGN_NM]').attr('selected', true);
+							  updateChart();
+						  }
+
+						  // 연합뉴스_데이터 차트 수정
+						  if(dataSn == 46) {
+							  $('#filter-field option[value=YNA_NO]').remove();
+							  $('#filter-field option[value=YNA_TTL]').remove();
+							  $('#filter-field option[value=YNA_CN]').remove();
+							  $('#filter-field option[value=YNA_YMD]').remove();
+							  $('#filter-field option[value=YNA_WRTR_NM]').remove();
+							  $('#filter-field option[value=CRT_DT]').attr('selected', true);
+							  updateChart();
+						  }
+
+						  // 자연재난-사유시설피해정보 차트 수정
+						  if(dataSn == 750) {
+							  $('#filter-field option[value=MSTN_YR]').remove();
+							  $('#filter-field option[value=MSTN_TYPE_CD]').remove();
+							  $('#filter-field option[value=MSTN_SN]').remove();
+							  $('#filter-field option[value=VCTM_SN]').remove();
+							  $('#filter-field option[value=DAM_SN]').remove();
+							  $('#filter-field option[value=DAM_HSTRY_SN]').remove();
+							  $('#filter-field option[value=DAM_RGN_MTN_ADDR_YN]').remove();
+							  $('#filter-field option[value=DAM_RGN_MNLNO]').remove();
+							  $('#filter-field option[value=DAM_RGN_SUBLOTNO]').remove();
+							  $('#filter-field option[value=DAM_RGN_DADDR]').remove();
+							  $('#filter-field option[value=DAM_RGN_RONA_ADDR_CD]').remove();
+							  $('#filter-field option[value=DAM_RGN_RONA_DADDR]').remove();
+							  $('#filter-field option[value=DAM_HM]').remove();
+							  $('#filter-field option[value=EXMNR_NM]').remove();
+							  $('#filter-field option[value=FNCN_APLY_YN]').remove();
+							  $('#filter-field option[value=DAM_FACTR_CD]').remove();
+							  $('#filter-field option[value=SPRT_RSN_CD]').remove();
+							  $('#filter-field option[value=DMG_QOM]').remove();
+							  $('#filter-field option[value=CFMTN_DAM_SE_CD]').remove();
+							  $('#filter-field option[value=CFMTN_DMG_AMT]').remove();
+							  $('#filter-field option[value=DSSTR_HH_CNT]').remove();
+							  $('#filter-field option[value=FLDN_HR_CD]').remove();
+							  $('#filter-field option[value=DMLTN_CST_YN]').remove();
+							  $('#filter-field option[value=HAB_YN]').remove();
+							  $('#filter-field option[value=ETC_DSCTN_1]').remove();
+							  $('#filter-field option[value=ETC_DSCTN_2]').remove();
+							  $('#filter-field option[value=ETC_DSCTN_3]').remove();
+							  $('#filter-field option[value=ETC_DSCTN_4]').remove();
+							  $('#filter-field option[value=RMRK]').remove();
+							  $('#filter-field option[value=VLD_DTIN_SPTR]').remove();
+							  $('#filter-field option[value=PRGRS_STTS]').remove();
+							  $('#filter-field option[value=FRST_REG_DT]').remove();
+							  $('#filter-field option[value=LAST_MDFCN_DT]').remove();
+							  $('#filter-field option[value=BRNO]').remove();
+							  $('#filter-field option[value=DAM_PHOTO_ID_1]').remove();
+							  $('#filter-field option[value=DAM_PHOTO_ID_2]').remove();
+							  $('#filter-field option[value=DAM_PHOTO_ID_3]').remove();
+							  $('#filter-field option[value=DAM_PHOTO_ID_4]').remove();
+							  $('#filter-field option[value=DWNG_SHP_CD]').remove();
+							  $('#filter-field option[value=DST_PRVN_0_YN]').remove();
+							  $('#filter-field option[value=RBNG_PLAN_YN]').remove();
+							  $('#filter-field option[value=ITNT_DAM_DCLR_YN]').remove();
+							  $('#filter-field option[value=RCPT_RGN_DONG_CD]').remove();
+							  $('#filter-field option[value=DAM_DSCTN_MSTN_SUMO]').remove();
+							  $('#filter-field option[value=NAPR_SHRN_PRPT_NTNLFRST_USE_LNMN_YN]').remove();
+							  $('#filter-field option[value=FCLTY_GRD_DTL_CD_1]').remove();
+							  $('#filter-field option[value=FCLTY_GRD_DTL_CD_2]').remove();
+							  $('#filter-field option[value=FCLTY_GRD_DTL_CD_3]').remove();
+							  $('#filter-field option[value=CFMTN_FCLT_GRD_CD]').remove();
+							  $('#filter-field option[value=CFMTN_DMG_QOM]').remove();
+							  $('#filter-field option[value=RCPT_RGN_STDG_CD_TMPR]').remove();
+							  $('#filter-field option[value=DAM_RGN_DONG_CD_TMPR]').remove();
+							  $('#filter-field option[value=INSRNC_JOIN_YN]').remove();
+							  $('#filter-field option[value=DAM_RGN_STDG_CD_TMPR]').remove();
+							  $('#filter-field option[value=RGN_CD]').attr('selected', true);
+							  updateChart();
+						  }
+
+						  // 산불정보 차트 수정
+						  if(dataSn == 882) {
+						  	  $('#filter-field option[value=FRSTFR_INFO_ID]').remove();
+						  	  $('#filter-field option[value=EXTNGS_END_DT]').remove();
+						  	  $('#filter-field option[value=FTRXTNGSH_SRNC_END_DT]').remove();
+						  	  $('#filter-field option[value=FRSTFR_DCLR_ADDR]').remove();
+						  	  $('#filter-field option[value=FRSTFR_PSTN_XCRD]').remove();
+						  	  $('#filter-field option[value=FRSTFR_PSTN_YCRD]').remove();
+						  	  $('#filter-field option[value=FRSTFR_GNT_PLC]').remove();
+						  	  $('#filter-field option[value=HKNG_CNTRL_YN]').remove();
+						  	  $('#filter-field option[value=FORST_PSN_SE_CD]').remove();
+						  	  $('#filter-field option[value=FRSTFR_OCRN_CS_CLSF_CD]').remove();
+						  	  $('#filter-field option[value=FRSTFR_OCRN_CS_DTL_CN]').remove();
+						  	  $('#filter-field option[value=FRSTFR_GRS_DAM_AMT]').remove();
+						  	  $('#filter-field option[value=PTTR_NM]').remove();
+						  	  $('#filter-field option[value=PTTR_GNT_ADDR]').remove();
+						  	  $('#filter-field option[value=PTTR_AGE]').remove();
+						  	  $('#filter-field option[value=PTTR_GNDR_SE_CD]').remove();
+						  	  $('#filter-field option[value=PTTR_CR_NM]').remove();
+						  	  $('#filter-field option[value=PTTR_INJR_CS_CN]').remove();
+						  	  $('#filter-field option[value=PTTR_DTH_CS_CN]').remove();
+						  	  $('#filter-field option[value=FRSTFR_DCL_NM]').remove();
+						  	  $('#filter-field option[value=FRSTFR_DCLR_YMD]').remove();
+						  	  $('#filter-field option[value=GRNDS_0_RBPRSN_NM]').remove();
+						  	  $('#filter-field option[value=FTRXTNGSH_RBPRSN_NM]').remove();
+						  	  $('#filter-field option[value=FTRXTNGSH_ACTN_MTTR]').remove();
+						  	  $('#filter-field option[value=FRSTFR_GRNDS_OPER_RSLT]').remove();
+						  	  $('#filter-field option[value=FRSTFR_GRNDS_ETC_MTTR]').remove();
+						  	  $('#filter-field option[value=NSTCKFRSTLND_AREA]').remove();
+						  	  $('#filter-field option[value=PPRMNFCTR_AREA]').remove();
+						  	  $('#filter-field option[value=FRSTFR_OCRN_HONU_NM]').remove();
+						  	  $('#filter-field option[value=FRST_RGTR_ID]').remove();
+						  	  $('#filter-field option[value=FRST_REG_DT]').remove();
+						  	  $('#filter-field option[value=FRST_MDFR_ID]').remove();
+						  	  $('#filter-field option[value=FRST_MDFCN_DT]').remove();
+						  	  $('#filter-field option[value=MAAS_OBTN_YMD]').remove();
+						  	  $('#filter-field option[value=LINK_STTS]').remove();
+						  	  $('#filter-field option[value=NDMS_LINK_PRCS_HR]').remove();
+						  	  $('#filter-field option[value=LINK_MSG_ID]').remove();
+						  	  $('#filter-field option[value=LINK_TRNS_ID]').remove();
+							  $('#filter-field option[value=FRSTFR_GNT_DT]').attr('selected', true);
+							  updateChart();
+						  }
+					}
+  				},
+  				error : function (e) {
+  					dataListTable.innerHTML = '접근 권한 부재 또는 내부 시스템 오류로 데이터를 정상적으로 수신하지 못했습니다.<br />포털 관리자에게 문의해 주시기 바랍니다.';
+  					closeLoadingWithMask();
+  				},
+  				complete : function (e) {
+  					// 스타일 적용 삭제
+  					$('#dataListTable').removeAttr('style');
+  					closeLoadingWithMask();
+  				}
+  			});
+  			// var p = $('#descriptionBox').text('재난안전데이터 공유 플랫폼에서는 최근 6개월의 재난안전데이터 미리보기가 가능하며, 데이터를 조건별(날짜, 키워드 등)로 검색할 수 있습니다.');
+  			var p = $('#descriptionBox').text('재난안전데이터 공유 플랫폼에서는 재난안전데이터 미리보기가 가능하며, 최대 100건까지 조회가 됩니다. \n필수 입력 항목이 있는 경우, 미리보기 기능이 제공되지 않습니다. \n미리보기 데이터는 최신데이터가 아닙니다. \n데이터 확인 용도로만 사용해 주시기 바랍니다.');
+  			p.html(p.html().replace(/\n/g, '<br/>'));
+  		}
+  		
+  		
+  		function handleClickFileData(event) {
+  			const dataSn = event.target.dataset.sn;
+  			if(!dataSn) return;
+
+  			const type = "GET";
+  			const data = {dataSn: dataSn};
+  			const success = function (resultVal)
+  			{
+  				$('#searchParams').hide();
+  				$('#searchDec').hide();
+  				// $('#metaDownload').show();
+  				// $('#metaDownload').off('click');
+ 	          	// $("#metaDownload").on("click",function(){
+ 	          	//	 $("#ifrm").prop("src",'/disaster-data/downloadData?dataSn=3328');
+ 	          	// });
+ 	          	// $('#metaDownload').html('다운로드');
+
+ 	          	$('#fileDataDownLabel').off('click');
+//  	          	$('#fileDataDownLabel').on("click",function()
+//  	          	{
+//  	          		$("#ifrm").prop("src",'/disaster-data/downloadData?dataSn=3328');
+//  	          	});
+
+ 	          	$('#fileDataConTents').show();
+ 	          	
+  				$('#fileDataConTents .data-list__title').html('참고문서');
+  				$('#fileDataConTents .label-box__label').html(resultVal.fileExtnCn);
+  				$('#fileDataConTents .label-box__text').html(resultVal.orgnflNm);
+  			};
+  			ajax("/disaster-data/fileData", type, data, success);
+
+  			$.ajax
+  			({
+  				url : "/disaster-data/fileDataTable",
+  				type : type,
+  				data : data,
+  				dataType : "html",
+  				success : function (resultVal) {
+					// dataListTable.innerHTML = $(resultVal).filter('#dataListTable').html();
+					dataListTable.innerHTML = resultVal;
+			    }
+  			});
+  			var p = $('#descriptionBox').html(
+  		              "재난안전데이터 공유 플랫폼에서는 재난관리책임기관 등으로부터 수집·연계된 데이터를 오픈API(RestAPI 기반의 JSON/XML)로 변환하여 제공합니다.\n"+
+            		  "오픈API를 활용하기 위해서는 공유플랫폼 회원 가입 및 활용 신청이 필요하며, 활용 관련 문의는 '이용안내/문의하기'를 참고하시기 바랍니다.\n"+
+            		  "데이터 자체에 대한 문의는 아래 데이터 담당부서 전화번호로 연락하여 주시기 바랍니다.\n\n"+
+            		  "■ 이용허락범위는 데이터 제공기관이 공공기관인 경우, 공공누리의 제3유형에 해당하며, 민간기관 또는 유관기관인 경우에는 공공누리의 제4유형에 해당합니다.\n"+
+            		 "[참고] 공공누리 유형안내 (<a href='https://www.kogl.or.kr/info/license.do' style=' color: #0F5ACA; border-bottom: 2px solid #0F5ACA;' target='_blank'  title='클릭시 공공누리 유형으로 이동합니다. 새창열림'>https://www.kogl.or.kr/info/license.do</a>)");
+  		  			p.html(p.html().replace(/\n/g, '<br/>'));
+  		}
+  		
+  		function handleClickOpenApi(event) {
+  			const dataSn = event.target.dataset.sn;
+  			if(!dataSn) return;
+  			
+  			const type = "GET";
+  			const data = {dataSn:dataSn};
+  			const success = function (resultVal)
+  			{
+  				$('#searchParams').hide();
+  				$('#searchDec').hide();
+  				// $('#metaDownload').show();
+  				// $('#metaDownload').off('click');
+ 	          	// $("#metaDownload").on("click",function(){ location.href='/share-data/shareData_1?dataSn='+dataSn; });
+ 	          	// $('#metaDownload').html('이용신청');
+ 	          	// git Test
+
+ 	          	$('#fileDataDownLabel').off('click');
+  				
+ 	          	$('#fileDataConTents').show();
+  				$('#fileDataConTents .data-list__title').html('참고문서');
+  				$('#fileDataConTents .label-box__label').html(resultVal.dataFrmtCd);
+  				$('#fileDataConTents .label-box__text').html(resultVal.dataNm);
+  			};
+  			ajax("/disaster-data/getApiView", type, data, success);
+  			
+  			$.ajax
+  			({
+  				url : "/disaster-data/apiDataTable",
+  				type : type,
+  				data : data,
+  				dataType : "html",
+  				success : function (resultVal) {
+  					dataListTable.innerHTML = $(resultVal).filter('#dataListTable').html();
+  					// console.log('check');
+  					fnSampleCodeTabClick();
+  				}
+  			});
+  			var p = $('#descriptionBox').html("재난안전데이터 공유 플랫폼에서는 재난관리책임기관 등으로부터 수집·연계된 데이터를 오픈API(RestAPI 기반의 JSON/XML)로 자동 변환하여 제공합니다.\n"+
+  		  			"오픈API를 활용하기 위해서는 공유플랫폼 회원 가입 및 활용 신청이 필요하며, 활용 관련 문의는 '이용안내/문의하기'를 참고하시기 바랍니다.\n"+
+  		  			"데이터 자체에 대한 문의는 아래 데이터 담당부서 전화번호로 연락하여 주시기 바랍니다.\n"+ 		  			
+  		  			"오픈 API는 <span class='PDounw'>이용신청</span>을 통해 이용하실수 있습니다.\n\n"+
+  		  		  "■ 이용허락범위는 데이터 제공기관이 공공기관인 경우, 공공누리의 제3유형에 해당하며, 민간기관 또는 유관기관인 경우에는 공공누리의 제4유형에 해당합니다.\n"+
+   				 "[참고] 공공누리 유형안내 (<a href='https://www.kogl.or.kr/info/license.do' style=' color: #0F5ACA; border-bottom: 2px solid #0F5ACA;' target='_blank'  title='클릭시 공공누리 유형으로 이동합니다. 새창열림'>https://www.kogl.or.kr/info/license.do</a>)");
+  		  			p.html(p.html().replace(/\n/g, '<br/>'));
+  		}
+
+  		function handleClickDetailBtn(event) {
+  			const type = event.target.dataset.type;
+  			// 스타일 적용 삭제
+			$('#dataListTable').removeAttr('style');
+  			if(type === "fileData") {
+  				$("#tabTitle").text("파일데이터");
+  				$('#review').show();
+  				$('#Qna').show();
+  				handleClickFileData(event);
+  			}
+  			if(type === "openApi") {
+  				$("#tabTitle").text("오픈API");
+  				$('#review').show();
+  				$('#Qna').show();
+  				handleClickOpenApi(event);
+  			}
+  			if(type === "previewData") {
+  				$("#tabTitle").text("미리보기");
+  				$('#review').hide();
+  				$('#Qna').hide();
+	  			handleClickPreview(event);
+  			}
+  			if(type === "previewChartData") {
+  				$("#tabTitle").text("CHART");
+  				$('#review').hide();
+  				$('#Qna').hide();
+	  			handleClickPreviewChart(event);
+  			}
+  			clearDetailBtnActive(type);
+  		}
+  		
+  		function clearDetailBtnActive(type) {
+  			detailBtns.forEach(detailBtn => {
+  				if(detailBtn.dataset.type === type) {
+  					detailBtn.classList.add("tab__button--active");
+  				}else {
+  					detailBtn.classList.remove("tab__button--active");
+  				}
+  			})
+  		}
+  		
+  		// 2023.10.25 데이터 후기 및 문의하기 탭 클래스 구현로직
+		const tabBtns = document.querySelectorAll(".tabBtn");
+		
+  		function handleClickTabBtn(event) {
+  			const type = event.target.id;
+  			handleClickDataReview(3328, 1, 5, 5);
+			handleClickDataInqty(3328, 1, 5, 5);
+  		}
+  		
+  		function handleClickDataReview(dataSn, currentPage, cntPerPage, pageSize) {
+			var param = {
+				mstnSftyDtinSn : dataSn,
+				currentPage : currentPage,
+				cntPerPage : cntPerPage,
+				pageSize : pageSize
+			}
+
+			$.ajax({
+				url : "/disaster-data/data-notice",
+				type : "GET",
+				data : param,
+				dataType : "html",
+				success : function (result) {
+					$("#reviewCon").html(result);
+				}
+			});
+  		}
+  		
+  		function handleClickDataInqty(dataSn, currentPage, cntPerPage, pageSize) {
+			var param = {
+				mstnSftyDtinSn : dataSn,
+				currentPage : currentPage,
+				cntPerPage : cntPerPage,
+				pageSize : pageSize
+			}
+
+			$.ajax({
+				url : "/disaster-data/data-inqty",
+				type : "GET",
+				data : param,
+				dataType : "html",
+				success : function (result) {
+					$("#qnaCon").html(result);
+				}
+			});
+  		}
+  		
+  			
+  		function init(){
+  			// 파일, api, 미리보기 탭 
+  			detailBtns.forEach(detailBtn => {
+  				detailBtn.addEventListener("click",handleClickDetailBtn);
+  			});
+  			// Invoke click event handler without any valid parameter.
+  			// It just fine that it loads file info.
+  			detailBtns[0].dispatchEvent(new MouseEvent('click'));
+
+			handleClickDataReview(3328, 1, 5, 5);
+			handleClickDataInqty(3328, 1, 5, 5);
+  			
+  		}
+  		
+  		init();
+  		
+  		// 데이터 후기 페이징
+  		function movePage1(currentPage, cntPerPage, pageSize) {
+  			handleClickDataReview(3328, currentPage, cntPerPage, pageSize);
+		}
+  		
+  		// 데이터 후기 작성하기
+  		function clickDataReview(selectedRating) {
+  			
+//   			if('' == ''){
+//   				alert('로그인 후 사용가능합니다.');
+//   				return false;
+//   			}
+  			
+//   			//승인여부 확인
+//   			if('' == 0){
+//   				alert('데이터를 이용한 후 작성해주세요.');
+//   				return false;
+//   			}
+  			
+  			if ($('#tbbsCn').val() == null || $('#tbbsCn').val() == undefined || $('#tbbsCn').val() == "") {
+  				alert('후기를 작성하시기 바랍니다.');
+  				return false;
+  			}
+  			
+  			if ($('#reviewRating').val() == 0 || $('#reviewRating').val() == '' || $('#reviewRating').val() == null || $('#reviewRating').val() == undefined) {
+  				alert('별점을 선택하시기 바랍니다.');
+  				return false;
+  			}
+  			
+  			var param = {
+  				mstnSftyDtinSn : 3328,
+  				tbbsTtl : '가축전염병발생통계',
+  				tbbsCn : $('#tbbsCn').val(),
+  				bbsSn : $('#bbsSn1').val(),
+  				inqCnt : $('#reviewRating').val()
+  			}
+  			
+  			$.ajax({
+  				url : '/insertReview',
+  				type : 'POST',
+  				data : param,  
+  				success : function(data) {
+  					if(data != "성공"){
+  						 alert(data);
+  					}
+  					location.href = '/disaster-data/view?dataSn=' + 3328;
+  				}
+  			});
+  			
+  		}
+  		
+  		// 데이터 문의 & 오류신고 페이징
+  		function movePage2(currentPage, cntPerPage, pageSize) {
+  			handleClickDataInqty(3328, currentPage, cntPerPage, pageSize);
+		}
+  		
+  		// 데이터 문의 & 오류신고 작성하기
+  		function clickDataInqty() {
+
+			if('' == ''){
+				alert('로그인 후 사용가능합니다.');
+				return false;
+			}
+
+			if ($('#bbscttCn2').val() == null || $('#bbscttCn2').val() == undefined || $('#bbscttCn2').val() == "") {
+				alert('문의를 작성하시기 바랍니다.');
+				return false;
+			}
+
+			var param = {
+				mstnSftyDtinSn : 3328,
+				tbbsTtl : '가축전염병발생통계',
+				tbbsCn : $('#bbscttCn2').val(),
+				bbsSn : $('#bbsSn2').val(),
+				scrtmsgYn : $('#scrtmsgYn').val()
+			}
+
+			$.ajax({
+				url : '/insertInqty',
+				type : 'POST',
+				data : param,
+				success : function(data) {
+					location.href = '/disaster-data/view?dataSn=' + 3328;
+				}
+			});
+  			
+  		 }
+  </script>
+	<!-- / 추가사항-->
+
+	<script src="/js/script.js"></script>
+	<script>
+		$(function () {
+			$("#bookMarkImg3328").on("click", function () {
+				$.post("/disaster-data/toggleWishList", {
+					data: $("#bookMarkImg3328").hasClass("Imgon"),
+					dataSn: 3328
+				})
+			})
+			$("#bookMarkImg3328").on("keydown", function () {
+				$.post("/disaster-data/toggleWishList", {
+					data: $("#bookMarkImg3328").hasClass("Imgon"),
+					dataSn: 3328
+				})
+				history.go(0);
+			})
+		})
+		
+		let lastFocusedElement;
+		function openErrorPop() {
+			lastFocusedElement = document.activeElement;
+			const modal = document.querySelector('.modal-pop');
+			modal.style.display = 'block';
+			const firstFocusable = modal.querySelector('[tabindex], button, a, input, select, textarea');
+		    if (firstFocusable) firstFocusable.focus();
+		}
+
+		function deleteErrorPop() {
+			$('.modal-pop').hide();
+			if (lastFocusedElement) lastFocusedElement.focus();
+		}
+
+		function openPop() {
+
+			if ('' == '') {
+				alert('로그인 후 사용가능합니다.');
+				return false;
+			}
+			lastFocusedElement = document.activeElement;
+			$('.modalPOPW').show();
+			$('.modalPOPW').focus();
+		}
+
+		function deletePop() {
+			$('.modalPOPW').hide();
+			lastFocusedElement.focus();
+		}
+
+		function search() {
+			var req_data =
+					{
+						dataSn: 3328,
+						dateFrom: $('input[name="dateFrom"]').val() ? $('input[name="dateFrom"]').val() + "T00:00:00.000+0900" : "",
+						dateTo: $('input[name="dateTo"]').val() ? $('input[name="dateTo"]').val() + "T23:59:59.999+0900" : "",
+						keyword: $('input[name="keyword"]').val()
+					};
+
+			$.ajax
+			({
+				url: '/disaster-data/previewFilteredDataTable',
+				type: 'POST',
+				data: req_data,
+				dataType: "html",
+				success: function (resultVal) {
+					$('#dataListTable').html($(resultVal).filter('#filteredDataTable').html());
+				}
+			});
+		}
+
+		function downloadFiltered() {
+			var req_data =
+					{
+						dataSn: 3328,
+						dateFrom: $('input[name="dateFrom"]').val() ? $('input[name="dateFrom"]').val() + "T00:00:00.000+0900" : "",
+						dateTo: $('input[name="dateTo"]').val() ? $('input[name="dateTo"]').val() + "T23:59:59.999+0900" : "",
+						keyword: $('input[name="keyword"]').val()
+					};
+
+			$("#ifrm").prop("src", '/disaster-data/downloadFilteredData?' + $.param(req_data));
+		}
+
+		$('#search').click(search);
+		$('#downloadFiltered').click(downloadFiltered);
+		$('input[name="dateFrom"]').datepicker({autoClose: true, defaultDate: $('input[name="dateFrom"]').val()});
+		$('input[name="dateTo"]').datepicker({autoClose: true, defaultDate: $('input[name="dateTo"]').val()});
+		$(".gnb li:nth-child(1)").addClass('hover');
+
+		// 메뉴얼파일 다운로드
+		function fnDownFile(fileDtinSn) {
+			window.open("/file-info/fileDown?fileSn=" + fileDtinSn);
+		}
+
+		// 2024.01.09 샘플코드 탭 클릭
+		function fnSampleCodeTabClick() {
+			/* 20240109 start */
+			/*########## Tab Menu ##########*/
+			$('.tabWrap').each(function () {
+				$(this).find('> div > div').hide().first().show();
+				$(this).find('> ul li').on('click', function () {
+					let idx = $(this).index();
+					$(this).parent().find('li').removeClass('on').eq(idx).addClass('on').find('a').attr('title', '선택됨');
+					$(this).parent().next().find('> div').hide().eq(idx).show();
+					$(this).siblings().find('a').removeAttr('title');
+				});
+			});
+
+
+			$('.tab-list').each(function () {
+				let itemLen = $('> li', this).length;
+				$(this).find('li').first().addClass('on').find('a').attr('title', '선택됨');
+
+				if (itemLen > 6) {
+					$(this).addClass('tab-dropdown');
+				}
+			});
+
+			$('.tab-list a').on('click', function (e) {
+				let $thisTab = $(this).closest('.tab-list');
+
+				if ($(window).width() < 1025 && $thisTab.hasClass('tab-dropdown')) {
+					$('.tab-list').not($thisTab).removeClass('opened');
+					$thisTab.toggleClass('opened');
+					if ($(this).parent('li').hasClass('on')) {
+						e.preventDefault();
+					}
+				}
+			});
+			/* 20240109 end */
+		}
+
+		function fnDownFile(fileSn) {
+			window.open("/file-info/fileDown?fileSn=" + fileSn);
+		}
+
+		function goList() {
+			if (document.referrer.indexOf("/disaster-data/list2") > -1) {
+				history.go(-1);
+			} else {
+				location.href = "/disaster-data/list2";
+			}
+		}
+
+	</script>
+</body>
+</html>

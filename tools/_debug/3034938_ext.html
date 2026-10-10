@@ -1,0 +1,572 @@
+
+
+
+
+
+ 
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width" />	
+	<title></title>
+	<link href="/css/common.css?v=20230807" rel="stylesheet" />
+	<link href="/css/style.css?v=202500626" rel="stylesheet" />
+	<link href="/css/style_dp.css" rel="stylesheet" />
+	<link href="/css/mobile.css?v=20220807" rel="stylesheet" media="(max-width:1280px)" />
+	<!-- HTLM5shiv ie6~8 -->
+	<!--[if lt IE 9]> 
+		<script src="/js/html5shiv.min.js"></script>
+		<script src="/js/respond.min.js"></script>
+		<script>
+			alert("현재 당신이 보는 브라우저는 지원하지 않습니다. 최신 브라우저로 업데이트해주세요!");
+		</script>
+	<![endif]-->
+	
+
+ 
+
+<script src="/js/jquery-3.5.1.min.js?v=20220323"></script>
+<script src="/js/jquery-ui.min.js?v=20220323"></script>
+<script src="/js/swiper.min.js?v=20220323"></script>
+<script src="/js/iscroll.js?v=20220323"></script>
+<script src="/js/common.js?v=20260219"></script>
+<script src="/js/common_renewal.js?v=20230427"></script>
+
+<script src="/js/message.js?v=20220323"></script>
+<script src="/js/popup.js?v=20220323"></script>
+<script src="/js/popup_renewal.js?v=20230621"></script>
+
+<script src="/js/jquery.alphanumeric.js?v=20220323"></script>
+
+
+<script src="/js/jquery/jquery.cookie.js?v=20220323"></script>
+<script src="/js/jquery/jquery.form.js?v=20220323"></script>
+
+
+<script src="/js/jquery/jquery.waiting-0.1.1/dist/jquery.waiting.min.js?v=20220323"></script>
+<link type="text/css" rel="stylesheet"  media="screen" href="/js/jquery/jquery.waiting-0.1.1/dist/waiting.css?v=20220323" />
+
+
+<script src="/js/jquery/jquery.MultiFile.js?v=20220323"></script>
+
+	
+	<script>
+		$(document).ready(function(){
+			
+		});
+		
+		function showAlertMessage(el, errorMessage) {
+			$("#" + el).focus();
+			alert(errorMessage);
+		}
+		
+		function showErrorMessage(el, errorMessage) {
+			$("#" + el).focus();
+			alert(errorMessage);
+		}
+		function showConformMessage(ConformMessage) {
+			
+			return window.confirm(ConformMessage);
+		}
+		
+	</script>
+
+</head>
+<body>
+	<div id="wrap">
+		<div class="skiptoContent">
+			<a href="#main">본문 바로가기</a>
+		</div>
+		
+		<header class="header-sub"><!-- sub page : header-sub class 추가 -->
+			
+
+
+<script>
+	
+	$(document).ready(function(){
+// 		gnb();
+
+		onInitMenu();
+// 		$('.nav > ul > li').unbind();
+	});
+	
+	/* 피씨 사이트맵 */ 
+	$(function(){
+        $(".link-sitemap").on("click",function(){
+            $("#modal_sitemap").show();
+        });
+        $("#btn_sitemap_pop_close").click(function(){
+            $("#modal_sitemap").hide();
+        });
+        $("#btn_sitemap_close").click(function(){
+            $("#modal_sitemap").hide();
+        });
+
+	});
+	
+	function onInitMenu() {
+		$('nav').find('li').removeClass('current');
+		$('nav').find('li').removeClass('active');
+		
+		let path = $(location).attr('pathname');
+		let pathFirst = path.substring(1, path.indexOf('/', 1))
+		let $child = $("li[id='"+pathFirst+"']");
+	
+		if(path.indexOf('/bbs/') >= 0) {
+			let mypageId = 'bbs'+path.substring(path.indexOf('/', 2)+1,path.lastIndexOf('/'))
+			$child = $('#'+mypageId);
+			$child.addClass('current');
+			
+			let $parent = $child.parent('ul').parent('li');
+			$parent.addClass('current active');
+			return ;
+		}
+		
+		if(path.indexOf('/mypage/') >= 0) {
+			let mypageId = 'mypage'+path.substring(path.indexOf('/', 2)+1,path.lastIndexOf('/'))
+			if(mypageId == 'mypagedatadream' || mypageId == 'mypageopendatareqst' || mypageId == 'mypagestdmanage')
+				mypageId = 'mypageopenapireqst';
+			
+			$child = $('#'+mypageId);
+			$child.addClass('current');
+			
+			let $parent = $child.parent('ul').parent('li');
+			$parent.addClass('current active');
+			return ;
+		}
+		
+		if(path.indexOf('/apply/') >= 0) {
+			let mypageId = path.substring(path.lastIndexOf('/')+1, path.lastIndexOf('.'))
+			$child = $('#'+mypageId);
+			$child.addClass('current');
+			
+			let $parent = $child.parent('ul').parent('li');
+			$parent.addClass('current active');
+			return ;
+		}
+		
+		if(path.indexOf('/visualweb/indexRelaxMap') >= 0){
+			let mypageId = 'relaxMap';
+			$child = $('#'+mypageId);
+			$child.addClass('current');
+			
+			let $parent = $child.parent('ul').parent('li');
+			$parent.addClass('current active');
+			return ;
+		}
+		
+		
+		if(path.indexOf('/indexTerms') >= 0) {
+			return ;
+		}
+		
+		if(path.indexOf('/indexPersonalInformation') >= 0) {
+			return ;
+		}
+		
+		if($child != null) {
+			$child.addClass('current');
+			
+			let $parent = $child.parent('ul').parent('li');
+			$parent.addClass('current active');
+		}
+	}
+	
+	//20151015kcr 메뉴별 접속 통계
+	function menuConectStats(num1, num2, num3){
+		var options = {
+				url : "/conect/MenuConectStatsReg.do;jsessionid=2Cp3GLImBr5mftJL2avmFODGHFWR4SdC1hhNRBFzjd2FmT8ATw0aESWtuUyf82GE.portal01_servlet_engine1",
+				data : { 
+					menuUrl : num1,
+					menuNm : num2,
+					menuCode : num3
+				},
+				callBack : cbMenuConectStats
+		};
+     	ajax.call(options);
+	}
+	function cbMenuConectStats(result){
+		var data = result.result_yn;
+		if(data == "N"){
+			alert("오류가 발생 하였습니다.");
+		}
+	}
+	
+	function goMain() {
+		location.href="/main.do";
+	}
+	
+	function goMenu(uri) {
+		$("#menuForm").attr("action", uri);
+		$("#menuForm").attr("method", "post");
+		$("#menuForm").submit();
+	}
+	
+	function adminPost(){
+		window.open("","login");
+		$("#menuForm").attr("action", "/manage/member/indexLogin.do");
+		$("#menuForm").attr("method", "post");
+		$("#menuForm").attr("target", "login");
+		$("#menuForm").submit();
+	}
+	
+</script>
+<form id="menuForm">
+	<input type="hidden" name="user_id" value=""/>
+</form>
+<div class="header">
+	<div class="inner">
+		<h1 class="logo" onClick="goMain();">
+			<a href="/main.do"><span>농림축산식품 공공데이터포털</span></a>
+		</h1>
+		<div class="gnb-area">
+			<ul class="top-menu">
+				<!-- 로그인 전 -->
+				
+					<li><a href="/member/indexLogin.do">로그인</a></li>
+					<li><a href="/member/join/indexJoinInit.do">회원가입</a></li>
+				
+				<!-- //로그인 전 -->
+				<!-- 로그인 후 -->
+				
+				<!-- //로그인 후 -->
+			</ul>
+
+			<div class="btn-menu">
+				<button type="button" class="mu-btn mu-btn-icon-only mu-btn-bg-non">
+					<i class="mu-icon-svg global-menu"></i><span>메뉴열기</span>
+				</button>
+			</div>
+
+			<nav class="nav">
+				<div class="nav-top">
+					<div class="btn-home">
+						<button type="button"
+							class="mu-btn mu-btn-icon-only mu-btn-bg-non" onClick="goMain();">
+							<i class="mu-icon-svg mobile-home"></i><span>처음으로가기</span>
+						</button>
+					</div>
+					<ul class="top-menu">
+						<!-- 로그인 전 -->
+						
+						<!-- //로그인 전 -->
+						<!-- 로그인 후 -->
+						
+							<li class="user-name"><a href="/mypage/info/indexMyInfo.do">님</a></li>
+							<li><a href="/member/logout.do">로그아웃</a></li>
+						
+						<!-- //로그인 후 -->
+					</ul>
+				</div>
+				<div class="btn-close">
+					<button type="button" class="mu-btn mu-btn-icon-only mu-btn-bg-non">
+						<i class="mu-icon-svg global-close"></i><span>메뉴닫기</span>
+					</button>
+				</div>
+				<ul>
+					<li><a href="javascript:void(0)" onclick="location.href='/opendata/data/open/indexOpenDataList.do'">데이터 검색</a>
+						<ul>
+							<li id="opendata"><a
+								href="/opendata/data/open/indexOpenDataList.do">통합 검색</a></li>
+							<li id="visualweb" class="pc-only"><a
+								href="/visualweb/indexVisualizationList.do">시각화 검색</a></li>
+							<li id="std"><a href="/std/stdwrd/indexStdWrdDicaryList.do">데이터
+									표준검색</a></li>
+							<li id="relaxMap" class="pc-only"><a href="/visualweb/indexRelaxMap.do">시도별 안심식당 현황</a></li>
+						</ul></li>
+					<li><a href="javascript:void(0)" onclick="location.href='/prcuse/indexPrcuseServiceList.do'">데이터 활용</a>
+						<ul>
+							<li id="prcuse"><a href="/prcuse/indexPrcuseServiceList.do">데이터
+									활용사례</a></li>
+							<li id="prent"><a href="/prent/indexPrentList.do">데이터
+									시각화</a></li>
+							<li id="majorpublicdata"><a
+								href="/majorpublicdata/indexMajorPublicData.do">주요 공공데이터</a></li>
+							<li><a href="/contest/competitionNew.do" target="_blank">창업
+									경진 대회</a></li>
+						</ul></li>
+					<li><a href="javascript:void(0)" onclick="location.href='/datadream/indexDataDreamList.do'">데이터 신청</a>
+						<ul>
+							<li id="datadream"><a
+								href="/datadream/indexDataDreamList.do">데이터 분석신청</a></li>
+								
+							<li><a href="/datafreezone/preview/dataFreeZoneMain.do">농식품 데이터 안심구역</a></li>
+							
+							<li id="indexApiPrcuseReqst"><a
+								href="/apply/indexApiPrcuseReqst.do">오픈API 신청</a></li>
+							<li id="indexDataOpenReqst"><a
+								href="/apply/indexDataOpenReqst.do">공공데이터 제공신청</a></li>
+							
+						</ul></li>
+					<li><a href="javascript:void(0)" onclick="location.href='/bbs/notice/indexNoticeList.do'">참여&amp;소통</a>
+						<ul>
+							<li id="bbsnotice"><a href="/bbs/notice/indexNoticeList.do">공지사항</a></li>
+							<li id="bbsfaq"><a href="/bbs/faq/indexFaqList.do">자주묻는 질문</a></li>
+							<li id="bbsqna"><a href="/bbs/qna/indexQnaList.do">문의하기</a></li>
+							<li id="intro"><a href="/intro/indexPortalIntroduce.do">포털소개</a></li>
+						</ul></li>
+					<li><a href="javascript:void(0)" onclick="location.href='/mypage/openapireqst/indexOpenApiList.do'">마이페이지</a>
+						<ul>
+							<li id="mypageopenapireqst"><a
+								href="/mypage/openapireqst/indexOpenApiList.do">신청현황</a></li>
+							<li id="mypageprcuse"><a
+								href="/mypage/prcuse/indexPrcuseList.do">내 활용사례</a></li>
+							<li id="mypageqna"><a href="/mypage/qna/indexQnaList.do">문의내역</a></li>
+							<li id="mypageintrst"><a
+								href="/mypage/intrst/indexIntrstInfoList.do">관심 공공데이터</a></li>
+							<li id="mypageinfo"><a href="/mypage/info/indexMyInfo.do">내
+									정보관리</a></li>
+						</ul></li>
+				</ul>
+			</nav>
+			<div class="nav-dim"></div>
+			<p class="link-sitemap">
+				<a href="#">사이트맵</a>
+			</p>
+			<!-- 2021-11-26 MOD : 사이트맵 -->
+
+			<div class="mu-modal" id="modal_sitemap" style="display: none;">
+				<div class="mu-dialog-background"></div>
+				<div class="mu-dialog sitemap-dialog">
+					<!-- 사이즈는 sitemap-dialog  -->
+					<div class="mu-dialog-head">
+						<h5 class="title">전체 메뉴</h5>
+					</div>
+					<div class="mu-dialog-body">
+						<nav class="sitemap">
+							<ul>
+								<li><a href="javascript:void(0)" onclick="location.href='/opendata/data/open/indexOpenDataList.do'">데이터 검색</a>
+									<ul>
+										<li><a href="/opendata/data/open/indexOpenDataList.do">통합
+												검색</a></li>
+										<li><a href="/visualweb/indexVisualizationList.do">시각화
+												검색</a></li>
+										<li><a href="/std/stdwrd/indexStdWrdDicaryList.do">데이터
+												표준검색</a></li>
+										<li><a href="/visualweb/indexRelaxMap.do">시도별 안심식당 현황</a></li>
+									</ul></li>
+								<li><a href="javascript:void(0)" onclick="location.href='/prcuse/indexPrcuseServiceList.do'">데이터 활용</a>
+									<ul>
+										<li><a href="/prcuse/indexPrcuseServiceList.do">데이터
+												활용사례</a></li>
+										<li><a href="/prent/indexPrentList.do">데이터 시각화</a></li>
+										<li><a href="/majorpublicdata/indexMajorPublicData.do">주요
+												공공데이터</a></li>
+										<li><a href="/contest/competitionNew.do" target="_blank">창업
+												경진 대회</a></li>
+									</ul></li>
+								<li><a href="javascript:void(0)" onclick="location.href='/datadream/indexDataDreamList.do'">데이터 신청</a>
+									<ul>
+										<li><a href="/datadream/indexDataDreamList.do">데이터
+												분석신청</a></li>
+										
+										<li><a href="/datafreezone/preview/dataFreeZoneMain.do">농식품 데이터 안심구역</a></li>
+										
+										<li><a href="/apply/indexApiPrcuseReqst.do">오픈API 신청</a></li>
+										<li><a href="/apply/indexDataOpenReqst.do">공공데이터 제공신청</a></li>
+										
+									</ul></li>
+								<li><a href="javascript:void(0)" onclick="location.href='/bbs/notice/indexNoticeList.do'">참여&amp;소통</a>
+									<ul>
+										<li><a href="/bbs/notice/indexNoticeList.do">공지사항</a></li>
+										<li><a href="/bbs/faq/indexFaqList.do">자주묻는 질문</a></li>
+										<li><a href="/bbs/qna/indexQnaList.do">문의하기</a></li>
+										<li><a href="/intro/indexPortalIntroduce.do">포털소개</a></li>
+									</ul></li>
+								<li><a href="javascript:void(0)" onclick="location.href='/mypage/openapireqst/indexOpenApiList.do'">마이페이지</a>
+									<ul>
+										<li><a href="/mypage/openapireqst/indexOpenApiList.do">신청현황</a></li>
+										<li><a href="/mypage/prcuse/indexPrcuseList.do">내
+												활용사례</a></li>
+										<li><a href="/mypage/qna/indexQnaList.do">문의내역</a></li>
+										<li><a href="/mypage/intrst/indexIntrstInfoList.do">관심
+												공공데이터</a></li>
+										<li><a href="/mypage/info/indexMyInfo.do">내 정보관리</a></li>
+									</ul></li>
+							</ul>
+							<ul class="etc-map">
+								
+								<li><a href="/intro/indexTerms.do">이용약관</a></li>
+								<li><a href="/intro/indexPersonalInformationLink.do">개인정보처리방침</a></li>
+<!-- 								<li><a href="https://www.mafra.go.kr/mafra/309/subview.do" target="_blank">저작권정책</a></li> -->
+<!-- 								<li><a href="mailto:privacy@mifaff.go.kr">개인정보침해 신고센터</a></li> -->
+								<li><a href="/intro/indexMailCollectionRefusal.do">전자우편 무단수집거부</a></li>
+							</ul>
+						</nav>
+					</div>
+					<!-- // mu-dialog-body -->
+
+					<div class="mu-dialog-foot">
+						<div class="mu-button-wrap">
+							<button type="button" class="mu-btn" id="btn_sitemap_close">
+								<span>닫기</span>
+							</button>
+						</div>
+					</div>
+
+
+					<!-- 접근성 : 내용을 읽고 나서 닫기 나중으로 빼준다  -->
+					<div class="mu-dialog-close-btn">
+						<button type="button"
+							class="mu-btn mu-btn-icon-only mu-btn-bg-non" title="해당 팝업 닫기"
+							id="btn_sitemap_pop_close">
+							<i class="mu-icon-svg window-close"></i><span>팝업닫기</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- // mu-modal -->
+		</div>
+	</div>
+</div>
+
+		</header>
+		<main id="main" class="main-sub"><!-- sub page : main-sub class 추가 -->
+			
+
+ 
+  
+    
+
+<script>
+	alert("폐기된 데이터 이거나 존재하지 않는 데이터입니다.");
+	location.href="/main.do";
+</script>
+			<!-- 2021-12-29 : ADD - 문의하기 및 top 버튼 추가 / 22-02-16 MOD : position 빼고 이동 -->
+            <div class="floating-button-wrap">
+                <button type="button" class="mu-btn mu-btn-icon-only que-quick-button" title="문의하기" onclick="location.href='/bbs/qna/indexQnaInsert.do'" style="display:none;"><i class="mu-icon-svg question"></i><span>문의하기</span></button>
+                <button type="button" class="mu-btn mu-btn-icon-only go-top-button" title="위로가기"><i class="mu-icon-svg arrow-top"></i><span>위로가기</span></button>
+            </div>
+            <!-- //2021-12-29 --> 
+		</main>
+		
+		<footer>
+			
+
+ 
+<script>
+	$(document).ready(function(){
+		
+	});	
+	$(function() {
+
+		/* selectbox */
+		$(".mu-selectbox .mu-value").click(function (e) {
+		    e.preventDefault();
+			if ($(this).parent().hasClass("disabled") == true){
+				return false;
+			}
+
+			$(this).next(".mu-list").slideToggle("fast");
+			$(this).parent().toggleClass("on");
+
+			$(this).next(".mu-list").children("li").click(function(){
+				if ($(this).hasClass("disabled") == true){
+					//return false;
+				} else if ($(this).children().hasClass("mu-checkbox") == true){
+					//return false;
+					//$(this).parent().siblings(".mu-value").text($(this).children(".mu-checkbox").children("input:checked").siblings("label").text() + " 외 1개");
+				} else {
+					$(this).parent().siblings(".mu-value").text($(this).text());
+					
+					$(this).addClass("active").siblings().removeClass("active");
+					$(this).parent().hide();
+					$(this).parent().parent().removeClass("on");
+				}
+			});
+
+		});
+
+		/* selectbox 외에 영역 클릭시 */
+		 $('#wrap').click(function(e){
+		  if( !$('.mu-selectbox').has(e.target).length ) $('.mu-selectbox').find(".mu-list").hide();
+		  
+		});
+	});
+	
+</script>
+
+<div class="footer-top">
+	<div class="inner">
+		<div class="footer-menu">
+			<ul>
+				<li><a href="/main.do">농림축산식품 공공데이터 포털</a></li>
+				<li><a href="/intro/indexTerms.do">이용약관</a></li>
+				<li class="privacy"><a href="/intro/indexPersonalInformationLink.do">개인정보처리방침</a></li>
+<!-- 				<li><a href="https://www.mafra.go.kr/home/5331/subview.do" target="_blank">저작권정책</a></li> -->
+<!-- 				<li><a href="mailto:privacy@mifaff.go.kr">개인정보침해 신고센터</a></li> -->
+				<li><a href="/intro/indexMailCollectionRefusal.do">전자우편 무단수집거부</a></li>
+<!-- 				<li><a href="https://113366.com/agrion" target="_blank" title="새창열기">원격지원서비스</a></li> -->
+			</ul>
+		</div>
+		<div class="family-site">
+			<div class="mu-selectbox mu-selectbox-up">
+				<button class="mu-value"><span>관련사이트</span></button>
+				<ul class="mu-list">
+					<li><a href="https://www.mafra.go.kr" target="_blank" title="새창열기">농림축산식품부</a></li>
+					<li><a href="https://www.naqs.go.kr" target="_blank" title="새창열기">국립농산물품질관리원</a></li>
+					<li><a href="https://www.seed.go.kr" target="_blank" title="새창열기">국립종자원</a></li>
+					<li><a href="https://www.qia.go.kr" target="_blank" title="새창열기">농림축산검역본부</a></li>
+					<li><a href="https://www.krei.re.kr" target="_blank" title="새창열기">한국농촌경제연구소</a></li>
+					<li><a href="https://www.af.ac.kr" target="_blank" title="새창열기">한국농수산대학</a></li>
+					<li><a href="https://www.ati.go.kr" target="_blank" title="새창열기">농식품인재개발원</a></li>
+					<li><a href="https://www.ekr.or.kr" target="_blank" title="새창열기">한국농어촌공사</a></li>
+					<li><a href="https://www.at.or.kr/home/apko000000/index.action" target="_blank" title="새창열기">한국농수산식품유통공사</a></li>
+					<li><a href="https://www.ekape.or.kr" target="_blank" title="새창열기">축산물품질평가원</a></li>
+					<li><a href="https://www.epis.or.kr" target="_blank" title="새창열기">농림수산식품교육문화정보원</a></li>
+					<li><a href="https://www.fris.go.kr" target="_blank" title="새창열기">농림수산식품기술기획평가원</a></li>
+					<li><a href="http://www.kra.co.kr" target="_blank" title="새창열기">KRA</a></li>
+					<li><a href="http://www.rda.go.kr" target="_blank" title="새창열기">농촌진흥청</a></li>
+					<li><a href="https://www.forest.go.kr" target="_blank" title="새창열기">산림청</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="footer-bottom">
+	<div class="inner">
+		<div class="footer-logo"><span>농림축산식품부</span></div>
+		<div class="footer-info">
+			<address>
+				<p>세종특별자치시 다솜2로 94 정부세종청사 농림축산식품부 (우 30110)</p><!--  issues/11 2022-02-03 DEL: 주소 text 공통삭제 -->
+				<p>농식품 지식정보서비스(공공데이터) 오아시스 운영센터<br> (평일 09:00~18:00, 점심시간 12:00~13:00) <br>대표번호 : 1661-5159 <span class="sect">/</span><span>Fax : 044-868-6451</span><span class="sect">/</span><span>E-mail : mafra.data@epis.or.kr</span></p>
+			</address>
+			<p class="copyright"><span>Copyright © </span><span>2022 by MAFRA. All Rights Reserved.</span></p>
+		</div>
+	</div>
+</div>
+
+<!-- Matomo -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+  _paq.push(["setCookieDomain", "*.data.mafra.go.kr"]);
+  _paq.push(["setDomains", ["*.data.mafra.go.kr","*.data.mafra.go.kr"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//weblog.epis.or.kr/piwik/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '15']);
+    
+    if(window.location.href.indexOf('/datafreezone/') > 0){
+        _paq.push(['addTracker', '//biglog.epis.or.kr/matomo/matomo.php', '5']);	
+    }
+    
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//weblog.epis.or.kr/piwik/matomo.php?idsite=15&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Matomo Code -->
+
+		</footer>
+		
+	</div>
+	<div id="popupAlertMessage"></div>
+</body>
+</html>

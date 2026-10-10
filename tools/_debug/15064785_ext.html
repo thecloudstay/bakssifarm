@@ -1,0 +1,4223 @@
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8 ]><html lang="ko" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html lang="ko" class="ie9"><![endif]-->
+<!--[if IE 10 ]><html lang="ko" class="ie10"><![endif]-->
+<!--[if IE 11 ]><html lang="ko" class="ie11"><![endif]-->
+<!--[if (gt IE 11)|!(IE)]><!-->
+<html lang="ko">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" id="document_mode" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	
+	
+
+	<title>데이터활용서비스</title>
+
+	<link rel="shortcut icon" href="/images/common/favicon.ico" />
+	<link type="text/css" href="/css/api/slick.css" rel="stylesheet">
+	<link type="text/css" href="/css/api/slick-theme.css" rel="stylesheet">
+	<link type="text/css" href="/css/api/sub.css" rel="stylesheet">
+	
+
+	<!-- 새로 추가  -->
+	<link type="text/css" href="/css/jquery.selecter.css" rel="stylesheet"/>
+	<link type="text/css" href="/css/api/search.css" rel="stylesheet"/>
+	<link type="text/css" href="/css/api/common_add.css" rel="stylesheet">
+
+	<!-- 2020.10.30 공공데이터(데이터활용서비스) 공지사항 주소지 바로가기 기능추가 -->
+	<link href="/css/style_sub.css" rel="stylesheet">
+
+	<script src="/js/jquery.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.sidr.min.js"></script>
+	<script src="/js/api/slick.js"></script>
+	<script src="/js/api/common.js"></script>
+	<script src="/js/api/main.js"></script>
+	<script src="/js/jquery.selecter.min.js"></script>
+	<script src="/js/jquery.fancybox.js"></script>
+	<script src="/js/jquery.simplePagination.js"></script>
+	<script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<script src="/js/jquery.cookie.min.js"></script>
+	<script src="/js/jquery.navgoco.min.js"></script>
+	<script src="/js/jquery.mousewheel.min.js"></script>
+	<script src="/js/highlight.pack.js"></script>
+	<script src="/js/jquery.print.js"></script>
+	<script src="/js/nav.js"></script>
+	<script src="/js/spin.min.js"></script>
+	<script src="/js/html5.js"></script>
+	<script src="/js/css3-mediaqueries.js"></script>
+	<script src="/js/search_autocomplete_common.js"></script>
+	<script src="/js/jquery.nivo.slider.min.js"></script>
+
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap/button.js"></script>
+	<script src="/js/bootstrap/tab.js"></script>
+	<script src="/js/bootstrap/collapse.js"></script>
+	<script src="/js/bootstrap/datepicker.js"></script>
+
+	<!-- ckeditor  -->
+	<script src="/websquare/externalJS/editor/ckeditor.js"></script>
+
+	
+	
+	
+
+	<!-- 넷퍼넬 대기열 -->
+	<script
+			src="https://www.foodsafetykorea.go.kr/netfunnel-statics/agents/client/javascript/netfunnel-javascript-agent.js"
+			data-nf-server-url="https://wait.foodsafetykorea.go.kr"
+			data-nf-setting-url="https://wait.foodsafetykorea.go.kr/assets/nf-setting/1/nf-setting.json"
+			data-nf-vwr-page-url="https://www.foodsafetykorea.go.kr/netfunnel-statics/assets/vwr-page/1/index.html"
+			data-nf-error-page-url="https://www.foodsafetykorea.go.kr/netfunnel-statics/assets/vwr-page/error/errorPage.html"
+			data-nf-retry-count="3"
+			data-nf-network-timeout="10000"
+	></script>
+
+</head>
+
+
+	
+	
+		<body class="sub" onload="SearchCookieView();">
+	
+
+<!-- <div id="u_skip">
+	<a href="#gnb" onclick="document.getElementById('gnb').tabIndex = -1;document.getElementById('gnb').focus();return false;"><span>메뉴 영역으로 바로가기</span></a>
+	<a href="#main" onclick="document.getElementById('main').tabIndex = -1;document.getElementById('main').focus();return false;"><span>본문 영역으로 바로가기</span></a>
+</div> -->
+<form id="baseForm" name="baseForm" method="post" onsubmit="return false;">
+	<!-- 공통영역 -->
+	<input type="hidden" id="menu_no" name="menu_no" value="656">
+	<input type="hidden" id="menu_grp" name="menu_grp" value="MENU_GRP31">
+	<!-- 공통영역 -->
+
+	<div id="container">
+		<header id="header">
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        var anyidAdaptor = anyidAdaptor || {};
+
+
+        /*이용기관 수정 영역 Start*/
+        anyidAdaptor.orgLogin = function(data){
+            // alert("이용기관 자체 로그인!!!");
+            //정부 통합인증SDK_연계가이드 4.4.1.3 이용기관 로그인(토글 off) 참조
+            //제공되는 라이브러리 메소드로 인증데이터 decrypt 이후 자체 로그인 로직 개발
+            if (data.ssob){
+                anyidAdaptor.goAnyIdLogin(data);
+            }else{
+                anyidAdaptor.goLogin();
+            }
+
+        }
+        /*이용기관 수정 영역 End*/
+        
+        
+        /*이용기관 문구수정 영역 Start*/
+        anyidAdaptor.JoinConfirm = function(portalJoinUri, memberData){
+            if(!confirm('Any-ID 사용자등록 하시겠습니까?')) {
+                anyidAdaptor.orgLogin(anyidAdaptor.certData);
+                return;
+            }else{
+                anyidAdaptor.receiveAnyIdJoin(portalJoinUri, memberData);
+            }
+        }
+        /*이용기관 문구수정 영역 End*/
+        
+        
+        
+
+        anyidAdaptor.portalJoinUri = "null";
+        anyidAdaptor.certData = null;
+        anyidAdaptor.ssoByPass = "0";
+        anyidAdaptor.niRegYn = "null";
+        anyidAdaptor.agencyContextPath = "";
+        
+        
+        anyidAdaptor.success = function(data){
+            if(anyidAdaptor.ssoByPass != 0 || !data.useSso) {
+                anyidAdaptor.orgLogin(data);
+            } else {
+                anyidAdaptor.certData = data;
+                anyidAdaptor.userCheck();
+            }  
+        }
+        
+        anyidAdaptor.userCheck = function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", anyidAdaptor.agencyContextPath + "/oidc/userCheck", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.success) {
+                        anyidAdaptor.ssoLogin();
+                    } else {
+                        setTimeout(function() {
+                            anyidAdaptor.receiveAnyIdJoin(response.uri, response.data);
+                        }, 100);  
+                    }
+                }
+            };
+
+            let jsonObject = new Object();
+            jsonObject.txId = anyidAdaptor.certData.txId;
+            jsonObject.ssob = anyidAdaptor.certData.ssob;
+            jsonObject.userSeCd = anyidAdaptor.certData.userSeCd;
+            
+            let jsonStr = JSON.stringify(jsonObject);
+            let encodedString = btoa(jsonStr);
+            
+            var data = "data=" + encodedString + "&txId=" + anyidAdaptor.certData.txId;
+            xhr.send(data);
+            
+        }
+
+        //anyid가입
+        anyidAdaptor.receiveAnyIdJoin = function(portalJoinUri, memberData){
+        
+            var url = portalJoinUri+encodeURIComponent(memberData);
+            anyidAdaptor.popup(url,"openAnyIdRegistUserIdv",700,740);
+
+            window.addEventListener("message", function(event) {
+                var result;
+                try {
+                    result = JSON.parse(event.data);
+                } catch (error) {
+                    console.error("Received message is not valid JSON:", error);
+                    return;
+                }
+                
+                if(!result.funcName || (result.funcName !== "trmsAgreComplete" && result.funcName !== "registUserComplete")) {
+                    return;
+                }
+                if(result.status === "success") {
+                    if(result.trmsAgreYn == "Y"){
+                        anyidAdaptor.ssoLogin();
+                    }else{
+                        anyidAdaptor.orgLogin(anyidAdaptor.certData);
+                    }
+                }else{
+                    
+                    anyidAdaptor.orgLogin(anyidAdaptor.certData);
+                }
+
+            }, false);
+        }
+
+        // 팝업 호출
+        anyidAdaptor.popup = function(url, name, width, height){
+            let left = (screen.width) ? (screen.width-width)/2 : 0;
+            let top = (screen.height) ? (screen.height-height)/2 : 0;
+            let popup=window.open(url, name ,"resizable=yes,toolbar=no,scrollbars=yes,location=no,top="+top+"px,left="+left+"px,width="+width+"px,height="+height+"px");
+            if(popup){
+                popup.focus();
+            }
+        }
+
+        anyidAdaptor.ssoLogin = function(){
+            let jsonObject = new Object();
+            jsonObject.txId = anyidAdaptor.certData.txId;
+            jsonObject.ssob = anyidAdaptor.certData.ssob;
+            jsonObject.userSeCd = anyidAdaptor.certData.userSeCd;
+            jsonObject.afData = anyidAdaptor.certData.afData;
+            let jsonStr = JSON.stringify(jsonObject);
+            
+            let encodedString = btoa(jsonStr);
+            var baseUrl = window.location.origin + anyidAdaptor.agencyContextPath + "/oidc/ssoLogin";
+            var urlWithParams = baseUrl + "?data=" + encodedString;
+            window.location.href = urlWithParams;
+            
+        }
+        
+        anyidAdaptor.ssoLoginPageSub = function(baseUrl, endPoint, acrValues){
+            var subUrl = "";
+            
+            if (endPoint && endPoint.trim() !== "") {
+                subUrl = "?endPoint=" + encodeURIComponent(endPoint);
+            }
+            
+            if (!acrValues && acrValues.trim() == "") {
+                acrValues = "3";
+            }
+            
+            if (acrValues && acrValues.trim() !== "") {
+                if(subUrl == ""){
+                    subUrl = "?";
+                }else{
+                    subUrl = subUrl + "&";
+                }
+                subUrl = subUrl + "acrValues=" + acrValues;
+            }
+            
+            window.location.replace(baseUrl+subUrl);
+        }
+        
+        /**/
+        anyidAdaptor.ssoLogout = function(endPoint) {
+            endPoint = typeof endPoint !== 'undefined' ? endPoint : "/";
+            var baseUrl = window.location.origin + anyidAdaptor.agencyContextPath + "/oidc/ssoLogout";
+            baseUrl = baseUrl + "?endPoint=" + encodeURIComponent(endPoint);
+            window.location.replace(baseUrl);
+        }
+        /**/
+        anyidAdaptor.reAuthLevel = function(endPoint, acrValues){
+            endPoint = typeof endPoint !== 'undefined' ? endPoint : "/";
+            var baseUrl = window.location.origin + anyidAdaptor.agencyContextPath + "/oidc/reAuthLevel";
+            anyidAdaptor.ssoLoginPageSub(baseUrl, endPoint, acrValues);
+
+        }
+        /**/
+        anyidAdaptor.ssoLoginPage = function(endPoint, acrValues){
+            endPoint = typeof endPoint !== 'undefined' ? endPoint : "/";
+            var baseUrl = window.location.origin + anyidAdaptor.agencyContextPath + "/oidc/auth";
+            anyidAdaptor.ssoLoginPageSub(baseUrl, endPoint, acrValues);
+        }
+        
+        /**/
+        anyidAdaptor.ssoSvcToSvc = function(url, endPoint){
+            var baseUrl = url + "/oidc/svcToSvc?endPoint=" + encodeURIComponent(endPoint);
+            window.open(baseUrl, "_blank");
+        }
+        anyidAdaptor.goAnyIdLogin = function (data) {
+            const params = new URLSearchParams(location.search);
+
+            var obj = {
+                ssob: data.ssob,
+                tag: params.get("tx")
+            };
+
+            $.ajax({
+                url : "/chkLoginAnyid.do",
+                type : "POST",
+                dataType:"json",
+                data: obj,
+                beforeSend: function() { _cfn_loading.show(); },
+                complete: function() { _cfn_loading.hide(); },
+                success:function (response) {
+                    if (response.status === "success") {
+                        console.log("success");
+                        location.href = "/minwonMainNew.do";
+                    }else{
+                        console.log("fail");
+                        anyidAdaptor.goLogin();
+                    }
+                },
+                error:function (xhr, status,error) {
+                    alert('시스템에러가 발생하였습니다. 관리자에게 문의하십시오.');
+                }
+            })
+        }
+        // 이용기과 로그인 함수 추가
+        anyidAdaptor.goLogin = function () {
+            var nowUrl = window.location.protocol;
+
+            var urlSplit = nowUrl.split(":");
+            var firstUrl = urlSplit[0];
+            var fullUrl;
+
+            if(firstUrl == "https"){
+                console.log("url : " + firstUrl);
+                fullUrl = "/portal/loginNew.do?menu_no=3817&amp;menu_grp=MENU_NEW07";
+            }else if (firstUrl == "http"){
+                console.log("url : " + firstUrl);
+                fullUrl = "/portal/loginNew.do?menu_no=3817&amp;menu_grp=MENU_NEW07";
+            }else{
+                console.log("else");
+            }
+
+            console.log("fullUrl : " + fullUrl);
+            location.href=fullUrl;
+        }
+
+
+    </script>
+
+		<div class="header_top_wrap">
+	        <div class="header_top">
+	          <ul class="site">
+	            <li><a href="/main.do" title="식품안전나라">식품안전나라</a></li>
+
+	            <li><a href="/minwonMainNew.do" title="통합민원창구">통합민원창구</a></li>
+	            
+	          	
+					<li class="util_left_bg3">
+						
+						
+					</li>
+				
+				
+	          
+	          </ul>
+	          <h1 class="logo"><a href="/apiMain.do">식품의약품안전처 데이터활용서비스</a></h1>
+	          <ul class="utill">
+	            
+	            
+					
+					
+
+			            <li><a href="http://www.foodsafetykorea.go.kr/portal/member/joinAgreeView.do">회원가입</a></li>
+
+			            <li><a href="#" onclick="anyidAdaptor.ssoLoginPage('/portal/member/ssoLoginResultView.do','3');">로그인</a></li>
+					
+				
+				
+	          </ul>
+	        </div>
+	      </div>
+		
+		<div class="top_m sub" style="height:0px !important;z-index:1000;">
+			
+			
+		</div>
+	<!-- search end -->
+
+<script id="commonOptionList" type="text/html">
+	<option value="{optionValue}">{optionName}</option>
+</script>
+
+<script>
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+/*
+location.href = "/portal/main_sub.html";
+//*/
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+//로딩바 처리
+$.loading();
+$(document).ajaxStart(function() { $.disable(); }).ajaxStop(function() { $.enable(); });
+
+var spinOpts = {
+		lines: 9,				// The number of lines to draw
+		length: 0,			// The length of each line
+		width: 4,				// The line thickness
+		radius: 6,			// The radius of the inner circle
+		corners: 1,			// Corner roundness (0..1)
+		rotate: 4,			// The rotation offset
+		direction: 1,			// 1: clockwise, -1: counterclockwise
+		color: '#000',		// #rgb or #rrggbb or array of colors
+		speed: 1,				// Rounds per second
+		trail: 60,			// Afterglow percentage
+		shadow: false,		// Whether to render a shadow
+		hwaccel: false,		// Whether to use hardware acceleration
+		className: 'spinner',	// The CSS class to assign to the spinner
+		zIndex: 2e9,			// The z-index (defaults to 2000000000)
+		top: '50%',			// Top position relative to parent
+		left: '50%'			// Left position relative to parent
+	};
+
+
+
+//무한 로딩바 방지
+window.onerror = function(){
+	$.enable();
+};
+
+$(document).ready(function(){
+	//포탈일 때만 검색엔진인기검색어 목록 실행
+	if('SITE03' == 'SITE01'){
+		getSearchTrandList();
+	}
+	else if('SITE03' == 'SITE04'){
+		fn_selectLcnsNoListForSafety();
+	}
+});
+
+$(function(){
+	$(".csmOpner").fancybox({
+		maxWidth: 300,
+		maxHeight: 330,
+		minHeight: 330,
+		fitToView: false,
+		width: '70%',
+		height: '80%',
+		autoSize: false,
+		closeClick: false,
+		openEffect: 'fade',
+		closeEffect: 'fade',
+// 		tpl: {next : '', prev : ''},
+		helpers: {overlay : {locked : false}}
+	});
+});
+
+//검색엔진인기검색어 목록
+function getSearchTrandList(){
+	/*
+	// 운영 COMMIT 금지			2016.09.30:임재록
+	$.ajax({
+        dataType:'json',
+        type:'POST',
+        url:"/ajax/getSearchTrandList.do",
+        success:function(listTrend){
+        	var htmlStr = '인기검색어 ';
+        	var cnt = 3;
+        	if(listTrend != null){
+        		cnt = listTrend.length;
+        		if(listTrend.length > 0){
+        			if(listTrend.length > 3){
+        				cnt = 3;
+        			}
+        			for(var i=0; i<cnt; i++){
+        				htmlStr += "<a href=\'javascript:fn_searchTranTop(\""+listTrend[i].KEYWORD+"\");\'>"+listTrend[i].KEYWORDM+"</a>";
+        			}
+        		}
+        	}
+
+        	$('#keyword').html(htmlStr);
+
+        },
+        error:function(request,status,error){
+            //alert("left 실패코드111 : " + request.status+"\n메세지 : " + request.error);
+        }
+    });
+	//*/
+}
+
+function fn_goMinwon(){
+    document.baseForm.action = '/minwon/myCivil.do?menu_grp=MENU_GRP21&menu_no=627';
+    document.baseForm.target="_self";
+    document.baseForm.method="post";
+    document.baseForm.submit();
+}
+
+//우리회사안전관리 콜백
+function fn_callbackCsm(url){
+	$.fancybox.close();
+	location.href = url;
+}
+
+// 권한이 없다는 메세지 띄우기
+function fn_Alert(){
+	alert('기업회원이 아니거나 위임받은 인허가번호가 없어서 우리회사안전서비스를 이용할 수 없습니다.');
+}
+
+//통합검색 페이지이동
+function fn_searchTop(){
+
+	//통합검색 SELECTBOX 선택에 따른 메뉴 네비게이션 SET
+	var topColTarget = $('#topColTarget').val();
+	var menuNoTarget = '3090';
+
+	if(topColTarget == 'TOTAL01') {
+		menuNoTarget = '3090';
+	} else if(topColTarget == 'IPO_NEW_GRP01') {
+		menuNoTarget = '3085';
+	} else if(topColTarget == 'IPO_NEW_GRP02') {
+		menuNoTarget = '3086';
+	} else if(topColTarget == 'IPO_NEW_GRP03') {
+		menuNoTarget = '3087';
+	} else if(topColTarget == 'IPO_NEW_GRP06') {
+		menuNoTarget = '3088';
+	} else if(topColTarget == 'IPO_NEW_GRP04') {
+		menuNoTarget = '3089';
+	} else if(topColTarget == 'IPO_NEW_GRP08') {
+		menuNoTarget = '3090';
+	} else if(topColTarget == 'IPO_WEB') {
+		menuNoTarget = '3091';
+	}
+
+	$("#searchMode").val("search");
+	document.searchForm.action="/portal/search/searchSelect.do";
+	$("input[name=menu_no]").val(menuNoTarget);
+	$("input[name=menu_grp]").val('MENU_NEW07');
+
+	document.searchForm.target="_self";
+	document.searchForm.method="post";
+	document.searchForm.submit();
+}
+//통합검색 페이지이동(엔터키)
+function fn_searchKeyTop() {
+	if(window.event.keyCode == 13)
+		fn_searchTop();
+}
+//통합검색 인기검색어 페이지이동
+function fn_searchTranTop(word){
+
+	$("#searchTermTop").val(word);
+	document.searchForm.action="/portal/search/searchSelect.do";
+	$("#menu_no").val('3090');
+	$("#menu_grp").val('MENU_NEW07');
+	document.searchForm.target="_self";
+	document.searchForm.method="post";
+	document.searchForm.submit();
+}
+
+//인허가 회원 수정 페이지로 이동
+function fn_moveEditLcnsMemberView(userId, userPw){
+	var form = $('<form/>', {method: 'post', action: '/portal/member/editLcnsMemberView.do'});
+	form.append($('<input/>', {type: 'hidden', name: 'userId', value: userId}));
+	form.append($('<input/>', {type: 'hidden', name: 'userPw', value: userPw}));
+
+	$(document.body).append(form);
+	form.submit();
+}
+
+//회원정보와 관련된 인허가번호를 가져온다.
+function fn_selectLcnsNoListForSafety(){
+
+  	$.ajax({
+  		data: {id: ''},
+  		dataType: 'json',
+  		type: 'POST',
+ 		url: '/csm/safetyinfo/selectLcnsNoListForSafety.do'
+  	}).done(function(rstData){
+  		var data;
+  		var strHtml = '<option value="">선택하세요</option>';
+
+  		if(rstData != null && rstData.length > 0){
+  			$.each(rstData, function(idx) {
+  	  			data = null;
+  	  			data = {optionValue: this['lcns_req_no'], optionName: this['entrps_nm']};
+
+  	  			strHtml += innerHtmlMaker('#commonOptionList', data);
+  	  		});
+
+  		}
+
+  		$('#select_ourCompany').html(strHtml);
+  		$('#select_ourCompany').selecter('update');
+  		fn_selectEntrpsNoToLcnsNo();
+
+  	}).fail(function(request ,status, error){
+  		alert('시스템에러가 발생하였습니다. 관리자에게 문의하십시오.');
+  	});
+}
+
+//기업번호로 인허가번호를 가져와서 셀렉트 박스를 set 한다.
+function fn_selectEntrpsNoToLcnsNo(){
+	var entrps_esntl_no = '';
+
+  	$.ajax({
+  		data: {entrps_esntl_no: entrps_esntl_no},
+  		dataType: 'json',
+  		type: 'POST',
+ 		url: '/csm/safetyinfo/selectEntrpsNoToLcnsNo.do'
+  	}).done(function(rstData){
+  		if(rstData != null){
+  			$('#select_ourCompany option').each(function(i){
+
+  				if(rstData.lcns_crtfc_no == $(this).val())
+  				{
+
+  					$("#select_ourCompany option:eq(" + i + ")").prop("selected", true);
+  					$("#select_ourCompany").val(rstData.lcns_crtfc_no);
+  				}
+
+  			});
+
+  		}
+
+  	}).fail(function(request ,status, error){
+  		alert('시스템에러가 발생하였습니다. 관리자에게 문의하십시오.');
+  	});
+}
+
+//gnb onchange
+//해당 인허가번호로 세션을 set한다.
+function changeInfo() {
+	// 업종을 가져와서 set 한다.
+	fn_setSesstionForSafety($('#select_ourCompany').val());
+
+}
+
+//해당 인허가 번호로 세션을 set한다.
+function fn_setSesstionForSafety(lcns_no){
+	$.ajax({
+		data: {lcns_no: lcns_no},
+		dataType: 'json',
+		type: 'POST',
+		url: '/csm/safetyinfo/setSesstionForSafety.do'
+	}).done(function(rstData){
+		var returnCode = rstData.returnCode;
+		var returnMessage = rstData.returnMessage;
+
+		if (returnCode == "01") {
+
+	 		alert(returnMessage);
+	 		//location.reload();
+	 		location.href = '/csm/main.do?menu_no=757&menu_grp=MENU_GRP40';
+		}
+		else {
+			alert(returnMessage);
+		}
+
+	}).fail(function(request ,status, error){
+		alert('시스템에러가 발생하였습니다. 관리자에게 문의하십시오.');
+	});
+}
+function fn_skip(){
+	return;
+}
+
+//gpki 로그인 오류로인한 로그인페이지 방식 변경
+function goLogin(){
+    var nowUrl = "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp";
+    console.log("nowUrl : " + nowUrl);
+
+    var urlSplit = nowUrl.split(":");
+    var firstUrl = urlSplit[0];
+    var fullUrl;
+
+    if(firstUrl == "https"){
+        console.log("url : " + firstUrl);
+        fullUrl = "https://www.foodsafetykorea.go.kr/portal/loginNew.do?menu_no=3817&amp;menu_grp=MENU_NEW07";
+    }else if (firstUrl == "http"){
+        console.log("url : " + firstUrl);
+        fullUrl = "http://www.foodsafetykorea.go.kr/portal/loginNew.do?menu_no=3817&amp;menu_grp=MENU_NEW07";
+    }else{
+        console.log("else");
+    }
+
+    console.log("fullUrl : " + fullUrl);
+    location.href=fullUrl;
+
+}
+
+</script>
+			
+			<!-- GNB start -->
+			
+
+
+
+
+
+
+
+
+
+
+<div class="header_bottom_wrap">
+  <div class="header_bottom">
+    <button type="button" class="total_menu tm_view" title="데이터활용서비스 한눈에 보기">전체메뉴</button>
+    <nav id="gnb">
+      <div class="gnb_area">
+        <h2>전체 메뉴</h2>
+        <ul class="depth_01">
+          <li>
+            <a href="javascript:fn_skip();"><span>서비스안내</span></a>
+            <div class="depth_02">
+              <ul>
+                <li><a href="/api/aboutApi.do?menu_grp=MENU_GRP34&menu_no=686">서비스 소개</a></li>
+                <li><a href="/api/howToUseApi.do?menu_grp=MENU_GRP34&menu_no=687">서비스 이용방법</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="/api/datasetList.do?menu_grp=MENU_GRP31&menu_no=649"><span>데이터공개</span></a>
+            <div class="depth_02">
+              <ul>
+                
+
+                  <li><a href="/api/datasetList.do?menu_grp=MENU_GRP31&menu_no=17879&cl_cd=API_SRT01">분류별</a></li>
+                  <li><a href="/api/datasetList.do?menu_grp=MENU_GRP31&menu_no=849&provd_instt=ORGN01">제공기관별</a></li>
+                  <li><a href="/api/datasetList.do?svc_type_cd=API_TYPE06&menu_no=661&menu_grp=MENU_GRP31">유형별</a></li>              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="javascript:fn_skip();"><span>인증키 관리</span></a>
+            <div class="depth_02">
+              <ul>
+                <li><a href="/api/newUserApiAplcDtl.do?menu_grp=MENU_GRP32&menu_no=3995">인증키 신청 현황</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="javascript:fn_skip();"><span>정보공유</span></a>
+            <div class="depth_02">
+              <ul>
+                <!--<li><a href="/api/board/board.do?menu_grp=MENU_GRP35&menu_no=3898">개발자 의견공유</a></li>-->
+		         <li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=688">공지사항</a></li>
+                <li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=5208">자료실</a></li>
+                <li><a href="/api/board/board.do?menu_grp=MENU_GRP35&menu_no=3899">데이터활용 갤러리</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <li>
+            <a href="javascript:fn_skip();"><span>고객센터</span></a>
+            <div class="depth_02">
+              <ul>
+                <li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=689">자주하는 질문</a></li> <!-- FAQ -->
+                <li class="last"><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=690">묻고 답하기</a></li> <!-- Q&A  -->
+              </ul>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+      <div class="gnb_bg"></div>
+    </nav>
+  </div>
+</div>
+
+
+
+<button type="button" id="btn_mobi_open" class="btn_mobi btn_mobi_open">전체메뉴</button>
+<div class="header_mobi_wrap">
+  <nav id="mobi_gnb">
+    <div class="mobi_utill">
+      <ul>
+
+      </ul>
+    </div>
+    <div class="gnb_area">
+      <button type="button" class="btn_mobi btn_mobi_close">전체메뉴 닫기</button>
+      <ul class="mobi_depth_01">
+        <li>
+          <a href="javascript:fn_skip();"><span>서비스안내</span></a>
+          <ul class="mobi_depth_02">
+            <li><a href="/api/aboutApi.do?menu_grp=MENU_GRP34&menu_no=686">서비스 소개</a></li>
+            <li><a href="/api/howToUseApi.do?menu_grp=MENU_GRP34&menu_no=687">서비스 이용방법</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:fn_skip();"><span>데이터공개</span></a>
+          <ul class="mobi_depth_02">
+            
+
+            <li><a href="/api/datasetList.do?menu_grp=MENU_GRP31&menu_no=17879&cl_cd=API_SRT01">분류별</a></li>
+            <li><a href="/api/datasetList.do?menu_grp=MENU_GRP31&menu_no=849&provd_instt=ORGN01">제공기관별</a></li>
+            <li><a href="/api/datasetList.do?menu_grp=MENU_GRP31&menu_no=661">유형별</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:fn_skip();"><span>인증키 관리</span></a>
+          <ul class="mobi_depth_02">
+            <li><a href="/api/newUserApiAplcDtl.do?menu_grp=MENU_GRP32&menu_no=3995">인증키 신청 현황</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:fn_skip();"><span>정보공유</span></a>
+          <ul class="mobi_depth_02">
+            <li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=688">공지사항</a></li>
+            <li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=5208">자료실</a></li>
+            <li><a href="/api/board/board.do?menu_grp=MENU_GRP35&menu_no=3899">데이터활용 갤러리</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="javascript:fn_skip();"><span>고객센터</span></a>
+          <ul class="mobi_depth_02">
+            <li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=689">자주하는 질문</a></li> <!-- FAQ -->
+            <li class="last"><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=690">묻고 답하기</a></li> <!-- Q&A  -->
+          </ul>
+        </li>
+
+      </ul>
+    </div>
+        <div class="mobi_site">
+          <ul>
+            <li><a href="/main.do" target="_blank" title="식품안전나라">식품안전나라</a></li>
+           <!--2023-07-31 SR64483 문구 수정 요청-->
+            <!--<li><a href="/minwonMainNew.do" target="_blank" title="통합민원상담서비스">통합민원상담서비스</a></li>-->
+            <li><a href="/minwonMainNew.do" target="_blank" title="통합민원상담">통합민원상담</a></li>
+            
+            
+              <li class="util_left_bg3">
+                <a href="/portal/member/csmLoginNew.do" onclick="" title="알림새창열림">우리회사 안전관리</a>
+              </li>
+            
+            
+            
+          </ul>
+        </div>
+  </nav>
+</div>
+<script>
+
+  $(document).ready(function(){
+    /* 2021 고도화 gog 추가 - 반응형으로 모바일 창으로 축소했을때 UserVO가 지워지는 현상으로 추가 */
+    fn_getMobileSession();
+  });
+
+  function fn_skip(){
+    return;
+  }
+
+  // 권한이 없다는 메세지 띄우기
+  function fn_Alert(){
+    alert('기업회원이 아니거나 위임받은 인허가번호가 없어서 우리회사안전서비스를 이용할 수 없습니다.');
+  }
+
+  function fn_getMobileSession() { //gog - 모바일 창 세션 다시 가져오기
+    $.ajax({
+      type: "post",
+      url: "/ajax/getMobileSession.do",
+      dataType: "html",
+      cache: false,
+      success: function(result) {
+        $(".mobi_utill ul").append(result);
+      },
+      error: function(request,status,error) {
+      }
+    });
+  }
+</script>
+			<!-- GNB end -->
+		</header>
+
+		
+
+
+
+
+
+	<!-- LNB start -->
+	<div class="path">
+		<div class="inner">
+			<div class="catn01" id="cdsn00">
+			
+			
+			<a href="/apiMain.do" class="home"><img src="/images/api/common/location_home_icon.png" alt="홈"/></a>
+			
+			</div>
+			
+			<div class="catn02" id="cdsn01">
+			</div>
+			<div class="catn02" id="cdsn02">
+			</div>
+			<div class="catn02" id="cdsn03">
+			</div>
+			<div class="catn02" id="cdsn04">
+			</div>
+			
+			<!-- <div class="catn02" id="cdsn01">
+				<a href="#" class="prt">식품·안전정보</a>
+				<ul style="display: none;">
+					<li><a href="#">식품·안전정보</a></li>
+					<li class="dpt02_ul">
+						<a href="#">위해·예방정보</a>
+						<ul style="display: none;">
+							<li><a href="#">식품·안전정보</a></li>
+							<li><a href="#">위해·예방정보</a></li>
+							<li><a href="#">건강·영양정보</a></li>
+							<li><a href="#">식품전문정보</a></li>
+							<li><a href="#">이슈·뉴스·식품·홍보·교육</a></li>
+						</ul>
+					</li>
+					<li><a href="#">건강·영양정보</a></li>
+					<li class="on"><a href="#">식품전문정보</a></li>
+					<li><a href="#">이슈·뉴스·식품·홍보·교육</a></li>
+				</ul>
+			</div>
+			<div class="catn02" id="cdsn02">
+				<a href="#" class="prt">국내식품부적합</a>
+				<ul style="display: none;">
+					<li><a href="#">식품·안전정보</a></li>
+					<li class="on"><a href="#">위해·예방정보</a></li>
+					<li class="dpt02_ul">
+						<a href="#">건강·영양정보</a>
+						<ul style="display: none;">
+							<li><a href="#">식품·안전정보</a></li>
+							<li><a href="#">위해·예방정보</a></li>
+							<li><a href="#">건강·영양정보</a></li>
+							<li><a href="#">식품전문정보</a></li>
+							<li><a href="#">이슈·뉴스·식품·홍보·교육</a></li>
+						</ul>
+					</li>
+					<li><a href="#">수입식품부적합</a></li>
+					<li><a href="#">회수판매중지</a></li>
+					<li><a href="#">행정처분</a></li>
+					<li><a href="#">허위과대광고</a></li>
+					<li><a href="#">식중독정보</a></li>
+					<li><a href="#">원산지표시관고</a></li>
+					<li><a href="#">해외직구정보</a></li>
+				</ul>
+			</div>
+			<div class="catn02" id="cdsn03">
+				<a href="#" class="prt">식품등 광고의 이해</a>
+				<ul style="display: none;">
+					<li><a href="#">식품·안전정보</a></li>
+					<li><a href="#">위해·예방정보</a></li>
+					<li class="on"><a href="#">건강·영양정보</a></li>
+					<li><a href="#">식품전문정보</a></li>
+					<li><a href="#">이슈·뉴스·식품·홍보·교육</a></li>
+				</ul>
+			</div>
+			<div class="catn02" id="cdsn04">
+				<a href="#" class="prt">건강·영양정보</a>
+				<ul style="display: none;">
+					<li><a href="#">식품·안전정보</a></li>
+					<li><a href="#">위해·예방정보</a></li>
+					<li class="on"><a href="#">건강·영양정보</a></li>
+					<li><a href="#">식품전문정보</a></li>
+					<li><a href="#">이슈·뉴스·식품·홍보·교육</a></li>
+				</ul>
+			</div> -->
+		</div>
+	</div>
+	<!-- LNB end -->
+    <script>
+
+
+    function moveMenu(index){
+
+		//alert("moveMenu start index["+index+"]");
+	    	var baseBbsUrl = "/api/board/board.do";    //게시판 기본 url
+	    	var menu_no = data[index].menu_no;
+	    	var menu_type_cd = data[index].menu_type_cd;
+	    	var url = "";
+
+	    	if(menu_type_cd != "MENU01"){
+		     	if(menu_type_cd == "MENU03"){    //링크메뉴
+		     		if(data[index].menu_no == '976'){
+		     			fn_rtrvlDsuse(data[index].url);
+		     		}else if(data[index].menu_no == '536'){    //GMO시간여행
+		     			window.open(data[index].url, '', 'width=750, height=390, scrollbars=yes, resizable=yes, toolbar=no, status=yes');
+		     		}else{
+		     			window.open(data[index].url, "");
+		     		}
+
+		    	}else{
+		    		if(menu_type_cd == "MENU02"){   //일반메뉴
+		    			url = data[index].url;
+
+		    		}else if(menu_type_cd == "MENU04"){   //게시판메뉴
+		    			url = baseBbsUrl;
+		    		}
+		    		if(url == ''){
+	    				url = "/portal/none.do";
+	    			}
+		    		var checkGetUrl = url.split("?");
+		    		if(checkGetUrl.length < 2){
+
+		    			$("#menu_grp").val('MENU_GRP31');    //gnb.jsp 에 있는 menu_grp 변수
+	                    $("#menu_no").val(menu_no);
+
+	                    var frm = document.baseForm;
+
+	                    // menu_no, menu_grp				화면이동간 필수값
+	                    fn_addRequiredClassForId('menu_no');
+	                    fn_addRequiredClassForId('menu_grp');
+	                    fn_removeFormInputElementsForId('baseForm');
+
+	                    frm.action=(""+url);
+
+	                    frm.submit();
+		    		}else{
+	                    location.href=""+url+"&menu_no="+menu_no+"&menu_grp="+'MENU_GRP31';
+		    		}
+		    	}
+	    	}
+	    }
+
+	// 3depth 에서는 data 가 아니라 Depth3Data 에서 가져와야 한다.
+	// 2016.12.26 cho yong dong change
+    function moveMenu2(index){
+
+		//alert("moveMenu start index["+index+"]");
+	    	var baseBbsUrl = "/api/board/board.do";    //게시판 기본 url
+	    	var menu_no = Depth3Data[index].menu_no;
+	    	var menu_type_cd = Depth3Data[index].menu_type_cd;
+	    	var url = "";
+
+	    	if(menu_type_cd != "MENU01"){
+		     	if(menu_type_cd == "MENU03"){    //링크메뉴
+		     		if(data[index].menu_no == '976'){
+		     			fn_rtrvlDsuse(Depth3Data[index].url);
+		     		}else if(Depth3Data[index].menu_no == '536'){    //GMO시간여행
+		     			window.open(Depth3Data[index].url, '', 'width=750, height=390, scrollbars=yes, resizable=yes, toolbar=no, status=yes');
+		     		}else if(Depth3Data[index].menu_no == '2926'){    //CODEX규격및지침
+		     			location.href=Depth3Data[index].url.replace('2927','2926');
+		     		}else if(Depth3Data[index].menu_no == '2994' || Depth3Data[index].menu_no == '2993' || Depth3Data[index].menu_no == '2998'
+		     			|| Depth3Data[index].menu_no == '2999' || Depth3Data[index].menu_no == '3008'){    //건강.영양정보 > 오감만족식단
+		     			location.href=Depth3Data[index].url;
+		     		}else{
+		     			window.open(Depth3Data[index].url, "");
+		     		}
+
+		    	}else{
+		    		if(menu_type_cd == "MENU02"){   //일반메뉴
+		    			url = Depth3Data[index].url;
+
+		    		}else if(menu_type_cd == "MENU04"){   //게시판메뉴
+		    			url = baseBbsUrl;
+		    		}
+		    		if(url == ''){
+	    				url = "/portal/none.do";
+	    			}
+		    		var checkGetUrl = url.split("?");
+		    		if(checkGetUrl.length < 2){
+
+		    			$("#menu_grp").val('MENU_GRP31');    //gnb.jsp 에 있는 menu_grp 변수
+	                    $("#menu_no").val(menu_no);
+
+	                    var frm = document.baseForm;
+
+	                    // menu_no, menu_grp				화면이동간 필수값
+	                    fn_addRequiredClassForId('menu_no');
+	                    fn_addRequiredClassForId('menu_grp');
+	                    fn_removeFormInputElementsForId('baseForm');
+
+	                    frm.action=(""+url);
+
+	                    frm.submit();
+		    		}else{
+	                    location.href=""+url+"&menu_no="+menu_no+"&menu_grp="+'MENU_GRP31';
+		    		}
+		    	}
+	    	}
+	    }
+
+    /* 고정메뉴 */
+    var HARD_TOP_MENU = {
+        "MENU_GRP31": [
+            {"menu_no":"649","hrnk_menu_no":"","lv":"1","menu_nm":"데이터공개","menu_type_cd":"MENU01","url":"","parent_nm":"","depthCount":4,"bbs_no":""},
+            {"menu_no":"654","hrnk_menu_no":"649","lv":"2","menu_nm":"분류별","menu_type_cd":"MENU01","url":"","parent_nm":"데이터공개","depthCount":25,"bbs_no":""},
+            {"menu_no":"17879","hrnk_menu_no":"654","lv":"3","menu_nm":"기준규격정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT01","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17880","hrnk_menu_no":"654","lv":"3","menu_nm":"코드정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT02","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17881","hrnk_menu_no":"654","lv":"3","menu_nm":"식품영양정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT03","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17882","hrnk_menu_no":"654","lv":"3","menu_nm":"수질환경정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT04","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17883","hrnk_menu_no":"654","lv":"3","menu_nm":"검사기관정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT05","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17884","hrnk_menu_no":"654","lv":"3","menu_nm":"식품위해관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT06","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17885","hrnk_menu_no":"654","lv":"3","menu_nm":"식품안전관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT07","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17886","hrnk_menu_no":"654","lv":"3","menu_nm":"이력추적관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT08","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17887","hrnk_menu_no":"654","lv":"3","menu_nm":"어린이식품안전관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT09","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17888","hrnk_menu_no":"654","lv":"3","menu_nm":"HACCP지정현황","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT10","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17889","hrnk_menu_no":"654","lv":"3","menu_nm":"업체인허가현황","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT11","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17890","hrnk_menu_no":"654","lv":"3","menu_nm":"위생용품","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT12","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17891","hrnk_menu_no":"654","lv":"3","menu_nm":"축산물","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT13","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17892","hrnk_menu_no":"654","lv":"3","menu_nm":"건강기능식품","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT14","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17893","hrnk_menu_no":"654","lv":"3","menu_nm":"수입식품 등","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT15","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17894","hrnk_menu_no":"654","lv":"3","menu_nm":"식품 등","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT16","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17895","hrnk_menu_no":"654","lv":"3","menu_nm":"자료실","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT17","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"4327","hrnk_menu_no":"654","lv":"3","menu_nm":"폐업정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT18","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"4328","hrnk_menu_no":"654","lv":"3","menu_nm":"용어사전","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT19","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"655","hrnk_menu_no":"649","lv":"2","menu_nm":"제공기관별","menu_type_cd":"MENU01","url":"","parent_nm":"데이터공개","depthCount":16,"bbs_no":""},
+            {"menu_no":"849","hrnk_menu_no":"655","lv":"3","menu_nm":"식품의약품안전처","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN01","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"858","hrnk_menu_no":"655","lv":"3","menu_nm":"해양수산부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN10","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"861","hrnk_menu_no":"655","lv":"3","menu_nm":"산업통상자원부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN13","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"857","hrnk_menu_no":"655","lv":"3","menu_nm":"농촌진흥청","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN09","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"853","hrnk_menu_no":"655","lv":"3","menu_nm":"농림축산검역본부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN05","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"856","hrnk_menu_no":"655","lv":"3","menu_nm":"국립농산물품질관리원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN08","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"863","hrnk_menu_no":"655","lv":"3","menu_nm":"국립환경과학원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN15","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"860","hrnk_menu_no":"655","lv":"3","menu_nm":"국립수산물품질관리원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN12","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"859","hrnk_menu_no":"655","lv":"3","menu_nm":"국립수산과학원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN11","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"852","hrnk_menu_no":"655","lv":"3","menu_nm":"행정안전부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN16","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"850","hrnk_menu_no":"655","lv":"3","menu_nm":"한국식품안전관리인증원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN02","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"855","hrnk_menu_no":"655","lv":"3","menu_nm":"축산물품질평가원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN07","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"862","hrnk_menu_no":"655","lv":"3","menu_nm":"한국환경공단","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN14","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"4811","hrnk_menu_no":"655","lv":"3","menu_nm":"한국수자원공사","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN17","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"653","hrnk_menu_no":"649","lv":"2","menu_nm":"유형별","menu_type_cd":"MENU01","url":"","parent_nm":"데이터공개","depthCount":7,"bbs_no":""},
+            {"menu_no":"661","hrnk_menu_no":"653","lv":"3","menu_nm":"XML/JSON","menu_type_cd":"MENU02","url":"/api/datasetList.do?svc_type_cd=API_TYPE06","parent_nm":"유형별","depthCount":0,"bbs_no":""},
+            {"menu_no":"658","hrnk_menu_no":"653","lv":"3","menu_nm":"FILE","menu_type_cd":"MENU02","url":"/api/datasetList.do?svc_type_cd=API_TYPE03","parent_nm":"유형별","depthCount":0,"bbs_no":""},
+            {"menu_no":"660","hrnk_menu_no":"653","lv":"3","menu_nm":"LINK","menu_type_cd":"MENU02","url":"/api/datasetList.do?svc_type_cd=API_TYPE05","parent_nm":"유형별","depthCount":0,"bbs_no":""}
+        ],
+
+        "MENU_GRP32": [
+            {"menu_no":"650","hrnk_menu_no":"","lv":"1","menu_nm":"인증키관리","menu_type_cd":"MENU01","url":"","parent_nm":"","depthCount":3,"bbs_no":""},
+            {"menu_no":"3995","hrnk_menu_no":"650","lv":"2","menu_nm":"인증키 신청현황","menu_type_cd":"MENU03","url":"/api/newUserApiAplcDtl.do","parent_nm":"인증키관리","depthCount":0,"bbs_no":""}
+        ],
+
+        "MENU_GRP33": [
+            {"menu_no":"651","hrnk_menu_no":"","lv":"1","menu_nm":"고객센터","menu_type_cd":"MENU01","url":"","parent_nm":"","depthCount":3,"bbs_no":""},
+            {"menu_no":"689","hrnk_menu_no":"651","lv":"2","menu_nm":"자주하는 질문","menu_type_cd":"MENU04","url":"","parent_nm":"고객센터","depthCount":0,"bbs_no":"apiFaq"},
+            {"menu_no":"690","hrnk_menu_no":"651","lv":"2","menu_nm":"묻고 답하기","menu_type_cd":"MENU04","url":"","parent_nm":"고객센터","depthCount":0,"bbs_no":"aipQna"}
+        ],
+
+        "MENU_GRP34": [
+            {"menu_no":"652","hrnk_menu_no":"","lv":"1","menu_nm":"서비스안내","menu_type_cd":"MENU01","url":"","parent_nm":"","depthCount":2,"bbs_no":""},
+            {"menu_no":"686","hrnk_menu_no":"652","lv":"2","menu_nm":"서비스 소개","menu_type_cd":"MENU02","url":"/api/aboutApi.do","parent_nm":"서비스안내","depthCount":0,"bbs_no":"bbs161"},
+            {"menu_no":"687","hrnk_menu_no":"652","lv":"2","menu_nm":"서비스 사용방법","menu_type_cd":"MENU02","url":"/api/howToUseApi.do","parent_nm":"서비스안내","depthCount":0,"bbs_no":"bbs162"}
+        ],
+
+        "MENU_GRP35": [
+            {"menu_no":"4098","hrnk_menu_no":"","lv":"1","menu_nm":"정보공유","menu_type_cd":"MENU01","url":"","parent_nm":"","depthCount":4,"bbs_no":""},
+            {"menu_no":"688","hrnk_menu_no":"4098","lv":"2","menu_nm":"공지사항","menu_type_cd":"MENU04","url":" ","parent_nm":"정보공유","depthCount":0,"bbs_no":"apiNotice"},
+            {"menu_no":"5208","hrnk_menu_no":"4098","lv":"2","menu_nm":"자료실","menu_type_cd":"MENU04","url":" ","parent_nm":"정보공유","depthCount":0,"bbs_no":"bbs175"},
+            {"menu_no":"3899","hrnk_menu_no":"4098","lv":"2","menu_nm":"데이터활용 갤러리","menu_type_cd":"MENU04","url":"","parent_nm":"정보공유","depthCount":0,"bbs_no":"dataUseGal"}
+        ]
+    };
+
+    var HARD_DEPTH3 = {
+
+        "653": [
+            {"menu_no":"661","hrnk_menu_no":"653","lv":"3","menu_nm":"XML/JSON","menu_type_cd":"MENU02","url":"/api/datasetList.do?svc_type_cd=API_TYPE06","parent_nm":"유형별","depthCount":0,"bbs_no":""},
+            {"menu_no":"658","hrnk_menu_no":"653","lv":"3","menu_nm":"FILE","menu_type_cd":"MENU02","url":"/api/datasetList.do?svc_type_cd=API_TYPE03","parent_nm":"유형별","depthCount":0,"bbs_no":""},
+            {"menu_no":"660","hrnk_menu_no":"653","lv":"3","menu_nm":"LINK","menu_type_cd":"MENU02","url":"/api/datasetList.do?svc_type_cd=API_TYPE05","parent_nm":"유형별","depthCount":0,"bbs_no":""}
+        ],
+
+        "654": [
+            {"menu_no":"17879","hrnk_menu_no":"654","lv":"3","menu_nm":"기준규격정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT01","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17880","hrnk_menu_no":"654","lv":"3","menu_nm":"코드정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT02","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17881","hrnk_menu_no":"654","lv":"3","menu_nm":"식품영양정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT03","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17882","hrnk_menu_no":"654","lv":"3","menu_nm":"수질환경정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT04","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17883","hrnk_menu_no":"654","lv":"3","menu_nm":"검사기관정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT05","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17884","hrnk_menu_no":"654","lv":"3","menu_nm":"식품위해관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT06","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17885","hrnk_menu_no":"654","lv":"3","menu_nm":"식품안전관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT07","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17886","hrnk_menu_no":"654","lv":"3","menu_nm":"이력추적관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT08","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17887","hrnk_menu_no":"654","lv":"3","menu_nm":"어린이식품안전관리","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT09","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17888","hrnk_menu_no":"654","lv":"3","menu_nm":"HACCP지정현황","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT10","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17889","hrnk_menu_no":"654","lv":"3","menu_nm":"업체인허가현황","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT11","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17890","hrnk_menu_no":"654","lv":"3","menu_nm":"위생용품","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT12","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17891","hrnk_menu_no":"654","lv":"3","menu_nm":"축산물","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT13","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17892","hrnk_menu_no":"654","lv":"3","menu_nm":"건강기능식품","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT14","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17893","hrnk_menu_no":"654","lv":"3","menu_nm":"수입식품 등","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT15","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17894","hrnk_menu_no":"654","lv":"3","menu_nm":"식품 등","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT16","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"17895","hrnk_menu_no":"654","lv":"3","menu_nm":"자료실","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT17","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"4327","hrnk_menu_no":"654","lv":"3","menu_nm":"폐업정보","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT18","parent_nm":"분류별","depthCount":0,"bbs_no":""},
+            {"menu_no":"4328","hrnk_menu_no":"654","lv":"3","menu_nm":"용어사전","menu_type_cd":"MENU02","url":"/api/datasetList.do?cl_cd=API_SRT19","parent_nm":"분류별","depthCount":0,"bbs_no":""}
+        ],
+
+        "655": [
+            {"menu_no":"849","hrnk_menu_no":"655","lv":"3","menu_nm":"식품의약품안전처","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN01","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"858","hrnk_menu_no":"655","lv":"3","menu_nm":"해양수산부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN10","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"861","hrnk_menu_no":"655","lv":"3","menu_nm":"산업통상자원부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN13","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"857","hrnk_menu_no":"655","lv":"3","menu_nm":"농촌진흥청","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN09","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"853","hrnk_menu_no":"655","lv":"3","menu_nm":"농림축산검역본부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN05","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"856","hrnk_menu_no":"655","lv":"3","menu_nm":"국립농산물품질관리원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN08","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"863","hrnk_menu_no":"655","lv":"3","menu_nm":"국립환경과학원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN15","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"860","hrnk_menu_no":"655","lv":"3","menu_nm":"국립수산물품질관리원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN12","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"859","hrnk_menu_no":"655","lv":"3","menu_nm":"국립수산과학원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN11","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"852","hrnk_menu_no":"655","lv":"3","menu_nm":"행정안전부","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN16","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"850","hrnk_menu_no":"655","lv":"3","menu_nm":"한국식품안전관리인증원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN02","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"855","hrnk_menu_no":"655","lv":"3","menu_nm":"축산물품질평가원","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN07","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"862","hrnk_menu_no":"655","lv":"3","menu_nm":"한국환경공단","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN14","parent_nm":"제공기관별","depthCount":0,"bbs_no":""},
+            {"menu_no":"4811","hrnk_menu_no":"655","lv":"3","menu_nm":"한국수자원공사","menu_type_cd":"MENU02","url":"/api/datasetList.do?provd_instt=ORGN17","parent_nm":"제공기관별","depthCount":0,"bbs_no":""}
+        ]
+    };
+
+    var menu_grp_data = new Array();
+
+    // 고정메뉴 배열에 해당 menu_no 가 있는지 확인
+    function fn_hasHardMenu(hardList, menuNo){
+   		if(hardList == null){
+   			return false;
+   		}
+   		for(var h=0; h<hardList.length; h++){
+   			if(hardList[h].menu_no == menuNo){
+   				return true;
+   			}
+   		}
+   		return false;
+    }
+
+    //  setLeftMenu 를 cho yong dong 2016.12.23 수정한다.
+    function setTopMenu(value){
+
+
+   	// 고정 메뉴
+   	var vHardMenuNo = $("#menu_no").val();
+   	var vHardTop = HARD_TOP_MENU['MENU_GRP31'];
+
+   	// menu_grp 로 찾은 그룹에 menu_no 가 없으면 전체 고정메뉴에서 소속 그룹을 다시 찾음
+   	if(!fn_hasHardMenu(vHardTop, vHardMenuNo)){
+   		vHardTop = null;
+   		for(var g in HARD_TOP_MENU){
+   			if(fn_hasHardMenu(HARD_TOP_MENU[g], vHardMenuNo)){
+   				vHardTop = HARD_TOP_MENU[g];
+   				break;
+   			}
+   		}
+   	}
+
+   	// 끝까지 못 찾으면 고정메뉴를 쓰지 않고 기존 조회 로직으로 우회
+   	if(vHardTop != null){
+   		set2DepthMenuTree(vHardTop);
+   		if(v3DepthMenuNo != ""){
+   			Depth3List(v2DepthMenuNo);
+   		}else{
+   			$("#cdsn03").html("");
+   			$("#cdsn04").html("");
+   		}
+   		return;
+   	}
+
+   	var leftUrl = "";
+//   	if('SITE03' == 'SITE01')		{	leftUrl = '/portal/left.do';	}
+   	if('SITE03' == 'SITE01')		{	leftUrl = '/portal/topMenu.do';	}
+   	else if('SITE03' == 'SITE02'){	leftUrl = '/minwon/topMenu.do';	}
+   	else if('SITE03' == 'SITE03'){	leftUrl = '/api/topMenu.do';		}
+   	else if('SITE03' == 'SITE04'){	leftUrl = '/csm/topMenu.do';		}
+
+   	$.ajax({
+           data: {menu_no : '656'
+           	  ,menu_grp : 'MENU_GRP31'
+           	  ,sys_dvs_cd : 'SITE03'
+           	  ,entrps_esntl_no : $("#entrps_esntl_no").val()},
+           dataType:'json',
+           type:'POST',
+           async:false,
+           url:""+leftUrl,
+           success:function(data){
+           	//alert("topMenu.do success !!!");
+           	/// 1depth , 2depth 세팅
+           	
+           	set2DepthMenuTree(data.topMenuList);
+
+           	//alert("setTopMenu end !!!");
+    		if(v3DepthMenuNo != ""){
+    			// 3,4 depth 데이터
+    			Depth3List(v2DepthMenuNo);
+    		}else{
+    			// 3,4 depth 초기화
+                $("#cdsn03").html("");
+                $("#cdsn04").html("");
+    		}
+
+
+
+
+           	if('SITE03' == 'SITE04') {
+           		drawMyCompany(data.myCompanyList);
+           	}
+           },
+           error:function(request,status,error){
+               //alert("left 실패코드111 : " + request.status+"\n메세지 : " + request.error);
+           }
+       });
+	}
+
+    function Depth3List(v_2menu_no){
+		// 고정 메뉴
+    	var vHard3 = HARD_DEPTH3[v_2menu_no];
+    	if(vHard3 != null){
+    		set3DepthMenuTree(vHard3);
+    		return;
+    	}
+
+    	//alert("Depth3List start v_2menu_no["+v_2menu_no+"]");
+    	$.ajax({
+            data: {menu_no : v_2menu_no
+            	  ,menu_grp : 'MENU_GRP31'
+            	  ,sys_dvs_cd : 'SITE03'
+            	  ,entrps_esntl_no : $("#entrps_esntl_no").val()},
+            dataType:'json',
+            type:'POST',
+            async:false,
+            url:""+"/portal/topDepth3List.do",
+            success:function(data){
+            	//alert("success Depth3List !!!");
+            	set3DepthMenuTree(data.topDepth3List);
+
+            },
+            error:function(request,status,error){
+                //alert("left 실패코드111 : " + request.status+"\n메세지 : " + request.error);
+            }
+        });
+ 	}
+
+    // data 변수는 최초에 가지고 와서 계속 쓴다.
+    var data = new Array();
+    // 3depth 이하에서는 아래 를 사용한다.
+	var Depth3Data = new Array();
+
+    //메뉴다시그리기 setLeftMenuTree 를 cho yong dong 2016.12.22 일 수정한다.
+    // 전체 가져온 리스트로 tnb 세팅 하고 셀렉트 박스 설정 한다.
+
+    var v1DepthMenuNo = "";
+    var v2DepthMenuNo = "238";
+    var v3DepthMenuNo = "";
+    var v4DepthMenuNo = "";
+
+    var vDepthString = "";
+
+    var v2DepthMenuName = "";
+    var v3DepthMenuName = "";
+    var v4DepthMenuName = "";
+
+    var v_menu_name = "";
+    var v_parent_nm = "";
+
+
+    function set2DepthMenuTree(leftList){
+    	
+    	//*
+    	var v_menu_no = $("#menu_no").val();
+    	if (v_menu_no == null || v_menu_no == undefined || v_menu_no == "") {
+    		if (location.href.indexOf("sitemap.do") > -1) {
+    			var menuStr = "<h2>사이트맵</h2>";
+                $("#cdsn01").html("");
+                $("#cdsn02").html("");
+                $("#cdsn03").html("");
+                $("#cdsn04").html("");
+
+                $("#cdsn01").html(menuStr);
+	    		return;
+    		}
+    	}
+    	//*/
+
+        data = leftList;
+
+    	var vFindLvl = "2";
+    	var vHrnk_menu_no = "2";
+    	// menu_no 를 가지고 2,3,4 depth 세팅할 menu_no 를 찾는다.
+        if(data != null && v_menu_no != null && v_menu_no != undefined && v_menu_no != ""){
+            if(data.length > 0){
+                for(var k=0; k<data.length; k++){
+                	if(data[k].menu_no == v_menu_no){
+                		vFindLvl = data[k].lv;
+                		vHrnk_menu_no = data[k].hrnk_menu_no;
+                		v_menu_name = data[k].menu_nm;
+                		v_parent_nm = data[k].parent_nm;
+                		//alert("Find v_menu_no["+v_menu_no+"] lv["+vFindLvl+"]vHrnk_menu_no["+vHrnk_menu_no+"]");
+                	}
+                }
+            }
+        }
+
+        /************************************************************************************************************************************
+                               2 depth menu_no         						3 deph menu_no              			4 depth menu_no
+        ---------------------------------------------------------------------------------------------------------------------------------------
+        vFindLvl = 2 : 2depth Menu_no = v_menu_no           					x                            				x
+        vFindLvl = 3 : 2depth Menu_no = menu_no.hrnk_menu_no    			3depth Menu_no = v_menu_no          			x
+        vFindLvl = 4 : 2depth Menu_no = menu_no.hrnk_menu_no.hrnk_menu_no   3depth Menu_no = menu_no.hrnk_menu_no         4depth Menu_no = v_menu_no
+        ****************************************************************************************************************************************/
+        if(vFindLvl == "2"){
+        	v2DepthMenuNo = v_menu_no;
+     	    v3DepthMenuNo = "";
+     	    v4DepthMenuNo = "";
+
+    	    v2DepthMenuName = v_menu_name;
+    	    v3DepthMenuName = "";
+    	    v4DepthMenuName = "";
+        }else if(vFindLvl == "3"){
+        	v2DepthMenuNo = vHrnk_menu_no;
+     	    v3DepthMenuNo = v_menu_no;
+     	    v4DepthMenuNo = "";
+
+    	    v2DepthMenuName = v_parent_nm;
+    	    v3DepthMenuName = v_menu_name;
+    	    v4DepthMenuName = "";
+
+        }else if(vFindLvl == "4"){
+
+        	v2DepthMenuNo = "";
+     	    v3DepthMenuNo = vHrnk_menu_no;
+     	    v4DepthMenuNo = v_menu_no;
+
+    	    v2DepthMenuName = "";
+    	    v3DepthMenuName = v_parent_nm;
+    	    v4DepthMenuName = v_menu_name;
+
+
+     	    if(data.length > 0){
+                for(var l=0; l<data.length; l++){
+                	if(data[l].lv == "3"){
+	                	if(data[l].menu_no == vHrnk_menu_no){
+	                		v2DepthMenuNo = data[l].hrnk_menu_no;
+	        	    	    v2DepthMenuName = data[l].parent_nm;
+	                	}
+                	}
+                }
+            }
+        }
+
+
+
+		//alert("Find v_menu_no["+v_menu_no+"] vFindLvl["+vFindLvl+"] v2DepthMenuNo["+v2DepthMenuNo+"]v3DepthMenuNo["+v3DepthMenuNo+"]v4DepthMenuNo["+v4DepthMenuNo+"]");
+		//alert("Find v_menu_no["+v_menu_no+"] vFindLvl["+vFindLvl+"] v2DepthMenuName["+v2DepthMenuName+"]v3DepthMenuName["+v3DepthMenuName+"]v4DepthMenuName["+v4DepthMenuName+"]");
+
+
+        //$("#left_front_contents").html("");
+        menuStr = "";
+        menu1DepthStr = "";
+        menu2DepthStr = "";
+        menu3DepthStr = "";
+        menu4DepthStr = "";
+
+        vDepthString = "";
+
+        if(data != null){
+            if(data.length > 0){
+                var start = 0;
+                var lv2 = 0;
+                var lv3 = 0;
+                var lv4 = 0;
+                var vLevel2Start = false;
+                var vLevel3Start = false;
+                var vLevel4Start = false;
+                var vCurrentLevel = "1";
+
+                if(v2DepthMenuName.length>=15) {
+                    menu2DepthStr += "<div class='catn02_1' id='cdsn02'>\n";
+            	} else {
+            		menu2DepthStr += "<div class='catn02' id='cdsn02'>\n";
+            	}
+                
+//                 menu2DepthStr += "<a href='#' class='prt00'>"+v2DepthMenuName+"</a>\n";
+                menu2DepthStr += "<a href='#' class='prt'>"+v2DepthMenuName+"</a>\n";
+                menu2DepthStr += "<ul style='display: none;'>\n";
+
+                for(var i=0; i<data.length; i++){
+
+                	var v_style = "";
+					
+                    if(data[i].lv == "1"){     //1레벨
+                        if(start == 0){
+//                     		menu1DepthStr += "<a href='#' class='prt00'>"+data[i].menu_nm+"  </a>  \n";
+                    		menu1DepthStr += "<a href='#' class='prt'>"+data[i].menu_nm+"  </a>  \n";
+                    		//menu1DepthStr += " " + data[i].menu_nm+" \n";
+                    		//menu1DepthStr += "<a href='#'>"+data[i].menu_nm+"</a>\n";
+
+                        }
+                        //start++;
+
+                    }else{
+                		//if(start < 5){
+                		//	alert("level check ["+i+"] lv=["+data[i].lv+"] vCurrentLevel["+vCurrentLevel+"]");
+                		//}
+                    	if(data[i].lv > vCurrentLevel){
+                    		if(data[i].lv == "2"){
+
+                    			//vCurrentLevel = "2";
+                    			vLevel2Start = true;
+                    			vLevel3Start = false;
+                    			vLevel4Start = false;
+                    		}else if(data[i].lv == "3"){
+                    			//vCurrentLevel = "3";
+                    			vLevel2Start = false;
+                    			vLevel3Start = true;
+                    			vLevel4Start = false;
+                    		}else if(data[i].lv == "4"){
+                    			//vCurrentLevel = "4";
+                    			vLevel2Start = false;
+                    			vLevel3Start = false;
+                    			vLevel4Start = true;
+                    		}else{
+                    			//vCurrentLevel = "1";
+                    			vLevel2Start = false;
+                    			vLevel3Start = false;
+                    			vLevel4Start = false;
+                    		}
+
+                    	}
+
+                		if(start > 2){
+                			if(data[i].lv < vCurrentLevel){
+                				if((vCurrentLevel - data[i].lv) == 1){
+                					menu2DepthStr += "</ul></li>\n";
+                				}else{
+                					menu2DepthStr += "</ul></li>\n";
+                					menu2DepthStr += "</ul></li>\n";
+                				}
+                			}
+                		}
+
+
+                   	}
+
+
+                	// 현재 버젼을 세팅한다.
+                	vCurrentLevel = data[i].lv;
+
+                    if(data[i].lv == "2"){
+	                    // 2depth start
+	                    if(vLevel2Start){
+
+                        	// 하위 뎁스가 있므면 표시를 한다.
+                        	if(data[i].depthCount > 0){
+                        		// 쿼리상에서 2depth 1번째 오는것이 1depth 의 총 하위숫자를 같이 가지고 와서 수정 한다.
+                        		// 다음에 나오는게 하위 depth 게 오는지 확인한후 , 있으면 dpt02_ul 붙이고, 없으면 하위가 없는거로 판단한다.
+                        		// 마지막이 아니고, 다음것의 lv 가 현재거 보다 작을때 ...
+                        		if(start < (data.length - 1) ){
+                        			if(vCurrentLevel <  data[i+1].lv){
+                        				menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"' class='dpt02_ul'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                        			}else{
+                                		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                        			}
+                        		}else{
+                            		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                        		}
+
+                        	}else{
+                        		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                        	}
+
+	                    }else{
+                        	// 하위 뎁스가 있므면 표시를 한다.
+                        	if(data[i].depthCount > 0){
+
+                        		if(start < (data.length - 1) ){
+                        			if(vCurrentLevel <  data[i+1].lv){
+                                		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"' class='dpt02_ul'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                        			}else{
+                                		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                        			}
+                        		}else{
+                            		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                        		}
+                        	}else{
+                        		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                        	}
+	                    }
+
+
+
+	                    vLevel2Start = false;
+	                    lv2++;
+                    }
+
+
+                    if(data[i].lv == "3"){
+	                    // 3depth start
+	                    if(vLevel3Start){
+	                    	menu2DepthStr += "<ul style='display: none;'>\n";
+	                    }
+                    	// 하위 뎁스가 있므면 표시를 한다.
+                    	if(data[i].depthCount > 0){
+
+                    		if(start < (data.length - 1) ){
+                    			if(vCurrentLevel <  data[i+1].lv){
+                            		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'  class='dpt03_ul'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                    			}else{
+                            		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                    			}
+                    		}else{
+                        		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a>\n";
+                    		}
+                    	}else{
+                    		if(start < (data.length - 1) ){
+                    			if(vCurrentLevel <  data[i+1].lv){
+                            		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"' class='dpt03_ul'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                    			}else{
+                            		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                    			}
+                    		}else{
+                        		menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+                    		}
+
+
+
+                    	}
+
+	                    vLevel3Start = false;
+	                    lv3++;
+                    }
+
+                    if(data[i].lv == "4"){
+	                    // 2depth start
+	                    if(vLevel4Start){
+	                    	menu2DepthStr += "<ul style='display: none;'>\n";
+	                    }
+
+	                    menu2DepthStr += "<li id='menu_li_"+data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+data[i].menu_nm+"</a></li>\n";
+
+	                    vLevel4Start = false;
+	                    lv4++;
+                    }
+
+                    start++;
+
+                }
+
+                menu2DepthStr += "</ul></div>\n";
+
+//              $("#left_front_contents").html(menuStr);
+
+              $("#cdsn01").html("");
+              $("#cdsn02").html("");
+              //$("#cdsn03").html("");
+              //$("#cdsn04").html("");
+
+              //alert(menu1DepthStr);
+              $("#cdsn01").html(menu1DepthStr);
+
+              //alert(menu2DepthStr);
+              $("#cdsn02").html(menu2DepthStr);
+              //$("#htmnl_check").html(menu2DepthStr);
+
+              //alert(menu3DepthStr);
+              //$("#cdsn03").html(menu3DepthStr);
+
+              //alert(menu4DepthStr);
+              //$("#cdsn04").html(menu4DepthStr);
+            }
+        }
+
+    }
+
+
+        function set3DepthMenuTree(dataList){
+        	//alert("set3DepthpMenuTree start !!!111111");
+
+
+        	Depth3Data = dataList;
+
+            var menu3DepthStr = "";
+            var menu4DepthStr = "";
+
+            //alert(Depth3Data.length);
+            if(Depth3Data != null){
+                if(Depth3Data.length > 0){
+                    var start = 0;
+                    var lv3 = 0;
+                    var lv4 = 0;
+                    var vLevel3Start = false;
+                    var vLevel4Start = false;
+                    var vMenu4Exists = false;
+                    var vCurrentLevel = "1";
+
+                    menu3DepthStr = "";
+                    menu4DepthStr = "";
+
+                    if(v3DepthMenuName.length>=15) {
+                    	menu3DepthStr += "<div class='catn02_1' id='cdsn03'>\n";
+                	} else {
+                		menu3DepthStr += "<div class='catn02' id='cdsn03'>\n";
+                	}
+                    v4DepthMenuNo
+                    if(v4DepthMenuNo != ""){
+//                     menu3DepthStr += "<a href='#' class='prt00'>"+v3DepthMenuName+"</a>\n";
+                    menu3DepthStr += "<a href='#' class='prt'>"+v3DepthMenuName+"</a>\n";
+                    }else{
+//                         menu3DepthStr += "<a href='#' class='prt01'>"+v3DepthMenuName+"</a>\n";
+                        menu3DepthStr += "<a href='#' class='prt00'>"+v3DepthMenuName+"</a>\n";
+                    }
+                    menu3DepthStr += "<ul style='display: none;'>\n";
+
+                    if(v3DepthMenuNo != "" && v4DepthMenuNo != "" && v4DepthMenuName != ""){
+                    	if(v4DepthMenuName.length>=15) {
+	                        menu4DepthStr += "<div class='catn02_1' id='cdsn04'>\n";
+                    	} else {
+	                        menu4DepthStr += "<div class='catn02' id='cdsn04'>\n";
+                    	}
+                        menu4DepthStr += "<a href='#' class='prt01'>"+v4DepthMenuName+"</a>\n";
+                        menu4DepthStr += "<ul style='display: none;'>\n";
+                        vMenu4Exists = true;
+                    }
+
+
+                    for(var i=0; i<Depth3Data.length; i++){
+
+                    	// 3,4 level 이고,
+                        if((Depth3Data[i].lv == "3" || Depth3Data[i].lv == "4") ){
+
+                        	if(Depth3Data[i].lv > vCurrentLevel){
+                        		if(Depth3Data[i].lv == "3"){
+                        			vLevel3Start = true;
+                        			vLevel4Start = false;
+                        		}else if(Depth3Data[i].lv == "4"){
+                        			vLevel3Start = false;
+                        			vLevel4Start = true;
+                        		}else{
+                        			vLevel3Start = false;
+                        			vLevel4Start = false;
+                        		}
+                        	}
+
+                    		if(start > 2){
+                    			if(Depth3Data[i].lv < vCurrentLevel){
+                    				menu3DepthStr += "</ul></li>\n";
+                    			}
+                    		}
+
+                    		// 현재 버젼을 세팅한다.
+                    		vCurrentLevel = Depth3Data[i].lv;
+
+	                        if(Depth3Data[i].lv == "3"){
+	                        	// 하위 뎁스가 있므면 표시를 한다.
+	                        	//if(Depth3Data[i].depthCount > 0){
+	                        		if(i < (Depth3Data.length - 1) ){
+	                        			if(vCurrentLevel <  Depth3Data[i+1].lv){
+	    	                        		menu3DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'  class='dpt03_ul'><a href='#' onclick='javascript:moveMenu2("+i+")'>"+Depth3Data[i].menu_nm+"</a>\n";
+	                        			}else{
+	    	                        		menu3DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu2("+i+")'>"+Depth3Data[i].menu_nm+"</a>\n";
+	                        			}
+	                        		}else{	// 리스트 마지막 이면
+	                        			//if(vCurrentLevel <  data[i+1].lv){
+			                        	//	menu3DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'  class='dpt03_ul'><a href='#' onclick='javascript:moveMenu("+i+")'>"+Depth3Data[i].menu_nm+"[3ac]</a>\n";
+	                        			//}else{
+			                        		menu3DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu2("+i+")'>"+Depth3Data[i].menu_nm+"</a>\n";
+	                        			//}
+	                        		}
+	                        	//}else{
+	                        	//	menu3DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu("+i+")'>"+Depth3Data[i].menu_nm+"[3ae][]"+Depth3Data[i].depthCount+"]</a></li>\n";
+	                        	//}
+
+	    	                    vLevel3Start = false;
+	    	                    lv3++;
+	                        }
+
+	                        if(Depth3Data[i].lv == "4"){
+	    	                    // 2depth start
+	    	                    if(vLevel4Start){
+	    	                    	menu3DepthStr += "<ul style='display: none;'>\n";
+	    	                    }
+
+	    	                    menu3DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu2("+i+")'>"+Depth3Data[i].menu_nm+"</a></li>\n";
+
+	    	                    if(vMenu4Exists && Depth3Data[i].hrnk_menu_no == v3DepthMenuNo){
+	    	                    	menu4DepthStr += "<li id='menu_li_"+Depth3Data[i].menu_no+"'><a href='#' onclick='javascript:moveMenu2("+i+")'>"+Depth3Data[i].menu_nm+"</a></li>\n";
+	    	                    }
+
+	    	                    vLevel4Start = false;
+	    	                    lv4++;
+	                        }
+                        }
+	                        start++;
+                    }	// for end
+
+                    menu3DepthStr += "</ul></div>\n";
+                    if(vMenu4Exists){
+                        menu4DepthStr += "</ul></div>\n";
+                    }
+
+
+//                  $("#left_front_contents").html(menuStr);
+
+                  //$("#cdsn01").html("");
+                  //$("#cdsn02").html("");
+                  $("#cdsn03").html("");
+                  $("#cdsn04").html("");
+
+                  //alert(menu1DepthStr);
+                  //$("#cdsn01").html(menu1DepthStr);
+
+                  //alert(menu2DepthStr);
+                  //$("#cdsn02").html(menu2DepthStr);
+                  //$("#htmnl_check").html(menu2DepthStr);
+
+                  //alert(menu3DepthStr);
+                  $("#cdsn03").html(menu3DepthStr);
+
+                  //alert(menu4DepthStr);
+                  $("#cdsn04").html(menu4DepthStr);
+                }
+            }
+        }
+
+
+
+		     function drawMyCompany(compList) {
+
+					var html = "";
+					var company = null;
+					var entrps_esntl_no = "";
+
+					//html += "<div id='companyListDiv'>";
+					//html += "<select id=\"entrps_esntl_no\" name=\"entrps_esntl_no\" onchange=\"fn_setCurrentCompanySummary('Y')\">";
+
+					var selected = "";
+					for(var i = 0; i < compList.length; i++) {
+						company = compList[i];
+
+						selected = (entrps_esntl_no == company.entrps_esntl_no) ? "selected" : "";
+						if(entrps_esntl_no == company.entrps_esntl_no)
+							html += "<option value='"+company.entrps_esntl_no+"' selected="+selected+" >"+nvl(company.entrps_nm)+"</option>";
+						else
+							html += "<option value='"+company.entrps_esntl_no+"'>"+nvl(company.entrps_nm)+"</option>";
+					}
+
+					//html += "</select>";
+					//html += "</div>";
+
+					//$("#companyListDiv").append(html);
+					$("#entrps_esntl_no").append(html);
+					$('#entrps_esntl_no').selecter('update');
+
+					 fn_setCurrentCompanySummary();
+				}
+
+				//회사 정보 셋팅
+				function fn_setCurrentCompanySummary(redirectYn) {
+
+					$.ajax({
+			            type	:"post",
+		    			data    : $("#baseForm").serialize(),
+		    			url		:"/csm/company/getMyCompanySummary.do",
+		    			dataType:"json",
+		    			async   :false,
+			            success:function(company) {
+
+			            	if(redirectYn == 'Y') {
+			            		var url = location.href;
+
+			            		if(url.indexOf('/csm/company/facilityRegt.do') > -1 || url.indexOf('/csm/company/reportsDetail.do') > -1){
+			            			fn_moveListPage();
+			            		}else{
+			            			fn_changeEntrps();
+			            		}
+
+			            	} else {
+				            	var html = "";
+
+				            	return;
+
+				    			$("#entrpsNmArea").text(company.entrps_nm);
+
+				    			if(nvl(company.atch_file_no) != ''){
+				    				//$("#curLogo").css("background-image","url(http://www.foodsafetykorea.go.kr/uploadimg/20160421/20160421035905_1461221945463.jpg");
+				    				$("#curLogo").css("background-image","url("+company.file_save_path+"/"+company.physic_file_nm+")");
+				    			}else{
+				    				$("#curLogo").css("background-image","url(/img/no-img-220x220.png)");
+				    			}
+				    			html += "<dt>대표자</dt><dd>"+company.prsdnt_nm+"</dd>";
+				    			if(company.mngr_nm != null && company.mngr_nm != '')
+				    				html += "<dt>관리자</dt><dd>"+company.mngr_nm+"</dd>";
+				    			//html += "<dt>등록사원</dt><dd>"+company.emplye_co+"</dd>";
+				    			//html += "<dt>대기사원</dt><dd>"+company.aplc_co+"</dd>";
+
+				    			$("#curCompDl").html("");
+				    			$("#curCompDl").append(html);
+				            }
+			            },
+			            error:function(request,status,error) {
+			                //alert("left 실패코드111 : " + request.status+"\n메세지 : " + request.error);   //시스템에러
+			            }
+			        });
+				}
+
+				//회사 선택
+				function fn_changeEntrps() {
+
+					var frm = document.baseForm;
+
+				    var url = "";
+
+		            if(location.href.indexOf("?") > 0) url = location.href.slice(0, location.href.indexOf("?"));
+		            else url = location.href;
+
+		            url += '?menu_grp='+$('#menu_grp').val()+'&menu_no='+$('#menu_no').val();
+
+					frm.action = url;
+					frm.method = "POST";
+			        frm.target = "_self";
+			        frm.submit();
+
+			        /*
+					$("#baseForm").attr("method","POST");
+
+					var url = "";
+
+					if(location.href.indexOf("?") > 0) url = location.href.slice(0, location.href.indexOf("?"));
+					else url = location.href;
+
+					url += '?menu_grp='+$('#menu_grp').val()+'&menu_no='+$('#menu_no').val();
+
+					$("#baseForm").attr("action", url );
+					$("#baseForm").submit();
+					*/
+
+				}
+
+				//뉴스레터 신청하기
+				function fn_joinNewsletter(){
+					var email = $("#e_mail").val();
+
+					if($("#email_agree").prop("checked") == false){
+						alert("정보수집에 동의해 주세요.");
+						$("#email_agree").focus();
+						return false;
+					}
+					if(email == null || email == ''){
+						return false;
+					}
+					if(fn_email("#e_mail",'이메일 형식에 맞게 입력해 주세요') == false){	//email 형식 체크
+						$("#e_mail").focus();
+						return false;
+					}
+
+					var param = "?save_type=insert&email="+email+"&id=guest&cretr_id=guest";
+					$.ajax({
+						type	:"post",
+						url		:"/popup/commonPopup/newsLetterSave.do"+param,
+						dataType:"json",
+						success:function(data){
+							if(data == '1'){
+								alert("정상 처리 되었습니다.");
+								$("#e_mail").val("");
+							}else if(data == '2'){
+								alert("이미 신청한 이메일 입니다.");
+							}else{
+								alert("뉴스레터 신청에 실패 하였습니다. 관리자에게 문의해 주세요.");
+							}
+						},
+				        error:function(request,status,error){
+				            alert("실패코드 : " + request.status+"\n메세지 : " + request.error);
+				        }
+					});
+				}
+
+				//회수폐기 실적 클릭시
+				//function fn_rtrvlDsuse(url){
+					//alert('test');
+					//var moveFlag = false
+					//야긴 테스트용으로 박아놓는다.
+					//if($('#entrps_esntl_no').val() == '26'){
+						//moveFlag = true;
+						//url = 'http://coop.foodsafetykorea.go.kr/websquare/websquare.html?w2xPath=/ui/foodadmin/afterfact/disusemngt/rtrvlDsuseMngt.xml&USE_MNGT=2&LCNS_NO=20130018037';
+
+					//}else{
+
+						//moveFlag = false;
+
+						//$.ajax({
+					  		//data: {entrpsEsntlNo: $('#entrps_esntl_no').val()},
+					  		//dataType: 'json',
+					  		//type: 'POST',
+					  		//async: false,
+					  		//url: '/csm/company/selectLcnsNo.do'
+					  	//}).done(function(rstData){
+
+					  		//url += '&USE_MNGT=2&LCNS_NO=';
+
+					  		//if(rstData != null && rstData.length > 0){
+					  			//url += rstData[0];
+					  			//moveFlag = true;
+
+					  		//}
+
+					  	//});
+					//}
+
+					//if(moveFlag)
+						//window.open(url, '', 'width=1024, height=768, scrollbars=yes, resizable=yes, toolbar=no, status=yes');
+					//else
+						//alert('시스템에러가 발생하였습니다. 관리자에게 문의하십시오.');
+
+				//}
+
+				/****************************2015마지막 닷맛미각추가***************************/
+				//레이어팝업 셋팅
+				$(".fileUpload").fancybox({
+					maxWidth	: 530,
+					maxHeight	: 450,
+					minHeight	: 100,
+					fitToView	: false,
+					width		: '70%',
+					height		: '45%',
+					autoSize	: false,
+					closeClick	: false,
+					openEffect	: 'fade',
+					closeEffect	: 'fade',
+//			 		tpl: {next : '', prev : ''},
+					padding : 0,
+					helpers : {overlay : {locked : false}}
+				});
+
+				//레이어팝업 셋팅
+				$(".fileDownload").fancybox({
+					maxWidth	: 530,
+					maxHeight	: 450,
+					minHeight	: 80,
+					fitToView	: false,
+					width		: '70%',
+					height		: '35%',
+					autoSize	: false,
+					closeClick	: false,
+					openEffect	: 'fade',
+					closeEffect	: 'fade',
+//			 		tpl: {next : '', prev : ''},
+					padding : 0,
+					helpers : {overlay : {locked : false}}
+				});
+				//레이어팝업 셋팅
+				$(".guideDownload").fancybox({
+					maxWidth	: 688,
+					maxHeight	: 495,
+					minHeight	: 80,
+					fitToView	: false,
+					width		: '100%',
+					height		: '100%',
+					autoSize	: false,
+					closeClick	: false,
+					openEffect	: 'fade',
+					closeEffect	: 'fade',
+//			 		tpl: {next : '', prev : ''},
+					padding : 0,
+					helpers : {overlay : {locked : false}}
+				});
+				//레이어팝업 셋팅
+				$(".bookDownload").fancybox({
+					maxWidth	: 720,
+					maxHeight	: 495,
+					minHeight	: 80,
+					fitToView	: false,
+					width		: '100%',
+					height		: '100%',
+					autoSize	: false,
+					closeClick	: false,
+					openEffect	: 'fade',
+					closeEffect	: 'fade',
+//			 		tpl: {next : '', prev : ''},
+					padding : 0,
+					helpers : {overlay : {locked : false}}
+				});
+
+
+</script>
+
+<script>
+	$(document).ready(function(){
+		//setLeftMenu();
+		//alert("start ready....");
+		setTopMenu();
+		 //v3DepthMenuNo = "";
+  	    //v4DepthMenuNo = "";
+		//leftDepth1List();
+		//leftDepth2List();
+		if($("#menu_no").val()=='3067')	{	//건강.영양정보 > 오감만족식단 > 테마식단 > 녹색식단
+			$('#aside_bottom').hide();
+		}
+	});
+
+
+	$(function(){
+		locatoin();
+	});
+
+	function locatoin(){
+		$('#cdsn01>a, #cdsn02>a, #cdsn03>a, #cdsn04>a').mouseover(function(ev){
+			ev.preventDefault();
+			if($(this).next('ul').is(':visible')){
+				$(this).next('ul').slideUp('fast');
+			}else{
+				$('#cdsn01 ul:visible, #cdsn02 ul:visible, #cdsn03 ul:visible, #cdsn04 ul:visible').slideUp('fast')
+				$(this).next('ul').slideDown();
+			}
+		});
+		$('#cdsn01, #cdsn02, #cdsn03, #cdsn03').mouseleave(function(){
+			$('#cdsn01 ul:visible, #cdsn02 ul:visible, #cdsn03 ul:visible, #cdsn04 ul:visible').slideUp('fast')
+		});
+	};
+
+	$(document).ready(function(){
+
+	  $(".tm_view").on("click", function(){
+		  $(".sitemap_op,.sitemap").show();
+	  });
+	  $(".tm_view2").on("click", function(){
+		  $(".sitemap_op,.sitemap").show();
+	  });
+	  $(".sitemap .title a").on("click", function(){
+		$(".sitemap_op,.sitemap").hide();
+	  });
+
+	  $("#top-nav a").on("click", function(){
+		$(".sub-nav").hide();
+		$(this).addClass("on");
+		$(this).next("div").slideDown('fast');
+	  });
+	  $(".sub-nav").mouseleave(function(){
+		$("#top-nav a").removeClass("on");
+		$(this).slideUp('fast');
+	  });
+
+	  $(".dpt02_ul").mouseover(function(){
+		$(this).children("ul").show();
+	  });
+
+	  $(".dpt02_ul").mouseleave(function(){
+		$(this).children("ul").hide();
+	  });
+
+	  $(".dpt03_ul").mouseover(function(){
+		$(this).children("ul").show();
+	  });
+
+	  $(".dpt03_ul").mouseleave(function(){
+		$(this).children("ul").hide();
+	  });
+
+
+	});
+
+
+    </script>
+
+    <!--  TEXTAREA ID="htmnl_check" width="100" height="100"></TEXTAREA -->
+
+		<main>
+			<!--본문-->
+			<div id="container">
+				
+
+
+
+
+
+
+<!-- 파라미터  -->
+<input type="hidden" id="start_idx" name="start_idx" value="1" >                               <!-- start_idx -->
+<input type="hidden" id="svc_no" name="svc_no" value="I1370">                   <!-- svc_no 서비스번호 -->
+<input type="hidden" id="p_svcTypeCd" name="p_svcTypeCd" value="">    <!-- svc_type_cd 서비스타입 -->
+<input type="hidden" id="openTabNo" name="openTabNo" value=" 3">    <!-- openTabNo 텝번호 -->
+<!-- 검색조건  -->
+<input type="hidden" id="cl_cd" name="cl_cd" value="">    <!-- cl_cd 분류타입 -->
+<input type="hidden" id="provd_instt" name="provd_instt" value="">    <!-- 제공기관 서비스타입 -->
+<input type="hidden" id="svc_type_cd" name="svc_type_cd" value="A">    <!-- svc_type_cd 서비스타입 -->
+<input type="hidden" id="search_keyword" name="search_keyword" value="">    <!--서비스명 -->
+
+<!--contents_wrap-->
+<div class="contents_wrap">
+    <div id="header">
+        <div class="board-head">
+        	
+        </div>
+    </div>
+    
+
+    <h2>축산물 집유업영업허가대장</h2>
+    
+    <ul id="tabs" class="tabs" role="tablist">
+         <li class="active"><a href="#tab1" role="tab" data-toggle="tab" id="tabs1">메타정보</a></li>
+   
+     
+	  
+  	  
+         <li><a href="#tab2" role="tab" data-toggle="tab" id="tabs2">SAMPLE</a></li>
+         <li><a href="#tab3" role="tab" data-toggle="tab" id="tabs3">OPEN-API</a></li>
+     
+   
+         
+     </ul>
+    
+    <div class="page-container-noborder">
+        <!-- 페이지 내용 -->
+        <article>
+        	
+            <div class="list-container">
+                
+                <!-- Tab panes -->
+                <div class="tab-content">
+                	
+                	<!-- tab1  -->
+                    <div class="tab-pane fade in active" id="tab1">
+                    	
+
+
+
+
+
+
+<section>
+    <table class="table1 vw">
+        <caption>
+            메타정보
+        </caption>
+        <colgroup>
+            <col width="12%" />
+            <col width="12%" />
+            <col width="32%" />
+            <col width="12%" />
+            <col width="32%" />
+        </colgroup>
+        <thead></thead>
+        <tbody>
+        <tr>
+            <th scope="col" rowspan="3">서비스</th>
+            <th scope="col">서비스명</th>
+            <td colspan="">축산물 집유업영업허가대장</td>
+            <th scope="col">서비스유형</th>
+            <td colspan="">
+                
+                    OPEN API
+                
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="col">최종수정일</th>
+            <td colspan="">
+                
+                    
+                        2020-04-06
+                    
+                    
+                
+            </td>
+            <th scope="col">업데이트주기</th>
+            <td colspan="">
+                
+                    
+                        상시
+                    
+                    
+                    
+                    
+                    
+                    
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="col">최초개방일</th>
+            <td colspan="">
+                
+                    
+                        2014-11-24
+                    
+                    
+                
+            </td>
+            <th scope="col">API호출제한</th>
+            <td colspan="">500</td>
+        </tr>
+
+        <tr>
+            <th scope="col">제공기관</th>
+            <th scope="col">기관</th>
+            <td>행정안전부</td>
+            <th scope="col">분류</th>
+            <td>축산물</td>
+        </tr>
+
+        <tr>
+            <th scope="col" rowspan="2">설명</th>
+            <th scope="col">속성정보</th>
+            <td colspan="3" >
+                
+                
+                    인허가 번호
+                    
+                        ,
+                    
+                
+                    업소명
+                    
+                        ,
+                    
+                
+                    대표자명
+                    
+                        ,
+                    
+                
+                    업종
+                    
+                        ,
+                    
+                
+                    허가일자
+                    
+                        ,
+                    
+                
+                    폐업 일자
+                    
+                        ,
+                    
+                
+                    휴업시작일자
+                    
+                        ,
+                    
+                
+                    휴업종료일자
+                    
+                        ,
+                    
+                
+                    주소
+                    
+                        ,
+                    
+                
+                    기관명
+                    
+                
+            </td>
+        </tr>
+
+        <tr>
+            <th scope="col">비고</th>
+            <td colspan="3">
+                
+                    
+                    -
+                
+            </td>
+        </tr>
+
+
+
+        
+
+
+        </tbody>
+    </table>
+
+</section>
+<script>
+
+    /****************************************
+     * Variable
+     ****************************************/
+
+    /****************************************
+     * Init
+     ****************************************/
+
+    $(document).ready(function(){
+
+    });
+
+    $(function(){
+
+    });
+
+    /****************************************
+     * Button Action
+     ****************************************/
+
+    /****************************************
+     * Function
+     ****************************************/
+
+</script>
+                    </div>
+                    
+                    <!-- tab2  -->
+                    <div class="tab-pane fade" id="tab2">
+
+	                    
+
+
+
+
+<style>
+	/* main #content-wrap,#content-wrap{width:995px;float:right;display:inline-block;margin:0 0 50px 0;} */
+</style>
+
+
+
+
+	
+		     <section>
+           <div class="scroll-x">
+           	  <table class="dataset">
+               	   <caption>SAMPLE 목록</caption>
+                   <thead id="headFrame">
+                       <tr>
+                           <th scope="col">인허가 번호</th>
+                           <th scope="col">업소명</th>
+                           <th scope="col">대표자명</th>
+                           <th scope="col">업종</th>
+                           <th scope="col">영업상태</th>
+                           <th scope="col">허가일자</th>
+                           <th scope="col">폐업 일자</th>
+                           <th scope="col">휴업시작일자</th>
+                           <th scope="col">휴업종료일자</th>
+                           <th scope="col">주소</th>
+                           <th scope="col">기관명</th>
+                       </tr>
+                   </thead>
+                   <tbody id="bodyFrame">
+                       <tr>
+                           <td scope="row">20030575002</td>
+                           <td scope="row">(주)낙농진흥회경남집유사업소</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20030930</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경상남도 고성군</td>
+                           <td scope="row">경상남도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20060476013</td>
+                           <td scope="row">(주)동원에프엔비정읍공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19870826</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">전라북도 정읍시</td>
+                           <td scope="row">전라북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850157004</td>
+                           <td scope="row">(주)비락 대구공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20120704</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">대구광역시 달성군</td>
+                           <td scope="row">대구광역시</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19950405001</td>
+                           <td scope="row">(주)비락 영동이송장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19850207</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청북도 영동군</td>
+                           <td scope="row">충청북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850575002</td>
+                           <td scope="row">(주)빙그레 김해집유장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19850518</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경상남도 김해시</td>
+                           <td scope="row">경상남도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19990262034</td>
+                           <td scope="row">(주)빙그레 도농집유장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19990125</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경기도 남양주시</td>
+                           <td scope="row">경기도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850448006</td>
+                           <td scope="row">(주)빙그레 집유장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19850521</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청남도 논산시</td>
+                           <td scope="row">충청남도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19780626002</td>
+                           <td scope="row">(주)삼양제주우유</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19781230</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">제주특별자치도 제주시</td>
+                           <td scope="row">제주특별자치도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20110379030</td>
+                           <td scope="row">(주)서울에프엔비</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20110218</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">강원도 횡성군</td>
+                           <td scope="row">강원도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20120405035</td>
+                           <td scope="row">(주)에그앤씨드 진천공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20120705</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청북도 진천군</td>
+                           <td scope="row">충청북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20170262174</td>
+                           <td scope="row">(주)유애래</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20171222</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경기도 이천시</td>
+                           <td scope="row">경기도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20060405067</td>
+                           <td scope="row">(주)이담</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20060721</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청북도 옥천군</td>
+                           <td scope="row">충청북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19870157002</td>
+                           <td scope="row">(주)푸르밀</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20120611</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">대구광역시 달성군</td>
+                           <td scope="row">대구광역시</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19940532004</td>
+                           <td scope="row">경북대구낙농협동조합 경주집유소</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19940926</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경상북도 경주시</td>
+                           <td scope="row">경상북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850157003</td>
+                           <td scope="row">경북대구낙농협동조합대구집유소</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19851112</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">대구광역시 북구</td>
+                           <td scope="row">대구광역시</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20190262165</td>
+                           <td scope="row">남양유업 주식회사 세종공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19890427</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">세종특별자치시</td>
+                           <td scope="row">세종특별자치시</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850448005</td>
+                           <td scope="row">남양유업 주식회사 천안공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19850420</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청남도 천안시 동남구</td>
+                           <td scope="row">충청남도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20020448018</td>
+                           <td scope="row">남양유업 주식회사 천안신공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20020517</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청남도 천안시 동남구</td>
+                           <td scope="row">충청남도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19820532002</td>
+                           <td scope="row">남양유업(주) 안동집유장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19820222</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경상북도 안동시</td>
+                           <td scope="row">경상북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850532001</td>
+                           <td scope="row">남양유업(주)경주공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19850629</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경상북도 경주시</td>
+                           <td scope="row">경상북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20080502010</td>
+                           <td scope="row">남양유업(주)나주공장 집유장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20080529</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">전남광주통합특별시 나주시</td>
+                           <td scope="row">전남광주통합특별시</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20160532017</td>
+                           <td scope="row">논지엠오</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20160613</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경상북도 문경시</td>
+                           <td scope="row">경상북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20160626006</td>
+                           <td scope="row">농업회사법인 주식회사 다인유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20160330</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">제주특별자치도 제주시</td>
+                           <td scope="row">제주특별자치도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20130476036</td>
+                           <td scope="row">농업회사법인데미샘목장(주)</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20130724</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">전라북도 진안군</td>
+                           <td scope="row">전라북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20120476031</td>
+                           <td scope="row">농업회사법인맛누리주식회사</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20120509</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">전라북도 임실군</td>
+                           <td scope="row">전라북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19800448001</td>
+                           <td scope="row">당진낙농축협</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19800910</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">충청남도 당진시</td>
+                           <td scope="row">충청남도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19960476004</td>
+                           <td scope="row">동진강낙농축협</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19960625</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">전라북도 김제시</td>
+                           <td scope="row">전라북도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">20060379017</td>
+                           <td scope="row">롯데푸드(주)파스퇴르공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">20060117</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">강원도 횡성군</td>
+                           <td scope="row">강원도</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19860213001</td>
+                           <td scope="row">매일유업(주) 광주공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19860611</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">전남광주통합특별시 광산구</td>
+                           <td scope="row">전남광주통합특별시</td>
+                       </tr>
+                       <tr>
+                           <td scope="row">19850262006</td>
+                           <td scope="row">매일유업(주) 평택공장</td>
+                           <td scope="row"></td>
+                           <td scope="row">집유업</td>
+                           <td scope="row"></td>
+                           <td scope="row">19850627</td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row"></td>
+                           <td scope="row">경기도 평택시</td>
+                           <td scope="row">경기도</td>
+                       </tr>
+                   </tbody>
+               </table>
+          </div>
+    </section>
+
+	
+	
+
+
+
+
+
+<script>
+
+	/****************************************
+	 * Variable
+	 ****************************************/
+
+	/****************************************
+	 * Init
+	 ****************************************/
+
+	// $(document).ready(function(){
+	// 	$(".scroll-x").mCustomScrollbar({
+	//         axis:"x",
+	//         theme:"minimal-dark",
+	//         //autoExpandScrollbar:true,
+	//         advanced:{autoExpandHorizontalScroll:true}
+	//     });
+	// });
+
+	/****************************************
+	 * Button Action
+	 ****************************************/
+
+	/****************************************
+	 * Function
+	 ****************************************/
+
+
+</script>
+                    </div>
+                    
+                  <!-- tab3 OPEN-API -->
+                  <!-- tab4 File  -->
+                
+                  
+               	  
+                	<div class="tab-pane fade" id="tab3">
+                  		
+
+
+
+
+
+<input type="hidden" id="svcChkArr" name="svcChkArr" >
+
+<section>
+	
+	
+	
+		<div class="api_btn_area taR">
+			
+				<!-- 서비스 신청 버튼 -->
+				<a href="javascript:fn_insertOpenAPIOne('I1370');" class="api_btn1">OpenAPI 이용신청</a>
+			
+			
+		</div>
+	
+
+	<!-- 요청주소  -->
+	<h3 class="subtitle">요청주소</h3>
+	<table class="table1 vw">
+		<caption>
+			요청주소
+		</caption>
+		<colgroup>
+			<col width="8%" />
+			<col width="11%" />
+			<col style="width:auto;">
+		</colgroup>
+		<thead>
+		</thead>
+		<tbody>
+		<tr>
+			<th rowspan="3" >요청주소</th>
+			<th>URL 형식</th>
+			<td class="taL" style="padding-left: 10%;">
+				
+					
+					
+						http://openapi.foodsafetykorea.go.kr/api/keyId/serviceId/dataType/startIdx/endIdx
+					
+				
+			</td>
+		</tr>
+
+		<tr>
+			<th>샘플</th>
+			<td class="taL" style="padding-left: 10%;">
+				
+					
+					
+						<a style="color: #0b78cb" href="http://openapi.foodsafetykorea.go.kr/api/sample/I1370/xml/1/5" target="_blank">http://openapi.foodsafetykorea.go.kr/api/sample/I1370/xml/1/5</a>
+					
+				
+			</td>
+		</tr>
+
+		<tr>
+			<th>파일</th>
+			<td class="taL" style="padding-left: 10%;">http://openapi.foodsafetykorea.go.kr/api/인증키/I1370/file</td>
+		</tr>
+
+		<tr>
+			<th rowspan="3" >URL설명</th>
+			<th class="taR">요청인자가 없을 경우</th>
+			<td class="taL" style="padding-left: 10%;" title="http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치">
+				http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치
+			</td>
+		</tr>
+
+		<tr>
+			<th class="taR">요청인자가 있을 경우</th>
+			<td class="taL" style="padding-left: 10%;" title="http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치/변수명=값&변수명=값2">
+				http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치/변수명=값&amp;변수명=값2
+			</td>
+		</tr>
+
+		
+		</tbody>
+	</table>
+
+	<!-- 요청주소  -->
+	<h3 class="subtitle">요청인자</h3>
+	<div class="responsive-table">
+		<table class="table2 vw">
+			<caption>
+				요청인자
+			</caption>
+			<colgroup>
+				<col style="width:10%;">
+				<col style="width:15%;">
+				<col style="width:15%;">
+				<col style="width:30%;">
+				<col style="width:auto;">
+			</colgroup>
+			<thead>
+			<tr>
+				<th scope="col">번호</th>
+				<th scope="col">변수명</th>
+				<th scope="col">타입</th>
+				<th scope="col">변수설명</th>
+				<th scope="col">값설명</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="tc">1</td>
+				<td class="tc">keyId</td>
+				<td class="tc">STRING(필수)</td>
+				<td class="tl">인증키</td>
+				<td class="tl">OpenAPI 에서 발급된 인증키</td>
+			</tr>
+			<tr>
+				<td class="tc">2</td>
+				<td class="tc">serviceId</td>
+				<td class="tc">STRING(필수)</td>
+				<td class="tl">서비스명</td>
+				<td class="tl">요청대상인 해당 서비스명</td>
+			</tr>
+			<tr>
+				<td class="tc">3</td>
+				<td class="tc">dataType</td>
+				<td class="tc">STRING(필수)</td>
+				<td class="tl">요청파일 타입</td>
+				<td class="tl">xml : xml파일 , json : json파일</td>
+			</tr>
+			
+				<tr>
+					<td class="tc">4</td>
+					<td class="tc">startIdx</td>
+					<td class="tc">STRING(필수)</td>
+					<td class="tl">요청시작위치</td>
+					<td class="tl">정수입력</td>
+				</tr>
+				<tr>
+					<td class="tc">5</td>
+					<td class="tc">endIdx</td>
+					<td class="tc">STRING(필수)</td>
+					<td class="tl">요청종료위치</td>
+					<td class="tl">정수입력</td>
+				</tr>
+			
+			
+				
+					<tr>
+						<td class="tc">6</td>
+						<td class="tc">CHNG_DT</td>
+						
+							
+							
+								<td class="tc">STRING(선택)</td>
+							
+						
+						<td class="tl">변경일자</td>
+						
+							
+								<td class="tl">변경일자 기준 이후 자료를 출력한다.<br>정수입력 : 20170101  (2017년 1월 1일)</td>
+							
+							
+						
+					</tr>
+				
+					<tr>
+						<td class="tc">7</td>
+						<td class="tc">LCNS_NO</td>
+						
+							
+							
+								<td class="tc">STRING(선택)</td>
+							
+						
+						<td class="tl">인허가번호</td>
+						
+							
+							
+								
+									
+									
+										<td class="tl">추가 파라미터값</td>
+									
+								
+							
+						
+					</tr>
+				
+			
+			</tbody>
+		</table>
+	</div>
+
+	<!--탭 메뉴 영역 -->
+	<ul class="tabs2">
+		<li class="active"><a href="#view-item" role="tab" data-toggle="tab">출력항목</a></li>
+		<li><a href="#message" role="tab" data-toggle="tab">메세지 설명</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content" >
+		<div class="tab-pane fade in active" id="view-item">
+			<table class="table2 scroll">
+				<caption>
+					변수 목록
+				</caption>
+				<colgroup>
+					<col style="width:10%;">
+					<col style="width:25%;">
+					<col style="width:auto;">
+				</colgroup>
+				<thead class="">
+				<tr>
+					<th class="w_10pct" scope="col">번호</th>
+					<th scope="col">항목</th>
+					<th scope="col">설명</th>
+				</tr>
+				</thead>
+				<tbody class="">
+				
+					
+						<tr>
+							<td class="w_10pct tc">1</td>
+							<td class="w_18pct">LCNS_NO</td>
+							<td class="tl">인허가 번호</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">2</td>
+							<td class="w_18pct">BSSH_NM</td>
+							<td class="tl">업소명</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">3</td>
+							<td class="w_18pct">PRSDNT_NM</td>
+							<td class="tl">대표자명</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">4</td>
+							<td class="w_18pct">INDUTY_NM</td>
+							<td class="tl">업종</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">5</td>
+							<td class="w_18pct">PRMS_DT</td>
+							<td class="tl">허가일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">6</td>
+							<td class="w_18pct">CLSBIZ_DT</td>
+							<td class="tl">폐업 일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">7</td>
+							<td class="w_18pct">CLSTMP_BGN_DT</td>
+							<td class="tl">휴업시작일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">8</td>
+							<td class="w_18pct">CLSTMP_END_DT</td>
+							<td class="tl">휴업종료일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">9</td>
+							<td class="w_18pct">LOCP_ADDR</td>
+							<td class="tl">주소</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">10</td>
+							<td class="w_18pct">INSTT_NM</td>
+							<td class="tl">기관명</td>
+						</tr>
+					
+				
+				</tbody>
+			</table>
+		</div>
+
+
+		<div class="tab-pane fade" id="message">
+
+			<table class="table2 scroll">
+				<thead class="">
+				<tr>
+					<th class="w_10pct">번호</th>
+					<th class="w_18pct">메세지코드</th>
+					<th>메세지설명</th>
+				</tr>
+				</thead>
+				<tbody class="">
+				<tr>
+					<td class="w_10pct tc">1</td>
+					<td class="w_18pct">INFO-000</td>
+					<td>정상 처리되었습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">2</td>
+					<td class="w_18pct">INFO-100</td>
+					<td>인증키가 유효하지 않습니다. 인증키가 없는 경우, 홈페이지에서 인증키를 신청하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">3</td>
+					<td class="w_18pct">INFO-110</td>
+					<td>인증키는 확인되었으나 해당 서비스의 활용신청 내역이 없습니다. 홈페이지에서 활용신청 후 이용하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">4</td>
+					<td class="w_18pct">INFO-120</td>
+					<td>서비스 신청상태가 유효하지 않습니다. 홈페이지에서 서비스신청상태를 확인해주세요.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">5</td>
+					<td class="w_18pct">INFO-200</td>
+					<td>해당하는 데이터가 없습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">6</td>
+					<td class="w_18pct">INFO-300</td>
+					<td>유효 호출건수를 이미 초과하셨습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">7</td>
+					<td class="w_18pct">INFO-310</td>
+					<td>샘플키로 더 이상 호출할 수 없습니다. 이용신청을 해주십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">8</td>
+					<td class="w_18pct">INFO-320</td>
+					<td>증분 파라미터를 사용하지 않으면 1시간당 100회까지만 호출할 수 있습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">9</td>
+					<td class="w_18pct">INFO-330</td>
+					<td>파일 다운로드는 인증키당 서비스별로 1일 10회까지 가능합니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">10</td>
+					<td class="w_18pct">INFO-400</td>
+					<td>권한이 없습니다. 관리자에게 문의하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">11</td>
+					<td class="w_18pct">INFO-500</td>
+					<td>현재 접속 중인 인증키입니다. 잠시 후에 다시 시도하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">12</td>
+					<td class="w_18pct">INFO-600</td>
+					<td>인증키가 만료되었습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">13</td>
+					<td class="w_18pct">INFO-700</td>
+					<td>오늘날짜에 생성 및 변경된 데이터는 19시 이후에 호출이 가능합니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">14</td>
+					<td class="w_18pct">ERROR-300</td>
+					<td>필수 값이 누락되어 있습니다. 요청인자를 참고 하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">15</td>
+					<td class="w_18pct">ERROR-301</td>
+					<td>파일타입 값이 누락 혹은 유효하지 않습니다. 요청인자 중 TYPE을 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">16</td>
+					<td class="w_18pct">ERROR-302</td>
+					<td>요청인자의 값 형식이 올바르지 않습니다. 날짜조건은 YYYYMMDD 8자리 단일값으로 입력하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">17</td>
+					<td class="w_18pct">ERROR-303</td>
+					<td>호출일자 기준 최대 7일까지 증분 데이터만 호출할 수 있습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">18</td>
+					<td class="w_18pct">ERROR-310</td>
+					<td>해당하는 서비스를 찾을 수 없습니다. 요청인자 중 SERVICE를 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">19</td>
+					<td class="w_18pct">ERROR-331</td>
+					<td>요청시작위치 값을 확인하십시오. 요청인자 중 START_INDEX를 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">20</td>
+					<td class="w_18pct">ERROR-332</td>
+					<td>요청종료위치 값을 확인하십시오. 요청인자 중 END_INDEX를 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">21</td>
+					<td class="w_18pct">ERROR-334</td>
+					<td>종료위치보다 시작위치가 더 큽니다. 요청시작조회건수는 정수를 입력하세요.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">22</td>
+					<td class="w_18pct">ERROR-336</td>
+					<td>데이터요청은 한번에 최대 1000건을 넘을 수 없습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">23</td>
+					<td class="w_18pct">ERROR-500</td>
+					<td>서버오류입니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">24</td>
+					<td class="w_18pct">ERROR-503</td>
+					<td>06시~19시에는 인증키/서비스별 300회까지만 호출할 수 있습니다. 이용에 참고바랍니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">25</td>
+					<td class="w_18pct">ERROR-601</td>
+					<td>SQL 문장 오류입니다.</td>
+				</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+<script>
+
+	/****************************************
+	 * Variable
+	 ****************************************/
+
+	/****************************************
+	 * Init
+	 ****************************************/
+
+	$(document).ready(function(){
+
+	});
+
+	$(function(){
+
+	});
+
+	/****************************************
+	 * Button Action
+	 ****************************************/
+
+	/****************************************
+	 * Function
+	 ****************************************/
+
+	// openAPI 이용신청 버튼 클릭 시
+	function fn_insertOpenAPIOne(svc_no){
+		// 휴면 인증키 사용자
+		if('' == 'Y'){
+			alert("서비스 보안 및 안정적인 운영을 위해 장기간 미사용된 인증키가 휴면 상태로 전환된 사용자입니다. 다시 서비스를 이용하기 위해 재신청을 진행합니다.");
+		}
+		$("#svcChkArr").val(svc_no);
+		document.baseForm.action = "/api/newUserApiAplcKey.do";
+		document.baseForm.method="post";
+		document.baseForm.submit();
+	}
+
+</script>
+                  	</div>
+                  
+                
+
+				 <!-- tab5 LINK  -->
+                
+                  
+               	  
+                	<div class="tab-pane fade" id="tab3">
+                  		
+
+
+
+
+
+<input type="hidden" id="svcChkArr" name="svcChkArr" >
+
+<section>
+	
+	
+	
+		<div class="api_btn_area taR">
+			
+				<!-- 서비스 신청 버튼 -->
+				<a href="javascript:fn_insertOpenAPIOne('I1370');" class="api_btn1">OpenAPI 이용신청</a>
+			
+			
+		</div>
+	
+
+	<!-- 요청주소  -->
+	<h3 class="subtitle">요청주소</h3>
+	<table class="table1 vw">
+		<caption>
+			요청주소
+		</caption>
+		<colgroup>
+			<col width="8%" />
+			<col width="11%" />
+			<col style="width:auto;">
+		</colgroup>
+		<thead>
+		</thead>
+		<tbody>
+		<tr>
+			<th rowspan="3" >요청주소</th>
+			<th>URL 형식</th>
+			<td class="taL" style="padding-left: 10%;">
+				
+					
+					
+						http://openapi.foodsafetykorea.go.kr/api/keyId/serviceId/dataType/startIdx/endIdx
+					
+				
+			</td>
+		</tr>
+
+		<tr>
+			<th>샘플</th>
+			<td class="taL" style="padding-left: 10%;">
+				
+					
+					
+						<a style="color: #0b78cb" href="http://openapi.foodsafetykorea.go.kr/api/sample/I1370/xml/1/5" target="_blank">http://openapi.foodsafetykorea.go.kr/api/sample/I1370/xml/1/5</a>
+					
+				
+			</td>
+		</tr>
+
+		<tr>
+			<th>파일</th>
+			<td class="taL" style="padding-left: 10%;">http://openapi.foodsafetykorea.go.kr/api/인증키/I1370/file</td>
+		</tr>
+
+		<tr>
+			<th rowspan="3" >URL설명</th>
+			<th class="taR">요청인자가 없을 경우</th>
+			<td class="taL" style="padding-left: 10%;" title="http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치">
+				http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치
+			</td>
+		</tr>
+
+		<tr>
+			<th class="taR">요청인자가 있을 경우</th>
+			<td class="taL" style="padding-left: 10%;" title="http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치/변수명=값&변수명=값2">
+				http://openapi.foodsafetykorea.go.kr/api/인증키/서비스명/요청파일타입/요청시작위치/요청종료위치/변수명=값&amp;변수명=값2
+			</td>
+		</tr>
+
+		
+		</tbody>
+	</table>
+
+	<!-- 요청주소  -->
+	<h3 class="subtitle">요청인자</h3>
+	<div class="responsive-table">
+		<table class="table2 vw">
+			<caption>
+				요청인자
+			</caption>
+			<colgroup>
+				<col style="width:10%;">
+				<col style="width:15%;">
+				<col style="width:15%;">
+				<col style="width:30%;">
+				<col style="width:auto;">
+			</colgroup>
+			<thead>
+			<tr>
+				<th scope="col">번호</th>
+				<th scope="col">변수명</th>
+				<th scope="col">타입</th>
+				<th scope="col">변수설명</th>
+				<th scope="col">값설명</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td class="tc">1</td>
+				<td class="tc">keyId</td>
+				<td class="tc">STRING(필수)</td>
+				<td class="tl">인증키</td>
+				<td class="tl">OpenAPI 에서 발급된 인증키</td>
+			</tr>
+			<tr>
+				<td class="tc">2</td>
+				<td class="tc">serviceId</td>
+				<td class="tc">STRING(필수)</td>
+				<td class="tl">서비스명</td>
+				<td class="tl">요청대상인 해당 서비스명</td>
+			</tr>
+			<tr>
+				<td class="tc">3</td>
+				<td class="tc">dataType</td>
+				<td class="tc">STRING(필수)</td>
+				<td class="tl">요청파일 타입</td>
+				<td class="tl">xml : xml파일 , json : json파일</td>
+			</tr>
+			
+				<tr>
+					<td class="tc">4</td>
+					<td class="tc">startIdx</td>
+					<td class="tc">STRING(필수)</td>
+					<td class="tl">요청시작위치</td>
+					<td class="tl">정수입력</td>
+				</tr>
+				<tr>
+					<td class="tc">5</td>
+					<td class="tc">endIdx</td>
+					<td class="tc">STRING(필수)</td>
+					<td class="tl">요청종료위치</td>
+					<td class="tl">정수입력</td>
+				</tr>
+			
+			
+				
+					<tr>
+						<td class="tc">6</td>
+						<td class="tc">CHNG_DT</td>
+						
+							
+							
+								<td class="tc">STRING(선택)</td>
+							
+						
+						<td class="tl">변경일자</td>
+						
+							
+								<td class="tl">변경일자 기준 이후 자료를 출력한다.<br>정수입력 : 20170101  (2017년 1월 1일)</td>
+							
+							
+						
+					</tr>
+				
+					<tr>
+						<td class="tc">7</td>
+						<td class="tc">LCNS_NO</td>
+						
+							
+							
+								<td class="tc">STRING(선택)</td>
+							
+						
+						<td class="tl">인허가번호</td>
+						
+							
+							
+								
+									
+									
+										<td class="tl">추가 파라미터값</td>
+									
+								
+							
+						
+					</tr>
+				
+			
+			</tbody>
+		</table>
+	</div>
+
+	<!--탭 메뉴 영역 -->
+	<ul class="tabs2">
+		<li class="active"><a href="#view-item" role="tab" data-toggle="tab">출력항목</a></li>
+		<li><a href="#message" role="tab" data-toggle="tab">메세지 설명</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content" >
+		<div class="tab-pane fade in active" id="view-item">
+			<table class="table2 scroll">
+				<caption>
+					변수 목록
+				</caption>
+				<colgroup>
+					<col style="width:10%;">
+					<col style="width:25%;">
+					<col style="width:auto;">
+				</colgroup>
+				<thead class="">
+				<tr>
+					<th class="w_10pct" scope="col">번호</th>
+					<th scope="col">항목</th>
+					<th scope="col">설명</th>
+				</tr>
+				</thead>
+				<tbody class="">
+				
+					
+						<tr>
+							<td class="w_10pct tc">1</td>
+							<td class="w_18pct">LCNS_NO</td>
+							<td class="tl">인허가 번호</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">2</td>
+							<td class="w_18pct">BSSH_NM</td>
+							<td class="tl">업소명</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">3</td>
+							<td class="w_18pct">PRSDNT_NM</td>
+							<td class="tl">대표자명</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">4</td>
+							<td class="w_18pct">INDUTY_NM</td>
+							<td class="tl">업종</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">5</td>
+							<td class="w_18pct">PRMS_DT</td>
+							<td class="tl">허가일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">6</td>
+							<td class="w_18pct">CLSBIZ_DT</td>
+							<td class="tl">폐업 일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">7</td>
+							<td class="w_18pct">CLSTMP_BGN_DT</td>
+							<td class="tl">휴업시작일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">8</td>
+							<td class="w_18pct">CLSTMP_END_DT</td>
+							<td class="tl">휴업종료일자</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">9</td>
+							<td class="w_18pct">LOCP_ADDR</td>
+							<td class="tl">주소</td>
+						</tr>
+					
+						<tr>
+							<td class="w_10pct tc">10</td>
+							<td class="w_18pct">INSTT_NM</td>
+							<td class="tl">기관명</td>
+						</tr>
+					
+				
+				</tbody>
+			</table>
+		</div>
+
+
+		<div class="tab-pane fade" id="message">
+
+			<table class="table2 scroll">
+				<thead class="">
+				<tr>
+					<th class="w_10pct">번호</th>
+					<th class="w_18pct">메세지코드</th>
+					<th>메세지설명</th>
+				</tr>
+				</thead>
+				<tbody class="">
+				<tr>
+					<td class="w_10pct tc">1</td>
+					<td class="w_18pct">INFO-000</td>
+					<td>정상 처리되었습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">2</td>
+					<td class="w_18pct">INFO-100</td>
+					<td>인증키가 유효하지 않습니다. 인증키가 없는 경우, 홈페이지에서 인증키를 신청하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">3</td>
+					<td class="w_18pct">INFO-110</td>
+					<td>인증키는 확인되었으나 해당 서비스의 활용신청 내역이 없습니다. 홈페이지에서 활용신청 후 이용하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">4</td>
+					<td class="w_18pct">INFO-120</td>
+					<td>서비스 신청상태가 유효하지 않습니다. 홈페이지에서 서비스신청상태를 확인해주세요.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">5</td>
+					<td class="w_18pct">INFO-200</td>
+					<td>해당하는 데이터가 없습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">6</td>
+					<td class="w_18pct">INFO-300</td>
+					<td>유효 호출건수를 이미 초과하셨습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">7</td>
+					<td class="w_18pct">INFO-310</td>
+					<td>샘플키로 더 이상 호출할 수 없습니다. 이용신청을 해주십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">8</td>
+					<td class="w_18pct">INFO-320</td>
+					<td>증분 파라미터를 사용하지 않으면 1시간당 100회까지만 호출할 수 있습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">9</td>
+					<td class="w_18pct">INFO-330</td>
+					<td>파일 다운로드는 인증키당 서비스별로 1일 10회까지 가능합니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">10</td>
+					<td class="w_18pct">INFO-400</td>
+					<td>권한이 없습니다. 관리자에게 문의하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">11</td>
+					<td class="w_18pct">INFO-500</td>
+					<td>현재 접속 중인 인증키입니다. 잠시 후에 다시 시도하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">12</td>
+					<td class="w_18pct">INFO-600</td>
+					<td>인증키가 만료되었습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">13</td>
+					<td class="w_18pct">INFO-700</td>
+					<td>오늘날짜에 생성 및 변경된 데이터는 19시 이후에 호출이 가능합니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">14</td>
+					<td class="w_18pct">ERROR-300</td>
+					<td>필수 값이 누락되어 있습니다. 요청인자를 참고 하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">15</td>
+					<td class="w_18pct">ERROR-301</td>
+					<td>파일타입 값이 누락 혹은 유효하지 않습니다. 요청인자 중 TYPE을 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">16</td>
+					<td class="w_18pct">ERROR-302</td>
+					<td>요청인자의 값 형식이 올바르지 않습니다. 날짜조건은 YYYYMMDD 8자리 단일값으로 입력하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">17</td>
+					<td class="w_18pct">ERROR-303</td>
+					<td>호출일자 기준 최대 7일까지 증분 데이터만 호출할 수 있습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">18</td>
+					<td class="w_18pct">ERROR-310</td>
+					<td>해당하는 서비스를 찾을 수 없습니다. 요청인자 중 SERVICE를 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">19</td>
+					<td class="w_18pct">ERROR-331</td>
+					<td>요청시작위치 값을 확인하십시오. 요청인자 중 START_INDEX를 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">20</td>
+					<td class="w_18pct">ERROR-332</td>
+					<td>요청종료위치 값을 확인하십시오. 요청인자 중 END_INDEX를 확인하십시오.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">21</td>
+					<td class="w_18pct">ERROR-334</td>
+					<td>종료위치보다 시작위치가 더 큽니다. 요청시작조회건수는 정수를 입력하세요.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">22</td>
+					<td class="w_18pct">ERROR-336</td>
+					<td>데이터요청은 한번에 최대 1000건을 넘을 수 없습니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">23</td>
+					<td class="w_18pct">ERROR-500</td>
+					<td>서버오류입니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">24</td>
+					<td class="w_18pct">ERROR-503</td>
+					<td>06시~19시에는 인증키/서비스별 300회까지만 호출할 수 있습니다. 이용에 참고바랍니다.</td>
+				</tr>
+
+				<tr>
+					<td class="w_10pct tc">25</td>
+					<td class="w_18pct">ERROR-601</td>
+					<td>SQL 문장 오류입니다.</td>
+				</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+<script>
+
+	/****************************************
+	 * Variable
+	 ****************************************/
+
+	/****************************************
+	 * Init
+	 ****************************************/
+
+	$(document).ready(function(){
+
+	});
+
+	$(function(){
+
+	});
+
+	/****************************************
+	 * Button Action
+	 ****************************************/
+
+	/****************************************
+	 * Function
+	 ****************************************/
+
+	// openAPI 이용신청 버튼 클릭 시
+	function fn_insertOpenAPIOne(svc_no){
+		// 휴면 인증키 사용자
+		if('' == 'Y'){
+			alert("서비스 보안 및 안정적인 운영을 위해 장기간 미사용된 인증키가 휴면 상태로 전환된 사용자입니다. 다시 서비스를 이용하기 위해 재신청을 진행합니다.");
+		}
+		$("#svcChkArr").val(svc_no);
+		document.baseForm.action = "/api/newUserApiAplcKey.do";
+		document.baseForm.method="post";
+		document.baseForm.submit();
+	}
+
+</script>
+                  	</div>
+                  
+                
+                    
+                </div>
+            </div>
+            
+            <div class="board-footer">
+    			
+    			<div class="api_btn_area taR">
+               		<a href="javascript:fn_moveToDataList();" class="api_btn1 gray" role="button">목록</a>
+               	</div>
+    			
+    		</div>
+    
+        </article>
+    </div>
+</div>
+<script>
+
+    /****************************************
+     * Variable
+    ****************************************/
+    var svc_no = "";
+    /****************************************
+     * Init
+    ****************************************/
+
+    $(document).ready(function(){
+        svc_no = 'I1370';
+        
+        // 공공데이터 URL 접근 시 (tab3 open)
+       if($("#openTabNo").val() == 3){
+	   		$("#tabs3").get(0).click();
+       }
+        
+    });
+
+    $(function(){
+		
+        // openAPI 항목, 메시지 (Tab)
+        // $('#api-tab a:first').tab('show');
+    });
+
+    /****************************************
+     * Button Action
+     ****************************************/
+
+    /****************************************
+     * Function
+     ****************************************/
+     function fn_moveTypePage(svc_type_cd){
+
+         $("#svc_type_cd").val(svc_type_cd);
+
+         if(svc_type_cd == "API_TYPE01"){        //sheet
+        	 document.baseForm.action="/api/sheetInfo.do";
+         }else if(svc_type_cd == "API_TYPE02"){  //chart
+             document.baseForm.action="/api/chartInfo.do";
+         }else if(svc_type_cd == "API_TYPE03"){  //file
+        	 document.baseForm.action="/api/fileInfo.do";
+//          }else if(svc_type_cd == "API_TYPE04"){  //map
+//              alert('준비중');
+//              return;
+         }else if(svc_type_cd == "API_TYPE05"){  //link
+             document.baseForm.action="/api/linkInfo.do";
+         }else if(svc_type_cd == "API_TYPE06"){  //XML/JSON
+        	 document.baseForm.action="/api/openApiAplcInfo.do";
+         }
+
+         document.baseForm.target="_self";
+         document.baseForm.method="post";
+         document.baseForm.submit();
+
+     }
+	 
+     function fn_goToAboutAPI(url){
+    	 document.baseForm.action = url;
+    	 document.baseForm.target="_self";
+         document.baseForm.method="post";
+         document.baseForm.submit();
+     }
+     
+     // 데이터 목록 화면 이동
+     function fn_moveToDataList(){
+	    document.baseForm.action="/api/datasetList.do";
+	    document.baseForm.target="_self";
+     	document.baseForm.method="post";
+     	document.baseForm.submit();
+     }
+     
+     
+</script>
+			</div>
+		</main>
+	</div>
+
+	<!-- footer start -->
+	<footer id="footer">
+		
+	<div class="footer_link_wrap">
+        <div class="footer_link">
+          <ul class="link">
+				
+				<!-- <li><a href="/portal/board/board.do?menu_no=2933&menu_grp=MENU_NEW07">개인정보처리방침</a></li> -->
+				
+				<li><a href="https://www.foodinfo.or.kr/portal/bbs/selectBoardList.do?bbsId=10000000000000000460&catId=36&bbsView=HTML&goMenuNo=9000001115&topMenuNo=9000001110&upperMenuNo=9000001110" target="_blank" title="개인정보처리방침 사이트로 이동합니다.">개인정보처리방침</a></li>
+				<li><a href="http://www.mfds.go.kr/wpge/m_34/de010803l001.do" target="_blank">저작권정책</a></li>
+				<li><a href="/portal/board/board.do?menu_no=2922&menu_grp=MENU_NEW07" target="_blank">포털이용관련 질의응답</a></li>
+				<li><a href="/portal/board/board.do?menu_no=2938&menu_grp=MENU_NEW07" target="_blank">관련 누리집</a></li>
+				
+			  	
+				
+				<li><a href="/portal/board/board.do?menu_no=2928&menu_grp=MENU_NEW07" target="_blank">정보오류 신고</a></li>
+
+				<li><a href="/minwon/counsel/ePeople.do" target="_blank" >국민신문고</a></li>
+
+				<li><a href="http://113366.com/foodinfo" class="blue" target="_blank">원격 지원</a></li>
+			</ul>
+			
+			 <div class="site">
+	            <button type="button" class="select_btn">관련부처사이트</button>
+	            <div class="select_box">
+	              <ul>
+	                <li><a href="#" onclick="javascript:goSite_new('0');" title="관련 부처 사이트">관련 부처 사이트</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('1');" title="식품의약품안전처">식품의약품안전처</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('2');" title="교육부">교육부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('3');" title="법무부">법무부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('4');" title="국방부">국방부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('5');" title="행정안전부">행정안전부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('6');" title="농림축산식품부">농림축산식품부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('7');" title="산업통상자원부">산업통상자원부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('8');" title="보건복지부">보건복지부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('9');" title="환경부">환경부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('10');" title="해양수산부">해양수산부</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('11');" title="관세청">관세청</a></li>
+					<li><a href="#" onclick="javascript:goSite_new('12');"  title="방위사업청">방위사업청</a></li>
+	              </ul>
+	            </div>
+	          </div>
+			</div>
+		</div>
+		<div class="footer_info_wrap">
+          <div class="footer_info">
+            <div class="footer_logo" style="top: 14px;">
+            <img id="logo1" src="/images/api/common/footer_logo.jpg" alt="식품안전정보포털 식품의약품안전처">
+            <img id="logo2" src="/images/api/common/footer_logo_02.png" alt="식품안전정보포털 식품안전정보원">
+            </div>
+            <address style="top: 17px;">
+             <p style="line-height: 22px;">
+               우)28159 충청북도 청주시 흥덕구 오송읍 오송생명2로 187 오송보건의료행정타운 식품의약품안전처<br>
+               Copyright ⓒ Ministry of Food and Drug Safety. All Rights Reserved.<br>
+				 통합망 고객지원센터(시스템 문의) : 1899-5590(유료)
+             </p>
+            </address>
+          </div>
+        </div>
+
+
+		<!-- 데이터활용서비스 한눈에 보기 start -->
+		
+
+
+
+	<div class="sitemap_op">&nbsp;</div>
+	<div class="sitemap">
+		<div class="title">데이터활용서비스 한눈에 보기<a href="#"><img src="/img/share-data/common/sitemap_close.png" alt="닫기"/></a></div>
+		<div class="site_cnt">
+
+			<div class="fl w_317 m_r_6">
+				<div class="box1">
+					<h1 class="h05">서비스안내</h1>
+					<ul>
+						<li><a href="/api/aboutApi.do?menu_grp=MENU_GRP34&menu_no=686" class="dpt01">·  서비스 소개</a></li>
+						<li><a href="/api/howToUseApi.do?menu_grp=MENU_GRP34&menu_no=687" class="dpt01">·  서비스 사용방법</a></li>
+					</ul>
+				</div>
+			</div>
+
+
+			<div class="fl w_317 m_r_6">
+				<div class="box1">
+					<h1 class="h01">데이터공개</h1>
+					<ul>
+						<!-- <li><a href="/api/datasetList.do?cl_cd=API_SRT01&menu_grp=MENU_GRP31&menu_no=843" class="dpt01">·  분류별</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT01&menu_grp=MENU_GRP31&menu_no=843" class="dpt02">·  식품안전관리</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT03&menu_grp=MENU_GRP31&menu_no=845" class="dpt02">·  시험분석</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT04&menu_grp=MENU_GRP31&menu_no=846" class="dpt02">·  기준규격</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT05&menu_grp=MENU_GRP31&menu_no=847" class="dpt02">·  인허가정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT06&menu_grp=MENU_GRP31&menu_no=848" class="dpt02">·  자료실</a></li> -->
+
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT01&menu_grp=MENU_GRP31&menu_no=17879" class="dpt01">·  분류별</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT01&menu_grp=MENU_GRP31&menu_no=17879" class="dpt02">·  기준규격정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT02&menu_grp=MENU_GRP31&menu_no=17880" class="dpt02">·  코드정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT03&menu_grp=MENU_GRP31&menu_no=17881" class="dpt02">·  식품영양정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT04&menu_grp=MENU_GRP31&menu_no=17882" class="dpt02">·  수질환경정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT05&menu_grp=MENU_GRP31&menu_no=17883" class="dpt02">·  검사기관정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT06&menu_grp=MENU_GRP31&menu_no=17884" class="dpt02">·  식품위해관리</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT07&menu_grp=MENU_GRP31&menu_no=17885" class="dpt02">·  식품안전관리</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT08&menu_grp=MENU_GRP31&menu_no=17886" class="dpt02">·  이력추적관리</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT09&menu_grp=MENU_GRP31&menu_no=17887" class="dpt02">·  어린이식품안전관리</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT10&menu_grp=MENU_GRP31&menu_no=17888" class="dpt02">·  HACCP지정현황</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT11&menu_grp=MENU_GRP31&menu_no=17889" class="dpt02">·  업체인허가현황</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT12&menu_grp=MENU_GRP31&menu_no=17890" class="dpt02">·  위생용품</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT13&menu_grp=MENU_GRP31&menu_no=17891" class="dpt02">·  축산물</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT14&menu_grp=MENU_GRP31&menu_no=17892" class="dpt02">·  건강기능식품</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT15&menu_grp=MENU_GRP31&menu_no=17893" class="dpt02">·  수입식품 등</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT16&menu_grp=MENU_GRP31&menu_no=17894" class="dpt02">·  식품 등</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT17&menu_grp=MENU_GRP31&menu_no=17895" class="dpt02">·  자료실</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT18&menu_grp=MENU_GRP31&menu_no=4327" class="dpt02">·  폐업정보</a></li>
+						<li><a href="/api/datasetList.do?cl_cd=API_SRT19&menu_grp=MENU_GRP31&menu_no=4328" class="dpt02">·  용어사전</a></li>
+
+						<li><a href="/api/datasetList.do?provd_instt=ORGN01&menu_grp=MENU_GRP31&menu_no=849" class="dpt01">·  제공기관별</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN01&menu_grp=MENU_GRP31&menu_no=849" class="dpt02">·  식품의약품안전처</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN10&menu_grp=MENU_GRP31&menu_no=858" class="dpt02">·  해양수산부</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN13&menu_grp=MENU_GRP31&menu_no=861" class="dpt02">·  산업통상자원부</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN09&menu_grp=MENU_GRP31&menu_no=857" class="dpt02">·  농촌진흥청</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN05&menu_grp=MENU_GRP31&menu_no=853" class="dpt02">·  농림축산검역본부</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN08&menu_grp=MENU_GRP31&menu_no=856" class="dpt02">·  국립농산물품질관리원</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN15&menu_grp=MENU_GRP31&menu_no=863" class="dpt02">·  국립환경과학원</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN12&menu_grp=MENU_GRP31&menu_no=860" class="dpt02">·  국립수산물품질관리원</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN11&menu_grp=MENU_GRP31&menu_no=859" class="dpt02">·  국립수산과학원</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN16&menu_grp=MENU_GRP31&menu_no=852" class="dpt02">·  행정안전부</a></li>
+						<!-- li><a href="/api/datasetList.do?provd_instt=ORGN04&menu_grp=MENU_GRP31&menu_no=852" class="dpt02">·  시도, 시군구</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN03&menu_grp=MENU_GRP31&menu_no=851" class="dpt02">·  시군구</a></li-->
+						<li><a href="/api/datasetList.do?provd_instt=ORGN02&menu_grp=MENU_GRP31&menu_no=850" class="dpt02">·  한국식품안전관리인증원</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN07&menu_grp=MENU_GRP31&menu_no=855" class="dpt02">·  축산물품질평가원</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN14&menu_grp=MENU_GRP31&menu_no=862" class="dpt02">·  한국환경공단</a></li>
+						<li><a href="/api/datasetList.do?provd_instt=ORGN17&menu_grp=MENU_GRP31&menu_no=4811" class="dpt02">·  한국수자원공사</a></li>
+						<!-- <li><a href="/api/datasetList.do?provd_instt=ORGN06&menu_grp=MENU_GRP31&menu_no=854" class="dpt02">·  농림수산식품</a></li> -->
+
+						<li><a href="/api/datasetList.do?svc_type_cd=API_TYPE06&menu_grp=MENU_GRP31&menu_no=661" class="dpt01">·  유형별</a></li>
+						<!-- <li><a href="/api/datasetList.do?svc_type_cd=API_TYPE01&menu_grp=MENU_GRP31&menu_no=656" class="dpt02">·  SHEET</a></li>
+						<li><a href="/api/datasetList.do?svc_type_cd=API_TYPE02&menu_grp=MENU_GRP31&menu_no=657" class="dpt02">·  CHART</a></li> -->
+						<li><a href="/api/datasetList.do?svc_type_cd=API_TYPE06&menu_grp=MENU_GRP31&menu_no=661" class="dpt02">·  XML/JSON</a></li>
+						<li><a href="/api/datasetList.do?svc_type_cd=API_TYPE03&menu_grp=MENU_GRP31&menu_no=658" class="dpt02">·  FILE</a></li>
+						<li><a href="/api/datasetList.do?svc_type_cd=API_TYPE05&menu_grp=MENU_GRP31&menu_no=660" class="dpt02">·  LINK</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="fl w_317 m_r_6">
+				<div class="box1">
+					<h1 class="h03">인증키 관리</h1>
+					<ul>
+						<li><a href="/api/newUserApiAplcDtl.do?menu_grp=MENU_GRP32&menu_no=3995" class="dpt01">·  인증키 신청현황</a></li>
+<!-- 						<li><a href="/api/newUserApiKey.do?menu_grp=MENU_GRP32&menu_no=691" class="dpt01">·  인증키 신청</a></li> -->
+<!-- 						<li><a href="/api/userApiKey.do?menu_grp=MENU_GRP32&menu_no=692" class="dpt01">·  인증키 발급 및 확인</a></li> -->
+					</ul>
+				</div>
+			</div>
+
+			<div class="fl w_317 m_r_6">
+				<div class="box1">
+					<h1 class="h03">정보공유</h1>
+					<ul>
+						<!-- <li><a href="/api/board/board.do?menu_grp=MENU_GRP35&menu_no=3898" class="dpt01">·  개발자 의견공유</a></li> -->
+						<li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=688" class="dpt01">·  공지사항</a></li>
+						<li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=5208" class="dpt01">·  자료실</a></li>
+						<li><a href="/api/board/board.do?menu_grp=MENU_GRP35&menu_no=3899" class="dpt01">·  데이터활용 갤러리</a></li>
+					</ul>
+				</div>
+			</div>
+
+
+			<div class="fl w_317 m_r_6">
+				<div class="box1">
+					<h1 class="h04">고객센터</h1>
+					<ul>
+						<li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=689" class="dpt01">·  자주하는 질문</a></li>
+						<li><a href="/api/board/board.do?menu_grp=MENU_GRP33&menu_no=690" class="dpt01">·  묻고답하기</a></li>
+					</ul>
+				</div>
+			</div>
+
+		</div>
+	</div>
+		<!-- 데이터활용서비스 한눈에 보기 end -->
+	</footer>
+	<!-- footer end -->
+
+</form>
+<script>
+	$(document).ready(function() {
+		$("#content-wrap select").selecter();
+
+		$("#btnSitePop").bind("click", function(){
+			goSite();
+		});
+
+		// CKEDITOR 적용
+		// 정보공유, 고객센터만 관리만 적용
+		if(  $("#bbs_no").val() != "aipQna"){
+            if($("#content").length > 0){
+                CKEDITOR.replace('content', {
+                    height:500
+                });
+            }
+        }
+	});
+
+
+	function goSite() {
+		var url = "";
+		var itm = $("#baseForm #selcet option:selected").val();
+
+		if( itm == "1" ){
+			url = "http://www.mfds.go.kr"; //식품의약품안전처
+		} else if ( itm == "2" ) {
+			url = "http://www.moe.go.kr"; //교육부
+		} else if ( itm == "3" ) {
+			url = "http://www.moj.go.kr"; //법무부
+		} else if ( itm == "4" ) {
+			url = "http://www.mnd.go.kr"; //국방부
+		} else if ( itm == "5" ) {
+			url = "http://www.mogaha.go.kr"; //행정자치부
+		} else if ( itm == "6" ) {
+			url = "http://www.mafra.go.kr"; //농림축산식품부
+		} else if ( itm == "7" ) {
+			url = "http://www.motie.go.kr"; //산업통상자원부
+		} else if ( itm == "8" ) {
+			url = "http://www.mohw.go.kr"; //보건복지부
+		} else if ( itm == "9" ) {
+			url = "http://www.me.go.kr"; //환경부
+		} else if ( itm == "10" ) {
+			url = "http://www.mof.go.kr"; //해양수산부
+		} else if ( itm == "11" ) {
+			url = "http://www.customs.go.kr"; //관세청
+		} else if ( itm == "12" ) {
+			url = "http://www.dapa.go.kr"; //방위사업청
+		}
+
+		if( url != ''){
+			document.baseForm.action = url;
+			document.baseForm.target="_blank";
+			document.baseForm.submit();
+		}
+
+	}
+</script>
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-67138433-1', 'auto');
+	ga('send', 'pageview');
+</script>
+</body>
+</html>

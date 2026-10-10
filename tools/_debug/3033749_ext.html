@@ -1,0 +1,258 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+
+	<link rel='stylesheet' type='text/css' href='/hpmg/css/comm/AUIGrid_style.css' />
+	<link rel='stylesheet' type='text/css' href='/hpmg/css/hpmg/common.css' />
+	<link rel="stylesheet" type='text/css' href='/hpmg/css/comm/jquery-ui.min.css' />
+	<link rel='stylesheet' type='text/css' href='/hpmg/css/comm/bootstrap.min.css' />
+	<link rel='stylesheet' type='text/css' href='/hpmg/css/hpmg/style.default.css' />
+
+	<script type="text/javascript" src="/hpmg/js/comm/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="/hpmg/js/comm/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="/hpmg/js/comm/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/hpmg/js/comm/jquery-ui.min.js"></script>
+	<script type='text/javascript' src='/hpmg/js/grid/AUIGridLicense.js'></script>
+	<script type='text/javascript' src='/hpmg/js/grid/AUIGrid.js'></script>
+	<script type='text/javascript' src='/hpmg/js/businessFunction.js'></script>
+<title>API 상세</title>
+<style>
+	main {
+	   float: none;
+	   width: 100%;
+	   display: inline-block;
+	   height: 400px;
+	}
+	.tab-grid .aui-grid-header-panel .aui-grid-table tr td span {
+		font-size: 14px;
+	}
+	.c-tit01 {
+		font-size: 16px;
+	}
+	.c-tit01:before {
+		top: 0px;
+	}
+	.c-tit01:after {
+		top: 6px ;
+	}
+	.c-tit02:before {
+		top: 4px;
+	}
+	.c-tit02 {
+		font-size: 14px;
+		margin: 0 0 0px 20px; !important;
+		font-weight: 700;
+	}
+	#popupTitle {
+		margin: 0;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		content: '';
+		/*position: absolute;*/
+		height: 70px;
+		width: 100%;
+		border-bottom: 1px solid #dde2e6;
+		box-shadow: 0px 0px 10px rgb(0 0 0 / 5%);
+	}
+	#popupTitle h3 {
+		font-size: 24px !important;
+		color: #000 !important;
+		font-weight: 700 !important;
+		margin: 0;
+		padding: 10px;
+	}
+	.apiRow{
+		padding: 15px;
+		border-bottom: 1px solid #dde2e6;
+	}
+	.ssgap:before {
+		display: block;
+		content: '';
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 3px;
+		background: #004198;
+		background-image: linear-gradient(to right,#015eb4, #159ba7 58%, #29b045);
+	}
+	.area-btn{
+		display: inline !important;
+		line-height: 0px;
+		border-radius: 5px;
+		font-size: 16px;
+		font-weight: 700;
+		border: 1px solid #dde2e6;
+		box-shadow: -2px 2px 4px rgb(0 0 0 / 5%);
+		padding: 2px 5px;
+		margin-right: 15px;
+		background: #fff;
+		height: 40px;
+		width: 60px;
+	}
+	.t-sky{
+		background: #004198;
+		color: #fff;
+	}
+	.ilbl {
+		display: none !important;
+	}
+</style>
+<script type="text/javaScript">
+var userId = "";
+
+$(document).ready(function() {
+});
+
+
+function initEvent() {
+}
+
+function fnRegst(apiCd, apiNm){
+	if(typeof userId == 'undefined' ||userId == "" || userId == null) {
+		alert('로그인 정보가 없습니다');
+		// window.close();
+		window.open('/cvmg/actionLoginPop.do', '국립수산물품질관리원', 'width = 800, height = 900, top=100, left=100');
+		return;
+	}
+	if(isEmpty($("#apiUrl").text())){
+		alert('개발 중입니다.');
+		return false;
+	}
+	param = {
+		"API_CD" : apiCd,
+		"API_NM" : apiNm
+	}
+	openWindow(getContextPath() + "/api/actionApiReqView.do", "apiRgst", {height:400, width:600, top:100, fullscreen:0, scrollbars:0}, param);
+
+	self.close();
+}
+
+// 신청내역
+function fnApiReqInfo(){
+	if(typeof userId == 'undefined' ||userId == "" || userId == null) {
+		alert('로그인 정보가 없습니다');
+		window.open('/cvmg/actionLoginPop.do', '국립수산물품질관리원', 'width = 800, height = 900, top=100, left=100');
+		return;
+	}
+	param = {
+		"userId" : userId
+		// "userId" : "shna"
+	}
+
+	openWindow(getContextPath() + "/api/actionApiReqList.do", "apiRgst", {height:800, width:800, top:50, fullscreen:0, scrollbars:0}, param);
+}
+</script>
+</head>
+<body>
+	<main>
+		<section id="popupTitle">
+			<h3>서비스 개요</h3>
+			<div>
+				<button id="fnRgst" onclick="fnRegst('004','수산물수출검사통계')" class="area-btn t-sky">
+					<span>신청</span>
+				</button>
+				<button id="fnRgstLog" onclick="fnApiReqInfo()" class="area-btn t-sky">
+					<span>내역</span>
+				</button>
+			</div>
+		</section>
+		<div class="ssgap"></div>
+		<div id="contents-wrap">
+			<div id="contents">
+				<!--// 타이틀 -->
+				<div class="board-wrap board-view-wrap">
+					<!-- 제목, 정보 -->
+					
+					<!-- 내용 -->
+					<div class="board-view-cont">
+						
+						<div class="apiRow">
+							<h3 class="c-tit01">서비스명</h3>
+							<span class="c-tit02">수산물수출검사통계</span>
+						</div>
+
+						<div class="apiRow">
+							<h3 class="c-tit01">설명</h3>
+							<span class="c-tit02">수출의 품종별 검사정보를 제공</span>
+						</div>
+
+						<div class="apiRow">
+							<h3 class="c-tit01">제공정보</h3>
+							<span class="c-tit02">품종명, 총검사건수, 총검사 건수, 중량, 금액, 부적합 건수, 중량, 금액
+</span>
+						</div>
+
+						<div class="apiRow">
+							<h3 class="c-tit01">데이터 포맷</h3>
+							<span class="c-tit02">XML</span>
+						</div>
+
+						<div class="apiRow">
+							<h3 class="c-tit01">요청URL</h3>
+							<span id="apiUrl" class="c-tit02">http://www.nfqs.go.kr/hpmg/front/api/exam_export_api.do</span>
+						</div>
+
+						<div class="apiRow">
+							<h3 class="c-tit01">개발 가이드</h3>
+							<span class="c-tit02">
+							<!-- 파일첨부 -->
+							
+								
+								
+							
+
+
+
+<div class="ilbl" style="display: inline-block; position: initial;">첨부파일 목록</div>
+<div class="board-view-file">
+	<div class="ptxt">
+	
+			<a href="/hpmg/comm/downloadAtchFile.do?FILE_ID=e9384cfe95384f32b4b6ed81c1d2f93f&FILE_SEQ=1" title="다운로드"><span class="bFile bf-PDF"><span class="blind">PDF파일</span></span> 수산물안전정보서비스_인터페이스설계서_수산물수출검사통계_v_1.0.pdf  (245.0KB)</a>
+		
+			<a href="#" target="_blank" class="ic-stbtn btnPreview" onclick="preview(this);return false;" data-fileId="e9384cfe95384f32b4b6ed81c1d2f93f" data-fileSeq="1" title="수산물안전정보서비스_인터페이스설계서_수산물수출검사통계_v_1.0.pdf 새창열림"><span class="zoom">미리보기</span></a>
+		
+			<br />			
+	
+	</div>
+	</div>
+
+
+							</span>
+						</div>
+					</div>
+					<!-- 버튼-->
+					<form id="formData"  name="formData" method="post" action="/hpmg/board/actionBoardForm.do?menuId=">
+					</form>
+					<div id="deletePassword" style="display: none;">
+						<table class="board-write-tbl">
+							<caption class="blind">홈페이지 개선의견 상세보기 전 비밀번호 입력창</caption>
+							<colgroup><col class="col_lbl"><col class="col_input"></colgroup>
+							<tbody>
+							<tr class="row_name">
+								<th scope="row" colspan="2">게시글을 삭제하려면 비밀번호를 입력해주세요.</th>
+							</tr>
+							<tr class="row_subject">
+								<td colspan="2"><input type="password" style="height: 95%; width: 98%;" class="text" name="POST_LOCK_NUM" id="postLockNum" placeholder="비밀번호를 입력해주세요"></td>
+							</tr>
+							</tbody>
+						</table>
+						<!-- 버튼-->
+						<a href="javascript:deleteBoard();" class="bw-btn"><span>확인</span></a>
+					</div>
+				</div>
+
+
+
+			</div>
+			<!-- 컨텐츠 내용 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+			</div>
+		</div>
+	</main>
+</body>
+</html>

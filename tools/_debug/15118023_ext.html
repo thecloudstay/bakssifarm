@@ -1,0 +1,928 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>오픈서비스 이용안내 - Meatwatch</title>
+<link type="text/css" rel="stylesheet" href="/css/meatwatch.css">
+<link type="text/css" rel="stylesheet" href="/css/subpages_cs.css?ver=202204231416">
+<script src="/js/jquery-1.11.0.min.js"></script>
+<script src="/js/layout_cs.js"></script>
+<script src="/js/lib/jquery-ui.min-1.12.1.js"></script>
+<script src="/js/ps/commonUtil.js?v=201406161002" ></script>
+<script src="/js/lib/jquery-ui-1.10.4.custom.min.js?ver=201812021414"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript">
+function openPopup(url){
+	window.open(url , "" , "width=1024, height=768, left=200, top=100,"+
+							 "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=N, resizable=yes, copyhistory=no");	
+}
+
+
+</script>
+
+
+<script>
+$(document).ready(function() {
+	$('#aAddFavorite').click(function(e) {
+		var bookmarkURL = window.location.href;
+        var bookmarkTitle = document.title;
+        var triggerDefault = false;
+ 
+        if (window.sidebar && window.sidebar.addPanel) {
+            // Firefox version < 23
+            window.sidebar.addPanel(bookmarkTitle, bookmarkURL, '');
+        } else if ((window.sidebar && (navigator.userAgent.toLowerCase().indexOf('firefox') > -1)) || (window.opera && window.print)) {
+            // Firefox version >= 23 and Opera Hotlist
+            var $this = $(this);
+            $this.attr('href', bookmarkURL);
+            $this.attr('title', bookmarkTitle);
+            $this.attr('rel', 'sidebar');
+            $this.off(e);
+            triggerDefault = true;
+        } else if (window.external && ('AddFavorite' in window.external)) {
+            // IE Favorite
+            window.external.AddFavorite(bookmarkURL, bookmarkTitle);
+        } else {
+            // WebKit - Safari/Chrome
+            alert((navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D 키를 눌러 즐겨찾기에 등록하실 수 있습니다.');
+        }
+        
+        return triggerDefault; 
+	});
+	
+	$('#aZoomIn').click(function(e) {
+		zooms(1);
+	});
+	
+	$('#aZoomOut').click(function(e) {
+		zooms(-1);
+	});
+	
+
+
+
+	$('#aRemoteService').attr('href', 'http://sup2.meatwatch.go.kr');
+
+
+	
+
+	$('#aBizLogin').click(function() {
+		location.href = "/biz/index.jsp";
+	});
+
+	
+	$('#aPubLogin').click(function() {
+
+	
+	
+		alert('공무원시스템은 행정망에서 사용가능합니다.');
+	
+
+	});
+	
+
+
+	/* hslee 2019.05.17 keyboard 이동 시 gnb 2depth menu 감추기 */
+	$("#gnb_last").blur(function(){
+		$(".gnb_line, .gnb_sub, .gnb_bn").css("display","none");
+	});
+});
+
+var zoomScope = 0;
+
+function zooms(n){
+	var tags = $('*');
+	var fontSize;
+	
+	zoomScope += n;
+	
+	if(zoomScope < -3) {
+		alert('최대 축소입니다.');
+		zoomScope++;
+		return;
+	}
+	
+	if(zoomScope > 5) {
+		alert('최대 확대입니다.');
+		zoomScope--;
+		return;
+	}
+	
+	for(var i=0; i<tags.length; i++) {
+		if(tags.eq(i).children().length == 0) {
+			fontSize = tags.eq(i).css('font-size').replace('px', '');
+			
+			tags.eq(i).css('font-size', (parseInt(fontSize)+parseInt(n))+'px');			
+		}
+	}
+}
+
+function fn_move(val) {
+	var frm = $('#frm2');
+	frm.attr('action', ""+val+"");
+	frm.submit();
+}
+
+function fn_main() {
+	var frm = $('#frm2');
+	frm.attr('action', "/cs/cpt/selectCnsmrMain.do");
+	frm.submit();
+}
+
+function fn_select_distbHistInfoMain() {
+	var frm = $('#searchFormHarm');
+	
+	var objvalue = $('#searchWrd2').val().toUpperCase();
+	$('input[name=searchWrd6]').val(objvalue);
+/* 	if($("#searchWrd2").val()=="803114400250"){
+		alert("해당 축산물은 식약처에서 판매중단 및 회수중인 제품입니다. \n 자세한 사항은 식품안전나라에서 확인하시기 바랍니다.")
+	} */
+
+	
+	if(objvalue == null || objvalue==""){
+		alert("이력번호를 입력해주십시오.");
+		return;
+	}
+	//국내산 소,돼지 개체이력번호 조회 되도록 2017.10.12추가
+	//국내산 소,돼지 개체이력번호 조회 되도록 2017.10.12추가
+	//국내산 소 , 돼지, 소 묶음번호, 돼지묶음번호 2020.09.07 변경
+	if(objvalue.substr(0,1)=="0" && objvalue.length =="12"){
+        var url =   "https://www.mtrace.go.kr/mtracesearch/cattleNoSearch.do?btsProgNo=0109008401&btsActionMethod=SELECT&cattleNo="+objvalue;
+    	window.open(url, "pop" , "width=800, height=928, left=0 , top=0 ,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no");
+	  return;
+    }else if(objvalue.substr(0,1)=="1" && objvalue.length =="12"){
+        var url =   "https://www.mtrace.go.kr/mtracesearch/pigNoSearch.do?btsProgNo=&btsProgNo=processPlaceCd&cattleNo="+objvalue;
+    	window.open(url, "pop" , "width=800, height=500, left=0 , top=0 ,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no");
+	  return;
+    }else if((objvalue.substr(0,1)=="L" && objvalue.substr(1,1)=="0")||(objvalue.substr(0,3)=="LOT" && objvalue.substr(3,1)=="0")){
+        var url =   "https://www.mtrace.go.kr/mtracesearch/cattleLotNoSearch.do?btsProgNo=0109008201&btsActionMethod=SELECT&lotNo="+objvalue;
+    	window.open(url, "pop" , "width=800, height=928, left=0 , top=0 ,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no");
+	  return;	
+	}else if((objvalue.substr(0,1)=="L" && objvalue.substr(1,1)=="1")||(objvalue.substr(0,3)=="LOT" && objvalue.substr(3,1)=="1")){
+        var url =   "https://www.mtrace.go.kr/mtracesearch/pigLotNoSearch.do?lotNo="+objvalue;
+    	window.open(url, "pop" , "width=800, height=928, left=0 , top=0 ,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=no");
+	  return;		
+		}else{
+    	$('#searchWrd2').val($('#searchWrd2').val().toUpperCase());
+    	frm.attr('action', "/cs/dst/bdi/selectDistbHistInfoDetail.do");
+/*     	$('#dialog-message').dialog({
+    		modal: true,
+    		buttons: {
+    			"예":function(){$(this).dialog('close'); alert("예")},
+    			"아니오":function(){$(this).dialog('close'); alert("아니오")}
+    		}
+    	}); */
+    			
+    
+    	//frm.submit();
+    	/**위해축산물 안내문구 추가  Start*/
+		 var url =   "https://www.foodsafetykorea.go.kr";
+    		$.ajax({
+		url:"/notice/selectHarmCntAJAX.do",
+		type: "post",
+		contentType: "application/json; charset=utf-8",
+		dataType: 'json',
+		data : JSON.stringify({
+			cn: objvalue
+		}),
+		success: function(data){
+			if(data.msg != '1') {
+				$('.sj_text').text("'"+data.msg+"'");
+		    	$('#dialog-message2').dialog({
+		    		modal: true,
+		    		buttons: {
+		    			" 예 ":function(){$(this).dialog('close');  window.open(url,'_blank'); },
+		    			"아니오":function(){$(this).dialog('close');frm.submit();}
+		    		}
+		    	});
+			} else {
+				frm.submit();
+			}
+		}
+	});
+    		/**위해축산물 안내문구 추가  End*/		
+    }
+}
+</script>
+</head>
+
+<body>
+<form name="frm2" id="frm2" method="post"><input type="hidden" name="csSignature" value="edl+5uBUWD7OynYqP6TMnA==" />
+
+<input type="hidden" id="meatWatchYn" name="meatWatchYn" value="">
+<input type="hidden" id="userNm" name="userNm" value="">
+<input type="hidden" id="check" disabled="disabled" name="check" value="null">
+</form>
+
+
+	<!-- SKIP NAVI -->
+	<div id="skipNavi">
+		<strong>컨텐츠 바로가기</strong>
+		<ul>
+			<li><a href="#csgnb_menu">주메뉴 바로가기</a></li>
+			<li><a href="#cs_content">본문 바로가기</a></li>
+			<li><a href="#cs_footer">푸터 바로가기</a></li>
+		</ul>
+	</div>
+	<!-- SKIP NAVI -->
+
+	<div id="cs_wrap">
+
+		<!-- HEADER -->
+		<div id="cs_header">
+				
+			<!-- TOPMENU -->
+			<div id="cs_top">
+				<h2 class="blind">Global Navigation</h2>
+				<ul class="gnb_stat">          
+					<li><a href="#" id="aAddFavorite" style="cursor:pointer;">즐겨찾기추가</a></li>
+					<li class="last"><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectBeginerCssIntro.do');">홈페이지이용안내</a></li>
+				</ul>
+
+				<ul class="gnb_end"> 
+			
+			
+				<li><a href="/cs/mbr/loginCnsmrId.do">로그인</a></li>
+				<li><a href="/cs/mbr/choiceCheckTarget.do">회원가입</a></li>
+			
+			
+					<li><a id="aRemoteService" style="cursor:pointer;" target="_blank">원격지원</a></li>
+					<li>
+						<dl class="textSize">
+							<dt>글자크기</dt>
+							<dd class="m1"><a href="#" id="aZoomIn" style="cursor:pointer;" title="글자크기 확대">확대</a></dd>
+							<dd class="m2"><a href="#" id="aZoomOut" style="cursor:pointer;" title="글자크기 축소">축소</a></dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+			<!-- TOPMENU -->
+
+			<!-- LOGO&GNB -->
+			<div id="cs_header_wrap">
+			<h1 id="logo"><a href="#" onclick="javascript:fn_main();"  title="홈으로 이동"><img src="/img/subpage_cs/logo.png" alt="수입축산물 이력관리시스템" /></a></h1>				
+
+				<!-- GNB -->
+				<div id="csgnb_menu">
+	
+					<!-- MAINMENU -->
+					<ul class="gnb">
+						
+							
+							<li class="gnb_li">
+								
+		            				
+		            				
+	            					<a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectDistbHistManageIntrcnHtml.do');"  class="gnbTit">제도소개</a>		            					
+		            				
+		            			
+		
+								<ul class="gnb_sub">
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectDistbHistManageIntrcnHtml.do');">수입축산물 이력관리제</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectMeatwatchIs.do');">MeatWatch 소개</a></li>						            					
+				            				
+				            			
+		
+									
+								</ul>
+							</li>
+						
+							
+							<li class="gnb_li">
+								
+		            				
+		            				
+	            					<a href="#" onclick="javascript:fn_move('/cs/dst/bdi/selectDistbHistInfoDetail.do');"  class="gnbTit">이력정보</a>		            					
+		            				
+		            			
+		
+								<ul class="gnb_sub">
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/dst/bdi/selectDistbHistInfoDetail.do');">수입이력정보 조회</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/dst/bdi/selectChkOverBplcInfoList.do');">위반업소현황</a></li>						            					
+				            				
+				            			
+		
+									
+								</ul>
+							</li>
+						
+							
+								
+							
+							<li class="gnb_li">
+								
+		            				
+		            				
+	            					<a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectBeginerCssIntro.do');"  class="gnbTit">이용안내</a>		            					
+		            				
+		            			
+		
+								<ul class="gnb_sub">
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectBeginerCssIntro.do');">사용가이드</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectMobileWebIntrcnHtml.do');">모바일서비스</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/wsm/selectWsrvIntrcnHtml.do');">오픈서비스 이용안내</a></li>						            					
+				            				
+				            			
+		
+									
+								</ul>
+							</li>
+						
+							
+							<li class="gnb_li">
+								
+		            				
+		            				
+	            					<a href="#" onclick="javascript:fn_move('/cs/cmu/bbs/selectBbsBoardList.do?bbsId=BBSMSTR_000000000042');"  class="gnbTit">정보광장</a>		            					
+		            				
+		            			
+		
+								<ul class="gnb_sub">
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/bbs/selectBbsBoardList.do?bbsId=BBSMSTR_000000000042');">공지사항</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/bbs/selectBbsNewsList.do?bbsId=BBSMSTR_000000000071');">뉴스 및 정책보도자료</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/bbs/selectBbsFaqList.do?bbsId=BBSMSTR_000000000081');">FAQ</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/bbs/selectLawRegimeList.do?bbsId=BBSMSTR_000000000041');">법제도자료</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/bbs/selectDtaEdcList.do?bbsId=BBSMSTR_000000000001');">자료실</a></li>						            					
+				            				
+				            			
+		
+									
+										
+				            				
+				            				
+	            					<li><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectEduList.do');">온라인교육자료</a></li>						            					
+				            				
+				            			
+		
+									
+								</ul>
+							</li>
+						
+					</ul>
+					<!-- MAINMENU -->
+					
+					<!-- 처음오셨나요? -->
+                    <div class="gnb_bn">
+                        <dl class="gnb_bn1">
+                            <dt><b>처음</b>오셨나요?</dt>
+                            <dd>시스템별 회원가입부터 로그인까지~<br />친절히 안내해 드립니다!</dd>
+                            <dd class="bnList">
+                                <ul>
+                                    <li><a href="/cs/cmu/inf/selectBeginerCssIntro.do" title="소비자 바로가기">소비자</a></li>
+                                    <li><a href="/cs/cmu/inf/selectBeginerBmsIntro.do" title="영업자 바로가기">영업자</a></li>
+                                    <li><a id="gnb_last" href="/cs/cmu/inf/selectBeginerPssIntro.do" title="공무원 바로가기">공무원</a></li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <div class="gnb_bn2">
+                            <dl>
+                                <dt>&nbsp;</dt>
+                                <dd>&nbsp;</dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!-- 처음오셨나요? -->
+
+					<!-- LOGINMENU -->
+					<ul class="gnb2">
+					
+						<li class="m11"><a href="/biz/index.jsp" id="aBizLogin" style="cursor:pointer;" title="영업자 바로가기">영업자로그인</a></li>
+					
+						<li class="m12"><a
+										 
+					
+					
+						href="javascript:alert('공무원시스템은 행정망에서 사용가능합니다.');return false;"
+					
+					
+	
+						id="aPubLogin" style="cursor:pointer;" title="공무원 바로가기">공무원로그인</a></li>
+					</ul>
+					<!-- LOGINMENU -->
+
+					<!-- SITEMAP -->
+					<span class="siteMap"><a href="/cs/cpt/selectCnsmrSitemapHtml.do">사이트맵</a></span>
+					<!-- SITEMAP -->
+
+				</div>
+			</div>
+			<!-- LOGO&GNB -->
+			<div class="gnb_line" style="height: 225px; padding-top: 0px; margin-top: 0px; padding-bottom: 0px; margin-bottom: 0px;"></div>
+				
+
+		</div>
+		<!-- HEADER -->
+	<div id="dialog-message2" title="위해 알림" style='display:none'>
+		해당 축산물은 식약처에서 <br/>
+		<p class="sj_text" style='color:green'></p> 
+		<span style='color:red'></span><strong>사유로 판매중단 및 회수중인 제품</strong>입니다.<br/>
+		자세한 내용은 <strong>'식품안전나라'</strong>에서 확인 할 수 있습니다.<br/>
+		'식품안전나라'로 이동하시겠습니까?
+	</div>
+		
+
+		<!-- SUB CONTENTS -->
+		<div id="cs_container">
+
+			<!-- SIDEBAR -->
+			<div id="cs_snb">
+
+				<!-- LEFTMENU -->
+	        	<div id="cs_snb_v" class="cs_snb_v">
+				       	<!-- 메뉴에 등록되지않는 경우에는 metaTag를 사용하여 처리한다. -->
+			        	
+			   				
+			   				
+			   				
+									<h2 class="tit3">이용안내</h2>
+									<ul>
+										
+											<li id='left_menu_20102000' >
+												
+						            				
+						            					<a href="javascript:void(0);"><span class="m31">사용가이드</span></a>
+						            				
+						            				
+						            			
+												
+													<ul style="display:block;">
+													 
+														<li id="left_menu_20303020" ><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectBeginerCssIntro.do');"><span class="s311">첫방문자용(소비자)</span></a></li>
+													 
+														<li id="left_menu_20303030" ><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectBeginerBmsIntro.do');"><span class="s312">첫방문자용(영업자)</span></a></li>
+													 
+														<li id="left_menu_20303040" ><a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectBeginerPssIntro.do');"><span class="s313">첫방문자용(공무원)</span></a></li>
+													
+													</ul>
+												
+											</li>
+						                
+											<li id='left_menu_20103000' >
+												
+						            				
+						            				
+						            					
+						            					<a href="#" onclick="javascript:fn_move('/cs/cmu/inf/selectMobileWebIntrcnHtml.do');"><span class="m32">모바일서비스</span></a>	
+						            				
+						            			
+												
+											</li>
+						                
+											<li id='left_menu_20406000' >
+												
+						            				
+						            					<a href="javascript:void(0);"><span class="m33">오픈서비스 이용안내</span></a>
+						            				
+						            				
+						            			
+												
+													<ul style="display:block;">
+													 
+														<li id="left_menu_20406010" ><a href="#" onclick="javascript:fn_move('/cs/wsm/selectWsrvIntrcnHtml.do');"><span class="s331">오픈서비스 이용안내</span></a></li>
+													 
+														<li id="left_menu_20406020" ><a href="#" onclick="javascript:fn_move('/cs/wsm/insertWsrvManagePage.do');"><span class="s332">오픈서비스 신청</span></a></li>
+													 
+														<li id="left_menu_20406030" ><a href="#" onclick="javascript:fn_move('/cs/wsm/selectWsrvManageDetail.do');"><span class="s333">오픈서비스 신청조회</span></a></li>
+													
+													</ul>
+												
+											</li>
+						                
+									</ul>
+			   				
+			   			
+				</div>
+				<!-- LEFTMENU -->
+				
+				<script type="text/javascript">
+				//현재 메뉴 선택
+				$("#left_menu_20406010").addClass("active");
+				</script>
+
+				<!-- 수입축산물이력번호조회 -->
+				<div class="sub_lnb_banner">
+					<h3 class="blind">MeatWatch - 수입축산물이력번호조회</h3>
+					<fieldset>
+						<legend>이력번호/묶음번호</legend>
+						<form action="/cs/dst/bdi/selectDistbHistInfoDetail.do" name="searchForm" id="searchFormHarm" method="post"><input type="hidden" name="csSignature" value="edl+5uBUWD7OynYqP6TMnA==" />
+
+						<input name="reportUrl" type="hidden" value="bms">				<!-- oz report file url  -->
+						<input name="reportName" type="hidden" value="MainDtlsPtr">		<!-- oz report file name -->
+						<input name="searchWrd6" id="searchWrd6" type="hidden">		<!-- oz report file name -->
+						</form>
+							<label for="searchWrd2" class="blind">조회어 입력</label>
+							<input type="text" name="searchWrd2" id="searchWrd2" title="이력번호(12자리)나 묶음번호(24자리)를 입력하세요" />
+							<button type="button" title="이력번호/묶음번호 조회" onclick="javascript:fn_select_distbHistInfoMain();" class="searchBtn glasses">조회</button>
+					</fieldset>
+				</div>
+				<!-- 수입축산물유통이력조회 -->
+
+				<!-- 고객센터 -->
+				<div class="sub_lnb_customer">
+					<p class="blind">수입축산물 이력관리제 콜센터</p>
+					<p class="blind">1688-0026 / 평일 09:00 ~ 18:00 / 주말 및 공휴일 휴무</p>
+				</div>
+				<!-- 고객센터 -->
+				<div class="sub_lnb_edu">
+				<a href="/cs/cmu/inf/selectEduList.do" title="수입축산물 이력제 온라인교육자료"><img src="/img/subpage_cs/bg_cs_snb_banner_edu.gif" alt="수입축산물 이력제 온라인교육자료 바로가기"></a>
+				</div>
+			</div>
+			<!-- SIDEBAR -->
+
+			<!-- CONTENTS -->
+			<div id="cs_content">
+
+
+<!-- sub_tit -->
+<div class="cs_location">
+	<h2 class="cs_tits11">오픈서비스 이용안내</h2>
+	<ul class="nav_depth">
+		<li><a href="/cs/cpt/selectCnsmrMain.do" class="home">Home</a></li>
+		<li><a href="/cs/cmu/inf/selectBeginerCssIntro.do">이용안내</a></li>
+		<li><a href="/cs/wsm/selectWsrvIntrcnHtml.do">오픈서비스 이용안내</a></li>
+		<li><a href="/cs/wsm/selectWsrvIntrcnHtml.do" class="current">오픈서비스 이용안내</a></li>
+	</ul>
+</div>
+<!-- // sub_tit -->
+
+<!-- sub_content -->
+<div class="content01">
+	<p class="mb30">
+		수입축산물 이력관리시스템에서는 수입축산물(수입쇠고기, 수입돼지고기)의 이력관리에 필요한 응용서비스를 개발할 수 있도록 다양한 API를 제공합니다.
+	</p>
+
+	<div class="c mb30">
+		<img src="/img/subpage_cs/img33_11.png" alt="" />
+	</div>
+
+	<div class="mb40">
+		<h3 class="con_tit02">오픈서비스란?</h3>
+		<p class="mb20">
+			서비스 운영자의 입장에서 <b class="green">데이터 플랫폼을 외부에 공개</b>하여 다양한 응용 서비스 및 어플리케이션을 개발 할 수 있도록 <b class="green">외부 개발자와 사용자에게 API를 개방 하는 것</b>을 말합니다.
+		</p>
+		<p>
+			API를 개방하게 되면 API 제공주체의 오픈서비스에서 사용되는 데이터를 활용할 수 있게 되어 유저(개발자) 들이 다양한 응용서비스를 개발 할 수 있습니다.
+		</p>
+	</div>
+
+	<div class="mb40">
+		<h3 class="con_tit02">미트와치 오픈서비스</h3>
+		<p class="mb20">
+			미트와치 오픈서비스는 E-marketplace, 포털사이트, 정부기관사이트, 개인블로그/홈페이지 등 수입축산물 유통 관련 사이트를 위한 조회오픈 서비스와 관련 업무 종사자의 생산, 유통, 판매 시스템을 위한 연계오픈서비스로 나뉩니다.
+		</p>
+		<p class="mb20">
+			<b class="green">조회오픈서비스</b>는 미트와치의 수입축산물 이력정보를 조회하기 위한 서비스이며 구현방식에 따라 Java API, Web Service, Jsp-XML, Jsp-HTML, REST 등이 있습니다.
+		</p>
+		<p>
+			<b class="green">연계오픈서비스</b>는 미트와치에 수입축산물의 거래내역 및 제품생산내역을 입력하기 위한 서비스이며 구현방식에 따라 Java API, Web Service, REST 등이 있습니다.
+		</p>
+	</div>	
+
+	<div class="tform2 mb10">
+		<table cellspacing="0" border="1" summary="오픈서비스 구분, 연계방식, 비고 순으로 구성된 정보">
+			<caption>미트와치 오픈서비스</caption>
+			<colgroup>
+				<col style="width:18%" />
+				<col style="width:18%" />
+				<col style="width:64%" />
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">오픈서비스 구분</th>
+					<th scope="col">연계방식</th>
+					<th scope="col">비고</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="3">연계오픈서비스</td>
+					<td>Java API</td>
+					<td class="l">Java 기반 생산, 유통, 판매 시스템에서 사용</td>
+				</tr>
+				<tr>
+					<td>Web Service</td>
+					<td class="l">Web Service 구현이 가능한 생산, 유통, 판매 시스템에서 사용</td>
+				</tr>
+				<tr>
+					<td>REST</td>
+					<td class="l">REST 구현이 가능한 시스템에서 사용</td>
+				</tr> 
+				<tr>
+					<td rowspan="5">조회오픈서비스</td>
+					<td>Java API</td>
+					<td class="l">Java 기반의 포털사이트, 수입축산물 유통 관련 사이트에서 사용</td>
+				</tr>
+				<tr>
+					<td>Web Service</td>
+					<td class="l">Web Service 구현이 가능한 포털사이트, 수입축산물 유통 관련 사이트에서 사용</td>
+				</tr>
+				<tr>
+					<td>Jsp-XML</td>
+					<td class="l">AJAX, DOM parser, SAX parser, XSLT 등이 구현 가능한 수입축산물 유통 관련 사이트에서 사용</td>
+				</tr>
+				<tr>
+					<td>Jsp-HTML</td>
+					<td class="l">iFrame, popup 등이 구현 가능한 수입축산물 유통 관련 사이트에서 사용</td>
+				</tr>
+				<tr> 
+					<td>REST</td>
+					<td class="l">REST 구현이 가능한 시스템에서 사용</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<p class="cyan mb40">더 자세한 정보를 원하시면 수입축산물 이력정보 오픈서비스 표준가이드를 다운로드 하십시오.</p>
+
+	<div>
+		<h3 class="con_tit02">오픈서비스 다운로드</h3>
+		<div class="tform2">
+			<table cellspacing="0" border="1" summary="설명서, 연계파일 순으로 구성된 정보">
+			<caption>미트와치 오픈서비스 다운로드</caption>
+				<colgroup>
+					<col style="width:50%" />
+					<col style="width:50%" />
+				</colgroup>
+						<thead>
+					<tr>
+						<th scope="col">설명서</th>
+						<th scope="col">연계파일</th>
+					</tr>
+				</thead>	
+				<tbody>
+					<tr>
+						<td>
+							시스템 오픈서비스 표준가이드
+							<a href="/download/wsm/MTWCHOpenServiceGuide.zip" class="ml10 downloadBtn" title="시스템 오픈서비스 표준가이드 다운로드">다운로드</a>
+						</td>
+						<td>
+							연계오픈서비스 Java API 
+							<a href="/download/wsm/MTWCHConOpenAPI.zip" class="ml10 downloadBtn" title="연계오픈서비스 Java API 다운로드">다운로드</a>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							Web Service java Doc
+							<a href="/download/wsm/MTWCHSrchWebService.zip" class="ml10 downloadBtn" title="Web Service java Doc 다운로드">다운로드</a>
+						</td>
+						<td>
+							조회오픈서비스 Java API
+							<a href="/download/wsm/MTWCHSrchOpenAPI.zip" class="ml10 downloadBtn" title="조회오픈서비스 Java API 다운로드">다운로드</a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=2>
+							오픈서비스 샘플(REST방식 추가)
+							<a href="/download/wsm/MTWCHOpenApiSample_v2.0.zip" class="ml10 downloadBtn" title="오픈서비스 샘플(REST방식 추가) 다운로드 ">다운로드</a>
+						</td>						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+    <div>
+        <h3 class="con_tit02" style="margin-top:30px;">기업전용 오픈서비스</h3>
+        <div class="tform2">
+            <table cellspacing="0" border="1" summary="기업전용 오픈서비스 정보 및 오픈서비스가이드 다운로드">
+            <caption>기업전용 오픈서비스</caption>
+        <p class="mb20">
+            오픈서비스 신청 후 개별키 발급을 통해 사용가능한 기업전용 오픈서비스 입니다.
+        </p>
+                <colgroup>
+                    <col style="width:100%" />
+                </colgroup>
+                        <thead>
+                    <tr>
+                        <th scope="col">설명서</th>
+                    </tr>                    
+                <tbody>
+                        <td>
+                            이력번호채번 오픈서비스 가이드
+                            <a href="/download/wsm/MTWCHNumberingGuide.zip" class="ml10 downloadBtn" title="이력번호채번 오픈서비스 가이드 다운로드 ">다운로드</a>
+                        </td>                       
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>	
+	
+	<div class="mb40"></div>
+	
+	<div class="mb40">
+		<h3 class="con_tit02">오픈서비스 사용자 관리 정책</h3>
+		<p class="mb20">
+			오픈서비스 이용 시 반드시 회원 가입 후 사용해야 합니다.
+		</p>
+		<p class="mb20">
+			오픈 서비스 이용을 위한 자체 프로그램 개발, 프로그램 구매 등 사용하는 프로그램에 관계없이 서비스의 이용주체(아이디)는 미트와치에 등록되어야 함으로 회원 가입 후 이용해주시기 바랍니다.
+		</p>
+		<p class="mb20">
+			오픈 서비스 이용 회원도 휴면계정 및 재동의 대상임을 알려드립니다.
+		</p>
+		<p class="mb20">
+			<a href="javascript:openPopup('/cs/cmu/bbs/selectBbsBoardListDetailPopup.do?bbsId=BBSMSTR_000000000042&nttId=1727')" title="새창 열림"><b class="green">미트와치 회원 정책(공지사항 게시글 16)</b></a>을 확인하시고, 미트와치에서 오픈 서비스를 계속 이용하고자 할 경우 미트와치 사용자관리 정책을 준수하여 주시기 바라며, 탈퇴 회원이 될 경우 오픈 서비스를 이용하지 못하거나, 이용을 원할 경우 재가입해야 함을 알려드립니다.
+		</p>
+		
+	</div>
+	
+	<div class="mb40"></div>
+</div>
+<!-- // sub_content -->
+
+
+			</div>
+			<!-- CONTENTS -->
+
+
+
+		</div>
+		<!-- SUB CONTENTS -->
+
+		<!-- FOOTER -->
+		<div id="cs_footer">
+			<div class="mfooter">
+
+				<div class="family">
+					<h2><a href="http://www.apqa.go.kr" title="새창" target="_blank"><img src="/img/subpage_cs/copy_logo.png" alt="농림축산검역본부" /></a></h2>
+					<ul class="family_site">
+						<li>수입축산물 이력관리제 콜센터(평일)<br /><strong style="margin-right: 0px;">1688-0026</strong><strong>&nbsp;/ FAX 0504-848-0026</strong></li>
+						<li>
+							<form><input type="hidden" name="csSignature" value="edl+5uBUWD7OynYqP6TMnA==" />
+
+								<label for="siteUrl1" class="blind">지역본부 홈페이지 이동</label>
+								<select name="siteUrl" id="siteUrl1" title="지역본부홈페이지 선택">
+									<option value="" selected="selected">지역본부홈페이지 바로가기</option>
+									<option value="https://www.apqa.go.kr/Incheon/html/main.jsp">인천공항지역본부</option>
+									<option value="https://www.apqa.go.kr/yeongnam/html/main.jsp">영남지역본부</option>
+									<option value="https://www.apqa.go.kr/Jungbu/html/main.jsp">중부지역본부</option>
+									<option value="https://www.apqa.go.kr/Seoul/html/main.jsp">서울지역본부</option>
+									<option value="https://www.apqa.go.kr/Honam/html/main.jsp">호남지역본부</option>
+									<option value="https://www.apqa.go.kr/Jeju/html/main.jsp">제주지역본부</option>
+								</select>
+								<a href="javascript:windowOpen($('#siteUrl1 option:selected').val())" title="지역본부 홈페이지 새창열림" class="goBtn">GO</a>
+							</form>
+						</li>
+						<li>
+							<form><input type="hidden" name="csSignature" value="edl+5uBUWD7OynYqP6TMnA==" />
+
+								<label for="siteUrl2" class="blind">관련기관 이동</label>
+								<select name="siteUrl" id="siteUrl2" title="관련기관 선택">
+									<option value="" selected="selected">관련기관 바로가기</option>
+									<option value="https://www.mafra.go.kr">농림축산식품부</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink01.jsp">농림축산식품부 유관기관</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink02.jsp">중앙행정기관</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink03.jsp">국내농업관련기관</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink04.jsp">해외농업관련기관</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink05.jsp">축산물안정성</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink06.jsp">동물질병, 병리</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink07.jsp">동물약품</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink08.jsp">세균, 기생충</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink09.jsp">축산, 농업</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink10.jsp">바이러스유전자</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink11.jsp">양돈관련정보</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink12.jsp">국외수의관련기관</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink13.jsp">학술정보</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink15.jsp">교육기관</option>
+									<option value="https://www.apqa.go.kr/popup/popup_organlink14.jsp">신문/방송</option>
+								</select>
+								<a href="javascript:windowOpen2($('#siteUrl2 option:selected').val())" title="관련기관 홈페이지 새창열림" class="goBtn">GO</a>
+							</form>
+						</li>
+						<script type="text/javascript" >
+						function windowOpen(url){
+							if(url==""){
+								alert("지역본부를 선택해 주십시오.");
+							}else{
+								window.open(url,'_blank');
+							}
+						}
+						
+						function windowOpen2(url){
+							if(url==""){
+								alert("관련기관을 선택해 주십시오.");
+							}else{
+								window.open(url,'_blank');
+							}
+						}
+					</script> 
+					</ul>
+				</div>
+
+				<div class="copy">
+					<div class="footer_menu">
+						<ul>
+							<li class="first"><a href="/cs/cpt/selectIndvdlInfoPolicyHtml.do">개인정보처리방침</a></li>
+							<li><a href="/cs/cpt/selectCpyrhtPolicyHtml.do">저작권보호정책</a></li>
+							<li><a href="/cs/cpt/selectCnsmrSitemapHtml.do">사이트맵</a></li>
+						</ul>
+						<p class="copyright">
+							우 : 39660 경상북도 김천시 혁신8로 177 (율곡동) / 전화 : (代) 054-912-1000, (당직) <b>1001</b><br />
+							COPYRIGHT © ANIMAL AND PLANT QUARANTINE AGENCY. ALL RIGHTS RESERVED
+						</p>
+					</div>
+					<div class="footer_mark"> 
+						<a title="새창" href="http://www.wa.or.kr/board/list.asp?BoardID=0006" target="_blank"> 
+ 							<img alt="(사)한국장애인단체총연합회 한국웹접근성인증평가원 웹 접근성우수사이트 인증마크(WA인증마크)" src="/img/subpage_cs/wa_mark.png" width="120" height="84" />
+ 						</a> 
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- FOOTER -->
+
+	</div>
+<!-- Login Tracking code by Xtractor Extension Edition --> 
+<script type="text/javascript" src="/global/xtractor/loginDummy?V_ID=&L_ID=Notloggedin&LOGIN_ID=Notloggedin"></script>
+<!-- Login Tracking -->	
+</body>
+</html>

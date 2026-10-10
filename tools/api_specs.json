@@ -15,6 +15,12 @@
   },
   "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=004",
   "link_pk": "3033749",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "http://www.nfqs.go.kr/hpmg/front/api/exam_export_api.do"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -51,6 +57,10 @@
   },
   "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000016&service_ty=O",
   "link_pk": "3034938",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -999,6 +1009,7 @@
   },
   "external": "https://marineweather.nmpnt.go.kr/serviceReq/serviceOpenApiIntro.do",
   "link_pk": "15033708",
+  "ext_err": "<urlopen error timed out>",
   "fetched": "2026-10-10"
  },
  {
@@ -1017,6 +1028,10 @@
   },
   "external": "https://www.khoa.go.kr/oceandata/openapi/openApiDetail.do?id=8&searchCondition=&searchKeyword=&pageNumber=5",
   "link_pk": "15038992",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -1704,6 +1719,7 @@
   },
   "external": "http://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=um000",
   "link_pk": "15056608",
+  "ext_err": "HTTP Error 502: Bad Gateway",
   "fetched": "2026-10-10"
  },
  {
@@ -3245,6 +3261,16 @@
   },
   "external": "https://www.nongsaro.go.kr/portal/ps/psn/psnj/openApiLst.ps?menuId=PS65428&pageIndex=1&pageSize=&sLclasCode=&sText=%ED%91%9C%EC%A4%80%EC%82%AC%EB%A3%8C",
   "link_pk": "15057808",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "http://api.nongsaro.go.kr/sample/ajax/feedSearch/feedSearch.html",
+    "http://api.nongsaro.go.kr/sample/rest/feedSearch/feedSearch.jsp",
+    "http://blog.naver.com/openapi/share",
+    "http://www.nongsaro.go.kr/portal/ps/psn/psnj/OpenApiLst.ps",
+    "https://www.nongsaro.go.kr/portal/apiManual/feedSearch.zip"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -6164,6 +6190,15 @@
   },
   "external": "https://ecvam.neins.go.kr/api/apiWrite.do",
   "link_pk": "15062666",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "https://api.vworld.kr/req/address",
+    "https://api.vworld.kr/req/data",
+    "https://api.vworld.kr/req/search",
+    "https://fonts.googleapis.com/css"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -6236,6 +6271,15 @@
   },
   "external": "https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=656&show_cnt=10&start_idx=1&svc_no=I1370&svc_type_cd=A",
   "link_pk": "15064785",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "http://openapi.foodsafetykorea.go.kr/api/",
+    "http://openapi.foodsafetykorea.go.kr/api/keyId/serviceId/dataType/startIdx/endIdx",
+    "http://openapi.foodsafetykorea.go.kr/api/sample/I1370/xml/1/5",
+    "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -9390,6 +9434,16 @@
   },
   "external": "https://www.safemap.go.kr/opna/data/dataViewRenew.do?objtId=222",
   "link_pk": "15101863",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "http://127.0.0.1/sm/apis.do",
+    "http://safemap.go.kr/intous/api/IF_0009_SDMX",
+    "http://safemap.go.kr/openapi2/IF_0099",
+    "http://safemap.go.kr/openapi2/IF_0099_WMS",
+    "http://www.safemap.go.kr/openapi2/lgdInfo"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10331,6 +10385,10 @@
   },
   "external": "https://meatwatch.go.kr/cs/wsm/selectWsrvIntrcnHtml.do",
   "link_pk": "15118023",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10349,6 +10407,10 @@
   },
   "external": "https://www.smartfarmkorea.net/openApi/openApiList.do?menuId=M11040303",
   "link_pk": "15121328",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -10367,6 +10429,26 @@
   },
   "external": "https://apihub.kma.go.kr/apiList.do?seqApi=3&seqApiSub=249&apiMov=%ED%95%B4%EC%96%91%20%EC%A2%85%ED%95%A9",
   "link_pk": "15126689",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "https://apihub.kma.go.kr/api/typ01/url/kma_buoy.php",
+    "https://apihub.kma.go.kr/api/typ01/url/kma_buoy2.php",
+    "https://apihub.kma.go.kr/api/typ01/url/sea_obs.php",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getBuoyLstTbl",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getBuoyMmSumry",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getBuoyMmSumry2",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getDailyBuoy",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getDailyLhaws",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getDailyWaveBuoy",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getLhawsLstTbl",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getLhawsMmSumry",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getLhawsMmSumry2",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getNote",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getObsOpenYear",
+    "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getWaveBuoyLstTbl"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -11979,6 +12061,10 @@
   },
   "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3328",
   "link_pk": "15150280",
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
   "fetched": "2026-10-10"
  },
  {
@@ -14798,6 +14884,14 @@
   },
   "external": "https://nifs.go.kr/openApi/actionOpenapiInfoList.do?contentsCd=04",
   "link_pk": "15156746",
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "http://blog.naver.com/openapi/share",
+    "https://www.nifs.go.kr/OpenAPI_json",
+    "https://www.nifs.go.kr/OpenAPI_xml"
+   ]
+  },
   "fetched": "2026-10-10"
  },
  {

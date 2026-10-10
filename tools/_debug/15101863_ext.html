@@ -1,0 +1,1143 @@
+
+    
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+
+<title>오픈API Data &lt; 오픈API  : 생활안전정보</title>
+<meta name="author" content="Kim kwangsung, Lim seonju">
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,target-densitydpi=medium-dpi">
+<meta name="keywords" content="생활안전지도,안전지도">
+<meta name="description" content="생활안전지도포털 사이트에 오신것을 환영합니다.본 페이지는 WCAG2.0,KWCAG2.0 및 미래창조과학부의 정보시스템의 구축 운영 기술 지침을 준수하여 제작하였습니다.">
+<meta http-equiv="X-UA-Compatible" content="IE=10">
+
+<link rel="stylesheet" type="text/css" href="/css_new/common_v2.css">
+<link rel="stylesheet" type="text/css" href="/css_new/contents.css">
+<link rel="stylesheet" type="text/css" href="/css/main/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="/css_new/con_infectious.css">
+<link rel="stylesheet" href="/share/css/common_new.css">
+<link rel="stylesheet" href="/share/css/openapi.css">
+
+
+
+<script type="text/javascript" src="/js/2dmap/smap.function.js"></script>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/jquery-ui-1.13.3.min.js"></script>
+<script src="/js/sub.js"></script>
+<script src="/js/navigation.js"></script>
+
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" href="/css_new/iefont.css">
+<![endif]-->
+<!--[if lt IE 9]>
+<script src="/js/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+
+
+<script>
+
+	function press(event) {
+		if (event.keyCode==13) {
+			fn_egov_select_noticeList('1');
+		}
+	}
+
+	function fn_egov_addNotice() {
+		jQuery("form[name='frm']").attr("action", "/cop/bbs/addBoardArticle.do");
+		jQuery("form[name='frm']").submit();
+	}
+	
+	function fn_egov_select_noticeList(pageNo) {
+		jQuery("input[name='pageIndex']").val(pageNo);
+		jQuery("form[name='frm']").attr("action", "/cop/bbs/selectBoardList.do");
+		jQuery("form[name='frm']").submit();	
+	}
+	
+	function fn_egov_inqire_notice(nttId, bbsId) {
+		//document.subForm.nttId.value = nttId;
+		//document.subForm.bbsId.value = bbsId;
+		//document.subForm.action = "/cop/bbs/selectBoardArticle.do";
+		//document.subForm.submit();			
+	}
+	
+	function fnBbsView(idx) {
+		jQuery("form[name='subForm']").eq(idx).submit();		
+	}
+	
+	function fnLoginCheck() {
+		
+		jQuery("form[name='frm']").attr("action", "/cop/bbs/addBoardArticle.do");
+		jQuery("form[name='frm']").submit();
+		
+		/* location.href = "/cop/bbs/addBoardArticle.do?bbsId="; */
+	}
+	
+
+</script>
+
+
+
+<script>
+jQuery(document.body).ready(function(){
+  	
+  	var totalCount = jQuery("input[name='totalCount']").val();
+	var page = jQuery("input[name='pageIndex']").val();
+	var pageSize = "10";
+	var pageBlockSize = "10";
+	var jsName = "fn_egov_select_noticeList";
+	
+	if(jQuery(window).width() <= 768){
+		
+		
+			
+			
+				jQuery(".m3").addClass("on");
+				jQuery(".snb3").addClass("on");
+			
+		
+		
+		pageBlockSize = "5";
+		//pageNavigation(totalCount, pageSize, pageBlockSize, page, jsName);
+		
+	} else {
+		
+		
+			
+			
+				jQuery(".m3").removeClass("on");
+				jQuery(".snb3").removeClass("on");
+			
+		
+		
+		pageBlockSize = "10";
+		//pageNavigation(totalCount, pageSize, pageBlockSize, page, jsName);
+	}
+
+	jQuery(window).resize(function(){
+		if(jQuery(window).width() <= 768){
+			
+			
+				
+				
+					jQuery(".m3").addClass("on");
+					jQuery(".snb3").addClass("on");
+				
+			
+			
+			pageBlockSize = "5";
+			//pageNavigation(totalCount, pageSize, pageBlockSize, page, jsName);
+			
+		} else {
+			
+			
+				
+				
+					jQuery(".m3").removeClass("on");
+					jQuery(".snb3").removeClass("on");
+				
+			
+			
+			pageBlockSize = "10";
+			//pageNavigation(totalCount, pageSize, pageBlockSize, page, jsName);
+		}
+	});
+
+	// 좌측 메뉴를 출력함
+	includeHTML();
+	
+	var urlParam = getUrlParams();
+	// console.log(urlParam.bbsId);
+	
+    // 오픈api view 탭 클릭
+    $(".openapi_explain_tab a").on("click", function(){
+        if($(this).hasClass("on")) return false;
+        var ele = $($(this).attr("href"));
+        $(this).addClass("on");
+        $(this).attr('title',"선택됨");
+        $(this).parent().siblings().children("a").removeClass("on");
+        $(this).parent().siblings().children("a").attr('title',"");
+        ele.show().siblings(".openapi_type_cont").hide();
+        if($(this).attr("href") == "#mapWMS"){
+            sampleMap();
+        }
+        return false;
+    });
+
+    // 사용신청 버튼
+    $(".api_use_btn").on("click", function(){
+        var ele = $("#"+$(this).data("pop"));
+        ele.show();
+    });
+
+    // 신청 취소 및 닫기
+    $(".openapi_use_close, .openapi_use_cancel").on("click", function(){
+        $("#apiApply").find("input").val("");
+        $("#apiApply").hide();
+        $(".api_use_btn").focus();
+    });
+
+    // 신청 버튼
+    $(".openapi_use_submit").on("click", function(){
+        var useApplyKey = $("#useApplyKey").val();
+        var lyrId = '222';
+        if(strNullCheck(useApplyKey)) {
+            alert("키값 또는 이메일 주소를 입력하여주세요.");
+            $("#useApplyKey").focus();
+        } else {
+            $.ajax({
+                url : '/opna/data/dataApplyRenew.json',
+                type : 'post',
+                data : {'searchKey' : useApplyKey, 'lyrId' : lyrId},
+                dataType : 'json',
+                success : function(result) {
+                    if(result.model.resultCode > 0) {
+                        if(result.model.resultCode == 99) {
+                            alert("이미 신청된 주제도 입니다.\nMy Data 페이지에서 확인이 가능합니다.");
+                        } else if (result.model.resultCode == 100) {
+                            alert("API 신청이 정상적으로 신청되지 못하였습니다.\n다시 한번 신청하여주세요.");
+                        } else {
+                            if(confirm("정상적으로 신청되었습니다.\n신청된 API는 My Data 에서 확인이 가능합니다.\n이동하시겠습니까?")) {
+                                location.href = '/opna/data/dataMyListRenew.do';
+                            } else {
+                                $(".openapi_use_close").click();
+                            };
+                        }
+                    } else {
+                        alert("키값 또는 이메일 주소가 정확하지 않습니다.\n확인 후 다시 신청해주세요.");
+                        $("#useApplyKey").focus();
+                    }
+                },
+                error : function(xhr) {
+                    console.log(xhr);
+                }
+            })
+        }
+    });
+    $("#useApplyKey").on("keydown", function() {
+		if(event.keyCode == '13') {
+			$(".openapi_use_submit").click();
+		}
+	});
+
+    // 샘플 지도 로드
+    function sampleMap(){
+        var myForm = document.popForm;
+        var url = "/dvct/data/LsmsDataAPISamplePost.do";
+        myForm.action =url;
+        myForm.target="mapSample";
+        myForm.testVal = 'test';
+        myForm.submit();
+    }
+
+});
+
+function moveDataList(menu) {
+    if(menu == 'my') {
+        $("#moveForm").attr("action", "/opna/data/dataMyListRenew.do");
+    } else {
+        $("#moveForm").attr("action", "/opna/data/dataListRenew.do");
+    }
+    $("#moveForm").submit();
+}
+
+function getUrlParams() {
+    var params = {};
+    window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(str, key, value) { params[key] = value; });
+    return params;
+}
+
+
+</script>
+
+<style>
+	html, body {
+	    height: 100%;
+	    overflow: auto;
+	}
+</style>
+
+</head>
+
+<body>
+	<div id="u_skip">
+		<dl>
+			<dt class="blind">메뉴 건너 뛰기</dt>
+			<!-- <dd><a href="#container">본문으로 바로가기</a></dd> -->
+			<dd><a href="#content">본문으로 바로가기</a></dd>
+		</dl>
+	</div>
+		<div id="wrap" class="none-map"><!-- wrap -->
+			<!--header-->
+		    <header>
+		        <div class="flex">
+		            <h1><a href="/main/smap.do"><img src="../../share/images/common/logo.png" alt="생활안전정보" /><img src="../../share/images/common/logo-b.png" alt="생활안전정보" /></a></h1>
+		            <button class="btn-menu"><span class="hidden">메뉴토글</span></button>
+		        </div>
+		    </header>
+		
+		    <!--//header-->
+		
+		    <!--nav-->
+		    <nav class="none-map-nav">
+		        
+
+
+	<!-- <div id="gnb" class="main">
+		<h2 class="tit_submenu"><a href="/cmm/main/mainPage.do"><span class="ico_totalview"></span>메인메뉴</a></h2>
+		<span class="ico mbi home webnone">Home</span>
+		<ul id="navi" class="subnavi">
+			<li>
+				<a href="#" class="m_depth1 m1">서비스안내</a>
+				<div class="snb1" style="left:-100px">
+					<ul>
+						<li><a href="/gdnc/sftyinfo.do">생활안전지도란</a></li>
+						<li><a href="/gdnc/userguide.do">이용가이드</a></li>
+						<li><a href="/gdnc/svcinfo.do">지도문제해결</a></li>
+						<li class="dbn_mbi"><a href="/mzine/LsmsMapMagazineList.do">세이프티매거진</a></li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<a href="#" class="m_depth1 m2">지도바로가기</a>
+				<div class="snb2">
+					<ul>
+						<li><a href="/main/smap.do?viewnum=0">교통안전</a></li>
+						<li><a href="/main/smap.do?viewnum=1">재난안전</a></li>
+						<li><a href="/main/smap.do?viewnum=2">치안안전</a></li>
+						<li><a href="/main/smap.do?viewnum=3">맞춤안전</a></li>
+						<li><a href="/main/smap.do?viewnum=4">시설안전</a></li>
+						<li><a href="/main/smap.do?viewnum=5">산업안전</a></li>
+						<li><a href="/main/smap.do?viewnum=6">보건안전</a></li>
+						<li><a href="/main/smap.do?viewnum=7">사고안전</a></li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<a href="#" class="m_depth1 m3">커뮤니티</a>
+				<div class="snb3" style="left:-67px">
+					<ul>
+						<li><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">새소식알림</a></li>
+						<li><a href="/uss/olh/faq/FaqListInqire.do">자주하는 질문</a></li>
+						<li><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_CCCCCCCCCCCC">자료실</a></li>
+						<li><a href="/prdta/selectPrDataList.do">홍보자료</a></li>
+						<li><a href="/uss/olh/qna/QnaCnRegistView.do">1:1 상담</a></li>
+						<li><a href="/uss/olh/qna/QnaList.do">1:1 소통</a></li>
+						<li><a href="/uss/olh/event/EventList.do">이벤트</a></li>
+						<li><a href="/teach/selectTeachDataList.do">학습지도서</a></li>
+					</ul>
+				</div>
+			</li>
+			<li>
+				<a href="#" class="m_depth1 m4">개발자센터</a>
+				<div class="snb4" style="left:-150px">
+					<ul>
+						<li><a href="/dvct/openAPI.do">오픈API 소개</a></li>						
+						<li><a href="/dvct/mapAPI.do">오픈API</a></li>
+						<li><a href="/dvct/crtfc/addCrtfcKey.do">인증키 발급</a></li>
+						<li><a href="/dvct/crtfc/selectCrtfcKey.do">인증키 관리</a></li>
+						<li><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_EEEEEEEEEEEE">오픈API 자료실</a></li>
+						<li><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_FFFFFFFFFFFF">오픈API Q&amp;A</a></li>
+						
+					</ul>
+				</div>
+			</li>
+			<li class="db">
+				<a href="/etc/policy.do" class="m_depth1 m5">이용안내</a>
+				<div class="snb5">
+					<ul>
+						<li><a href="/etc/policy.do">개인정보처리방침</a></li>
+						<li><a href="/etc/email.do">이메일무단수집거부</a></li>
+						<li><a href="/etc/sitemap.do">사이트맵</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</div>	 -->
+	<div class="tit-nav">
+        <button type="button" class="btn-close"><span class="hidden">닫기</span></button>
+    </div>
+    <ul class="clearFix">
+        <!-- <li class="menu-01"><a href="/">홈</a></li>
+        <li class="menu-02"><a href="/main/smap.do">생활안전지도</a></li>
+        <li class="menu-03"><a href="/gdnc/sftyinfo.do">서비스안내</a></li>
+        <li class="menu-04"><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">커뮤니티</a></li>
+        <li class="menu-05"><a href="/dvct/openAPI.do">개발자센터</a></li> -->
+		<li class="menu-02"><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_AAAAAAAAAAAA">이용안내</a></li>
+		<!-- <li class="menu-03"><a href="/dvct/openAPI.do">오픈API</a></li> -->
+		<li class="menu-04"><a href="/dvct/openAPIRenew.do">오픈API</a></li>
+		<li class="menu-04"><a href="/uss/olh/faq/FaqListInqire.do">고객의견</a></li>
+		<!-- <li class="menu-05"><a href="/bbsAccidents/selectBoardList.do">법령 및 보도자료</a></li> -->
+		
+    </ul>
+    <!-- <div class="copyright">
+        <img src="../images/common/ico-m-copyright-01.png" alt="">
+        <img src="../images/common/ico-m-copyright-02.png" alt="">
+    </div> -->
+	
+
+ 
+		    </nav>
+		    
+			<div id="container"><!-- container -->
+				
+				<h2 class="hidden">본문 시작 영</h2>
+		        <!--flex-->
+		        <div class="flex">
+		            <!--lnb-->
+		            <div id="lnb">
+		                <div class="lnbTit"><span>오픈API</span></div>
+		                <ul class="clearFix">
+							<li><a href="/dvct/openAPIRenew.do">오픈API 소개</a></li>
+							<li ><a href="/opna/data/dataListRenew.do">오픈API Data</a></li>
+							<li><a href="/opna/crtfc/keyAgreeRenew.do">오픈API 인증키 발급</a></li>
+							<li ><a href="/opna/data/dataMyListRenew.do">오픈API My Data</a></li>
+							<li><a href="/cop/bbs/selectBoardListPost.do?bbsId=BBSMSTR_EEEEEEEEEEEE">오픈API 자료실</a></li>
+							<li><a href="/cop/bbs/selectBoardListPost.do?bbsId=BBSMSTR_FFFFFFFFFFFF">오픈API Q&A</a></li>
+							
+		                </ul>
+		            </div>
+		            <!--//lnb-->
+		            <!--content-->
+		            <div id="content">
+		                <!--pageTit-->
+		                <div class="pageTit">
+		                    <h3>오픈API Data 상세보기</h3>
+		                    <div class="location">
+		                        <a href="/main/smap.do" class="btn-home"><em class="hidden">메인페이지 이동</em></a><span>&gt;</span>
+								<a href="/dvct/openAPI.do">오픈API</a><span>&gt;</span>
+								<a href="/opna/data/dataList.do" class="active">오픈API Data</a>
+                            </div>
+		                </div>
+		                <!--//pageTit-->
+		                <div id="contentBody">
+                            <div class="openapi_board">
+                                
+                                <div class="openapi_view_top">
+                                    <h4>철새도래지</h4>
+                                     <span class="type xml">XML</span>
+                                     <span class="type wms">WMS</span>
+	                                 
+                                </div>
+
+                                <div id="apiApply" class="openapi_use_apply">
+                                    <div class="openapi_use_box">
+                                        <h5 class="openapi_use_tit">사용신청안내사항</h5>
+                                        <div class="public_data_guide">
+                                            <strong class="guide_tit">공공데이터 제공제도</strong>
+                                            <ul class="txt_list data_guide_box">
+                                                <li>공공데이터중 위치정보를 포함한 서비스를 사용하고자 하는 사업자는 '위치정보의 보호 및 이용 등에 관한 법률'에 따라 방송통신위원회에 '위치정보서비스 허가'를 받거나 '위치기반 서비스사업 신고'를 하여야 합니다.</li>
+                                                <li>이에 해당하는 사업자인 경우에는 첨부파일에 '위치기반서비스사업신고필증'을 첨부해 주시기 바랍니다.</li>
+                                                <li>활용신청 시 '위치기반서비스사업신고필증'이 등록되지 않으면 반려가 될 수 있으니 참고 하시기 바랍니다.</li>
+                                            </ul>
+                                            <strong class="guide_tit">주요항목정보</strong>
+                                            <div class="item_info data_guide_box">
+                                                <table class="data_guide_tbl">
+                                                    <colgroup>
+                                                        <col style="width:15%;">
+                                                        <col style="width:85%;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">주요항목</th>
+                                                            <td>겨울철새 도래지 경계를 의미하며 국립환경과학원 겨울철새 센서스 조사지역 경계자료임.</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <strong class="guide_tit">라이선스표시</strong>
+                                            <div class="license_info data_guide_box">
+                                                <table class="data_guide_tbl">
+                                                    <colgroup>
+                                                        <col style="width:15%;">
+                                                        <col style="width:85%;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th scope="row">라이선스</th>
+                                                            <td>
+                                                                <div class="license_img">
+                                                                    <img src="../../share/images/common/public_data_license_img.png" alt="출처표시, 상업용금지, 변경금지, 공공누리 공공저작물자유이용허락">
+                                                                    <span>생활안전지도는 “공공누리 4유형(출처표시,상업적이용금지, 변경금지)” 조건에 따라 이용할 수 있습니다.</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="input_form">
+                                                <div class="inp_box">
+                                                    <input type="text" title="사용신청 키값 또는 이메일주소" id="useApplyKey" name="openapi_use_email" placeholder="키값 또는 이메일 주소를 작성해 주세요." required>
+                                                </div>
+                                                <div class="btn_box">
+                                                    <button type="button" class="openapi_use_cancel">취소</button>
+                                                    <button type="button" class="openapi_use_submit">사용신청</button>
+                                                </div>
+                                            </div>
+                                        </div> <!-- public_data_guide -->
+                                        <button type="button" class="openapi_use_close">사용신청 닫기</button>
+                                    </div>
+                                </div> <!-- openapi_use_apply -->
+
+                                <div class="openapi_info_box">
+                                    <table class="openapi_tbl">
+                                <caption>철새도래지정보표</caption>
+                                        <colgroup>
+                                            <col style="width:20%">
+                                            <col style="width:30%">
+                                            <col style="width:20%">
+                                            <col style="width:30%">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">분류체계</th>
+                                                <td>보건안전</td>
+                                                <th scope="row">제공기관</th>
+                                                <td>환경부</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">관리부서명</th>
+                                                <td>-</td>
+                                                <th scope="row">관리부서 전화번호</th>
+                                                <td>044-201-6482</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">API 유형</th>
+                                                <td>REST</td>
+                                                <th scope="row">데이터 포맷</th>
+                                                <td>
+                                                    
+                                                        
+                                                        
+                                                        XML + WMS
+                                                    
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">활용 신청</th>
+                                                <td>80</td>
+                                                <th scope="row">갱신주기</th>
+                                                <td>1년</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">수집일</th>
+                                                <td>2025년</td>
+                                                <th scope="row">수정일</th>
+                                                <td>2025-10-01</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">주요항목</th>
+                                                <td colspan="3">겨울철새 도래지 경계를 의미하며 국립환경과학원 겨울철새 센서스 조사지역 경계자료임.</td>
+                                            </tr>
+                                            
+                                                <tr>
+                                                    <th scope="row">XML 호출 URL</th>
+                                                    <td colspan="3">safemap.go.kr/openapi2/IF_0099 (아래 예제 참고)</td>
+                                                </tr>
+                                            
+                                            
+                                                <tr>
+                                                    <th scope="row">WMS 호출 URL</th>
+                                                    <td colspan="3">safemap.go.kr/openapi2/IF_0099_WMS (아래 예제 참고)</td>
+                                                </tr>
+                                            
+                                            
+                                        </tbody>
+                                    </table>
+                                </div> <!-- openapi_info_box -->
+
+                                <div class="openapi_explain_wrap">
+                                    <div class="openapi_explain_tab">
+                                        <ul>
+                                            <li><a href="#gridXML" class="on" title="선택됨" >그리드(XML)</a></li>
+                                            <li><a href="#openapiXML" >OPEN API(XML)</a></li>
+                                            <li><a href="#openapiWMS"  >OPEN API(WMS)</a></li>
+                                            <li><a href="#mapWMS" >MAP(WMS)</a></li>
+                                            <li><a href="#openapiSDMX" style="display:none;">OPEN API(SDMX)</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="openapi_explain_cont">  
+
+                                        <!-- 그리드(XML) -->
+                                        <div id="gridXML" class="openapi_type_cont" >
+                                            <div class="tbl_scroll tbl_header_fix">
+                                                <table class="openapi_explain_tbl grid_tbl">
+                                                 <caption>철새도래지오픈API 그리드(XML) 정보표</caption>
+                                                    <thead>
+                                                      	
+                                                        <tr>
+                                                            
+                                                                <th scope="col">objt_id</th>
+                                                            
+                                                                <th scope="col">manage_no</th>
+                                                            
+                                                                <th scope="col">hbtt_nm</th>
+                                                            
+                                                                <th scope="col">examin_yy</th>
+                                                            
+                                                                <th scope="col">examin_mm</th>
+                                                            
+                                                                <th scope="col">population</th>
+                                                            
+                                                                <th scope="col">x</th>
+                                                            
+                                                                <th scope="col">y</th>
+                                                            
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr><td>1.0</td><td>S001</td><td>철원평야</td><td>1999</td><td>01</td><td>44993</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>2.0</td><td>S001</td><td>철원평야</td><td>2000</td><td>01</td><td>6039</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>3.0</td><td>S001</td><td>철원평야</td><td>2001</td><td>01</td><td>3037</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>4.0</td><td>S001</td><td>철원평야</td><td>2002</td><td>01</td><td>3306</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>5.0</td><td>S001</td><td>철원평야</td><td>2003</td><td>01</td><td>2977</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>6.0</td><td>S001</td><td>철원평야</td><td>2004</td><td>01</td><td>12994</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>7.0</td><td>S001</td><td>철원평야</td><td>2005</td><td>01</td><td>4025</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>8.0</td><td>S001</td><td>철원평야</td><td>2006</td><td>01</td><td>17521</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>9.0</td><td>S001</td><td>철원평야</td><td>2007</td><td>01</td><td>5176</td><td>1.41636412088E7</td><td>4617290.31007</td></tr><tr><td>10.0</td><td>S001</td><td>철원평야</td><td>2008</td><td>01</td><td>5759</td><td>1.41636412088E7</td><td>4617290.31007</td></tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div> <!-- gridXML -->
+                                        
+                                        <!-- OPEN API(XML) -->
+                                        <div id="openapiXML" class="openapi_type_cont">
+                                            <h5 class="cont_tit">철새도래지 정보조회 서비스</h5>
+                                            <div class="cont_section"> 
+                                                <h6 class="cont_stit">요청변수(Request Parameter)</h6>
+                                                <table class="openapi_explain_tbl">
+                                                <caption>철새도래지요청변수표</caption>
+                                                    <colgroup>
+                                                        <col style="width:20%;">
+                                                        <col style="width:20%;">
+                                                        <col style="width:10%;">
+                                                        <col style="width:20%;">
+                                                        <col style="width:30%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">항목명(국문)</th>
+                                                            <th scope="col">항목명(영문)</th>
+                                                            <th scope="col">항목구분</th>
+                                                            <th scope="col">샘플데이터</th>
+                                                            <th scope="col">항목설명</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>인증키</td>
+                                                            <td>serviceKey</td>
+                                                            <td>필</td>
+                                                            <td>인증키 (URL Encode)</td>
+                                                            <td>생활안전지도에서 발급받은 인증키</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>한 페이지 결과 수</td>
+                                                            <td>numOfRows</td>
+                                                            <td>필</td>
+                                                            <td>10</td>
+                                                            <td>한 페이지 결과 수</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>페이지 번호</td>
+                                                            <td>pageNo</td>
+                                                            <td>필</td>
+                                                            <td>1</td>
+                                                            <td>페이지 번호</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>데이터 타입</td>
+                                                            <td>returnType</td>
+                                                            <td>옵</td>
+                                                            <td>XML</td>
+                                                            <td>요청자료형식(XML/JSON) Default : JSON</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="cont_section">
+                                                <h6 class="cont_stit">공통결과(Response Element)</h6>
+                                                <table class="openapi_explain_tbl">
+                                                 <caption>철새도래지공통결과표</caption>
+                                                    <colgroup>
+                                                        <col style="width:40%;">
+                                                        <col style="width:30%;">
+                                                        <col style="width:30%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">항목명(국문)</th>
+                                                            <th scope="col">항목명(영문)</th>
+                                                            <th scope="col">항목타입</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>결과코드</td>
+                                                            <td>resultCode</td>
+                                                            <td>NUMBER</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>결과메시지</td>
+                                                            <td>resultMsg</td>
+                                                            <td>VARCHAR2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>한 페이지 결과 수</td>
+                                                            <td>numOfRows</td>
+                                                            <td>NUMBER</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>페이지 번호</td>
+                                                            <td>pageNo</td>
+                                                            <td>NUMBER</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>데이터 총 개수</td>
+                                                            <td>totalCount</td>
+                                                            <td>NUMBER</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <br>
+                                                <h6 class="cont_stit">출력결과(Response Element)</h6>
+                                                <table class="openapi_explain_tbl">
+                                                 <caption>철새도래지출력결과표</caption>
+                                                    <colgroup>
+                                                        <col style="width:40%;">
+                                                        <col style="width:20%;">
+                                                        <col style="width:10%;">
+                                                        <col style="width:30%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">항목명(국문)</th>
+                                                            <th scope="col">항목명(영문)</th>
+                                                            <th scope="col">항목타입</th>
+                                                            <th scope="col">항목설명</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    	
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>일련번호</td>
+                                                            	
+                                                            
+                                                                <td>objt_id</td>
+                                                                <td>INT</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>관리번호</td>
+                                                            	
+                                                            
+                                                                <td>manage_no</td>
+                                                                <td>STRING</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>도래지명</td>
+                                                            	
+                                                            
+                                                                <td>hbtt_nm</td>
+                                                                <td>STRING</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>조사년도</td>
+                                                            	
+                                                            
+                                                                <td>examin_yy</td>
+                                                                <td>STRING</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>조사월</td>
+                                                            	
+                                                            
+                                                                <td>examin_mm</td>
+                                                                <td>STRING</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>개체수</td>
+                                                            	
+                                                            
+                                                                <td>population</td>
+                                                                <td>INT</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>X좌표</td>
+                                                            	
+                                                            
+                                                                <td>x</td>
+                                                                <td>STRING</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                            <tr>
+                                                            
+                                                            	
+                                                            	
+                                                            		<td>Y좌표</td>
+                                                            	
+                                                            
+                                                                <td>y</td>
+                                                                <td>STRING</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="cont_section">
+                                                <h6 class="cont_stit">제공 데이터 예제</h6>
+                                                <div class="openapi_data_example">
+                                                    /* JAVA 샘플 코드 */
+
+                                                    StringBuilder strBuilder = new StringBuilder("http://safemap.go.kr/openapi2/IF_0099"); /*URL*/
+                                                    strBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=서비스키"); /*Service Key*/
+                                                    strBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+                                                    strBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+                                                    strBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("xml", "UTF-8")); /*xml(기본값), JSON*/
+                                                    URL url = new URL(strBuilder.toString());
+                                                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                                                </div>
+
+
+<!--                                                     *서비스 범례 호출(XML) -->
+
+<!--                                                     layer=레이어명&style=스타일명 (스타일명이 없는 서비스의 경우 layer 만 입력) -->
+
+                                            </div>
+
+                                        </div> <!-- openapiXML -->
+
+                                        <!-- OPEN API(WMS) -->
+                                        <div id="openapiWMS" class="openapi_type_cont" >
+                                            <h5 class="cont_tit">철새도래지</h5>
+                                            <div class="cont_section"> 
+                                                <h6 class="cont_stit">요청변수(Request Parameter)</h6>
+                                                <table class="openapi_explain_tbl">
+                                                 <caption>철새도래지요청변수표</caption>
+                                                    <colgroup>
+                                                        <col style="width:33.33%;">
+                                                        <col style="width:33.33%;">
+                                                        <col style="width:33.33%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">항목명</th>
+                                                            <th scope="col">샘플데이터</th>
+                                                            <th scope="col">항목설명</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>serviceKey</td>
+                                                            <td>인증키 (URL Encode)</td>
+                                                            <td>발급받은 인증키</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>srs</td>
+                                                            <td>좌표계</td>
+                                                            <td>예시 ) EPSG:4326</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>bbox</td>
+                                                            <td>표시할 영역 범위</td>
+                                                            <td>허용 범위 초과시 오류</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>format</td>
+                                                            <td>이미지 포맷</td>
+                                                            <td>image/png ,image/jpeg</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>width</td>
+                                                            <td>가로크기</td>
+                                                            <td>요청할 이미지 가로 크기(px)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>height</td>
+                                                            <td>세로크기</td>
+                                                            <td>요청할 이미지 세로 크기(px)</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>transparent</td>
+                                                            <td>배경 투명 여부</td>
+                                                            <td>TRUE/FALSE</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="cont_section">
+                                                <h6 class="cont_stit">제공 데이터 예제 (url호출)</h6>
+                                                <div class="openapi_data_example">
+                                                    *서비스 호출 <br>
+                                                    StringBuilder strBuilder = new StringBuilder("http://safemap.go.kr/openapi2/IF_0099_WMS"); /*URL*/
+                                                    strBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=서비스키"); /*Service Key*/
+                                                    strBuilder.append("&" + URLEncoder.encode("srs","UTF-8") + "=" + URLEncoder.encode("EPSG:4326", "UTF-8")); /*좌표계	*/
+                                                    strBuilder.append("&" + URLEncoder.encode("bbox","UTF-8") + "=" + URLEncoder.encode("126.84814453125,35.137879119634185,126.859130859375,35.146862906756304", "UTF-8")); /*표시할 영역 범위*/
+                                                    strBuilder.append("&" + URLEncoder.encode("format","UTF-8") + "=" + URLEncoder.encode("image/png", "UTF-8")); /*format*/
+                                                    strBuilder.append("&" + URLEncoder.encode("width","UTF-8") + "=" + URLEncoder.encode("256", "UTF-8")); /*요청할 이미지 가로 크기(px)*/
+                                                    strBuilder.append("&" + URLEncoder.encode("height","UTF-8") + "=" + URLEncoder.encode("256", "UTF-8")); /*요청할 이미지 세로 크기(px)*/
+                                                    strBuilder.append("&" + URLEncoder.encode("transparent","UTF-8") + "=" + URLEncoder.encode("TRUE", "UTF-8")); /*배경 투명 여부*/
+                                                    URL url = new URL(strBuilder.toString());
+                                                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                                                </div>
+                                            </div>
+                                           
+                                            <div class="cont_section">
+                                                <h6 class="cont_stit">제공 데이터 예제 (OpenLayers)</h6>
+                                                <div class="openapi_data_example">
+                                                    *서비스 호출 <br>
+                                                    param = {
+                                                    &emsp;name:"철새도래지",
+                                                    &emsp;serverUrl:'www.safemap.go.kr/openApi2/IF_0099_WMS?serviceKey=[serviceKey]', 
+                                                    &emsp;layername:"A2SM_MGRBIRDSHBTT", 
+                                                    &emsp;styles:"", 
+                                                    }; 
+                                                    var wmsLayer = new OpenLayers.Layer.WMS ( 
+                                                    &emsp;param.serverUrl, 
+                                                    &emsp;{
+                                                    &emsp;&emsp;layers: pram.layername, 
+                                                    &emsp;&emsp;styles:  pram.styles, 
+                                                    &emsp;&emsp;format:"image/png", 
+                                                    &emsp;&emsp;srs:"EPSG:3857", 
+                                                    &emsp;&emsp;transparent: TRUE
+                                                    &emsp;}, 
+                                                    &emsp;{
+                                                    &emsp;&emsp;isBaseLayer: false
+                                                    &emsp;}
+                                                    );
+                                                    wmsLayer.getFullRequestString = function(newParams, altUrl) {
+												    &emsp;var url = OpenLayers.Layer.Grid.prototype.getFullRequestString.apply(
+												    &emsp;&emsp;this, arguments
+												    &emsp;);
+												    &emsp;url = url.replace(/([?&])([^=]+)/g, function(match, sep, key){
+												    &emsp;&emsp;if (key === "serviceKey") {
+												    &emsp;&emsp;&emsp;return sep + key;
+												    &emsp;&emsp;}
+												    &emsp;return sep + key.toLowerCase();
+												    &emsp;});
+												    return url;
+												    };
+                                                    <br>
+                                                    *서비스 범례 호출(XML) <br>
+                                                    layer=레이어명&style=스타일명 (스타일명이 없는 서비스의 경우 layer 만 입력)
+                                                    예) http://www.safemap.go.kr/openapi2/lgdInfo?serviceKey=인증키&intId=IF_0099
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- openapiWMS -->
+                                        <!-- MAP(WMS) -->
+                                        <div id="mapWMS" class="openapi_type_cont" tabindex="1">
+                                            <form name="popForm" id="popForm" method="post">
+                                                <!-- <input type="hidden" id="mapurl" name="mapurl" value="http://127.0.0.1/sm/apis.do?apikey=9HM7X8QM-9HM7-9HM7-9HM7-9HM7X8QM9C"/> -->
+                                                <input type="hidden" id="mapurl" name="mapurl" value="/openapi2/IF_0099_WMS?apikey=f6105fa6-8571-4f11-97b0-3aa79d0ad353"/>
+                                                <input type="hidden" id="layertext" name="layertext" value="철새도래지"/>
+                                                <input type="hidden" id="layername" name="layername" value="A2SM_MGRBIRDSHBTT"/>
+                                                <input type="hidden" id="styles" name="styles" value=""/>
+                                            </form>
+                                            <div class="openapi_map_example">
+                                                <iframe name="mapSample" frameborder="0"></iframe>
+                                            </div>
+                                            <script>
+                                                
+                                            </script>
+                                        </div> <!-- mapWMS -->
+                                        
+                                        <div id="openapiSDMX" class="openapi_type_cont">
+                                            <h5 class="cont_tit">철새도래지 정보조회 서비스</h5>
+                                            <div class="cont_section"> 
+                                                <h6 class="cont_stit">요청변수(Request Parameter)</h6>
+                                                <table class="openapi_explain_tbl">
+                                                <caption>철새도래지요청변수표</caption>
+                                                    <colgroup>
+                                                        <col style="width:20%;">
+                                                        <col style="width:20%;">
+                                                        <col style="width:10%;">
+                                                        <col style="width:20%;">
+                                                        <col style="width:30%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">항목명(국문)</th>
+                                                            <th scope="col">항목명(영문)</th>
+                                                            <th scope="col">항목구분</th>
+                                                            <th scope="col">샘플데이터</th>
+                                                            <th scope="col">항목설명</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>인증키</td>
+                                                            <td>serviceKey</td>
+                                                            <td>필</td>
+                                                            <td>인증키 (URL Encode)</td>
+                                                            <td>생활안전지도에서 발급받은 인증키</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>타입</td>
+                                                            <td>type  </td>
+                                                            <td>필</td>
+                                                            <td>DSD</td>
+                                                            <td>DSD: 자료구조정의 <br> Generic: 일반수치자료 <br> StructureSpecific: 구조화된수치자료</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>통계기준시작년도</td>
+                                                            <td>startPrdDe </td>
+                                                            <td>필</td>
+                                                            <td>2021</td>
+                                                            <td>통계기준시작년도</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>통계기준종료년도</td>
+                                                            <td>endPrdDe  </td>
+                                                            <td>필</td>
+                                                            <td>2024</td>
+                                                            <td>통계기준종료년도</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="cont_section">
+                                                <h6 class="cont_stit">제공 데이터 예제</h6>
+                                                <div class="openapi_data_example">
+                                                    /* JAVA 샘플 코드 */
+
+                                                    StringBuilder strBuilder = new StringBuilder("http://safemap.go.kr/intous/api/IF_0009_SDMX?itmId=T001+T002&objL1=ALL&objL2=ALL&prdSe=Y&version=v2_1&format=sdmx"); /*URL*/
+                                                    strBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=서비스키"); /*Service Key*/
+                                                    strBuilder.append("&" + URLEncoder.encode("type","UTF-8") + "=" + URLEncoder.encode("DSD", "UTF-8")); /*타입*/
+                                                    strBuilder.append("&" + URLEncoder.encode("startPrdDe","UTF-8") + "=" + URLEncoder.encode("2021", "UTF-8")); /*통계기준시작년도*/
+                                                    strBuilder.append("&" + URLEncoder.encode("endPrdDe","UTF-8") + "=" + URLEncoder.encode("2024", "UTF-8")); /*통계기준종료년도*/
+                                                    URL url = new URL(strBuilder.toString());
+                                                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                                                </div>
+                                            </div>
+
+                                        </div> <!-- openapiXML -->
+
+                                    </div> <!-- openapi_explain_cont -->
+
+                                </div> <!-- openapi_explain_wrap -->
+
+                                <div class="openapi_view_bottom">
+                                    <form id="moveForm" method="post">
+                                        <input type="hidden" name="pageIndex" value="1"/>
+                                        <input type="hidden" name="searchCate" value=""/>
+                                        <input type="hidden" name="searchWrd" value=""/>
+                                        <input type="hidden" name="searchKey" value=""/>
+                                        <input type="hidden" name="clCode" value=""/>
+                                        <input type="hidden" name="menuType" value=""/>
+                                        <button type="button" class="openapi_list_go" onclick="moveDataList('')">목록</button>
+                                    </form>
+                                </div>
+
+                            </div> <!-- openapi_board -->
+
+                        </div> <!-- contentBody -->
+		                
+		            </div>
+		            <!--//content-->
+		        </div>
+				
+			</div><!-- //container -->
+		</div><!-- //wrap -->
+	
+	<script>
+
+		//모바일에서 5, 6칸의 셀을 2칸으로 만들어 주는 코드
+		jQuery(window).resize(function() {
+		
+			var cols = 5;
+			
+			if(jQuery(window).width() <= 768){
+				if(jQuery("td[colspan='"+cols+"']").text().indexOf("검색결과가 없습니다.") > -1) {
+					jQuery("td[colspan='"+cols+"']").attr("colspan", "2");
+				}
+			} else {
+				if(jQuery("td[colspan='2']").text().indexOf("검색결과가 없습니다.") > -1) {
+					jQuery("td[colspan='2']").attr("colspan", cols);
+				}
+			}
+		
+		}).resize();
+	
+	</script>
+	
+  	<div id="footer"><!-- footer -->
+		
+
+
+
+
+
+		<div class="foot_inner">
+			<ul class="lst_organ" style="background:url(/images/newMain/footer_logo_new.png) no-repeat; height: 30px;">
+				<li ><a href="http://www.mois.go.kr/" target="_blank" class="btn_family_v1" title="행정안전부 새창 열기">행정안전부</a></li> 
+			</ul>
+			<ul class="foot_menu">
+				<li style="margin: 5px;"><a href="/etc/policy.do" style="font-size: 1.1em; color: #2356B3 !important;">개인정보처리방침</a></li>
+				<li style="margin: 5px;"><a href="/etc/email.do">이메일 무단수집거부</a></li>
+				<li style="margin: 5px;"><a href="/etc/sitemap.do">사이트맵</a></li>
+			</ul>
+			<div class="family">
+				<h3><a href="#none" class="familybtn" title="패밀리 사이트 펼치기">패밀리 사이트</a></h3>
+				<ul class="familysub">
+					<li><a href="http://www.molit.go.kr" target="_blank" title="새창열림">국토교통부</a></li>
+					<li><a href="http://www.mohw.go.kr" target="_blank" title="새창열림">보건복지부</a></li>
+					<li><a href="http://www.kostat.go.kr" target="_blank" title="새창열림">통계청</a></li>
+					<li><a href="http://www.police.go.kr" target="_blank" title="새창열림">경찰청</a></li>
+					<li><a href="http://www.forest.go.kr/" target="_blank" title="새창열림">산림청</a></li>
+					<li><a href="http://www.koroad.or.kr" target="_blank" title="새창열림">도로교통공단</a></li>
+				</ul>
+			</div>
+			<div class="p_addr">
+				<address>우)30128 세종특별자치시 정부2청사로 13(나성동)</address>
+				<p>Copyright ⓒ Ministry of the Interior and Safety. All rights reserved.</p>
+			</div>
+		</div>
+
+
+   	</div><!-- //footer -->
+   	
+</body>
+</html>
