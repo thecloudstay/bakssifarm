@@ -7,11 +7,17 @@ old = {}
 p_out = os.path.join(ROOT, 'api_specs.json')
 if os.path.exists(p_out):
     old = {x['id']: x for x in json.load(open(p_out, encoding='utf-8'))}
+import http.cookiejar
+JAR = http.cookiejar.CookieJar(); OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(JAR))
+REF = ['https://www.data.go.kr/']
 def get(url, data=None):
     body = urllib.parse.urlencode(data).encode() if data else None
-    req = urllib.request.Request(url, data=body, headers={'User-Agent': 'Mozilla/5.0 (bakssifarm spec reader)', 'Accept-Language': 'ko', 'X-Requested-With': 'XMLHttpRequest', 'Referer': 'https://www.data.go.kr/'})
-    with urllib.request.urlopen(req, timeout=40) as r: return r.read().decode('utf-8', 'replace')
-import urllib.parse, html as H
+    hd = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko', 'Referer': REF[0]}
+    if data is not None: hd.update({'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'Origin': 'https://www.data.go.kr', 'Accept': 'text/html, */*; q=0.01'})
+    else: REF[0] = url
+    req = urllib.request.Request(url, data=body, headers=hd)
+    with OPENER.open(req, timeout=40) as r: return r.read().decode('utf-8', 'replace')
+import urllib.parse, urllib.error, html as H
 def cells(tr): return [re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', ' ', c))).strip() for c in re.findall(r'<t[dh][^>]*>(.*?)</t[dh]>', tr, re.S)]
 def parse_detail(h):
     # 상세기능 조각: 요청주소·요청변수·출력결과 표
@@ -81,6 +87,8 @@ for i, c in enumerate(cands):
                     if url:
                         u = urllib.parse.urlparse(url); host = host or u.netloc
                         ops.append({'path': u.path if u.netloc == host else url, 'sum': nm.strip()[:60], 'params': params, 'props': props, 'full': url})
+                except urllib.error.HTTPError as e:
+                    rec.setdefault('detail_err', f'{e.code} ' + e.read().decode('utf-8', 'replace')[:200])
                 except Exception as e: rec.setdefault('detail_err', str(e)[:80])
                 time.sleep(0.4)
             if ops:
