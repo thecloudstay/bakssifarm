@@ -1,0 +1,21 @@
+# 연동창구 명세 모으기(열쇠 불필요) — 매주 일요일 + 손으로 실행
+name: 연동창구 명세 모으기
+on:
+  schedule:
+    - cron: '30 18 * * 6'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  specs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: python tools/fetch_specs.py
+      - run: |
+          git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
+          git add tools/api_specs.json
+          git diff --cached --quiet || git commit -m "연동창구 명세 갱신 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git pull --rebase -q && git push
