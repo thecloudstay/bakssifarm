@@ -15,8 +15,13 @@ STATE = os.path.join(PD, 'state.json'); st = jload(STATE, {})
 WH = jload(os.path.join(DATA, 'places.json'), {'wharfs': []})['wharfs']
 def norm(n): return re.sub(r'\s+', '', (n or '').replace('수산업협동조합', '수협').replace('(주)', ''))
 COOP_U = {norm(w['name']): w['u'] for w in WH}
+# 위판장 목록(63곳)에 없는 조합의 소재 시군 — 본소 위치가 분명한 곳만(넓은 바다를 도는 근해 조합·소재 불분명은 비워 둠)
+MANUAL = {'제주어류양식수협': '제주|제주시', '서남해수어류양식수협': '전남|여수시', '나로도수협': '전남|고흥군', '경인서부수협': '인천|인천', '서천서부수협': '충남|서천군',
+          '죽왕수협': '강원|고성군', '양양수협': '강원|양양군', '대천서부수협': '충남|보령시', '원덕수협': '강원|삼척시', '안면도수협': '충남|태안군', '영흥수협': '인천|인천',
+          '욕지수협': '경남|통영시', '대포수협': '강원|속초시', '의창수협': '경남|창원시', '기장수협': '부산|부산', '거문도수협': '전남|여수시'}
 def coop_unit(name):
     n = norm(name)
+    if n in MANUAL: return MANUAL[n]
     if n in COOP_U: return COOP_U[n]
     for k, u in COOP_U.items():
         if k and (k in n or n in k): return u
@@ -31,6 +36,13 @@ try:
     if not m: raise RuntimeError('내려받기 주소를 못 찾음')
     fid = m.group(1) + '_' + m.group(2)
     if st.get('fid') == fid and not env('WIPAN_FORCE'):
+        pub = jload(os.path.join(DATA, 'wipan.json'), None)
+        if pub:   # 조합 소재 시군 대응표가 바뀌었으면 다시 매김
+            byu = collections.defaultdict(lambda: {'amt': 0, 'coops': []})
+            for c in pub['coops']:
+                c['u'] = coop_unit(c['name'])
+                if c['u']: byu[c['u']]['amt'] += c['amt']; byu[c['u']]['coops'].append(c['name'])
+            pub['units'] = byu; jsave(os.path.join(DATA, 'wipan.json'), pub)
         status('wipan', True, f'새 파일 없음({st.get("month")})'); print('새 파일 없음'); sys.exit(0)
     raw = open(env('WIPAN_FILE'), 'rb').read() if env('WIPAN_FILE') else fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m.group(1)}&fileDetailSn={m.group(2)}&insertDataPrcus=N', page_url)
     for enc in ('utf-8-sig', 'cp949'):
