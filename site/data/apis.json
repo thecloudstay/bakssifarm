@@ -33,7 +33,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000330",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "3055523": {
    "title": "농림축산식품부 농림축산검역본부_가축질병발생정보",
@@ -44,7 +44,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151204000000000563&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "3055528": {
    "title": "농림축산식품부 농림축산검역본부_식물검역정보",
@@ -77,7 +77,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20150827000000000463&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15009422": {
    "title": "해양수산부 국립수산물품질관리원_수산물 방사능 조사현황",
@@ -110,7 +110,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000538",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15029182": {
    "title": "전국농수축산물조사가격표준데이터",
@@ -121,7 +121,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15033708": {
    "title": "해양수산부 국립해양측위정보원_해양기상 정보",
@@ -167,7 +167,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000014&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15052495": {
    "title": "농림축산식품부_재배품목별 면세유 공급현황",
@@ -178,7 +178,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000020&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15056511": {
    "title": "해양수산부_수협 산지조합 위판장 정보",
@@ -250,7 +250,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000494&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15056724": {
    "title": "해양수산부_양식어종수별 어가현황",
@@ -304,7 +304,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000770",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15057101": {
    "title": "축산물품질평가원_축산물등급판정확인서 발급정보",
@@ -359,7 +359,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000772",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15057699": {
    "title": "기후에너지환경부 국립환경과학원_축산계 정보제공서비스",
@@ -385,7 +385,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000668&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15057886": {
    "title": "농림축산식품부_시도별 사고원인 가축보험금지급 통계정보",
@@ -396,7 +396,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000663&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15057912": {
    "title": "축산물품질평가원_축산물경락가격정보",
@@ -475,7 +475,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000773",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15058568": {
    "title": "농림축산식품부 농림축산검역본부_도축장별 축종별 도축실적",
@@ -486,7 +486,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000678&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15058595": {
    "title": "농림축산식품부_소 브루셀라 검사결과현황",
@@ -497,7 +497,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000496&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15058693": {
    "title": "해양수산부 국립수산물품질관리원_품질인증수산물(API)",
@@ -590,7 +590,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000673&filter_ty=O&getBack=G&sort_id=&s_da",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15059357": {
    "title": "농림축산식품부_시도별 농작물 보험가입 통계정보",
@@ -631,7 +631,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000497&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15059494": {
    "title": "농림축산식품부_축종별 가축보험가입 통계정보",
@@ -642,7 +642,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000667&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15059973": {
    "title": "해양환경공단_해양환경측정망 관측서비스",
@@ -667,7 +667,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200713000000001391&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=201410120001&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15062666": {
    "title": "한국환경연구원_국토환경성평가_습지보호지역",
@@ -909,7 +909,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000636&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15086484": {
    "title": "농촌진흥청_축산환경자가진단",
@@ -977,7 +977,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000752",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15101863": {
    "title": "행정안전부_생활안전지도 철새도래지",
@@ -1024,7 +1024,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000071",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15102526": {
    "title": "농림수산식품교육문화정보원_농촌 마을 현황 정보",
@@ -1035,7 +1035,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151210000000000570",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15102748": {
    "title": "농림축산식품부_거점소독시설",
@@ -1046,7 +1046,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002114",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15102749": {
    "title": "농림축산식품부_통제초소",
@@ -1057,7 +1057,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002115",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15102819": {
    "title": "농림축산식품부 농림축산검역본부_축산관계시설등록통계",
@@ -1068,7 +1068,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002112",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15103013": {
    "title": "농림축산식품부 농림축산검역본부_농림축산식품부_농림축산검역본부 질병발생 통계",
@@ -1079,7 +1079,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220621000000002111",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15105524": {
    "title": "식품의약품안전처_축산물 판매업 폐업정보",
@@ -1111,7 +1111,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002359",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15109070": {
    "title": "농림축산식품부_지역별 농장 통계 데이터 제공",
@@ -1122,7 +1122,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002331",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15109071": {
    "title": "농림축산식품부_업종별 농장 통계 데이터 제공",
@@ -1133,7 +1133,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002330",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15109072": {
    "title": "농림축산식품부_축종별 농장 통계 데이터 제공",
@@ -1144,7 +1144,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002329",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15109073": {
    "title": "농림축산식품부_운영상태별 농장 통계 데이터 제공",
@@ -1155,7 +1155,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002328",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15109074": {
    "title": "농림축산식품부_사육규모별 농장 통계 데이터 제공",
@@ -1166,7 +1166,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002327",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:22"
+   "at": "2026-10-11 23:26"
   },
   "15109075": {
    "title": "농림축산식품부_대상질병별 농장 통계 데이터 제공",
@@ -1177,7 +1177,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002326",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109076": {
    "title": "농림축산식품부_가축 통계 데이터",
@@ -1188,7 +1188,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002325",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109218": {
    "title": "농림수산식품교육문화정보원_원천조사가격목록조회",
@@ -1199,7 +1199,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109239": {
    "title": "농림수산식품교육문화정보원_원천산지위판장가격목록조회",
@@ -1210,7 +1210,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000535",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15111816": {
    "title": "식품의약품안전처_어류질병정보",
@@ -1326,7 +1326,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141127000000000364",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15130187": {
    "title": "해양수산부 국립수산물품질관리원_매체별 이력 조회 현황",
@@ -1382,7 +1382,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002459",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15141806": {
    "title": "농림축산식품부 국립농산물품질관리원_무항생제 인증정보",
@@ -1421,7 +1421,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20250221000000002664",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15142447": {
    "title": "해양수산부 국립수산물품질관리원_수산물이력제 기본정보제공서비스 이력조회",
@@ -1801,7 +1801,7 @@
    "dom": "공통",
    "cat": "시세·거래",
    "state": "제공처 열쇠",
-   "at": "2026-10-11 23:23",
+   "at": "2026-10-11 23:27",
    "msg": "KAMIS_KEY, KAMIS_ID",
    "link": "https://www.kamis.or.kr/customer/reference/openapi_list.do",
    "host": "www.kamis.or.kr"
@@ -1811,7 +1811,7 @@
    "dom": "공통",
    "cat": "수출입",
    "state": "제공처 열쇠",
-   "at": "2026-10-11 23:23",
+   "at": "2026-10-11 23:27",
    "msg": "ECOS_KEY",
    "link": "https://ecos.bok.or.kr/api/",
    "host": "ecos.bok.or.kr"
@@ -1821,7 +1821,7 @@
    "dom": "공통",
    "cat": "원가",
    "state": "제공처 열쇠",
-   "at": "2026-10-11 23:23",
+   "at": "2026-10-11 23:27",
    "msg": "OPINET_KEY",
    "link": "https://www.opinet.co.kr/user/custapi/openApiInfo.do",
    "host": "www.opinet.co.kr"
@@ -1831,7 +1831,7 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "state": "제공처 열쇠",
-   "at": "2026-10-11 23:23",
+   "at": "2026-10-11 23:27",
    "msg": "KOSIS_KEY",
    "link": "https://kosis.kr/openapi/",
    "host": "kosis.kr"
@@ -1841,7 +1841,7 @@
    "dom": "동물농장",
    "cat": "수출입",
    "state": "제공처 열쇠",
-   "at": "2026-10-11 23:23",
+   "at": "2026-10-11 23:27",
    "msg": "USDA_KEY",
    "link": "https://mymarketnews.ams.usda.gov/mymarketnews-api",
    "host": "mymarketnews.ams.usda.gov"
@@ -1885,7 +1885,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002347",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15057968": {
    "title": "부산광역시_경매전 농산물 잔류농약검사(엄궁, 반여) 서비스",
@@ -1903,7 +1903,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220817000000002312",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109237": {
    "title": "농림수산식품교육문화정보원_원천실시간경락가격도매시장목록조회",
@@ -1930,7 +1930,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220818000000002315",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109234": {
    "title": "농림수산식품교육문화정보원_원천정산경락가격도매시장목록조회",
@@ -1949,7 +1949,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000533",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109236": {
    "title": "농림수산식품교육문화정보원_원천실시간경락가격품목목록조회",
@@ -1960,7 +1960,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000538",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109050": {
    "title": "농림수산식품교육문화정보원_화훼류농협공판장별경락가격조회",
@@ -1971,7 +1971,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002348",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15135883": {
    "title": "농림수산식품교육문화정보원_스마트팜코리아_노지 빅데이터 제공 서비스",
@@ -2019,7 +2019,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141216000000000372",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109058": {
    "title": "농림수산식품교육문화정보원_농수축산물지역별가격조회",
@@ -2030,7 +2030,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002322",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15012299": {
    "title": "산지공판장 경락가격정보",
@@ -2048,7 +2048,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002358",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15101446": {
    "title": "농촌진흥청_농작물재해예방정보",
@@ -2074,7 +2074,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002460",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15121330": {
    "title": "농림축산식품부_스마트팜 데이터 마트 노지 빅데이터 제공 서비스",
@@ -2093,7 +2093,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000495&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15101389": {
    "title": "농촌진흥청_축산분뇨 농가활용프로그램",
@@ -2112,7 +2112,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002467",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15140550": {
    "title": "농림축산식품부_도매시장 원천데이터 정산 가격",
@@ -2123,7 +2123,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002462",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15057828": {
    "title": "경기도_사료 제조업체 현황(수입)",
@@ -2302,7 +2302,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141029000000000346",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15058328": {
    "title": "농림축산식품부 농림축산검역본부_닭 품종별 도축실적",
@@ -2313,7 +2313,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000676&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15059332": {
    "title": "농림축산식품부 농림축산검역본부_축종별 암수별 도축실적",
@@ -2324,7 +2324,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000674&filter_ty=O&getBack=G&sort_id=&s_da",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15059452": {
    "title": "농림축산식품부_시도별 산지유통관리시설현황",
@@ -2351,7 +2351,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000334",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15111641": {
    "title": "기후에너지환경부_맞춤형 물환경정보(축산계 오염원 분포현황)",
@@ -2378,7 +2378,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002465",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15140562": {
    "title": "농림축산식품부_정산가격 기간별 법인별 품목별 총물량 총금액",
@@ -2389,7 +2389,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002466",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15140560": {
    "title": "농림축산식품부_정산가격 기간별 법인별 총물량 총금액",
@@ -2400,7 +2400,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002464",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15058064": {
    "title": "경기도_종오리업 현황",
@@ -2443,7 +2443,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002360",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15078893": {
    "title": "충청북도_농산물 잔류농약 검사결과",
@@ -2461,7 +2461,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002356",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109067": {
    "title": "농림수산식품교육문화정보원_정산경락 도매시장 유통통계 조회",
@@ -2472,7 +2472,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002357",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15141320": {
    "title": "부산광역시_국제수산물유통시설관리사업소_경매결과_일 정산내역",
@@ -2504,7 +2504,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002323",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15156073": {
    "title": "한국농수산식품유통공사_친환경농산물 가격정보 조회",
@@ -2676,7 +2676,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000675&filter_ty=O&getBack=G&sort_id=&s_da",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15121325": {
    "title": "농림축산식품부_스마트팜 데이터 마트 품목별 데이터셋 제공 서비스",
@@ -2695,7 +2695,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002468",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15080743": {
    "title": "농림축산식품부 국립농산물품질관리원_ 농산물 잔류농약 분석결과 OpenAPI",
@@ -2706,7 +2706,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000639&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15128301": {
    "title": "대전광역시 서구_축산현황 및 가금류 사육현황",
@@ -2725,7 +2725,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151027000000000487&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15097251": {
    "title": "경상북도 구미시_가축분뇨 배출시설 설치 허가 농가",
@@ -2743,7 +2743,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002463",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15059478": {
    "title": "경기도_가축 분뇨 수집 운반업체 현황",
@@ -2778,7 +2778,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000028&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15056737": {
    "title": "경기도_가축 전염병 발생 현황",
@@ -2911,7 +2911,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002353",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15156070": {
    "title": "한국농수산식품유통공사_가격 등락 정보 조회",
@@ -3016,7 +3016,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200929000000001392&filter_ty=O&getBack=G&sort_id=regist_dt&s_data_nm=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15102820": {
    "title": "농림축산식품부 농림축산검역본부_축산차량통계",
@@ -3027,7 +3027,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002113",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15041765": {
    "title": "농촌진흥청_축산실용기술모음",
@@ -3054,7 +3054,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200929000000001392&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "3055319": {
    "title": "농림축산식품부_과수고품질생산시설현대화지원사업",
@@ -3065,7 +3065,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000749&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15115478": {
    "title": "농촌진흥청 국립축산과학원_축종별 품종해설 정보(돼지)",
@@ -3083,7 +3083,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000637&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15079706": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리(GAP) 인증정보 OpenAPI",
@@ -3094,7 +3094,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141015000000000216&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15103485": {
    "title": "농촌진흥청 국립축산과학원_가축인공수정사 시험일정",
@@ -3119,7 +3119,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141224000000000399&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15080744": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물 중금속 분석결과 OpenAPI",
@@ -3130,7 +3130,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000640&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15104788": {
    "title": "농촌진흥청 국립축산과학원_가축인공수정사 면허시험 합격 통계",
@@ -3155,7 +3155,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000093",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15080607": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리(GAP) 관리시설정보 OpenAPI",
@@ -3166,7 +3166,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141015000000000218&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15080606": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리(GAP) 인증기관정보 OpenAPI",
@@ -3177,7 +3177,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141015000000000217&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15147274": {
    "title": "농촌진흥청 국립축산과학원_축종별 품종해설 정보(오리)",
@@ -3233,7 +3233,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000021&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15165612": {
    "title": "농림축산식품부_농산물 계약재배 물량 및 가격정보",
@@ -3515,7 +3515,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002354",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15139765": {
    "title": "행정안전부_공유플랫폼_실시간_조석정보",
@@ -3557,7 +3557,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002355",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15153184": {
    "title": "행정안전부_수산검역_휴대품_통계",
@@ -3793,7 +3793,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000321",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15101562": {
    "title": "농림축산식품부_2021년 시설원예 온실현황 및 에너지이용현황",
@@ -3812,7 +3812,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000748&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15102557": {
    "title": "농촌진흥청 국립축산과학원_가축유전체 동결자원(정액)",
@@ -3830,7 +3830,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151027000000000490&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15080746": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물 방사능 검사현황 OpenAPI",
@@ -3841,7 +3841,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000642&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15038287": {
    "title": "서울특별시 동작구_축산가공업 인허가 정보",
@@ -4640,7 +4640,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20160201000000000580&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-11 23:23"
+   "at": "2026-10-11 23:27"
   },
   "15109842": {
    "title": "경상남도 남해군_농어촌체험휴양마을현황 데이터 조회 서비스",
@@ -5084,7 +5084,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5094,7 +5094,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5104,7 +5104,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5114,7 +5114,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5124,7 +5124,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5134,7 +5134,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5144,7 +5144,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5154,7 +5154,7 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5164,7 +5164,7 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5174,7 +5174,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5184,7 +5184,7 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5194,7 +5194,7 @@
    "dom": "동물농장",
    "cat": "시세·거래",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5204,7 +5204,7 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5214,7 +5214,7 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5284,7 +5284,7 @@
    "dom": "동물농장",
    "cat": "수출입",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5294,7 +5294,7 @@
    "dom": "공통",
    "cat": "수출입",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5304,7 +5304,7 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5314,7 +5314,7 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "www.data.go.kr",
-   "at": "2026-10-11 23:22",
+   "at": "2026-10-11 23:26",
    "state": "제공처 열쇠",
    "n": null,
    "msg": "제공처 링크(포털 로그인 필요)"
@@ -5330,7 +5330,7 @@
    "msg": "열쇠 없이 내려받음"
   }
  },
- "at": "2026-10-11 23:23",
+ "at": "2026-10-11 23:27",
  "total": 625,
  "summary": {
   "제공처 열쇠": 367,
