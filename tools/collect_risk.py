@@ -12,7 +12,7 @@ AQ = jload(os.path.join(DATA, 'aqua.json'), {'species': []}); LS = jload(os.path
 WP = jload(os.path.join(DATA, 'wipan.json'), {}); SST = jload(os.path.join(DATA, 'seastock.json'), {})
 # 품종별 참고 한계 수온(℃): (고수온 주의, 고수온 위험, 저수온 주의, 저수온 위험) — 국립수산과학원 고수온·저수온 특보 기준과 품종별 적정 수온 자료를 박씨팜이 정리한 참고값
 SEA_TH = {'조피볼락': (25, 27, 5, 3), '넙치': (26, 28, 7, 5), '참돔': (27, 29, 10, 8), '방어': (26, 28, 11, 9), '숭어': (28, 30, 4, 2), '농어': (27, 29, 6, 4), '볼락': (25, 27, 6, 4),
-          '어류': (26, 28, 7, 4), '전복': (25, 27, 8, 5), '멍게': (22, 24, None, None), '미더덕': (24, 26, None, None), '해삼': (24, 27, None, None), '가리비': (22, 24, None, None),
+          '어류': (26, 28, 7, 4), '전복': (25, 27, 8, 5), '멍게': (24, 26, None, None), '미더덕': (25, 27, None, None), '해삼': (25, 28, None, None), '가리비': (23, 25, None, None),
           '굴': (26, 28, None, None), '홍합': (25, 27, None, None), '피조개': (26, 28, None, None), '키조개': (26, 28, None, None), '새우': (30, 32, 12, 10), '성게': (24, 26, None, None)}
 OFFICIAL = '국립수산과학원 특보: 고수온 예비특보 25℃, 주의보 28℃, 경보 28℃ 3일 이상 · 저수온 주의보 4℃, 경보 4℃ 3일 이상'
 WP_NAME = {'조피볼락': '조피볼락(활어)', '넙치': '넙치(활어)', '참돔': '참돔(활어)', '방어': '방어(활어)', '숭어': '숭어(활어)', '농어': '농어(활어)', '전복': '전복(활어)', '멍게': '우렁쉥이(활어)',
@@ -50,10 +50,13 @@ try:
         risks = []
         for k, (n, ha) in sp:
             th = SEA_TH[k]; lv = ''; why = ''
-            if hi is not None and hi >= th[1]: lv, why = '위험', f'최고 {hi}℃ ≥ {th[1]}℃'
-            elif hi is not None and hi >= th[0]: lv, why = '주의', f'최고 {hi}℃ ≥ {th[0]}℃'
-            if th[3] is not None and lo is not None and lo <= th[3]: lv, why = '위험', f'최저 {lo}℃ ≤ {th[3]}℃'
-            elif th[2] is not None and lo is not None and lo <= th[2] and LV[lv] < 1: lv, why = '주의', f'최저 {lo}℃ ≤ {th[2]}℃'
+            hd = sum(1 for i in idx if s['max'][i] >= th[1]); hw = sum(1 for i in idx if s['max'][i] >= th[0])
+            ld = sum(1 for i in idx if th[3] is not None and s['min'][i] <= th[3]); lw = sum(1 for i in idx if th[2] is not None and s['min'][i] <= th[2])
+            # 위험은 한계 수온을 이틀 이상 넘을 때(특보 「경보」가 사흘 지속을 보는 것과 같은 뜻), 주의는 하루라도 주의 수온에 닿을 때
+            if hd >= 2: lv, why = '위험', f'{th[1]}℃ 이상 {hd}일(최고 {hi}℃)'
+            elif hw >= 1: lv, why = '주의', f'{th[0]}℃ 이상 {hw}일(최고 {hi}℃)'
+            if ld >= 2: lv, why = '위험', f'{th[3]}℃ 이하 {ld}일(최저 {lo}℃)'
+            elif lw >= 1 and LV[lv] < 1: lv, why = '주의', f'{th[2]}℃ 이하 {lw}일(최저 {lo}℃)'
             day1 = next((s['days'][i] for i in idx if (th[1] and s['max'][i] >= th[0]) or (th[2] is not None and s['min'][i] <= th[2])), None)
             risks.append({'sp': k, 'lv': lv, 'why': why, 'n': n, 'ha': ha, 'from': day1})
         s.update({'hi': hi, 'lo': lo, 'risks': sorted(risks, key=lambda r: (-LV[r['lv']], -r['ha'])),
@@ -70,9 +73,9 @@ try:
             if u in heads and y: heads[u][g] += y[1] or 0
     for ks in chunks(keys, 50):
         res = om('https://api.open-meteo.com/v1/forecast', {'latitude': ','.join(str(PTS['land'][u][0]) for u in ks), 'longitude': ','.join(str(PTS['land'][u][1]) for u in ks),
-                 'daily': 'temperature_2m_max,temperature_2m_min,relative_humidity_2m_mean', 'timezone': 'Asia/Seoul', 'forecast_days': 7})
+                 'daily': 'temperature_2m_max,temperature_2m_min,relative_humidity_2m_min', 'timezone': 'Asia/Seoul', 'forecast_days': 7})
         for u, r in zip(ks, res):
-            d = r.get('daily') or {}; tx = d.get('temperature_2m_max') or []; tn = d.get('temperature_2m_min') or []; rh = d.get('relative_humidity_2m_mean') or []
+            d = r.get('daily') or {}; tx = d.get('temperature_2m_max') or []; tn = d.get('temperature_2m_min') or []; rh = d.get('relative_humidity_2m_min') or []   # 낮 최고 기온 때는 습도가 가장 낮으므로 최저 습도와 짝지음
             if not tx: continue
             thi = [round((1.8 * a + 32) - (0.55 - 0.0055 * (h or 60)) * (1.8 * a - 26), 1) if a is not None else None for a, h in zip(tx, rh)]
             mt = max((x for x in thi if x is not None), default=None); mn = min((x for x in tn if x is not None), default=None)

@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -53,7 +53,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/risk/', '위험 예보'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
@@ -382,6 +382,59 @@ def about_page():
     b += '<h2>연락</h2><p>자료 오류, 위치 정정, 제휴는 <a href="/pro/">업체 등록</a> 양식이나 <a href="/gongu/">모집판</a>의 양식으로 남겨 주세요.</p>'
     write('/about/', shell('/about/', '소개 — 자료 출처·갱신·원칙 | 박씨팜', '박씨팜이 쓰는 자료와 출처, 갱신 주기, 개별 농가 비공개 원칙.', b), '0.5')
 
+# ── 수급 위험 예보 — 7일 수온·기온 예보 × 품종 한계 × 사육·면허 규모 × 위판 값
+LVC = {'위험': 'bad', '경고': 'bad', '주의': 'wait', '': ''}
+def sst_cell(v):
+    if v is None: return '<td class="num">–</td>'
+    c = 'background:#f6d5cf' if v >= 28 else 'background:#fbe7c6' if v >= 25 else 'background:#d9e8f3' if v <= 4 else ''
+    return f'<td class="num" style="{c}">{v}</td>'
+def risk_page():
+    R = RISK
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 수급 위험 예보</p><h1 class="title">수급 위험 예보 <small class="mini">' + E(R.get('at', '')) + ' 기준</small></h1>'
+    b += '<p class="lead">앞으로 7일 바다 수온과 기온·습도 예보를 품종별 한계 수온, 가축 더위지수와 맞춰 「어디서, 무엇이, 언제부터」 위험한지 매깁니다. 폐사가 나면 공급과 값이 움직이므로, 지금 위판 값과 재고를 함께 붙였습니다. 양식장·축산 농가는 대비를, 유통·가공·보험·사료 업체는 물량과 값 변동에 대비하는 데 씁니다.</p>'
+    if not R.get('sea') and not R.get('land'):
+        b += '<p>첫 예보를 받는 중입니다. 매일 아침 작업에서 갱신됩니다.</p>'
+    else:
+        sm = R.get('summary', {})
+        b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [(f'양식 위험 해역 {sm.get("sea_units", 0)}곳', 'off' if sm.get('sea_units') else 'on'), (f'그중 폐사 위험 {sm.get("sea_danger", 0)}곳', 'off' if sm.get('sea_danger') else 'on'), (f'가축 더위·추위 주의 이상 {sm.get("land_units", 0)}곳', 'soon' if sm.get('land_units') else 'on'), (f'경고 이상 {sm.get("land_danger", 0)}곳', 'off' if sm.get('land_danger') else 'on')]) + '</div>'
+        sp = R.get('species') or []
+        b += '<h2>품종별 — 폐사 위험과 값 움직임</h2>'
+        if sp:
+            b += '<table class="t"><tr><th>품종</th><th>단계</th><th>위험 해역</th><th class="num">노출 면허 면적</th><th class="num">지금 위판 값</th><th>값에 미칠 영향</th></tr>'
+            for x in sp:
+                pr = x.get('price')
+                eff = '폐사 전 몰아 출하로 며칠 값 내림 → 물량이 줄면 몇 주 뒤 산지 값 오름 압력' if x['lv'] == '위험' else '출하 앞당김 가능성, 값 흔들림 지켜볼 것'
+                b += f'<tr><td>{E(x["sp"])}</td><td class="{LVC[x["lv"]]}">{E(x["lv"])}</td><td class="mini">{E(", ".join(uname(u) for u in x["units"][:8]))}{" 외" if len(x["units"]) > 8 else ""}</td><td class="num">{man(x["ha"])}㏊</td><td class="num">{(format(pr["wonkg"], ",") + "원/㎏" + (f" ({pr["chg"]:+}%)" if pr.get("chg") is not None else "")) if pr else "–"}</td><td class="mini">{eff}</td></tr>'
+            b += '</table>'
+        else: b += '<p>앞으로 7일 동안 품종별 한계 수온을 넘는 해역이 없습니다.</p>'
+        sea = R.get('sea') or {}
+        if sea:
+            ks = sorted(sea, key=lambda u: (-{'위험': 3, '경고': 2, '주의': 1, '': 0}[sea[u].get('lv', '')], -(sea[u].get('hi') or 0)))
+            days = next(iter(sea.values()))['days']
+            b += '<h2>양식 해역별 7일 바다 수온(하루 최고, ℃)</h2><p class="mini">' + E(R.get('official', '')) + '. 노란 칸 25℃ 이상, 붉은 칸 28℃ 이상, 파란 칸 4℃ 이하.</p>'
+            b += '<div style="overflow-x:auto"><table class="t"><tr><th>시군</th>' + ''.join(f'<th class="num">{E(d)}</th>' for d in days) + '<th>주된 양식 · 위험</th></tr>'
+            for u in ks:
+                x = sea[u]; rk = [r for r in x.get('risks', []) if r['lv']]
+                b += f'<tr><td><a href="{upath(u)}">{E(ufull(u))}</a></td>' + ''.join(sst_cell(v) for v in x['max']) + f'<td class="mini">{E(", ".join(r["sp"] + "(" + r["lv"] + ")" for r in rk[:4]) or ", ".join(r["sp"] for r in x.get("risks", [])[:3]) or "–")}</td></tr>'
+            b += '</table></div>'
+        land = R.get('land') or {}
+        if land:
+            ls = R.get('livestock') or {}
+            b += '<h2>가축 — 더위·추위 위험(7일)</h2><p class="mini">가축 더위지수(온습도지수) 72 주의 · 79 경고 · 89 위험, 최저 기온 −10℃ 주의 · −15℃ 경고. 두수는 위험 시군의 사육 두수 합.</p>'
+            b += '<table class="t"><tr><th>축종</th><th class="num">주의 시군 두수</th><th class="num">경고</th><th class="num">위험</th></tr>' + ''.join(f'<tr><td>{g}</td><td class="num">{man(v["주의"])}</td><td class="num">{man(v["경고"])}</td><td class="num">{man(v["위험"])}</td></tr>' for g, v in ls.items()) + '</table>'
+            hot = sorted([u for u in land if land[u].get('lv')], key=lambda u: -{'위험': 3, '경고': 2, '주의': 1, '': 0}[land[u]['lv']])
+            if hot:
+                b += '<table class="t"><tr><th>시군</th><th>단계</th><th class="num">더위지수 최고</th><th class="num">최저 기온</th><th class="num">소</th><th class="num">돼지</th><th class="num">닭</th></tr>' + ''.join(
+                    f'<tr><td><a href="{upath(u)}">{E(ufull(u))}</a></td><td class="{LVC[land[u]["lv"]]}">{E(land[u]["kind"])} {E(land[u]["lv"])}</td><td class="num">{land[u].get("thi_max")}</td><td class="num">{land[u].get("tmin_min")}</td><td class="num">{man(land[u]["heads"].get("소", 0))}</td><td class="num">{man(land[u]["heads"].get("돼지", 0))}</td><td class="num">{man(land[u]["heads"].get("닭", 0))}</td></tr>' for u in hot[:40]) + '</table>'
+            else: b += '<p>앞으로 7일 동안 가축 더위·추위 주의 단계에 드는 시군이 없습니다.</p>'
+        b += seastock_html()
+    b += '<h2>어떻게 매기나</h2><ul><li>바다 수온: 오픈메테오 공개 바다 예보(시간별)를 시군별 양식 면허 구역 가운데 지점에서 받아 하루 최고·최저로 묶습니다. 연안 실측(국립해양조사원 조위관측소)은 <a href="/sheet/">시세 한 장</a>의 이상 신호에 따로 씁니다.</li>'
+    b += '<li>품종별 한계 수온: 국립수산과학원 고수온·저수온 특보 기준과 품종별 적정 수온 자료를 바탕으로 박씨팜이 정리한 참고값입니다(예: 조피볼락 25℃ 주의·27℃ 위험, 전복 25·27℃, 멍게 24·26℃, 넙치 26·28℃). 위험은 한계 수온을 이틀 이상 넘을 때, 주의는 하루라도 주의 수온에 닿을 때입니다.</li>'
+    b += '<li>가축: 시군 중심의 하루 최고 기온과 그날 최저 습도(한낮 습도)로 더위지수를 셈해 축종별 사육 두수와 곱해 봅니다.</li>'
+    b += '<li>예보는 매일 저장해 두었다가 실제 위판 값·재고·폐사 신고와 맞춰 보며 기준을 고칩니다. 이 기록이 쌓이면 「고수온 며칠 뒤 어느 품종 값이 몇 % 움직였나」를 숫자로 말할 수 있게 됩니다.</li></ul>'
+    b += '<h2>업체·기관용</h2><p>보험사(양식·가축 재해보험), 수협·축협, 사료·종묘 업체, 유통·가공 업체에 해역·시군 단위 위험 예보와 값 영향 자료를 아침마다 보내 드립니다. <a href="/pro/">업체 등록 →</a></p>'
+    write('/risk/', shell('/risk/', '수급 위험 예보 — 양식 폐사·가축 더위 위험과 값 움직임 7일 | 박씨팜', '7일 바다 수온·기온·습도 예보로 양식 품종별 폐사 위험 해역, 가축 더위·추위 위험 시군과 노출 두수를 매기고 위판 값·수산 재고와 함께 보여 줍니다.', b, '/og/price.png'), '0.8')
+
 # ── 자료 대장(공개) — 박씨팜이 연동하는 공공 자료 전부를 영역·갈래별로
 APIS = J('apis.json', {'items': {}})
 APISUM = {}
@@ -432,7 +485,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
@@ -545,5 +598,5 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); data_page(); console_page(); misc()
+    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); risk_page(); data_page(); console_page(); misc()
     print('글 화면', len(PAGES) + 1)
