@@ -25,6 +25,6 @@ jobs:
         env: { FILE_IDS: '${{ github.event.inputs.ids }}' }
       - run: |
           git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
-          git add -f tools/_debug tools/file_discovered.json tools/api_discover_log.json 2>/dev/null || true
+          for f in tools/_debug tools/file_discovered.json tools/api_discover_log.json tools/file_specs.json site/data/files; do [ -e "$f" ] && git add -f "$f"; done; true
           git diff --cached --quiet || git commit -m "파일데이터 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           git pull --rebase -q && git push
