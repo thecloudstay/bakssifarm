@@ -72,7 +72,7 @@ jobs:
           git config user.email "bot@bakssifarm.local"
           git add -A site/data site/index.html tools/urls.txt private || true
           git diff --cached --quiet || git commit -m "아침 수집 $(TZ=Asia/Seoul date +%Y-%m-%d)"
-          git push || true
+          for i in 1 2 3; do git pull --rebase -X theirs -q && git push && break; sleep 5; done || true
       - name: 넷리파이에도 올리기(토큰이 있을 때만)
         if: ${{ env.NETLIFY_AUTH_TOKEN != '' && env.NETLIFY_SITE_ID != '' }}
         run: npx --yes netlify-cli@17 deploy --prod --dir=site --site="$NETLIFY_SITE_ID" --auth="$NETLIFY_AUTH_TOKEN" --message="아침 올리기 $(TZ=Asia/Seoul date +%Y-%m-%d)"
