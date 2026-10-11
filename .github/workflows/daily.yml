@@ -57,6 +57,8 @@ jobs:
         run: python tools/collect_extra.py
       - name: 이상 신호(고수온·급등락·전염병)
         run: python tools/collect_signals.py
+      - name: 수급 위험 예보(7일 수온·기온·습도 → 양식 폐사·가축 더위 위험, 열쇠 불필요)
+        run: python tools/collect_risk.py
       - name: 수입 단가(관세청 수출입실적) — 매달 3일
         run: |
           if [ "$(TZ=Asia/Seoul date +%d)" = "03" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then python tools/collect_trade.py; else echo "매달 3일 아침에만"; fi
