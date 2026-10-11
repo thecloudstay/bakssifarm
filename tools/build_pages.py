@@ -420,17 +420,17 @@ def risk_page():
         land = R.get('land') or {}
         if land:
             ls = R.get('livestock') or {}
-            b += '<h2>가축 — 더위·추위 위험(7일)</h2><p class="mini">가축 더위지수(온습도지수) 72 주의 · 79 경고 · 89 위험, 최저 기온 −10℃ 주의 · −15℃ 경고. 두수는 위험 시군의 사육 두수 합.</p>'
+            b += '<h2>가축 — 더위·추위 위험(7일)</h2><p class="mini">가축 더위지수(온습도지수)를 하루 평균으로 셈해 72 이상이 이틀이면 주의, 79 이상이 이틀이면 경고, 한낮 지수가 89를 넘으면 위험. 최저 기온 −10℃ 주의 · −15℃ 경고. 두수는 위험 시군의 사육 두수 합.</p>'
             b += '<table class="t"><tr><th>축종</th><th class="num">주의 시군 두수</th><th class="num">경고</th><th class="num">위험</th></tr>' + ''.join(f'<tr><td>{g}</td><td class="num">{man(v["주의"])}</td><td class="num">{man(v["경고"])}</td><td class="num">{man(v["위험"])}</td></tr>' for g, v in ls.items()) + '</table>'
             hot = sorted([u for u in land if land[u].get('lv')], key=lambda u: -{'위험': 3, '경고': 2, '주의': 1, '': 0}[land[u]['lv']])
             if hot:
-                b += '<table class="t"><tr><th>시군</th><th>단계</th><th class="num">더위지수 최고</th><th class="num">최저 기온</th><th class="num">소</th><th class="num">돼지</th><th class="num">닭</th></tr>' + ''.join(
-                    f'<tr><td><a href="{upath(u)}">{E(ufull(u))}</a></td><td class="{LVC[land[u]["lv"]]}">{E(land[u]["kind"])} {E(land[u]["lv"])}</td><td class="num">{land[u].get("thi_max")}</td><td class="num">{land[u].get("tmin_min")}</td><td class="num">{man(land[u]["heads"].get("소", 0))}</td><td class="num">{man(land[u]["heads"].get("돼지", 0))}</td><td class="num">{man(land[u]["heads"].get("닭", 0))}</td></tr>' for u in hot[:40]) + '</table>'
+                b += '<table class="t"><tr><th>시군</th><th>단계</th><th class="num">더위지수(하루 평균 최고)</th><th class="num">최저 기온</th><th class="num">소</th><th class="num">돼지</th><th class="num">닭</th></tr>' + ''.join(
+                    f'<tr><td><a href="{upath(u)}">{E(ufull(u))}</a></td><td class="{LVC[land[u]["lv"]]}">{E(land[u]["kind"])} {E(land[u]["lv"])}</td><td class="num">{land[u].get("thi_mean_max", land[u].get("thi_max"))}</td><td class="num">{land[u].get("tmin_min")}</td><td class="num">{man(land[u]["heads"].get("소", 0))}</td><td class="num">{man(land[u]["heads"].get("돼지", 0))}</td><td class="num">{man(land[u]["heads"].get("닭", 0))}</td></tr>' for u in hot[:40]) + '</table>'
             else: b += '<p>앞으로 7일 동안 가축 더위·추위 주의 단계에 드는 시군이 없습니다.</p>'
         b += seastock_html()
     b += '<h2>어떻게 매기나</h2><ul><li>바다 수온: 오픈메테오 공개 바다 예보(시간별)를 시군별 양식 면허 구역 가운데 지점에서 받아 하루 최고·최저로 묶습니다. 연안 실측(국립해양조사원 조위관측소)은 <a href="/sheet/">시세 한 장</a>의 이상 신호에 따로 씁니다.</li>'
     b += '<li>품종별 한계 수온: 국립수산과학원 고수온·저수온 특보 기준과 품종별 적정 수온 자료를 바탕으로 박씨팜이 정리한 참고값입니다(예: 조피볼락 25℃ 주의·27℃ 위험, 전복 25·27℃, 멍게 24·26℃, 넙치 26·28℃). 위험은 한계 수온을 이틀 이상 넘을 때, 주의는 하루라도 주의 수온에 닿을 때입니다.</li>'
-    b += '<li>가축: 시군 중심의 하루 최고 기온과 그날 최저 습도(한낮 습도)로 더위지수를 셈해 축종별 사육 두수와 곱해 봅니다.</li>'
+    b += '<li>가축: 시군 중심의 하루 평균 기온·습도로 더위지수를 셈해(한낮 지수는 위험 판정에만) 축종별 사육 두수와 곱해 봅니다.</li>'
     b += '<li>예보는 매일 저장해 두었다가 실제 위판 값·재고·폐사 신고와 맞춰 보며 기준을 고칩니다. 이 기록이 쌓이면 「고수온 며칠 뒤 어느 품종 값이 몇 % 움직였나」를 숫자로 말할 수 있게 됩니다.</li></ul>'
     b += '<h2>업체·기관용</h2><p>보험사(양식·가축 재해보험), 수협·축협, 사료·종묘 업체, 유통·가공 업체에 해역·시군 단위 위험 예보와 값 영향 자료를 아침마다 보내 드립니다. <a href="/pro/">업체 등록 →</a></p>'
     write('/risk/', shell('/risk/', '수급 위험 예보 — 양식 폐사·가축 더위 위험과 값 움직임 7일 | 박씨팜', '7일 바다 수온·기온·습도 예보로 양식 품종별 폐사 위험 해역, 가축 더위·추위 위험 시군과 노출 두수를 매기고 위판 값·수산 재고와 함께 보여 줍니다.', b, '/og/price.png'), '0.8')

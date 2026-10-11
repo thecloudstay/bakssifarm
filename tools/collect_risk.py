@@ -73,15 +73,20 @@ try:
             if u in heads and y: heads[u][g] += y[1] or 0
     for ks in chunks(keys, 50):
         res = om('https://api.open-meteo.com/v1/forecast', {'latitude': ','.join(str(PTS['land'][u][0]) for u in ks), 'longitude': ','.join(str(PTS['land'][u][1]) for u in ks),
-                 'daily': 'temperature_2m_max,temperature_2m_min,relative_humidity_2m_min', 'timezone': 'Asia/Seoul', 'forecast_days': 7})
+                 'daily': 'temperature_2m_max,temperature_2m_min,temperature_2m_mean,relative_humidity_2m_min,relative_humidity_2m_mean', 'timezone': 'Asia/Seoul', 'forecast_days': 7})
         for u, r in zip(ks, res):
             d = r.get('daily') or {}; tx = d.get('temperature_2m_max') or []; tn = d.get('temperature_2m_min') or []; rh = d.get('relative_humidity_2m_min') or []   # 낮 최고 기온 때는 습도가 가장 낮으므로 최저 습도와 짝지음
             if not tx: continue
-            thi = [round((1.8 * a + 32) - (0.55 - 0.0055 * (h or 60)) * (1.8 * a - 26), 1) if a is not None else None for a, h in zip(tx, rh)]
+            tm = d.get('temperature_2m_mean') or []; rm = d.get('relative_humidity_2m_mean') or []
+            f = lambda a, h: round((1.8 * a + 32) - (0.55 - 0.0055 * (h or 60)) * (1.8 * a - 26), 1) if a is not None else None
+            thi = [f(a, h) for a, h in zip(tx, rh)]                      # 한낮 더위지수(최고 기온·최저 습도)
+            thm = [f(a, h) for a, h in zip(tm, rm)] if tm else thi       # 하루 평균 더위지수 — 단계는 이것으로(한낮 잠깐 더운 날까지 경보하지 않도록)
             mt = max((x for x in thi if x is not None), default=None); mn = min((x for x in tn if x is not None), default=None)
-            lv = next((n for t, n in THI_ST if mt is not None and mt >= t), '')
+            mm = max((x for x in thm if x is not None), default=None)
+            n72 = sum(1 for x in thm if x is not None and x >= 72); n79 = sum(1 for x in thm if x is not None and x >= 79)
+            lv = '위험' if (mt or 0) >= 89 else '경고' if n79 >= 2 else '주의' if n72 >= 2 else ''
             cold = '경고' if mn is not None and mn <= -15 else '주의' if mn is not None and mn <= -10 else ''
-            out['land'][u] = {'days': [x[5:] for x in d.get('time', [])], 'tmax': tx, 'tmin': tn, 'rh': rh, 'thi': thi, 'thi_max': mt, 'tmin_min': mn,
+            out['land'][u] = {'days': [x[5:] for x in d.get('time', [])], 'tmax': tx, 'tmin': tn, 'rh': rh, 'thi': thi, 'thi_mean': thm, 'thi_max': mt, 'thi_mean_max': mm, 'tmin_min': mn,
                               'lv': lv if LV[lv] >= LV[cold] else cold, 'kind': '더위' if lv and LV[lv] >= LV[cold] else '추위' if cold else '', 'heads': heads.get(u, {})}
     # ── 묶음: 품종별 위험 해역·노출 면적, 축종별 노출 두수, 값 움직임 근거
     sp_sum = collections.defaultdict(lambda: {'units': [], 'ha': 0.0, 'lv': ''})
