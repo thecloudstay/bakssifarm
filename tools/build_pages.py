@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {}); OPPS = J('opps.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -53,7 +53,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/risk/', '위험 예보'), ('/signal/', '구매 신호'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/risk/', '위험 예보'), ('/signal/', '구매 신호'), ('/opps/', '수급 기회'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
@@ -459,8 +459,39 @@ def signal_page():
             b += '<h2>적중 기록</h2><table class="t"><tr><th>신호 달 → 채점 달</th><th class="num">품목</th><th class="num">적중</th></tr>' + ''.join(f'<tr><td>{E(m["month"])} → {E(m["to"])}</td><td class="num">{m["n"]}</td><td class="num">{m["hit"]} ({round(m["hit"] / m["n"] * 100)}%)</td></tr>' for m in sc['months']) + '</table>'
     b += '<h2>신호를 만드는 방법</h2><ul><li>창고 재고: 수협 물류센터·조합창고 재고가 한 달 새 15% 넘게 줄면 오를 쪽(+1), 늘면 내릴 쪽(−1).</li><li>달 안 흐름: 달 후반 위판 값이 전반보다 5% 넘게 오르면 +0.5, 내리면 −0.5. 앞달 대비 10% 넘게 움직이면 같은 방향으로 ±0.5.</li><li>폐사 위험 예보: 7일 안에 폐사 위험이면 +1, 고수온 주의면 +0.5(공급이 줄 수 있음).</li><li>합이 +1 이상이면 오를 쪽, −1 이하면 내릴 쪽. 채점은 다음 달 ㎏당 값이 3% 넘게 움직인 방향과 맞는지로 봅니다.</li><li>축산(소·돼지 경락가)·농산(도매시장 정산)은 공공데이터포털 열쇠가 들어오면 같은 틀로 붙입니다.</li></ul>'
     b += '<p class="mini">이 신호는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않습니다.</p>'
+    b += '<p><a href="/opps/">싸게 사는 산지 · 넘치는 품목 · 마르는 품목 · 어족 동향 보기 →</a></p>'
     b += '<h2>업체용</h2><p>품목·지역을 골라 매주 받는 구독(급식·식자재 유통·수산 가공·횟집 묶음)과, 우리 회사 구매 품목만 따로 보는 신호표를 준비하고 있습니다. <a href="/pro/">업체 등록에서 「시세 한 장 구독」 →</a></p>'
     write('/signal/', shell('/signal/', '구매 신호 — 품목별 산지 값 방향과 적중 기록(시험판) | 박씨팜', '수협 위판 값·창고 재고·폐사 위험 예보로 품목별 다음 달 산지 값이 오를 쪽인지 내릴 쪽인지 근거와 함께. 신호는 다음 달 실제 값으로 자동 채점해 공개.', b, '/og/price.png'), '0.8')
+
+# ── 수급 기회 — 수요·공급이 어긋나는 곳을 유통업체용 추천으로
+def opps_page():
+    O = OPPS
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 수급 기회</p><h1 class="title">수급 기회 — 어긋난 곳에 장사가 있다 <span class="tag">시험판</span></h1>'
+    b += '<p class="lead">같은 어종인데 산지마다 값이 크게 다르거나, 창고에 물량이 쌓이거나, 반대로 물량이 말라 가는 품목을 찾아 유통·가공·급식 업체가 바로 쓸 수 있는 말로 바꿉니다 — 「여기서 사라」, 「지금 싸게 사들여라」, 「이걸로 바꿔라」. 자연산 어획(어족)이 어디서 얼마나 잡히는지도 함께 봅니다.</p>'
+    if not O.get('month'):
+        b += '<p>첫 자료를 만드는 중입니다.</p>'
+    else:
+        mo = O['month'].replace('-', '년 ') + '월'
+        b += f'<p class="mini">기준: {E(mo)} · {E(O["basis"])} · 크기·선도(상품 규격)가 섞인 평균이므로 실제 매입 전 규격을 맞춰 보세요.</p>'
+        b += '<div class="toc"><a href="#o1">싸게 사는 산지</a><a href="#o2">공급 넘침</a><a href="#o3">공급 빠듯</a><a href="#o4">어족(자연산)</a><a href="#o5">자연산·양식 값 차이</a></div>'
+        b += '<h2 id="o1">1. 싸게 사는 산지 — 같은 어종, 조합마다 다른 값</h2>'
+        if O.get('spread'):
+            b += '<table class="t"><tr><th>어종</th><th class="num">전국 ㎏당</th><th>싸게 판 조합(㎏당 · 물량 · 평균보다)</th><th>비싸게 판 곳</th><th class="num">차익 크기</th></tr>'
+            b += ''.join(f'<tr><td>{E(x["fish"])}</td><td class="num">{format(x["avg"], ",")}</td><td class="mini">{E(" · ".join(f"{c[0]} {c[1]:,}원 {man(c[2])}㎏ −{c[3]}%" for c in x["cheap"]))}</td><td class="mini">{E(x["high"][0])} {x["high"][1]:,}원</td><td class="num">{man(x["save"])}원</td></tr>' for x in O['spread']) + '</table>'
+            b += '<p class="mini">차익 크기 = (전국 평균 − 싼 조합 값) × 그 조합 물량. 활어 운송비·선도 차이는 빼지 않았습니다.</p>'
+        b += '<h2 id="o2">2. 공급 넘침 — 싸게 사들이거나 판촉할 품목</h2>'
+        b += ('<table class="t"><tr><th>품목</th><th class="num">지금 ㎏당</th><th>근거</th><th>할 일</th></tr>' + ''.join(f'<tr><td>{E(x["item"])}<span class="mini"> {E(x["name"])}</span></td><td class="num">{format(x["wonkg"], ",")}</td><td class="mini">{E(" · ".join(x["why"]))}</td><td class="mini">{E(x["act"])}</td></tr>' for x in O['glut']) + '</table>') if O.get('glut') else '<p>이번 달에는 뚜렷한 공급 넘침 품목이 없습니다.</p>'
+        b += '<h2 id="o3">3. 공급 빠듯 — 미리 확보하거나 바꿔 쓸 품목</h2>'
+        b += ('<table class="t"><tr><th>품목</th><th class="num">지금 ㎏당</th><th>근거</th><th>바꿔 쓸 품목(㎏당)</th></tr>' + ''.join(f'<tr><td>{E(x["item"])}<span class="mini"> {E(x["name"])}</span></td><td class="num">{format(x["wonkg"], ",")}</td><td class="mini">{E(" · ".join(x["why"]))}</td><td class="mini">{E(", ".join(f"{a} {v:,}원" for a, v in x.get("subs", [])) or "–")}</td></tr>' for x in O['tight']) + '</table>') if O.get('tight') else '<p>이번 달에는 뚜렷한 공급 빠듯 품목이 없습니다.</p>'
+        b += '<h2 id="o4">4. 어족 — 자연산이 어디서, 무슨 어업으로, 얼마나 잡히나</h2>'
+        if O.get('wild'):
+            b += '<table class="t"><tr><th>어종</th><th class="num">자연산 위판 물량</th><th class="num">㎏당</th><th>주로 잡히는 곳</th><th>어업 종류</th><th class="num">달 후반 물량</th><th class="num">앞달 대비</th></tr>'
+            b += ''.join(f'<tr><td>{E(x["name"])}</td><td class="num">{man(x["kg"])}㎏</td><td class="num">{format(x["wonkg"], ",") if x["wonkg"] else "–"}</td><td class="mini">{E(", ".join(w[0] for w in x["where"]))}</td><td class="mini">{E(", ".join(g[0] for g in x["gear"]))}</td><td class="num">{(f"{x["kg_trend"]:+}%") if x.get("kg_trend") is not None else "–"}</td><td class="num">{(f"{x["wild_chg"]:+}%") if x.get("wild_chg") is not None else "다음 달부터"}</td></tr>' for x in O['wild']) + '</table>'
+            b += '<p class="mini">자연산은 위판 업종이 양식이 아닌 줄만 셉니다. 달이 바뀌면 앞달 대비 물량으로 어장 이동·어획 부진(어족 변화)을 바로 잡습니다.</p>'
+        if O.get('wildfarm'):
+            b += '<h2 id="o5">5. 자연산과 양식 값 차이 — 바꿔 사면 얼마나 싸나</h2><table class="t"><tr><th>어종</th><th class="num">자연산 ㎏당</th><th class="num">양식 ㎏당</th><th class="num">차이</th></tr>' + ''.join(f'<tr><td>{E(x["name"])}</td><td class="num">{x["wild"]:,}</td><td class="num">{x["farm"]:,}</td><td class="num">{x["gap"]:+}%</td></tr>' for x in O['wildfarm']) + '</table>'
+    b += '<h2>업체용</h2><p>우리 회사가 사는 품목·지역만 골라 매주 「싸게 사는 산지 · 넘치는 품목 · 마르는 품목」을 받아 보는 구독을 준비하고 있습니다. 박씨팜은 물건을 사고팔거나 거래를 중개하지 않고, 공개 위판 자료를 정리한 정보만 드립니다. <a href="/pro/">업체 등록 →</a> · <a href="/signal/">품목별 값 방향 신호 →</a> · <a href="/risk/">폐사 위험 예보 →</a></p>'
+    write('/opps/', shell('/opps/', '수급 기회 — 싸게 사는 산지, 넘치는 품목, 마르는 품목, 어족 동향 | 박씨팜', '같은 어종의 조합별 위판 값 차이, 창고 재고·물량으로 본 공급 넘침과 빠듯, 자연산 어획이 잡히는 곳과 어업 종류, 자연산·양식 값 차이를 유통·가공·급식 업체용 추천으로.', b, '/og/price.png'), '0.8')
 
 # ── 자료 대장(공개) — 박씨팜이 연동하는 공공 자료 전부를 영역·갈래별로
 APIS = J('apis.json', {'items': {}})
@@ -512,7 +543,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('buysignal', '구매 신호(시험판)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('buysignal', '구매 신호(시험판)'), ('opps', '수급 기회(시험판)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
@@ -625,5 +656,5 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); risk_page(); signal_page(); data_page(); console_page(); misc()
+    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); risk_page(); signal_page(); opps_page(); data_page(); console_page(); misc()
     print('글 화면', len(PAGES) + 1)

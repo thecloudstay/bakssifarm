@@ -176,5 +176,6 @@ https://thecloudstay.github.io/bakssifarm/p/%EC%B6%A9%EB%B6%81/%EC%B6%A9%EC%A3%B
 https://thecloudstay.github.io/bakssifarm/p/
 https://thecloudstay.github.io/bakssifarm/risk/
 https://thecloudstay.github.io/bakssifarm/signal/
+https://thecloudstay.github.io/bakssifarm/opps/
 https://thecloudstay.github.io/bakssifarm/data/
 https://thecloudstay.github.io/bakssifarm/console/
