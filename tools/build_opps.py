@@ -33,7 +33,7 @@ spread = []
 for f in fish:
     avg = f.get('wonkg')
     if not avg: continue
-    ok = [b for b in f.get('by', []) if len(b) > 3 and b[3] >= 2000 and b[1]]
+    ok = [b for b in f.get('by', []) if len(b) > 3 and b[3] >= 3000 and b[1] and avg * 0.4 <= b[1] <= avg * 2.5]   # 평균의 40% 아래·2.5배 위는 규격·단위 차이로 보고 뺌
     if len(ok) < 3: continue
     cheap = sorted([b for b in ok if b[1] <= avg * 0.85], key=lambda b: b[1])
     if not cheap: continue
@@ -60,6 +60,8 @@ for f in fish:
     if f.get('chg') is not None and f['chg'] <= -10: g += 0.5; why.append(f'앞달 대비 값 {f["chg"]:+}%')
     if risk.get(b) in ('위험', '주의'): t += 1 if risk[b] == '위험' else 0.5; why.append(f'폐사 {risk[b]} 예보')
     row = {'item': b, 'name': f['name'], 'wonkg': f['wonkg'], 'amt': f['amt'], 'why': why, 'sub': [s for s in SUB.get(b, [])]}
+    if pt is not None and pt > 5: g = 0      # 값이 오르는데 넘친다고 하지 않음
+    if pt is not None and pt < -5: t = 0     # 값이 내리는데 빠듯하다고 하지 않음
     if g >= 1 and g > t: glut.append(dict(row, score=g, act='싸게 사들여 냉동·가공 재고로 두거나 판촉 품목으로'))
     elif t >= 1 and t > g:
         subs = []
@@ -79,9 +81,12 @@ for f in sorted(WP['fish'], key=lambda f: -(f.get('wild_kg') or 0))[:25]:
                  'where': [[k, v] for k, v in where.most_common(4)], 'kg_trend': trend(f.get('daily_kg', [])), 'wild_chg': f.get('wild_chg')})
 # 5) 자연산 대 양식
 wf = []
+FARMED = {'넙치', '조피볼락', '참돔', '숭어', '농어', '전복', '멍게', '굴', '홍합', '가리비', '뱀장어', '돌돔', '능성어', '강도다리', '가자미', '쥐치', '방어', '해삼', '새우', '꼬막', '감성돔', '볼락'}
 for f in WP['fish']:
+    if base(f['name']) not in FARMED: continue
     if (f.get('wild_kg') or 0) >= 3000 and (f.get('farm_kg') or 0) >= 3000:
         a = f['wild_amt'] / f['wild_kg']; b = f['farm_amt'] / f['farm_kg']
+        if not (1 / 3 <= a / b <= 3): continue   # 세 배 넘게 벌어지면 규격·업종 기록 차이로 보고 뺌
         wf.append({'name': f['name'], 'wild': round(a), 'farm': round(b), 'gap': round((a / b - 1) * 100), 'wild_kg': f['wild_kg'], 'farm_kg': f['farm_kg']})
 wf.sort(key=lambda x: -abs(x['gap']))
 out = {'at': stamp(), 'month': WP['month'], 'spread': spread[:15], 'glut': glut[:12], 'tight': tight[:12], 'wild': wild, 'wildfarm': wf[:12],
