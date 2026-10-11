@@ -17,16 +17,18 @@ def get(url, to=60):
 try: get('https://www.data.go.kr/')
 except Exception as e: print('첫 화면 실패', e)
 PER = int(os.environ.get('DISC_PER', '40'))
+DT = os.environ.get('DISC_TYPE', 'API')  # API 또는 FILE(파일데이터: 열쇠 없이 내려받기)
+OUTN = 'api_discovered.json' if DT == 'API' else 'file_discovered.json'
 found = {}
 if os.environ.get('DISC_WORDS'): WORDS = os.environ['DISC_WORDS'].split(',')
 T0 = time.time(); LOG = []
 def save():
-    json.dump(sorted(found.values(), key=lambda x: -len(x['words'])), open(os.path.join(ROOT, 'api_discovered.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    json.dump(sorted(found.values(), key=lambda x: -len(x['words'])), open(os.path.join(ROOT, OUTN), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     json.dump(LOG, open(os.path.join(ROOT, 'api_discover_log.json'), 'w', encoding='utf-8'), ensure_ascii=False)
 DEBUG = os.environ.get('DISC_DEBUG')
 for w in WORDS:
     if time.time() - T0 > 2600: LOG.append('시간 초과로 멈춤'); break
-    for dtype, pat in (('API', r'/data/(\d+)/(openapi|standard)\.do'),):
+    for dtype in (DT,):
         for page in range(1, 9):
             q = urllib.parse.urlencode({'dType': dtype, 'keyword': w, 'perPage': PER, 'currentPage': page, 'sort': ''})
             t1 = time.time()
@@ -37,7 +39,7 @@ for w in WORDS:
             n = 0
             def tx(x): return re.sub(r'\s+', ' ', H.unescape(re.sub(r'<[^>]+>', '', x or ''))).strip()
             for li in h.split('class="apply-result-item"')[1:]:
-                m = re.search(r'<a href="/data/(\d+)/(openapi|standard)\.do">(.*?)</a>', li, re.S)
+                m = re.search(r'<a href="/data/(\d+)/(openapi|standard|fileData)\.do">(.*?)</a>', li, re.S)
                 if not m: continue
                 i = m.group(1); n += 1
                 if i in cands: continue

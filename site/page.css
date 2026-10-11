@@ -69,6 +69,7 @@ table.t tr.ex td{color:var(--faint)}
   .form .row{grid-template-columns:1fr}
   .sgrid{grid-template-columns:repeat(2,1fr)}
   table.t{font-size:13.5px} table.t th,table.t td{padding:8px 6px}
+  table.t td{overflow-wrap:anywhere;word-break:keep-all} table.t td.mini,table.t td .mini{word-break:break-all}
 }
 .pagenav{margin-left:14px}
 .pagenav a{display:inline-flex;align-items:center;height:34px;padding:0 12px;border-radius:8px;font-size:14.5px;color:var(--mute);font-weight:580;text-decoration:none}

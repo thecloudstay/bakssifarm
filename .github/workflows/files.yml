@@ -1,0 +1,30 @@
+# 파일데이터(열쇠 불필요) 진단·수집 — 손으로 실행
+name: 파일데이터 모으기
+on:
+  workflow_dispatch:
+    inputs:
+      ids: { description: '번호(쉼표)', required: false }
+      discover: { description: '파일데이터 찾기도(아무 값)', required: false }
+permissions:
+  contents: write
+jobs:
+  files:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - if: ${{ github.event.inputs.discover != '' }}
+        run: python tools/discover_apis.py
+        timeout-minutes: 50
+        continue-on-error: true
+        env: { DISC_TYPE: FILE }
+      - if: ${{ github.event.inputs.ids != '' }}
+        run: python tools/fetch_files.py
+        continue-on-error: true
+        env: { FILE_IDS: '${{ github.event.inputs.ids }}' }
+      - run: |
+          git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
+          git add -f tools/_debug tools/file_discovered.json tools/api_discover_log.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "파일데이터 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          git pull --rebase -q && git push
