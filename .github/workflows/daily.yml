@@ -50,7 +50,7 @@ jobs:
       - name: 수협 산지 위판 시세(해양수산부 위탁판매 현황 파일, 열쇠 불필요)
         run: python tools/collect_wipan.py
       - name: 파일데이터 일괄(열쇠 불필요 — 사료값·수입가·부분육·도축·재고 등)
-        run: pip install -q openpyxl && python tools/collect_files.py
+        run: pip install -q openpyxl && python tools/collect_files.py && python tools/build_files.py
       - name: 연동 가능한 모든 연동창구(명세 기반 일괄 수집)
         run: python tools/collect_all.py
       - name: 공공데이터포털 밖 제공처(농산물유통정보·환율·기름값·국가통계·미국 농무부)

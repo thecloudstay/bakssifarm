@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -143,6 +143,16 @@ def wipan_html(n=20, h2=True):
     if WPN.get('farm'): b += '<p class="mini">양식 업종으로 위판된 어종(금액 순): ' + E(', '.join(f'{k} {man(v)}원' for k, v in WPN['farm'][:8])) + '</p>'
     return b
 
+def seastock_html():
+    if not SSTK.get('center') and not SSTK.get('coop'): return ''
+    b = f'<h2>수산 재고 — {E(SSTK["month"].replace("-", "년 "))}월 초 대비 말</h2><p class="mini">창고에 쌓이는 재고가 늘면 값 내림 압력, 줄면 오름 압력. 해양수산부 수협 물류센터·공판장 재고(㎏)와 조합창고 재고(수량).</p><div class="grid2">'
+    for k, t, u in (('center', '수협 물류센터·공판장', '㎏'), ('coop', '조합 창고', '수량')):
+        x = SSTK.get(k)
+        if not x: continue
+        b += f'<div><h3>{t}</h3><table class="t"><tr><th>품목</th><th class="num">달 말({u})</th><th class="num">달 초 대비</th></tr>' + ''.join(
+            f'<tr><td>{E(i[0])}</td><td class="num">{man(i[2])}</td><td class="num {"bad" if (i[3] or 0) > 15 else "ok" if (i[3] or 0) < -15 else ""}">{("+" if (i[3] or 0) > 0 else "") + str(i[3]) + "%" if i[3] is not None else "새로"}</td></tr>' for i in x['items'][:12]) + '</table></div>'
+    return b + '</div>'
+
 def price_page():
     ek = PRICE.get('ekape'); at = PRICE.get('at') or ''
     b = '<p class="crumb"><a href="/">박씨팜</a> › 경락가</p><h1 class="title">경락가 조회</h1><p class="lead">소·돼지는 축산물품질평가원 등급별 경락가, 농산물은 공영도매시장 경락가, 수산물은 수협 위판 시세. 연동창구가 붙는 순서대로 이 화면에 들어옵니다.</p>'
@@ -177,7 +187,7 @@ def price_page():
             b += f'<tr><td>{E(it["item"])}</td><td>{E(it["grp"])}</td><td class="num">{format(it["won_kg"], ",") if it["won_kg"] else "–"}</td><td class="num">{man(it["amt"])}원</td><td class="mini">{E(" · ".join(f"{m[0]} {m[1]:,}" for m in sorted(top, key=lambda x: -x[1])))}</td></tr>'
         b += '</table>'
     b += '<h2>농산물 도매시장 경락가</h2><p>공영도매시장 32곳의 품목·등급별 경락가는 농림축산식품부 도매시장 통합 창구(농넷)로 받습니다. 지도의 <a href="/?mode=crop">농장 보기</a>에서 시군을 누르면 그 지역 대표 품목의 경락가가 함께 보이도록 준비하고 있습니다.</p>'
-    b += wipan_html(30) + '<p><a href="/?mode=sea&m=w">지도에서 시군별 위판 금액 보기 →</a></p>' if WPN.get('fish') else '<h2>수산물 위판 시세</h2><p>수협 위판장 63곳의 품종별 위판 시세는 해양수산부 위탁판매 현황 파일로 받습니다. 지도의 <a href="/?mode=sea">어장 보기</a>에서 위판장을 누르면 보이게 됩니다.</p>'
+    b += wipan_html(30) + '<p><a href="/?mode=sea&m=w">지도에서 시군별 위판 금액 보기 →</a></p>' + seastock_html() if WPN.get('fish') else '<h2>수산물 위판 시세</h2><p>수협 위판장 63곳의 품종별 위판 시세는 해양수산부 위탁판매 현황 파일로 받습니다. 지도의 <a href="/?mode=sea">어장 보기</a>에서 위판장을 누르면 보이게 됩니다.</p>'
     b += '<h2>수입 단가와 비교</h2>'
     tr = TRADE.get('items', [])
     if tr:
@@ -264,7 +274,7 @@ def sheet_page():
     d = PRICE.get('date') or TODAY
     b = f'<p class="crumb"><a href="/">박씨팜</a> › 시세 한 장</p><h1 class="title">산지 시세 한 장 <small class="mini">{E(d)} 기준</small></h1><p class="lead">축·수산 가공·유통·사료 업체의 아침 회의용 한 장. 등급별 경락가와 공판장별 차이, 돈육 대표가격, 수입 단가, 구입가 중위값, 오늘의 이상 신호를 한 화면에. 매일 아침 자동으로 다시 만들어집니다.</p>'
     b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('경락가 ' + ('연동' if ek else '연동 전'), 'on' if ek else 'soon'), ('수입 단가 ' + ('연동' if tr else '연동 전'), 'on' if tr else 'soon'), (('위판 시세 ' + WPN['month']) if WPN.get('fish') else '위판 시세 연동 전', 'on' if WPN.get('fish') else 'soon'), ('이상 신호 ' + (f'{len(sig)}건' if sig else '없음'), 'off' if sig else 'on')]) + '</div>'
-    b += wipan_html(15)
+    b += wipan_html(15) + seastock_html()
     b += '<h2>소·돼지 등급별 경락가</h2>'
     if ek:
         for sec in ek:

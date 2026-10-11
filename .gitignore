@@ -3,3 +3,4 @@ node_modules/
 shots/
 tools/config.json
 tools/_debug/
+.cache/

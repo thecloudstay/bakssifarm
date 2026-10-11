@@ -1,11 +1,12 @@
 # 파일데이터(열쇠 불필요) 일괄 내려받기 — tools/file_sets.json 의 공공데이터포털 파일데이터를 바뀐 것만 받아
 #  private/files/<번호>.<확장자>(8㎆ 이하일 때 원본), private/files/<번호>.json(칸 이름·줄 수·앞 200줄) 로 저장.
 #  공개 화면용 가공은 build_files.py 가 이 요약을 읽어 만든다(개별 업소 명단은 공개하지 않음).
-import sys, os, re, io, csv, json, time, zipfile, urllib.request, urllib.parse, http.cookiejar
+import sys, os, re, io, csv, json, time, zipfile, collections, urllib.request, urllib.parse, http.cookiejar
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 SETS = jload(os.path.join(ROOT, 'tools', 'file_sets.json'), [])
 PD = os.path.join(PRIVATE, 'files'); os.makedirs(PD, exist_ok=True)
+RAW = os.path.join(ROOT, '.cache', 'files'); os.makedirs(RAW, exist_ok=True)   # 원본 전체(저장소에 안 올림) — 같은 작업 안에서 build_files.py 가 가공
 STATE = os.path.join(PD, 'state.json'); st = jload(STATE, {})
 OP = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko;q=0.9'}
@@ -42,7 +43,9 @@ for s in SETS:
         m = re.search(r'/cmm/cmm/fileDownload\.do\?atchFileId=(\w+)&(?:amp;)?fileDetailSn=(\d+)', h)
         t = re.search(r'<title>([^<|]*)', h); title = t.group(1).strip() if t else s.get('title', '')
         upd = re.search(r'수정일</th>\s*<td[^>]*>\s*([\d-]+)', h)
-        if not m: raise RuntimeError('내려받기 주소 없음')
+        if not m:
+            if '기관자체에서 다운로드' in h: st[i] = {'link': True, 'at': stamp(), 'title': title}; print('제공처 링크(로그인 필요)', i); continue
+            raise RuntimeError('내려받기 주소 없음')
         fid = m.group(1) + '_' + m.group(2)
         if st.get(i, {}).get('fid') == fid and os.path.exists(os.path.join(PD, i + '.json')) and not env('FILES_FORCE'):
             same += 1; continue
@@ -52,10 +55,10 @@ for s in SETS:
         if ext == 'zip':
             z = zipfile.ZipFile(io.BytesIO(b)); nm = max(z.namelist(), key=lambda n: z.getinfo(n).file_size); b = z.read(nm); disp = nm; ext = nm.rsplit('.', 1)[-1].lower()
         rows = table(b, disp)
-        if len(b) <= 8 * 1024 * 1024:
-            for f in os.listdir(PD):
-                if f.startswith(i + '.') and not f.endswith('.json'): os.remove(os.path.join(PD, f))
-            open(os.path.join(PD, f'{i}.{ext}'), 'wb').write(b)
+        for f in os.listdir(PD):
+            if f.startswith(i + '.') and not f.endswith('.json'): os.remove(os.path.join(PD, f))
+        open(os.path.join(RAW, f'{i}.{ext}'), 'wb').write(b)
+        if len(b) <= 1024 * 1024: open(os.path.join(PD, f'{i}.{ext}'), 'wb').write(b)
         jsave(os.path.join(PD, i + '.json'), {'id': i, 'key': s.get('key'), 'title': title, 'file': disp, 'size': len(b), 'updated': upd.group(1) if upd else '', 'at': stamp(),
                                               'cols': rows[0] if rows else [], 'n': max(0, len(rows) - 1), 'head': rows[1:201]})
         st[i] = {'fid': fid, 'at': stamp(), 'file': disp, 'n': max(0, len(rows) - 1)}; ok += 1
@@ -64,4 +67,17 @@ for s in SETS:
         st.setdefault(i, {})['err'] = str(e)[:160]; fail += 1; print('실패', i, e)
     time.sleep(1)
 jsave(STATE, st, indent=1)
-status('files', fail == 0, f'파일데이터 {len(SETS)}종 · 새로 받음 {ok} · 그대로 {same} · 실패 {fail}')
+# 연동 대장에 파일데이터도 올림
+reg = jload(os.path.join(DATA, 'apis.json'), {'items': {}})
+DOM = {'feed': '동물농장', 'import_cattle': '동물농장', 'cattle': '동물농장', 'pig': '동물농장', 'ls': '동물농장', 'grade': '동물농장', 'dairy': '동물농장', 'abattoirs': '동물농장', 'dealers': '동물농장', 'insect': '동물농장',
+       'wipan': '어장', 'sea': '어장', 'busan': '어장', 'import_meat': '동물농장', 'at_trade': '공통'}
+for s in SETS:
+    v = st.get(s['id'], {}); k = s.get('key', '')
+    dom = next((d for p, d in DOM.items() if k.startswith(p)), '공통')
+    cat = '시세·거래' if any(w in s['title'] for w in ('가격', '경락', '위판', '판매')) else '수출입' if '수입' in s['title'] or '수출' in s['title'] else '업체·인허가' if any(w in s['title'] for w in ('현황', '등록')) else '사육·생산'
+    reg['items']['file-' + s['id']] = {'title': '파일데이터_' + s['title'], 'dom': dom, 'cat': cat, 'host': 'www.data.go.kr', 'at': v.get('at', ''),
+        'state': '정상' if v.get('fid') else '제공처 열쇠' if v.get('link') else '실패', 'n': v.get('n'), 'msg': '열쇠 없이 내려받음' if v.get('fid') else '제공처 링크(포털 로그인 필요)' if v.get('link') else v.get('err', '')}
+reg['summary'] = dict(collections.Counter(x.get('state', '?') for x in reg['items'].values()))
+jsave(os.path.join(DATA, 'apis.json'), reg, indent=1)
+nl = sum(1 for v in st.values() if isinstance(v, dict) and v.get('link'))
+status('files', fail == 0, f'파일데이터 {len(SETS)}종 · 새로 받음 {ok} · 그대로 {same} · 제공처 링크 {nl} · 실패 {fail}')
