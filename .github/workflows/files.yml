@@ -5,6 +5,7 @@ on:
     inputs:
       ids: { description: '번호(쉼표)', required: false }
       discover: { description: '파일데이터 찾기도(아무 값)', required: false }
+      probe: { description: '바로 받기 되는지만 훑기(아무 값)', required: false }
 permissions:
   contents: write
 jobs:
@@ -22,7 +23,7 @@ jobs:
       - if: ${{ github.event.inputs.ids != '' }}
         run: python tools/fetch_files.py
         continue-on-error: true
-        env: { FILE_IDS: '${{ github.event.inputs.ids }}' }
+        env: { FILE_IDS: '${{ github.event.inputs.ids }}', PROBE: '${{ github.event.inputs.probe }}' }
       - run: |
           git config user.name "박씨팜 아침 작업"; git config user.email "bot@bakssifarm.local"
           for f in tools/_debug tools/file_discovered.json tools/api_discover_log.json tools/file_specs.json site/data/files; do [ -e "$f" ] && git add -f "$f"; done; true
