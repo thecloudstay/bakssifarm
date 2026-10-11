@@ -54,6 +54,9 @@ try:
     fishday = collections.defaultdict(lambda: collections.defaultdict(lambda: [0.0, 0.0])) # 어종 → 날짜 → [금액, ㎏]
     fish = collections.defaultdict(lambda: [0.0, 0.0, set()])                              # 어종 → [금액, ㎏, 조합들]
     kind = collections.Counter(); farm = collections.Counter(); days = set(); n = 0
+    src = collections.defaultdict(lambda: [0.0, 0.0, 0.0, 0.0])          # 어종 → [자연산 ㎏, 자연산 금액, 양식 ㎏, 양식 금액]
+    gear = collections.defaultdict(collections.Counter)                   # 어종 → 업종(어업 종류)별 ㎏
+    wildcoop = collections.defaultdict(collections.Counter)               # 어종 → 조합별 자연산 ㎏(어디서 잡히나)
     for r in rd:
         amt = num(r.get('위판금액')); kg = num(r.get('위판중량'))
         if amt <= 0: continue
@@ -63,12 +66,15 @@ try:
         b = fishday[name][d]; b[0] += amt; b[1] += kg
         g = fish[name]; g[0] += amt; g[1] += kg; g[2].add(c)
         kind[(r.get('업종명') or '').strip()] += amt
-        if '양식' in (r.get('업종명') or ''): farm[name] += amt
+        gy = (r.get('업종명') or '').strip(); fm = '양식' in gy
+        if fm: farm[name] += amt
+        z = src[name]; z[2 if fm else 0] += kg; z[3 if fm else 1] += amt
+        if not fm: gear[name][gy] += kg; wildcoop[name][c] += kg
         days.add(d); n += 1
     month = max(days)[:7] if days else ''
     def wk(a): return round(a[0] / a[1]) if a[1] > 0 else None
     agg = {'month': month, 'rows': n, 'coops': {c: {k: [round(v[0]), round(v[1], 1)] for k, v in d.items()} for c, d in coop.items()},
-           'fish': {k: [round(v[0]), round(v[1], 1)] for k, v in fish.items()}, 'kind': dict(kind), 'farm': dict(farm)}
+           'fish': {k: [round(v[0]), round(v[1], 1)] for k, v in fish.items()}, 'src': {k: [round(x) for x in v] for k, v in src.items()}, 'kind': dict(kind), 'farm': dict(farm)}
     jsave(os.path.join(PD, month + '.json'), agg)
     # 공개 집계
     topfish = sorted(fish.items(), key=lambda x: -x[1][0])[:80]
@@ -76,7 +82,11 @@ try:
            'total': round(sum(v[0] for v in fish.values())),
            'fish': [{'name': k, 'amt': round(v[0]), 'kg': round(v[1]), 'wonkg': wk(v), 'coops': len(v[2]),
                      'daily': [[d[5:], wk(x)] for d, x in sorted(fishday[k].items()) if wk(x)],
-                     'by': sorted([[c, wk(coop[c][k]), round(coop[c][k][0])] for c in v[2] if wk(coop[c][k])], key=lambda x: -x[2])[:12]} for k, v in topfish],
+                     'daily_kg': [[d[5:], round(x[1])] for d, x in sorted(fishday[k].items())],
+                     'wild_kg': round(src[k][0]), 'farm_kg': round(src[k][2]), 'wild_amt': round(src[k][1]), 'farm_amt': round(src[k][3]),
+                     'gear': [[g, round(q)] for g, q in gear[k].most_common(4)],
+                     'wild_where': [[c, round(q)] for c, q in wildcoop[k].most_common(6)],
+                     'by': sorted([[c, wk(coop[c][k]), round(coop[c][k][0]), round(coop[c][k][1])] for c in v[2] if wk(coop[c][k])], key=lambda x: -x[2])[:20]} for k, v in topfish],
            'coops': sorted([{'name': c, 'u': coop_unit(c), 'amt': round(sum(v[0] for v in d.values())),
                              'top': [[k, round(v[0]), wk(v)] for k, v in sorted(d.items(), key=lambda x: -x[1][0])[:8]]} for c, d in coop.items()], key=lambda x: -x['amt']),
            'kind': sorted([[k, round(v)] for k, v in kind.items()], key=lambda x: -x[1])[:15],
@@ -92,7 +102,9 @@ try:
         pa = jload(os.path.join(PD, prev[-1]), {}).get('fish', {})
         for x in pub['fish']:
             p = pa.get(x['name'])
-            if p and p[1] > 0 and x['wonkg']: x['prev'] = round(p[0] / p[1]); x['chg'] = round((x['wonkg'] / x['prev'] - 1) * 100, 1)
+            if p and p[1] > 0 and x['wonkg']: x['prev'] = round(p[0] / p[1]); x['chg'] = round((x['wonkg'] / x['prev'] - 1) * 100, 1); x['prev_kg'] = round(p[1]); x['kg_chg'] = round((x['kg'] / p[1] - 1) * 100, 1) if p[1] else None
+            ps = jload(os.path.join(PD, prev[-1]), {}).get('src', {}).get(x['name'])
+            if ps and ps[0] > 0: x['wild_chg'] = round((x['wild_kg'] / ps[0] - 1) * 100, 1)
         pub['prev_month'] = prev[-1][:7]
     jsave(os.path.join(DATA, 'wipan.json'), pub)
     st.update({'fid': fid, 'month': month, 'at': stamp(), 'rows': n}); jsave(STATE, st, indent=1)

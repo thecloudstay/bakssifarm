@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '17 21 * * *'   # 한국 시간 06:17
   workflow_dispatch:
+    inputs:
+      force: { description: '파일 자료 다시 받기(아무 값)', required: false }
 permissions:
   contents: write
   pages: write
@@ -14,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+      WIPAN_FORCE: ${{ github.event.inputs.force }}
+      FILES_FORCE: ${{ github.event.inputs.force }}
       FOODSAFETY_KEY: ${{ secrets.FOODSAFETY_KEY }}
       MAFRA_KEY: ${{ secrets.MAFRA_KEY }}
       KAMIS_KEY: ${{ secrets.KAMIS_KEY }}
@@ -61,6 +65,8 @@ jobs:
         run: python tools/collect_risk.py
       - name: 구매 신호(품목별 값 방향·적중 채점)
         run: python tools/build_signal.py
+      - name: 수급 기회(산지 값 차이·공급 넘침·빠듯·어족)
+        run: python tools/build_opps.py
       - name: 수입 단가(관세청 수출입실적) — 매달 3일
         run: |
           if [ "$(TZ=Asia/Seoul date +%d)" = "03" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then python tools/collect_trade.py; else echo "매달 3일 아침에만"; fi
