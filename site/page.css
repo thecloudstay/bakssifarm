@@ -80,3 +80,6 @@ table.t tr.ex td{color:var(--faint)}
 .form.calc input{text-align:right}
 @media (max-width:760px){.form.calc label{grid-template-columns:1fr 120px}}
 @media (max-width:760px){#cform{order:2}#cout{position:sticky;top:64px;z-index:5;box-shadow:0 6px 18px rgba(30,38,33,.08)}}
+.form.calc{align-self:start}
+#cab label{display:block;margin:8px 0 10px;font-size:14px;color:var(--mute)}
+#cab select{display:block;width:100%;height:42px;margin-top:6px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:inherit}
