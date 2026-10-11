@@ -1,14 +1,28 @@
 {
- "15051663": [
-  "/cmm/cmm/fileDownload.do?atchFileId=FILE_000000007681708&fileDetailSn=1&insertDataPrcus=N",
-  "atchFileId: $('#limitAtchFileId').val()",
-  "fn_fileDataDown('15051663', 'uddi:d1e13c8f-4d00-4714-97de-f28c7aa27358', '','1', '1')",
-  "publicDataDetailPk\" name=\"publicDataDetailPk\" value=\"uddi:d1e13c8f-4d00-4714-97de-f28c7aa27358\" />"
- ],
- "15102791": [
-  "/cmm/cmm/fileDownload.do?atchFileId=FILE_000000007673684&fileDetailSn=1&insertDataPrcus=N",
-  "atchFileId: $('#limitAtchFileId').val()",
-  "fn_fileDataDown('15102791', 'uddi:8e543159-83ba-4778-b2cd-a4ab4e871c40', '','1', '1')",
-  "publicDataDetailPk\" name=\"publicDataDetailPk\" value=\"uddi:8e543159-83ba-4778-b2cd-a4ab4e871c40\" />"
- ]
+ "15051663": {
+  "hints": [
+   "/cmm/cmm/fileDownload.do?atchFileId=FILE_000000007681708&fileDetailSn=1&insertDataPrcus=N",
+   "atchFileId: $('#limitAtchFileId').val()",
+   "fn_fileDataDown('15051663', 'uddi:d1e13c8f-4d00-4714-97de-f28c7aa27358', '','1', '1')",
+   "publicDataDetailPk\" name=\"publicDataDetailPk\" value=\"uddi:d1e13c8f-4d00-4714-97de-f28c7aa27358\" />"
+  ],
+  "title": "인천광역시_남촌도매시장 일별 경매 가격정보_20260831",
+  "size": 454441,
+  "type": "application/octet-stream; charset=UTF-8",
+  "disp": "attachment; filename=\"%EC%9D%BC%EB%B3%84 %EA%B2%BD%EB%A7%A4 %EA%B0%80%EA%B2%A9%EC%A0%95%EB%B3%B4_20260801~20260831.csv\"",
+  "head": "癤우씪�옄,�뭹紐�,臾쇰웾,湲덉븸\r\n2026-08-01 00:00:00,媛�吏�(媛�吏�(�씪諛�)),9553,9542000\r\n2026-08-01 00:00:00,媛먭랠(�븯�슦�뒪媛먭랠),3145.2,13161000\r\n2026-08-01 00:00:00,媛먯옄(媛먯옄),9420,12284500\r\n2026-08-01 00:00:00,媛먯옄(湲고��),560,623000\r\n2026-08-01 00:00:00,媛먯옄(�닔誘�),11308,12412000\r\n20"
+ },
+ "15102791": {
+  "hints": [
+   "/cmm/cmm/fileDownload.do?atchFileId=FILE_000000007673684&fileDetailSn=1&insertDataPrcus=N",
+   "atchFileId: $('#limitAtchFileId').val()",
+   "fn_fileDataDown('15102791', 'uddi:8e543159-83ba-4778-b2cd-a4ab4e871c40', '','1', '1')",
+   "publicDataDetailPk\" name=\"publicDataDetailPk\" value=\"uddi:8e543159-83ba-4778-b2cd-a4ab4e871c40\" />"
+  ],
+  "title": "해양수산부_일자별위탁판매현황_20260831",
+  "size": 95132198,
+  "type": "application/octet-stream; charset=UTF-8",
+  "disp": "attachment; filename=\"%ED%95%B4%EC%96%91%EC%88%98%EC%82%B0%EB%B6%80_%EC%9D%BC%EC%9E%90%EB%B3%84%EC%9C%84%ED%83%81%ED%8C%90%EB%A7%A4%ED%98%84%ED%99%A9_2026%EB%85%84 08%EC%9B%94(%EC%9B%94%EA%B0%84).csv\"",
+  "head": "\"위판일자\",\"산지조합코드\",\"산지조합명\",\"위판장코드\",\"위판장명\",\"수산물표준코드\",\"수산물표준코드명\",\"어종상태코드\",\"어종상태명\",\"업종명\",\"위판수량\",\"위판중량\",\"위판단가\",\"위판단가(1킬로그램)\",\"위판금액\",\"상품규격명\",\"상품단위명\",\"데이터기준일자\"\r\n\"2026-08-01\",\"301\",\"경인서부수산업협동조합\",\"301001\",\""
+ }
 }
