@@ -32,7 +32,7 @@
 
   var S = { mode: 'ani', sp: '한우', m: 'n', sel: null, pin: null, zone: null, layers: { farm: true, market: true, cattle: true, wharf: true, zone: true, whole: true } };
   var LS, AQ, CR, PL, MK, TOPO, FEAT, UNITS = {}, map, polyLayer, lblLayer, pinLayer, zoneLayer, bizLayer, breaks = [], YEARS, SP, CELLS = {};
-  var PR = null, BIZ = null, BIZD = {}, SG = null, OR = null;   // OR: 실제 출하 금액(경락 원산지 기준)   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
+  var PR = null, BIZ = null, BIZD = {}, SG = null, OR = null, WP = null, WPU = null;   // WP: 수협 산지 위판(달 단위 파일데이터)   // OR: 실제 출하 금액(경락 원산지 기준)   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
   var BIZN = { feed: '사료 공장', slaughter: '도축장', hatchery: '부화장', breeding: '종축장', vet: '동물병원', pharmacy: '동물약국', ai_center: '인공수정소', vet_drug: '동물약품 도매', vet_equip: '동물 의료용구', milk: '집유장', processing: '축산 가공', packer: '식육 포장', manure_trans: '분뇨 수집운반', manure_fac: '분뇨 처리시설' };
   var ALL_SEA = { k: '모든 양식', g: '', all: true };
 
@@ -70,6 +70,11 @@
       var i = firstIdx(r.y, 0); if (r.y[i][0] < 10) return null;
       return c.v;
     }
+    if (S.mode === 'sea' && S.m === 'w') {
+      if (!WP) return null;
+      if (SP.all) return WP.units[u] ? WP.units[u].amt : null;
+      return wpSp(u) || null;
+    }
     if (S.mode === 'sea') {
       var e = AQ.units[u]; if (!e) return null;
       if (S.m === 'v') return e.v[0] || null;
@@ -89,6 +94,7 @@
   }
   function unitKeys() {
     if (S.mode === 'ani') return Object.keys(SP.d);
+    if (S.mode === 'sea' && S.m === 'w' && WP) return Object.keys(WP.units);
     if (S.mode === 'sea') return Object.keys(SP.all ? AQ.units : SP.units);
     if (S.m === 's' && OR) return Object.keys(OR.units);
     return Object.keys(CR.units).filter(function (u) { return SP.all || CR.units[u].items.indexOf(SP.k) >= 0; });
@@ -111,6 +117,7 @@
   function valText(u) {
     var v = val(u); if (v == null) return '자료 없음';
     if (S.mode === 'ani') return S.m === 'c' ? '농가 ' + pct(v) : S.m === 'n' ? man(v) + SP.w : man(v) + '호';
+    if (S.mode === 'sea' && S.m === 'w') return '위판 ' + man(v) + '원';
     if (S.mode === 'sea') return S.m === 'v' ? '마을어장 ' + man(v) + '곳' : S.m === 'n' ? '면허 ' + man(v) + '건' : man(v) + '㏊';
     if (S.m === 's') return '출하 ' + man(v) + '원';
     if (S.m === 'k') return SP.all ? '대표 ' + v + ' · ' + CR.units[u].items.slice(0, 3).join(', ') : SP.k;
@@ -273,7 +280,7 @@
       h += chip('farm', '양식 분포', SEA[4]);
       h += chip('zone', '면허 구역 <span class="n">1만 1천</span>', '#2c5530');
       h += chip('wharf', '위판장 <span class="n">' + PL.wharfs.length + '</span>', '#3a7ea5');
-      h += '<button type="button" class="chip wait" title="수협 위판 시세·어촌계 연락처는 연동창구 연결 뒤 표시"><span class="dot"></span>위판 시세 <span class="n">곧 추가</span></button>';
+      if (!WP) h += '<button type="button" class="chip wait" title="수협 위판 시세는 해양수산부 위탁판매 현황 파일이 들어오면 표시"><span class="dot"></span>위판 시세 <span class="n">곧 추가</span></button>';
     } else {
       h += chip('farm', '대표 품목', KIND['과일']);
       h += chip('whole', '도매시장 <span class="n">' + PL.markets.length + '</span>', '#a8821a');
@@ -312,6 +319,7 @@
     }
     var unit, title;
     if (S.mode === 'ani') { unit = S.m === 'n' ? SP.w : '호'; title = S.sp + ' ' + (S.m === 'n' ? '마릿수' : '농가 수') + ' · ' + YEARS[YEARS.length - 1] + '년 1월'; }
+    else if (S.mode === 'sea' && S.m === 'w') { unit = '원'; title = (SP.all ? '' : SP.k + ' ') + '수협 위판 금액 · ' + WP.month.replace('-', '년 ') + '월(조합 소재 시군)'; }
     else if (S.mode === 'sea') { unit = S.m === 'n' ? '건' : S.m === 'a' ? '㏊' : '곳'; title = S.m === 'v' ? '마을어장(어촌계) 수' : (SP.all ? '양식 ' : SP.k + ' 양식 ') + (S.m === 'n' ? '면허 수' : '면적'); }
     else if (S.m === 's') { unit = '원'; title = (SP.all ? '' : SP.k + ' ') + '실제 출하 금액(도매시장 낙찰, 최근 ' + OR.months.length + '개월)'; }
     else { unit = '건'; title = (SP.all ? '지리적표시' : SP.k) + ' 등록 수'; }
@@ -461,7 +469,34 @@
   }
 
   /* ── 판: 어장 */
-  function seaBoard(title) {
+  function wpSp(u) {   // 고른 품종의 시군별 위판 금액(조합 소재 시군 기준)
+    if (!WP || SP.all) return null;
+    if (!WPU || WPU.k !== SP.k) {
+      WPU = { k: SP.k, d: {} }; var cu = {}; WP.coops.forEach(function (c) { cu[c.name] = c.u; });
+      WP.fish.filter(function (f) { return f.name.indexOf(SP.k) === 0 || f.name.replace(/\(.*\)/, '').indexOf(SP.k) >= 0; }).forEach(function (f) { f.by.forEach(function (b) { var uu = cu[b[0]]; if (uu) WPU.d[uu] = (WPU.d[uu] || 0) + b[2]; }); });
+    }
+    return WPU.d[u] || null;
+  }
+  function wpFish(k) { return WP ? WP.fish.filter(function (f) { return f.name.indexOf(k) === 0 || f.name.replace(/\(.*\)/, '').indexOf(k) >= 0; }) : []; }
+  function wpTable(rows) {
+    return '<ol class="top">' + rows.map(function (x, i) { return '<li data-sp="' + esc(x[0].replace(/\(.*\)/, '')) + '" tabindex="0"><span class="no">' + (i + 1) + '</span><span class="nm">' + esc(x[0]) + '</span><span class="v">' + (x[2] ? x[2].toLocaleString('ko-KR') + '원/㎏' : '–') + (x[3] != null ? ' <small class="' + (x[3] > 0 ? 'up' : x[3] < 0 ? 'down' : '') + '">' + (x[3] > 0 ? '+' : '') + x[3] + '%</small>' : '') + '</span><span class="bar2"><span style="width:' + (x[1] / rows[0][1] * 100).toFixed(1) + '%"></span></span></li>'; }).join('') + '</ol>';
+  }
+  function wpNote() { return '<p class="mini">해양수산부 일자별 위탁판매 현황(수협 산지 위판) ' + esc(WP.month.replace('-', '년 ')) + '월 · ' + WP.days + '일치. ㎏당 값은 금액÷중량. 막대는 위판 금액.</p>'; }
+  function seaBoard(title, u, pin) {
+    if (WP) {
+      var cs = pin ? WP.coops.filter(function (c) { var a = c.name.replace('수산업협동조합', '수협').replace(/\s/g, ''), b = pin.name.replace(/\s/g, ''); return a === b || a.indexOf(b) >= 0 || b.indexOf(a) >= 0; }) : u ? WP.coops.filter(function (c) { return c.u === u; }) : [];
+      if (cs.length) {
+        var h = '';
+        cs.slice(0, 3).forEach(function (c) { h += '<section class="sec"><p class="eyebrow"><span>' + esc(c.name.replace('수산업협동조합', '수협')) + ' 위판</span><span>' + man(c.amt) + '원</span></p>' + wpTable(c.top.map(function (x) { var f = WP.fish.filter(function (y) { return y.name === x[0]; })[0]; return [x[0], x[1], x[2], null, f]; })) + '</section>'; });
+        return h + '<section class="sec">' + wpNote() + '</section>';
+      }
+      if (!SP.all && S.mode === 'sea') {
+        var fs = wpFish(SP.k);
+        if (fs.length) { var f0 = fs[0]; return '<section class="sec"><p class="eyebrow"><span>' + esc(f0.name) + ' 조합별 ㎏당 위판 값</span><span>전국 ' + (f0.wonkg || 0).toLocaleString('ko-KR') + '원</span></p>' + wpTable(f0.by.map(function (b) { return [b[0].replace('수산업협동조합', '수협'), b[2], b[1], null]; })) + wpNote() + '</section>'; }
+      }
+      var top = WP.fish.slice(0, 10);
+      return '<section class="sec"><p class="eyebrow"><span>' + esc(title || '전국 수협 위판 상위 어종') + '</span><span>' + man(WP.total) + '원</span></p>' + wpTable(top.map(function (f) { return [f.name, f.amt, f.wonkg, f.chg != null ? f.chg : null]; })) + wpNote() + '</section>';
+    }
     return '<section class="sec"><p class="eyebrow"><span>' + esc(title || '오늘 위판 시세') + ' <span class="tag mute">연동 전</span></span></p><p class="board-note" style="margin:0">수협 위판 시세는 수협중앙회 위판정보 연동창구를 붙이면 품종별로 들어옵니다. 지금은 면허 구역과 위판장 위치까지만 보입니다. <a href="price/">경락가 조회 화면 →</a></p></section>';
   }
   function seaPanel() {
@@ -486,7 +521,7 @@
         }
         var ws = PL.wharfs.filter(function (w) { return w.u === S.sel; });
         if (ws.length) h += '<section class="sec"><p class="eyebrow"><span>이 시군 위판장</span><span>수협</span></p><ul class="plain">' + ws.map(function (w) { return '<li><button type="button" class="lnk" data-pin="' + w.id + '">' + esc(w.name) + '</button> <span class="tag mute">위치 근사</span></li>'; }).join('') + '</ul></section>';
-        h += seaBoard();
+        h += seaBoard(null, S.sel);
         h += '<section class="sec"><p class="read small">지도를 확대하면 이 시군의 면허 구역이 한 칸씩 보입니다. 구역을 누르면 면허 종류·품종·면적·만료 연도가 나옵니다.</p></section>';
       }
       h += otherModes(S.sel);
@@ -603,7 +638,7 @@
         h += '<section class="sec sec-board"><p class="eyebrow"><span>' + esc(PR.abattoir.date) + ' 이 공판장 한우 거세 경락가</span><span>원/kg</span></p><div class="board" style="--cols:' + Object.keys(g).length + '">' + Object.keys(g).map(function (k) { return '<div><span class="g">' + esc(k) + '</span><span class="p">' + g[k].toLocaleString('ko-KR') + '</span></div>'; }).join('') + '</div></section>';
       } else h += board('소').replace('오늘 한우 거세 경락가', '오늘 이 공판장 한우 경락가');
     }
-    else if (m.type === '위판장') h += seaBoard('오늘 이 위판장 시세');
+    else if (m.type === '위판장') h += seaBoard('이 위판장 시세', null, m);
     else if (m.type === '도매시장') h += cropBoard('오늘 이 도매시장 경락가');
     var srcs = { '공판장': '위치: 박씨팜 정리본(공판장 13곳). 전화·주소 대조한 곳은 「대조함」으로 표시.', '가축시장': '가축시장 장날·위치는 공공 연동창구가 없어 직접 확인해 채우는 중입니다.',
       '위판장': '위판장은 수협 지구별 조합 기준 63곳. 공공 좌표가 없어 시군 중심에 두었고, 산지위판장 현황 자료의 주소로 바꿀 예정입니다.', '도매시장': '공영도매시장 32곳. 좌표는 근사(1~2㎞)이며 주소 대조 뒤 확정합니다.' };
@@ -728,6 +763,7 @@
     if (!keep) { S.sel = null; S.pin = null; S.zone = null; }
     var ms = mode().measures.map(function (m) { return m[0]; }); if (!keep || ms.indexOf(S.m) < 0) S.m = ms.indexOf(S.m) >= 0 && keep ? S.m : ms[0];
     var first = speciesList()[0]; SP = findSpecies(S.sp) || first; S.sp = SP.k; $('#pickName').textContent = S.sp;
+    if (k === 'sea' && WP && !MODES.sea.measures.some(function (m) { return m[0] === 'w'; })) MODES.sea.measures.push(['w', '위판 금액']);
     if (k === 'crop' && OR && OR.units && !MODES.crop.measures.some(function (m) { return m[0] === 's'; })) MODES.crop.measures.unshift(['s', '출하 금액']);
     if (k === 'crop' && OR && (!keep || !new URLSearchParams(location.search).get('m'))) S.m = 's';
     drawSeg(); computeBreaks(); restyle(); drawLabels(); drawPins(); drawZones(); drawBiz(); drawLayers(); drawLegend(); hint(); renderPanel();
@@ -758,10 +794,11 @@
   /* ── 시작 */
   function get(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
   function opt(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json'), opt('data/origin.json')])
+  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json'), opt('data/origin.json'), opt('data/wipan.json')])
     .then(function (res) {
       LS = res[0]; TOPO = res[1]; MK = res[2]; AQ = res[3]; CR = res[4]; PL = res[5]; YEARS = LS.years;
-      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9]; OR = res[10] && res[10].units ? res[10] : null;
+      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9]; OR = res[10] && res[10].units ? res[10] : null; WP = res[11] && res[11].fish ? res[11] : null;
+      if (WP && !MODES.sea.measures.some(function (m) { return m[0] === 'w'; })) MODES.sea.measures.push(['w', '위판 금액']);
       FEAT = topojson.feature(TOPO, TOPO.objects.units);
       var q = new URLSearchParams(location.search);
       S.mode = MODES[q.get('mode')] ? q.get('mode') : 'ani';

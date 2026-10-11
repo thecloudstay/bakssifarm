@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -130,10 +130,23 @@ def field(f):
 SIGUN_OPTS = sorted(set(ufull(u) for u in [g['properties']['u'] for g in J('units.json')['objects']['units']['geometries']]))
 
 # ── 경락가 화면
+def wipan_html(n=20, h2=True):
+    if not WPN.get('fish'): return ''
+    mo = WPN['month'].replace('-', '년 ') + '월'
+    b = (f'<h2>수협 산지 위판 시세 — {mo}</h2>' if h2 else '') + f'<p class="mini">해양수산부 일자별 위탁판매 현황(수협 산지 위판 {WPN["days"]}일치, {WPN["rows"]:,}줄). ㎏당 값은 위판 금액÷위판 중량. 위판 금액 큰 어종 순.' + (f' 앞달({E(WPN.get("prev_month", ""))}) 대비 변화 포함.' if WPN.get('prev_month') else '') + '</p>'
+    b += '<table class="t"><tr><th>어종(상태)</th><th class="num">원/㎏</th>' + ('<th class="num">앞달 대비</th>' if WPN.get('prev_month') else '') + '<th class="num">위판 금액</th><th>비싸게 받은 조합</th></tr>'
+    for f in WPN['fish'][:n]:
+        hi = sorted([x for x in f['by'] if x[1]], key=lambda x: -x[1])[:3]
+        chg = f.get('chg')
+        b += f'<tr><td>{E(f["name"])}</td><td class="num">{format(f["wonkg"], ",") if f["wonkg"] else "–"}</td>' + (f'<td class="num {"bad" if (chg or 0) < 0 else "ok" if (chg or 0) > 0 else ""}">{("+" if (chg or 0) > 0 else "") + str(chg) + "%" if chg is not None else "–"}</td>' if WPN.get('prev_month') else '') + f'<td class="num">{man(f["amt"])}원</td><td class="mini">{E(" · ".join(x[0].replace("수산업협동조합", "수협") + " " + format(x[1], ",") for x in hi))}</td></tr>'
+    b += '</table>'
+    if WPN.get('farm'): b += '<p class="mini">양식 업종으로 위판된 어종(금액 순): ' + E(', '.join(f'{k} {man(v)}원' for k, v in WPN['farm'][:8])) + '</p>'
+    return b
+
 def price_page():
     ek = PRICE.get('ekape'); at = PRICE.get('at') or ''
     b = '<p class="crumb"><a href="/">박씨팜</a> › 경락가</p><h1 class="title">경락가 조회</h1><p class="lead">소·돼지는 축산물품질평가원 등급별 경락가, 농산물은 공영도매시장 경락가, 수산물은 수협 위판 시세. 연동창구가 붙는 순서대로 이 화면에 들어옵니다.</p>'
-    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('축산물품질평가원 등급별 경락가', 'on' if ek else 'soon'), ('공판장별 실시간 경매', 'soon'), ('농산물 도매시장 경락가', 'soon'), ('수협 위판 시세', 'soon')]) + '</div>'
+    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('축산물품질평가원 등급별 경락가', 'on' if ek else 'soon'), ('공판장별 실시간 경매', 'soon'), ('농산물 도매시장 경락가', 'soon'), ('수협 위판 시세' + (' ' + WPN['month'] if WPN.get('fish') else ''), 'on' if WPN.get('fish') else 'soon')]) + '</div>'
     b += '<h2>오늘의 이상 신호 — 급등·급락, 고수온, 폐사</h2>'
     sig = SIG.get('items', [])
     if sig:
@@ -164,7 +177,7 @@ def price_page():
             b += f'<tr><td>{E(it["item"])}</td><td>{E(it["grp"])}</td><td class="num">{format(it["won_kg"], ",") if it["won_kg"] else "–"}</td><td class="num">{man(it["amt"])}원</td><td class="mini">{E(" · ".join(f"{m[0]} {m[1]:,}" for m in sorted(top, key=lambda x: -x[1])))}</td></tr>'
         b += '</table>'
     b += '<h2>농산물 도매시장 경락가</h2><p>공영도매시장 32곳의 품목·등급별 경락가는 농림축산식품부 도매시장 통합 창구(농넷)로 받습니다. 지도의 <a href="/?mode=crop">농장 보기</a>에서 시군을 누르면 그 지역 대표 품목의 경락가가 함께 보이도록 준비하고 있습니다.</p>'
-    b += '<h2>수산물 위판 시세</h2><p>수협 위판장 63곳의 품종별 위판 시세는 수협중앙회 위판정보 창구로 받습니다. 지도의 <a href="/?mode=sea">어장 보기</a>에서 위판장을 누르면 보이게 됩니다.</p>'
+    b += wipan_html(30) + '<p><a href="/?mode=sea&m=w">지도에서 시군별 위판 금액 보기 →</a></p>' if WPN.get('fish') else '<h2>수산물 위판 시세</h2><p>수협 위판장 63곳의 품종별 위판 시세는 해양수산부 위탁판매 현황 파일로 받습니다. 지도의 <a href="/?mode=sea">어장 보기</a>에서 위판장을 누르면 보이게 됩니다.</p>'
     b += '<h2>수입 단가와 비교</h2>'
     tr = TRADE.get('items', [])
     if tr:
@@ -178,7 +191,7 @@ def price_page():
         b += '<p>쇠고기·돼지고기·옥수수·대두박·어분·전복·김·넙치·새우의 월별 수입 단가(관세청 수출입실적)를 받아 국내 경락가·구입가 옆에 나란히 둡니다. 「수입산이 들어오는 값」과 「내가 받는 값」의 차이가 보이면 출하 시점과 사료 구매 시점을 잡기 쉬워집니다. 공공데이터포털 열쇠가 붙으면 자동으로 채워집니다.</p>'
     b += '<h2>내 품목 가격 알림 받기</h2><p>품목과 지역을 적어 두면, 경락가가 들어오기 시작할 때 아침 보고에 함께 넣어 드립니다.</p>'
     b += form('price-alert', [('row', [('sel', '갈래', '갈래', True, ['소', '돼지', '닭·오리', '농산물', '수산물']), ('text', '품목', '품목', True, '예: 한우 거세 1+ / 사과 부사 / 전복')]), ('sel', '지역', '지역(시군)', True, ['전국'] + SIGUN_OPTS), ('tel', '연락처', '연락처(휴대전화)', True), ('text', '메모', '참고(선택)', False, '예: 매주 화요일 출하')], '알림 신청', '/price/thanks/')
-    b += '<h2>자료 출처</h2><ul><li>축산물품질평가원 등급판정정보 — 등급별 경락가·공판장 실시간 경매(공공데이터포털, 하루 1,000건 한도)</li><li>농림축산식품부 도매시장 통합 창구(농넷) — 공영도매시장 경락가</li><li>수협중앙회 — 위판 시세</li></ul>'
+    b += '<h2>자료 출처</h2><ul><li>축산물품질평가원 등급판정정보 — 등급별 경락가·공판장 실시간 경매(공공데이터포털, 하루 1,000건 한도)</li><li>농림축산식품부 도매시장 통합 창구(농넷) — 공영도매시장 경락가</li><li>해양수산부 일자별 위탁판매 현황(수협 산지 위판, 공공데이터포털 파일데이터, 달마다)</li></ul>'
     write('/price/', shell('/price/', '경락가 조회 — 소·돼지 등급별, 도매시장, 위판 시세 | 박씨팜', '축산물품질평가원 등급별 경락가, 공판장별 경매, 농산물 도매시장 경락가, 수협 위판 시세를 한 화면에서. 내 품목 가격 알림 신청.', b, '/og/price.png'), '0.8')
     write('/price/thanks/', shell('/price/thanks/', '알림 신청이 접수되었습니다 | 박씨팜', '경락가 알림 신청 접수', '<h1 class="title">알림 신청이 접수되었습니다</h1><p class="lead">경락가가 들어오기 시작하면 적어 주신 연락처로 안내드립니다. <a href="/price/">경락가 화면으로 돌아가기</a></p>', noindex=True))
 
@@ -250,7 +263,8 @@ def sheet_page():
     ek = PRICE.get('ekape') or []; rep = PRICE.get('pigRep') or []; ab = J('price/abattoir.json', {}); sig = SIG.get('items', []); tr = TRADE.get('items', []); buy = BUY.get('items', [])
     d = PRICE.get('date') or TODAY
     b = f'<p class="crumb"><a href="/">박씨팜</a> › 시세 한 장</p><h1 class="title">산지 시세 한 장 <small class="mini">{E(d)} 기준</small></h1><p class="lead">축·수산 가공·유통·사료 업체의 아침 회의용 한 장. 등급별 경락가와 공판장별 차이, 돈육 대표가격, 수입 단가, 구입가 중위값, 오늘의 이상 신호를 한 화면에. 매일 아침 자동으로 다시 만들어집니다.</p>'
-    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('경락가 ' + ('연동' if ek else '연동 전'), 'on' if ek else 'soon'), ('수입 단가 ' + ('연동' if tr else '연동 전'), 'on' if tr else 'soon'), ('위판 시세 연동 전', 'soon'), ('이상 신호 ' + (f'{len(sig)}건' if sig else '없음'), 'off' if sig else 'on')]) + '</div>'
+    b += '<div class="statusbar">' + ''.join(f'<span class="{c}"><i></i>{E(t)}</span>' for t, c in [('경락가 ' + ('연동' if ek else '연동 전'), 'on' if ek else 'soon'), ('수입 단가 ' + ('연동' if tr else '연동 전'), 'on' if tr else 'soon'), (('위판 시세 ' + WPN['month']) if WPN.get('fish') else '위판 시세 연동 전', 'on' if WPN.get('fish') else 'soon'), ('이상 신호 ' + (f'{len(sig)}건' if sig else '없음'), 'off' if sig else 'on')]) + '</div>'
+    b += wipan_html(15)
     b += '<h2>소·돼지 등급별 경락가</h2>'
     if ek:
         for sec in ek:
@@ -289,7 +303,7 @@ def sheet_page():
     else: b += '<p>잡힌 신호가 없습니다(고수온·저수온, 경락가 급등락, 가축전염병).</p>'
     b += '<h2>시험 발송 신청(업체·기관)</h2><p>아침마다 이 한 장을 전자우편으로 받습니다. 시험 기간은 무료이며, 유료 전환 전에 미리 안내드립니다. 농가는 신청 없이 이 화면을 그냥 보시면 됩니다.</p>'
     b += form('sheet-sub', [('row', [('sel', '업종', '업종', True, ['사료 공장·대리점', '도축·가공', '유통·급식', '수산 가공·유통', '보험·금융', '지자체·협회·연구', '언론', '기타']), ('text', '상호', '상호·기관명', True, '')]), ('row', [('text', '전자우편', '받을 전자우편', True, ''), ('text', '관심품목', '관심 품목(선택)', False, '예: 한우, 돼지, 전복')]), ('tel', '연락처', '연락처(선택)', False)], '시험 발송 신청', '/sheet/thanks/')
-    b += '<p class="mini">출처: 축산물품질평가원 등급판정정보 · 관세청 수출입실적 · 국립해양조사원 실측 수온(해루낚 보관) · 박씨팜 구입가 제보. 숫자가 없는 칸은 연동 전입니다.</p>'
+    b += '<p class="mini">출처: 축산물품질평가원 등급판정정보 · 관세청 수출입실적 · 해양수산부 위탁판매 현황(수협 위판) · 국립해양조사원 실측 수온(해루낚 보관) · 박씨팜 구입가 제보. 숫자가 없는 칸은 연동 전입니다.</p>'
     write('/sheet/', shell('/sheet/', f'산지 시세 한 장 — {d} | 박씨팜', '소·돼지 등급별·공판장별 경락가, 돈육 대표가격, 수입 단가, 구입가 중위값, 오늘의 이상 신호를 아침마다 한 장으로. 업체·기관 시험 발송 신청.', b, '/og/price.png'), '0.8')
     write('/sheet/thanks/', shell('/sheet/thanks/', '신청되었습니다 | 박씨팜', '시세 한 장 시험 발송 신청 접수', '<h1 class="title">신청되었습니다</h1><p class="lead">다음 거래일 아침부터 보내 드립니다. <a href="/sheet/">시세 한 장으로</a></p>', noindex=True))
 
@@ -403,7 +417,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
@@ -461,6 +475,12 @@ def sigun_pages():
             b += f'<p>양식 면허 <b>{e["n"]:,}건</b>, 면허 면적 <b>{man(e["ha"])}㏊</b>. 마을어장(어촌계) {e["v"][0]}곳 · {man(e["v"][1])}㏊' + (f', 정치망 {e["j"]}곳' if e['j'] else '') + '.</p>'
             if e['top']: b += '<table class="t"><tr><th>품종</th><th class="num">면허</th><th class="num">면적</th></tr>' + ''.join(f'<tr><td><a href="/?mode=sea&sp={urllib.parse.quote(t[0])}&u={urllib.parse.quote(u)}">{E(t[0])}</a></td><td class="num">{t[1]:,}건</td><td class="num">{man(t[2])}㏊</td></tr>' for t in e['top']) + '</table><p class="mini">국립해양조사원 어장정보도 2025. 지도를 확대하면 면허 구역이 하나씩 보입니다.</p>'
         else: b += '<p>이 시군에는 어장 면허 기록이 없습니다.</p>'
+        wc = [x for x in WPN.get('coops', []) if x.get('u') == u]
+        if wc:
+            b += f'<h2>어장 — 수협 위판 실적({E(WPN["month"].replace("-", "년 "))}월)</h2>'
+            for wcc in wc[:3]:
+                b += f'<h3>{E(wcc["name"].replace("수산업협동조합", "수협"))} <small class="mini">{man(wcc["amt"])}원</small></h3><table class="t"><tr><th>어종(상태)</th><th class="num">위판 금액</th><th class="num">원/㎏</th></tr>' + ''.join(f'<tr><td>{E(x[0])}</td><td class="num">{man(x[1])}원</td><td class="num">{format(x[2], ",") if x[2] else "–"}</td></tr>' for x in wcc['top']) + '</table>'
+            b += '<p class="mini">해양수산부 일자별 위탁판매 현황(수협 산지 위판). 조합 소재 시군 기준.</p>'
         o = ORIG.get('units', {}).get(u)
         if o:
             b += '<h2>농장 — 실제로 팔린 품목(도매시장 낙찰 금액)</h2><table class="t"><tr><th>품목</th><th>갈래</th><th class="num">금액(최근 ' + str(len(ORIG.get('months', []))) + '개월)</th></tr>' + ''.join(f'<tr><td>{E(x[0])}</td><td>{E(x[2])}</td><td class="num">{man(x[1])}원</td></tr>' for x in o['top']) + '</table><p class="mini">한국농수산식품유통공사 경매원천정보, 원산지 기준. 농협 수매 품목 제외.</p>'
