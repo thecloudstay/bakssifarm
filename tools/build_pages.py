@@ -411,8 +411,8 @@ def risk_page():
         if sea:
             ks = sorted(sea, key=lambda u: (-{'위험': 3, '경고': 2, '주의': 1, '': 0}[sea[u].get('lv', '')], -(sea[u].get('hi') or 0)))
             days = next(iter(sea.values()))['days']
-            b += '<h2>양식 해역별 7일 바다 수온(하루 최고, ℃)</h2><p class="mini">' + E(R.get('official', '')) + '. 노란 칸 25℃ 이상, 붉은 칸 28℃ 이상, 파란 칸 4℃ 이하.</p>'
-            b += '<div style="overflow-x:auto"><table class="t"><tr><th>시군</th>' + ''.join(f'<th class="num">{E(d)}</th>' for d in days) + '<th>주된 양식 · 위험</th></tr>'
+            b += '<h2>양식 해역별 7일 바다 수온(하루 최고, ℃)</h2><p class="mini">' + E(R.get('official', '')) + '. 노란 칸 25℃ 이상, 붉은 칸 28℃ 이상, 파란 칸 4℃ 이하. 흐린 날짜는 지난 이틀(비교용).</p>'
+            b += '<div style="overflow-x:auto"><table class="t"><tr><th>시군</th>' + ''.join(f'<th class="num" style="white-space:nowrap{";color:var(--faint)" if d < TODAY[5:] else ""}">{E(d.replace("-", "."))}</th>' for d in days) + '<th>주된 양식 · 위험</th></tr>'
             for u in ks:
                 x = sea[u]; rk = [r for r in x.get('risks', []) if r['lv']]
                 b += f'<tr><td><a href="{upath(u)}">{E(ufull(u))}</a></td>' + ''.join(sst_cell(v) for v in x['max']) + f'<td class="mini">{E(", ".join(r["sp"] + "(" + r["lv"] + ")" for r in rk[:4]) or ", ".join(r["sp"] for r in x.get("risks", [])[:3]) or "–")}</td></tr>'
