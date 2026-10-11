@@ -421,7 +421,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
