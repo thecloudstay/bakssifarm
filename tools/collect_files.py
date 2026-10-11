@@ -11,7 +11,7 @@ STATE = os.path.join(PD, 'state.json'); st = jload(STATE, {})
 OP = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko;q=0.9'}
 def fetch(url, ref='https://www.data.go.kr/'):
-    with OP.open(urllib.request.Request(url, headers=dict(UA, Referer=ref)), timeout=300) as r: return r.read(), dict(r.headers)
+    with OP.open(urllib.request.Request(url, headers=dict(UA, Referer=ref)), timeout=120) as r: return r.read(), dict(r.headers)
 def decode(b):
     for enc in ('utf-8-sig', 'cp949'):
         try: return b.decode(enc)
@@ -35,8 +35,10 @@ def table(b, name):
         return []
     return [r for r in csv.reader(io.StringIO(decode(b)))]
 ok = fail = same = 0
+T0 = time.time()
 for s in SETS:
     i = s['id']
+    if time.time() - T0 > 600: print('10분 넘어 나머지는 다음에'); break
     try:
         page = f'https://www.data.go.kr/data/{i}/fileData.do'
         h = fetch(page)[0].decode('utf-8', 'replace')
