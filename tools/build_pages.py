@@ -565,6 +565,9 @@ def console_page():
         b += f'<h2>자가 점검 — {E(sc.get("at", ""))}</h2><p class="mini">매일 아침 스스로 재고(수집기·자료 신선도·깨진 연결·빈 칸·적중률) 고칠 거리를 뽑습니다. 고침과 2주 뒤 검증은 아침 자가 개선 작업이 맡고, 기록은 docs/개선기록.md 에 남습니다.</p>'
         b += '<dl class="kv">' + ''.join(f'<dt>{E(k)}</dt><dd>{E(str(v))}</dd>' for k, v in (sc.get('fresh') or {}).items()) + f'<dt>화면 수</dt><dd>{sc.get("pages", {}).get("n")}</dd><dt>깨진 내부 연결</dt><dd>{sc.get("pages", {}).get("broken_links")}</dd><dt>활용신청 대기</dt><dd>{sc.get("need_apply", 0)}건</dd></dl>'
         b += '<table class="t"><tr><th>중요도</th><th>갈래</th><th>내용</th><th>고칠 방향</th></tr>' + ''.join(f'<tr><td class="{"bad" if t["level"] == "높음" else "wait"}">{E(t["level"])}</td><td>{E(t["kind"])}</td><td class="mini">{E(t["what"])}</td><td class="mini">{E(t["hint"])}</td></tr>' for t in sc['todo']) + '</table>'
+        if sc.get('apply_top'):
+            b += '<h3>활용신청 먼저 할 것(위에서부터)</h3><p class="mini">공공데이터포털에 로그인한 채로 이름을 누르면 신청 화면이 열립니다. 「활용신청」 → 목적 「웹 사이트 개발」 → 신청. 승인되면 다음 날 아침 수집부터 자동으로 들어옵니다.</p>'
+            b += '<table class="t"><tr><th>연동창구</th><th>풀리는 것</th></tr>' + ''.join(f'<tr><td><a href="https://www.data.go.kr/data/{E(k)}/openapi.do" target="_blank" rel="noopener">{E(t)}</a> <span class="mini">{E(k)}</span></td><td class="mini">{E(why)}</td></tr>' for k, t, w, why in sc['apply_top'] if k.isdigit()) + '</table>'
     b += '<h2>양식(접수함)</h2><p>모집 열기·참여 신청·업체 등록·가격 알림은 넷리파이 양식으로 받습니다. 접수 내용은 넷리파이 콘솔의 「양식」에서 보고, 모집판 반영은 data/gongu.json 을 고쳐 다시 올리면 됩니다.</p>'
     write('/console/', shell('/console/', '콘솔 | 박씨팜', '박씨팜 수집기·열쇠·양식 상태', b, noindex=True))
 

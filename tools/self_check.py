@@ -44,6 +44,17 @@ c = collections.Counter(v.get('state') for v in ap['items'].values()); m['apis']
 need = [[k, v['title']] for k, v in ap['items'].items() if v.get('state') == '활용신청 필요' or '403' in (v.get('msg') or '')]
 if need: todo('낮음', '활용신청 필요', f'공공데이터포털 활용신청이 안 된 연동창구 {len(need)}건', '대표가 할 일 목록으로 정리(콘솔 「자가 점검」에 표시)')
 m['apis_need_apply'] = need[:300]
+# 활용신청 우선순위 — 막힌 다른 수집을 풀어 주거나 유통업체가 돈 내고 볼 값·수급 자료부터(대표가 위에서부터 눌러 신청)
+PRI = [(r'표준코드', 10, '도매시장 정산·원천 수집의 코드 목록을 풀어 줌'), (r'경락|경매|정산|도매시장|위판|공판장', 8, '값 자료(구매 신호·수급 기회의 근거)'),
+       (r'가격|시세|등락|추이', 8, '값 자료(구매 신호·수급 기회의 근거)'), (r'수급|관측|예측|출하|재고|생산량', 7, '수급 예보의 근거'),
+       (r'이력|도축|도계|등급', 6, '축산 물량·등급 흐름'), (r'수입|수출|검역', 5, '수입 물량·단가'), (r'질병|방역|구제역|인플루엔자|돼지열병|폐사|적조|수온', 5, '위험 예보의 근거'),
+       (r'부화|종축|동물병원|사료|도축업', 4, '업체 지도 층')]
+def pri(t):
+    if re.search(r'잔류농약|위판장 정보|위판장 현황', t): return 2, ''
+    for rx, w, why in PRI:
+        if re.search(rx, t): return w, why
+    return 1, ''
+m['apply_top'] = sorted(([k, t, *pri(t)] for k, t in need), key=lambda x: -x[2])[:25]
 # 4) 화면: 수, 깨진 내부 연결, 빈 칸
 pages = glob.glob(os.path.join(SITE, '**', 'index.html'), recursive=True) + glob.glob(os.path.join(SITE, '*.html'))
 m['pages']['n'] = len(pages)
@@ -62,6 +73,6 @@ m['traffic'] = st.get('traffic') or None
 if not m['traffic']: todo('낮음', '측정 공백', '방문 숫자 없음(구글 분석·서치어드바이저 미연결)', '대표 키 입력 후 자동으로 채워짐')
 order = {'높음': 0, '보통': 1, '낮음': 2}; m['todo'].sort(key=lambda x: order[x['level']])
 jsave(os.path.join(PRIVATE, 'metrics', today.isoformat() + '.json'), m, indent=1)
-jsave(os.path.join(DATA, 'selfcheck.json'), {k: m[k] for k in ('date', 'at', 'fresh', 'pages', 'apis', 'signal', 'todo')} | {'need_apply': len(need)})
+jsave(os.path.join(DATA, 'selfcheck.json'), {k: m[k] for k in ('date', 'at', 'fresh', 'pages', 'apis', 'signal', 'todo')} | {'need_apply': len(need), 'apply_top': m['apply_top']})
 status('selfcheck', not any(t['level'] == '높음' for t in m['todo']), f'고칠 거리 {len(m["todo"])}건(높음 {sum(1 for t in m["todo"] if t["level"] == "높음")})')
 print('자가 점검', len(m['todo']), [t['what'][:40] for t in m['todo'][:5]])
