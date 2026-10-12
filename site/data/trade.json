@@ -1,17 +1,127 @@
 {
- "at": "2026-10-12 22:02",
- "items": [],
+ "at": "2026-10-12 23:00",
+ "items": [
+  {
+   "name": "쇠고기(냉장·냉동)",
+   "hs": "0201",
+   "cmp": "한우 경락가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 14.326,
+     "wgt_t": 93242.7
+    }
+   ]
+  },
+  {
+   "name": "쇠고기 냉동",
+   "hs": "0202",
+   "cmp": "한우 경락가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 7.485,
+     "wgt_t": 380140.8
+    }
+   ]
+  },
+  {
+   "name": "돼지고기",
+   "hs": "0203",
+   "cmp": "돼지 경락가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 3.669,
+     "wgt_t": 614294.3
+    }
+   ]
+  },
+  {
+   "name": "옥수수(사료용)",
+   "hs": "1005",
+   "cmp": "배합사료 구입가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 0.251,
+     "wgt_t": 11392832.7
+    }
+   ]
+  },
+  {
+   "name": "대두박",
+   "hs": "2304",
+   "cmp": "배합사료 구입가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 0.369,
+     "wgt_t": 1707584.1
+    }
+   ]
+  },
+  {
+   "name": "어분",
+   "hs": "2301",
+   "cmp": "양식 사료 구입가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 2.013,
+     "wgt_t": 67848.2
+    }
+   ]
+  },
+  {
+   "name": "전복",
+   "hs": "030781",
+   "cmp": "전복 위판가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 88.033,
+     "wgt_t": 0.1
+    }
+   ]
+  },
+  {
+   "name": "김",
+   "hs": "121221",
+   "cmp": "김 위판가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 2.012,
+     "wgt_t": 8365.2
+    }
+   ]
+  },
+  {
+   "name": "넙치",
+   "hs": "030229",
+   "cmp": "넙치 위판가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 2.133,
+     "wgt_t": 0.1
+    }
+   ]
+  },
+  {
+   "name": "새우",
+   "hs": "0306",
+   "cmp": "새우 위판가",
+   "rows": [
+    {
+     "ym": "총계",
+     "usd_kg": 9.101,
+     "wgt_t": 133987.6
+    }
+   ]
+  }
+ ],
  "note": "관세청 수출입실적, 달러/㎏ 단가. 원화 환산은 화면에서 월평균 환율로",
- "errors": [
-  "쇠고기(냉장·냉동) <urlopen error timed out>",
-  "쇠고기 냉동 <urlopen error timed out>",
-  "돼지고기 <urlopen error timed out>",
-  "옥수수(사료용) <urlopen error timed out>",
-  "대두박 <urlopen error timed out>",
-  "어분 <urlopen error timed out>",
-  "전복 <urlopen error timed out>",
-  "김 <urlopen error timed out>",
-  "넙치 <urlopen error timed out>",
-  "새우 <urlopen error timed out>"
- ]
+ "errors": []
 }

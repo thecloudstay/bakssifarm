@@ -1,0 +1,49 @@
+[
+ {
+  "name": "katSale",
+  "params": {
+   "cond[trd_clcln_ymd::EQ]": "20261008"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katSale",
+  "params": {
+   "trd_clcln_ymd": "20261008"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katSale",
+  "params": {},
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katOrigin",
+  "params": {
+   "cond[trd_clcln_ymd::EQ]": "20261008"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katOrigin",
+  "params": {},
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "license",
+  "params": {
+   "type": "json"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[{\"ANMLHSBNDR_SN\":\"1471\",\"ANMLHSBNDR_TASK_SE_NM\":\"가축사육업\",\"BPLC_NM\":\"광현농장\",\"CLSBIZ_YMD\":\"\",\"CRD_INFO_X\":\"249633.011269562\",\"CRD_INFO_Y\":\"418838.498473315\",\"DAT_UPDT_PNT\":\"2026-10-09 21:33:00\",\"DAT_UPDT_SE\":\"I\",\"DTL_SALS_STTS_CD\":\"0000\",\"DTL_SALS_STTS_NM\":\"정상\",\"FRMHS_UNQ_NO\":\"BN022\",\"LAST_MDFCN_PNT\":\"2026-10-08 12:31:25\",\"LCPMT_RTRCN_YMD\":\"\",\"LCPMT_YMD\":\"2026-10-08\",\"LCTN_AREA\":\"\",\"LCTN_ZIP\":\"\",\"LOTNO_ADDR\":\"경기도 여주시 세종대왕면 마래리 ***-*\",\"MNG_NO\":\"570000003320260004\",\"OPN_ATMY_GRP_CD\":\"5700000\",\"PRMN_LSFBIZ_SPECS\":\"한우\",\"RGHT_MNBD_SN\":\"000\",\"ROAD_NM_ADDR\":\"경기도 여주시 세종대왕면 양화로 **-**\",\"ROAD_NM_ZIP\":\"12647\",\"ROBIZ_YMD\":\"\",\"SALS_STTS_CD\":\"01\",\"SALS_STTS_NM\":\"영업/정상\",\"TCBIZ_BGNG_YMD\":\"\",\"TCBIZ_END_YMD\":\"\",\"TELNO\":\"\"},{\"ANMLHSBNDR_SN\":\"2471\",\"ANMLHSBNDR_TASK_SE_NM\":\"가축사육업\",\"BPLC_NM\":\"없음\",\"CLSBIZ_YMD\":\"\",\"CRD_INFO_X\":\"344181.096342335\",\"CRD_INFO_Y\":\"3"
+ },
+ {
+  "name": "trade",
+  "params": {
+   "strtYymm": "202608",
+   "endYymm": "202608",
+   "hsSgn": "0201"
+  },
+  "resp": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><response><header><resultCode>00</resultCode><resultMsg>정상서비스.</resultMsg></header><body><items><item><balPayments>-100973924</balPayments><expDlr>397441</expDlr><expWgt>5181</expWgt><hsCd>-</hsCd><impDlr>101371365</impDlr><impWgt>6876854</impWgt><statCd>-</statCd><statCdCntnKor1>-</statCdCntnKor1><statKor>-</statKor><year>총계</year></item><item><balPayments>-3889887</balPayments><expDlr>0</expDlr><expWgt>0</expWgt><hsCd>020120</hsCd><impDlr>3889887</impDlr><impWgt>423003</impWgt><statCd>AU</statCd><statCdCntnKor1>호주</statCdCntnKor1><statKor>그 밖의 것으로서 뼈째로 절단한 것</statKor><year>2026.08</year></item><item><balPayments>-26695733</balPayments><expDlr>0</expDlr><expWgt>0</expWgt><hsCd>020130</hsCd><impDlr>26695733</impDlr><impWgt>1965213</impWgt><statCd>AU</statCd><statCdCntnKor1>호주</statCdCntnKor1><statKor>뼈 없는 것</statKor><year>2026.08</ye"
+ }
+]
