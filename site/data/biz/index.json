@@ -1,10 +1,20 @@
 {
- "at": "2026-10-12 23:00",
+ "at": "2026-10-12 23:21",
  "layers": [
   {
    "k": "farm",
    "name": "가축사육업",
    "public": false
+  },
+  {
+   "k": "feed",
+   "name": "사료제조업",
+   "public": true
+  },
+  {
+   "k": "slaughter",
+   "name": "도축업",
+   "public": true
   }
  ]
 }

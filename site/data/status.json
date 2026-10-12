@@ -41,22 +41,22 @@
   },
   "license": {
    "ok": false,
-   "at": "2026-10-12 23:00",
-   "msg": "가축사육업 103,237/199,626 · 사료제조업 실패 HTTP Error 400: Bad Request · 도축업 실패 HTTP Error 400: Bad Request · 부화업 실패 HTTP Error 403: Forbidden · 종축업 실패 HTTP Error 403: Forbidden · 동물병원 실패 HTTP Error 400: Bad Request · 동물약국 실패 HTTP Error 400: Bad Request · 가축인공수정소 실패 HTTP Error 400: Bad Request · 동물용의약품도매상 실패 "
+   "at": "2026-10-12 23:21",
+   "msg": "가축사육업 103,237/199,626 · 사료제조업 100/100 · 도축업 71/100 · 부화업 실패 HTTP Error 403: Forbidden · 종축업 실패 HTTP Error 403: Forbidden · 동물병원 실패 HTTP Error 403: Forbidden · 동물약국 실패 HTTP Error 403: Forbidden · 가축인공수정소 실패 HTTP Error 403: Forbidden · 동물용의약품도매상 실패 HTTP Error 403: Forbidden · 동물용의료용구판매업 실패 HTTP Error "
   },
   "wholesale": {
    "ok": true,
-   "at": "2026-10-12 22:54",
+   "at": "2026-10-12 23:15",
    "msg": "2026-10-10 0건 · 0품목"
   },
   "origin": {
    "ok": true,
-   "at": "2026-10-12 22:54",
+   "at": "2026-10-12 23:15",
    "msg": "20261011 낙찰 0건 · 누적 1개월"
   },
   "trade": {
    "ok": true,
-   "at": "2026-10-12 23:00",
+   "at": "2026-10-12 23:22",
    "msg": "10품목"
   },
   "wipan": {

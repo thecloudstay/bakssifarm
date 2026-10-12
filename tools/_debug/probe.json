@@ -2,33 +2,69 @@
  {
   "name": "katSale",
   "params": {
-   "cond[trd_clcln_ymd::EQ]": "20261008"
+   "cond[trd_clcln_ymd::EQ]": "2026-10-08"
   },
   "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
  },
  {
   "name": "katSale",
   "params": {
-   "trd_clcln_ymd": "20261008"
+   "trd_clcln_ymd": "2026-10-08"
   },
   "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
  },
  {
   "name": "katSale",
-  "params": {},
+  "params": {
+   "cond[trd_clcln_ymd::GTE]": "20261001",
+   "cond[trd_clcln_ymd::LTE]": "20261008"
+  },
   "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
  },
  {
-  "name": "katOrigin",
+  "name": "katSale",
   "params": {
-   "cond[trd_clcln_ymd::EQ]": "20261008"
+   "cond[trd_clcln_ymd::GTE]": "2026-10-01",
+   "cond[trd_clcln_ymd::LTE]": "2026-10-08"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katSale",
+  "params": {
+   "trdClclnYmd": "20261008"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katSale",
+  "params": {
+   "cond[trd_clcln_ymd::EQ]": "20261008",
+   "cond[whsl_mrkt_cd::EQ]": "110001"
   },
   "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
  },
  {
   "name": "katOrigin",
-  "params": {},
+  "params": {
+   "cond[trd_clcln_ymd::EQ]": "2026-10-08"
+  },
   "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "katOrigin",
+  "params": {
+   "cond[trd_clcln_ymd::GTE]": "2026-10-07",
+   "cond[trd_clcln_ymd::LTE]": "2026-10-08"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[]},\"numOfRows\":3,\"pageNo\":1,\"totalCount\":0},\"header\":{\"resultCode\":\"0\",\"resultMsg\":\"정상\"}}}\n"
+ },
+ {
+  "name": "feed",
+  "params": {
+   "type": "json"
+  },
+  "resp": "{\"response\":{\"body\":{\"dataType\":\"JSON\",\"items\":{\"item\":[{\"ANMLHSBNDR_SN\":null,\"ANMLHSBNDR_TASK_SE_NM\":\"사료제조업\",\"BPLC_NM\":\"주식회사 다옴물류\",\"BZSTAT_SE_NM\":\"수입\",\"CLSBIZ_YMD\":\"\",\"CRD_INFO_X\":\"168959.525245404\",\"CRD_INFO_Y\":\"461978.916255493\",\"DAT_UPDT_PNT\":\"2026-10-10 21:03:30\",\"DAT_UPDT_SE\":\"I\",\"DTL_SALS_STTS_CD\":\"0000\",\"DTL_SALS_STTS_NM\":\"정상\",\"LAST_MDFCN_PNT\":\"2026-10-09 11:07:14\",\"LCPMT_RTRCN_YMD\":\"\",\"LCPMT_YMD\":\"2026-10-09\",\"LCTN_AREA\":\"0\",\"LCTN_ZIP\":\"\",\"LOTNO_ADDR\":\"경기도 김포시 양촌읍 석모리 444-3\",\"LSPRD_PRCSNBIZ_SE_NM\":\"수입\",\"MNG_NO\":\"409000003420260015\",\"OPN_ATMY_GRP_CD\":\"4090000\",\"RGHT_MNBD_SN\":\"L00\",\"ROAD_NM_ADDR\":\"경기도 김포시 양촌읍 석모1로187번길 67-11, 가동\",\"ROAD_NM_ZIP\":\"10055\",\"ROBIZ_YMD\":\"\",\"SALS_STTS_CD\":\"01\",\"SALS_STTS_NM\":\"영업/정상\",\"TCBIZ_BGNG_YMD\":\"\",\"TCBIZ_END_YMD\":\"\",\"TELNO\":\"\"},{\"ANMLHSBNDR_SN\":null,\"ANMLHSBNDR_TASK_SE_NM\":\"사료제조업\",\"BPLC_NM\":\"아사비야\",\"BZSTAT_SE_NM\":\"사료제조업(배합)\",\"CLSBIZ_YMD\":\"\",\"CRD_INFO_"
  },
  {
   "name": "license",
