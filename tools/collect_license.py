@@ -100,7 +100,7 @@ for name, path, public, fn in SERVICES:
             jsave(os.path.join(PRIVATE, 'license', fn + '_ri.json'), {'at': stamp(), 'rows': [[u, e, ri, sp, c] for (u, e, ri, sp), c in ri_ct.items()]})
         summary.append(f'{name} {len(alive):,}/{len(rows):,}')
     except Exception as e:
-        summary.append(f'{name} 실패 {str(e)[:60]}')
+        summary.append(f'{name} 활용신청 대기' if '403' in str(e) else f'{name} 실패 {str(e)[:60]}')   # 403 = 포털 활용신청 전(고장 아님)
 idx = {'at': stamp(), 'layers': [{'k': fn, 'name': name, 'public': public} for name, path, public, fn in SERVICES if os.path.exists(os.path.join(DATA, 'biz', fn + '.json'))]}
 jsave(os.path.join(DATA, 'biz', 'index.json'), idx, indent=1)
 ok = not any('실패' in s for s in summary)

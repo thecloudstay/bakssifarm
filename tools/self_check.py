@@ -12,10 +12,15 @@ def todo(level, kind, what, hint=''):
     m['todo'].append({'level': level, 'kind': kind, 'what': what, 'hint': hint})
 # 1) 수집기
 for k, v in cols.items():
+    if k == 'selfcheck': continue   # 자기 자신의 앞 결과는 세지 않음
     at = v.get('at') or ''
     try: age = (T.replace(tzinfo=None) - datetime.datetime.strptime(at, '%Y-%m-%d %H:%M')).total_seconds() / 3600
     except Exception: age = None
     m['collectors'][k] = {'ok': v.get('ok'), 'age_h': round(age, 1) if age is not None else None, 'msg': (v.get('msg') or '')[:120]}
+    if v.get('ok') is False and k == 'apis':   # 403(활용신청 전)은 아래 「활용신청 필요」로 따로 셈 — 진짜 실패만
+        nf = sum(1 for x in jload(os.path.join(DATA, 'apis.json'), {'items': {}})['items'].values() if x.get('state') == '실패' and '403' not in (x.get('msg') or ''))
+        if nf: todo('보통', '수집 실패', f'연동창구 {nf}곳 응답 실패(403 제외)', '끝점·변수 확인, 해외 실행기에서 막힌 것인지 구분')
+        continue
     if v.get('ok') is False: todo('높음', '수집 실패', f'{k}: {(v.get("msg") or "")[:100]}', '원인 확인 후 수집기 고침(끝점·변수·쪽 넘김)')
     if age is not None and age > 50 and k not in ('trade', 'license', 'wipan'): todo('보통', '오래된 자료', f'{k} 마지막 실행 {round(age)}시간 전', '작업 흐름이 멈췄는지 확인')
 # 2) 자료 신선도·빈 자료

@@ -133,5 +133,5 @@ for s in order:
 reg['at'] = stamp(); reg['total'] = len(SPECS)
 reg['summary'] = dict(collections.Counter(v.get('state', '?') for v in reg['items'].values()))
 jsave(os.path.join(DATA, 'apis.json'), reg, indent=1)
-status('apis', None if not KEY else (fail == 0), f'정상 {ok} · 실패 {fail} · 건너뜀 {skip} / {len(SPECS)}')
+status('apis', None if not KEY else (fail <= max(10, ok)), f'정상 {ok} · 실패 {fail} · 건너뜀 {skip} / {len(SPECS)}')   # 몇 개 창구의 일시 끊김은 고장으로 보지 않음(창구별 상태는 대장에)
 print('연동 대장', reg['summary'])

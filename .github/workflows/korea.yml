@@ -3,7 +3,7 @@
 name: 국내 수집(공공데이터포털)
 on:
   schedule:
-    - cron: '20 20 * * *'   # 한국 시간 05:20
+    - cron: '20 16 * * *'   # 한국 시간 01:20(늦게 돌아도 아침 수집 전에)
   workflow_dispatch:
     inputs:
       force: { description: '인허가·수입 단가까지 지금 받기(아무 값)', required: false }

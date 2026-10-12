@@ -2,7 +2,7 @@
 name: 아침 수집과 올리기
 on:
   schedule:
-    - cron: '17 21 * * *'   # 한국 시간 06:17
+    - cron: '17 18 * * *'   # 한국 시간 03:17(깃허브 예약이 2~3시간 늦게 돌아 8시 31분 자가 개선 전에 끝나도록)
   workflow_dispatch:
     inputs:
       force: { description: '파일 자료 다시 받기(아무 값)', required: false }
