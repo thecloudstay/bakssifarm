@@ -25,8 +25,9 @@ for name, hs, cmp_ in ITEMS:
             if g('statCd') and g('statCd') != '-': continue   # 국가별 줄은 건너뛰고 합계 줄만
             try: imp_amt = float(g('impDlr') or 0); imp_wgt = float(g('impWgt') or 0)
             except ValueError: continue
+            if '총계' in (g('year') or g('yymm')): continue   # 기간 합계 줄 빼고 달별만
             if imp_wgt > 0: rows.append({'ym': g('year') or g('yymm'), 'usd_kg': round(imp_amt / imp_wgt, 3), 'wgt_t': round(imp_wgt / 1000, 1)})
-        out.append({'name': name, 'hs': hs, 'cmp': cmp_, 'rows': rows[-12:]})
+        rows.sort(key=lambda r: r['ym']); out.append({'name': name, 'hs': hs, 'cmp': cmp_, 'rows': rows[-12:]})
     except Exception as e:
         errs.append(f'{name} {str(e)[:50]}')
 jsave(os.path.join(DATA, 'trade.json'), {'at': stamp(), 'items': out, 'note': '관세청 수출입실적, 달러/㎏ 단가. 원화 환산은 화면에서 월평균 환율로', 'errors': errs}, indent=1)
