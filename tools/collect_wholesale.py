@@ -7,29 +7,20 @@ KEY = env('DATA_GO_KR_KEY')
 if not KEY:
     status('wholesale', None, '열쇠 없음(DATA_GO_KR_KEY)'); print('열쇠 없음'); sys.exit(0)
 URL = 'https://apis.data.go.kr/B552845/katSale/trades'
+from kat_markets import markets, fetch_day, last_weekday
 def fetch(ymd):
-    iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'   # 명세: 정산일자는 YYYY-MM-DD 형식이어야 정상 처리(공공데이터포털 15141809)
-    for style, day in (('cond', iso), ('cond', ymd), ('plain', iso)):
-        rows = []; page = 1
-        while True:
-            p = {'serviceKey': KEY, 'pageNo': page, 'numOfRows': 1000, 'returnType': 'json'}
-            if style == 'cond': p['cond[trd_clcln_ymd::EQ]'] = day
-            else: p['trd_clcln_ymd'] = day
-            j = json.loads(get(URL, p)); body = j.get('response', j).get('body', j.get('body', {}))
-            it = body.get('items', []); it = it.get('item', []) if isinstance(it, dict) else it
-            if not it: break
-            rows += it
-            if len(it) < 1000 or page >= 200: break
-            page += 1
-        if rows: return rows
-    return []
+    iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'
+    codes = markets(KEY, URL, iso)
+    return fetch_day(KEY, URL, iso, codes) if codes else []
 def f(x):
     try: return float(x or 0)
     except ValueError: return 0.0
-d = now().date() - datetime.timedelta(days=1)
-while d.weekday() == 6: d -= datetime.timedelta(days=1)
+d = last_weekday(1)
 try:
     rows = fetch(d.strftime('%Y%m%d'))
+    for _ in range(4):   # 휴장일이면 앞 거래일로
+        if rows: break
+        d = last_weekday((now().date() - d).days + 1); rows = fetch(d.strftime('%Y%m%d'))
     items = collections.defaultdict(lambda: {'amt': 0, 'kg': 0, 'grp': '', 'mk': collections.defaultdict(lambda: [0, 0])})
     for r in rows:
         name = (r.get('gds_mclsf_nm') or '').strip()

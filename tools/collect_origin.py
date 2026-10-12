@@ -30,25 +30,11 @@ def to_unit(name):
     if sd and (sd + '|' + rest) in UNITS: return sd + '|' + rest
     cands = [u for u in SG_BY_SHORT.get(short, []) if not sd or u.startswith(sd + '|')]
     return cands[0] if len(cands) == 1 else None
+from kat_markets import markets, fetch_day as _fd
 def fetch_day(ymd):
-    rows = []; page = 1
-    iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'   # 명세: 정산일자는 YYYY-MM-DD 형식이어야 정상 처리(공공데이터포털 15141810)
-    for style, d in (('cond', iso), ('cond', ymd), ('plain', iso)):
-        rows = []; page = 1
-        while True:
-            params = {'serviceKey': KEY, 'pageNo': page, 'numOfRows': 1000, 'returnType': 'json'}
-            if style == 'cond': params['cond[trd_clcln_ymd::EQ]'] = d
-            else: params['trd_clcln_ymd'] = d
-            j = json.loads(get(URL, params))
-            body = j.get('response', j).get('body', j.get('body', {}))
-            items = body.get('items', [])
-            if isinstance(items, dict): items = items.get('item', [])
-            if not items: break
-            rows += items
-            if len(items) < 1000 or page >= 300: break
-            page += 1
-        if rows: return rows
-    return rows
+    iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'   # 명세: 정산일자 YYYY-MM-DD + 도매시장코드 필수(공공데이터포털 15141810)
+    codes = markets(KEY, URL, iso)
+    return _fd(KEY, URL, iso, codes) if codes else []
 day = now().date() - datetime.timedelta(days=1)
 ymd = day.strftime('%Y%m%d')
 try:
