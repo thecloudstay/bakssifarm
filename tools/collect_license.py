@@ -61,6 +61,7 @@ def fetch_all(path):
         page += 1
         if page > 400: break
     return rows
+if env('ONLY_SCHEDULED') and now().weekday() != 0 and not env('FORCE_RUN'): print('월요일에만'); sys.exit(0)
 today = now().date(); y1 = (today - datetime.timedelta(days=365)).strftime('%Y%m%d')
 summary = []
 for name, path, public, fn in SERVICES:

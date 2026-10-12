@@ -4,6 +4,7 @@ import sys, os, json, datetime, xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 KEY = env('DATA_GO_KR_KEY')
+if env('ONLY_SCHEDULED') and now().day != 3 and not env('FORCE_RUN'): print('매달 3일에만'); sys.exit(0)
 # 비교할 품목: (이름, HS 부호, 우리 쪽 비교 대상)
 ITEMS = [('쇠고기(냉장·냉동)', '0201', '한우 경락가'), ('쇠고기 냉동', '0202', '한우 경락가'), ('돼지고기', '0203', '돼지 경락가'),
          ('옥수수(사료용)', '1005', '배합사료 구입가'), ('대두박', '2304', '배합사료 구입가'), ('어분', '2301', '양식 사료 구입가'),

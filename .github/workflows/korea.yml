@@ -24,6 +24,8 @@ jobs:
       PYTHONUTF8: '1'
       PYTHONIOENCODING: utf-8
       API_BUDGET_SEC: '2400'
+      ONLY_SCHEDULED: '1'
+      FORCE_RUN: ${{ github.event.inputs.force }}
     steps:
       - uses: actions/checkout@v4
       - name: 파이썬 준비(설치 없이 압축본, 처음 한 번만 내려받음)
@@ -47,15 +49,17 @@ jobs:
         run: python tools/collect_origin.py
         continue-on-error: true
       - name: 인허가(월요일 또는 손으로 고를 때)
-        shell: powershell
-        run: |
-          $dow = [int](Get-Date).DayOfWeek
-          if ($dow -eq 1 -or "${{ github.event.inputs.force }}" -ne "") { python tools/collect_license.py } else { "월요일에만" }
+        shell: cmd
+        run: python tools/collect_license.py
         continue-on-error: true
       - name: 수입 단가(매달 3일 또는 손으로 고를 때)
-        shell: powershell
-        run: |
-          if ((Get-Date).Day -eq 3 -or "${{ github.event.inputs.force }}" -ne "") { python tools/collect_trade.py } else { "3일에만" }
+        shell: cmd
+        run: python tools/collect_trade.py
+        continue-on-error: true
+      - name: 진단(손으로 고를 때)
+        if: ${{ github.event.inputs.force != '' }}
+        shell: cmd
+        run: python tools/probe.py
         continue-on-error: true
       - name: 연동창구 일괄 수집
         shell: cmd
@@ -67,6 +71,7 @@ jobs:
           path: |
             site/data
             private
+            tools/_debug/probe.json
           retention-days: 3
   publish:
     needs: korea
@@ -90,12 +95,13 @@ jobs:
           a.setdefault('keys', {}).update(b.get('keys', {}))
           json.dump(a, open('site/data/status.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
           P
+          if [ -e _korea/tools/_debug/probe.json ]; then mkdir -p tools/_debug; cp _korea/tools/_debug/probe.json tools/_debug/; fi
           rm -rf _korea
           pip install -q pyproj && python3 tools/fix_pins.py
       - name: 기록하고 올리기
         run: |
           git config user.name "박씨팜 국내 수집"; git config user.email "bot@bakssifarm.local"
-          git add -A site/data private
+          git add -A site/data private; git add -f tools/_debug/probe.json 2>/dev/null || true
           git diff --cached --quiet || git commit -m "국내 수집 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           for i in 1 2 3; do git pull --rebase --autostash -X theirs -q && git push && break; sleep 5; done
       - name: 화면 다시 만들기(올리기 작업 부르기)
