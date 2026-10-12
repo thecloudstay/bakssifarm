@@ -7,6 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       force: { description: '인허가·수입 단가까지 지금 받기(아무 값)', required: false }
+      quick: { description: '연동창구 일괄 수집은 건너뛰기(아무 값)', required: false }
 concurrency:
   group: korea
   cancel-in-progress: false
@@ -62,6 +63,7 @@ jobs:
         run: python tools/probe.py
         continue-on-error: true
       - name: 연동창구 일괄 수집
+        if: ${{ github.event.inputs.quick == '' }}
         shell: cmd
         run: python tools/collect_all.py
         continue-on-error: true

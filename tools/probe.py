@@ -3,8 +3,10 @@ import sys, os, json, urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 K = env('DATA_GO_KR_KEY'); out = []
-T = [('katSale', 'https://apis.data.go.kr/B552845/katSale/trades', [{'cond[trd_clcln_ymd::EQ]': '20261008'}, {'trd_clcln_ymd': '20261008'}, {}]),
-     ('katOrigin', 'https://apis.data.go.kr/B552845/katOrigin/trades', [{'cond[trd_clcln_ymd::EQ]': '20261008'}, {}]),
+T = [('katSale', 'https://apis.data.go.kr/B552845/katSale/trades', [{'cond[trd_clcln_ymd::EQ]': '2026-10-08'}, {'trd_clcln_ymd': '2026-10-08'}, {'cond[trd_clcln_ymd::GTE]': '20261001', 'cond[trd_clcln_ymd::LTE]': '20261008'},
+                {'cond[trd_clcln_ymd::GTE]': '2026-10-01', 'cond[trd_clcln_ymd::LTE]': '2026-10-08'}, {'trdClclnYmd': '20261008'}, {'cond[trd_clcln_ymd::EQ]': '20261008', 'cond[whsl_mrkt_cd::EQ]': '110001'}]),
+     ('katOrigin', 'https://apis.data.go.kr/B552845/katOrigin/trades', [{'cond[trd_clcln_ymd::EQ]': '2026-10-08'}, {'cond[trd_clcln_ymd::GTE]': '2026-10-07', 'cond[trd_clcln_ymd::LTE]': '2026-10-08'}]),
+     ('feed', 'https://apis.data.go.kr/1741000/feed_manufacturers/info', [{'type': 'json'}]),
      ('license', 'https://apis.data.go.kr/1741000/livestock_farming_v2/info_v2', [{'type': 'json'}]),
      ('trade', 'https://apis.data.go.kr/1220000/nitemtrade/getNitemtradeList', [{'strtYymm': '202608', 'endYymm': '202608', 'hsSgn': '0201'}])]
 for nm, url, vs in T:

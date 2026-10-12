@@ -49,7 +49,7 @@ def parse_addr(a):
 def fetch_all(path):
     rows = []; page = 1
     while True:
-        raw = get(f'https://apis.data.go.kr/1741000/{path}/info_v2', {'serviceKey': KEY, 'pageNo': page, 'numOfRows': 1000, 'type': 'json'})
+        raw = get(f'https://apis.data.go.kr/1741000/{path}/' + ('info_v2' if path.endswith('_v2') else 'info'), {'serviceKey': KEY, 'pageNo': page, 'numOfRows': 1000, 'type': 'json'})
         j = json.loads(raw)
         body = j.get('response', j).get('body', {}) if isinstance(j, dict) else {}
         items = body.get('items', [])
