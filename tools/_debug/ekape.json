@@ -6,6 +6,18 @@
    "endYmd": "20261008",
    "breedCd": "024001",
    "sexCd": "025003",
+   "qgradeYn": "Y",
+   "defectIncludeYn": "Y"
+  },
+  "resp": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><response><header><resultCode>00</resultCode><resultMsg>NORMAL SERVICE.</resultMsg></header><body><items><item><CCenterAmt>26510</CCenterAmt><CCenterCnt>374</CCenterCnt><CCityAmt>27075</CCityAmt><CCityCnt>139</CCityCnt><CEastAmt>26565</CEastAmt><CEastCnt>65</CEastCnt><CTotAmt>26627</CTotAmt><CTotCnt>597</CTotCnt><CWestAmt>25797</CWestAmt><CWestCnt>19</CWestCnt><c_0202Amt>26893</c_0202Amt><c_0202Cnt>44</c_0202Cnt><c_0302Amt>27069</c_0302Amt><c_0302Cnt>41</c_0302Cnt><c_0320Amt>27071</c_0320Amt><c_0320Cnt>58</c_0320Cnt><c_0323Amt>27198</c_0323Amt><c_0323Cnt>34</c_0323Cnt><c_0513Amt>26677</c_0513Amt><c_0513Cnt>263</c_0513Cnt><c_0613Amt>26615</c_0613Amt><c_0613Cnt>13</c_0613Cnt><c_0616Amt>26040</c_0616Amt><c_0616Cnt>98</c_0616Cnt><c_0717Amt>26273</c_0717Amt><c_0717Cnt>8</c_0717Cnt><c_0809Amt>25433</c_0809Amt><c_0809Cnt>11</c_0809Cnt><c_0905Amt>25447</c_0905Amt><c_0905Cnt>17</c_0905Cnt><c_1015Amt>28053</c_1015Amt><c_1015Cnt>4</c_1015Cnt><c_1301Amt>26509</c_1301Amt><c_1301Cnt>6</c_1301Cnt><defectIncludeYn>Y</defectIncludeYn><endYmd>20261008</endYmd><gradeCd>0</gradeCd><gradeNm>1++</gradeNm><gradeType>QW</gradeType><judgeBreedCd>024001</judgeBreedCd><judgeBreedNm>한우</judgeBreedNm><judgeSexCd>025003</judgeSexCd><judgeSexNm>거세</judgeSexNm><qgradeYn>Y</qgradeYn><startYmd>20261008</startYmd></item><item><CCityAmt>9900</CCityAmt><CCityCnt>1</CCityCnt><CEastAmt>9747</CEastAmt><CEastCnt>2</CEastCnt><CTotAmt>9796</CTotAmt><CTotCnt>3</CTotCnt><c_0202Amt>9747</c_0202Amt><c_0202Cnt>2</c_0202Cnt><c_0323Amt>9900</c_0323Amt><c_0323Cnt>1</c_0323Cnt><defectIncludeYn>Y</defectIncludeYn><endYmd>20261008</endYmd><gradeCd>029016</gradeCd><gradeNm>D</gradeNm><gradeType>QW</gradeType><judgeBreedCd>024001</judgeBreedCd><judgeBreedNm>한우</judgeBreedNm><judgeSexCd>025003</judgeSexCd><judgeSexNm>거세</judgeSexNm><qgradeYn>Y</qgradeYn><startYmd>20261008</startYmd></item><item><CCenterAmt>24426</CCenterAmt><CCenterCnt>775</CCenterCnt><CCityAmt>25051</CCityAmt><CCityCnt>275</CCityCnt><CEastAmt>25554</CEastAmt><CEastCnt>100</CEastCnt><CTotAmt>24648</CTotAmt><CTotCnt>1187</CTotCnt><CWestAmt>23905</CWestAmt><CWestCnt>37</CWestCnt><c_0202Amt>25731</c_0202Amt><c_0202Cnt>66</c_0202Cnt><c_0302Amt>25592</c_0302Amt><c_0302Cnt>72</c_0302Cnt><c_0320Amt>25052</c_0320Amt><c_0320Cnt>111</c_0320Cnt><c_0323Amt>24603</c_0323Amt><c_0323Cnt>82</c_0323Cnt><c_0513Amt>24570</c_0513Amt><c_0513Cnt>544</c_0513Cnt><c_0613Amt>23033</c_0613Amt><c_0613Cnt>43</c_0613Cnt>"
+ },
+ {
+  "op": "auct/cattle",
+  "params": {
+   "startYmd": "20261008",
+   "endYmd": "20261008",
+   "breedCd": "024001",
+   "sexCd": "025003",
    "qgradeYn": "N",
    "defectIncludeYn": "Y"
   },
