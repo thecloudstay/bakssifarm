@@ -32,6 +32,7 @@
 
   var S = { mode: 'ani', sp: '한우', m: 'n', sel: null, pin: null, zone: null, layers: { farm: true, market: true, cattle: true, wharf: true, zone: true, whole: true } };
   var LS, AQ, CR, PL, MK, TOPO, FEAT, UNITS = {}, map, polyLayer, lblLayer, pinLayer, zoneLayer, bizLayer, breaks = [], YEARS, SP, CELLS = {};
+  var WH = null;   // 공영도매시장 정산(한국농수산식품유통공사, 전 거래일)
   var PR = null, BIZ = null, BIZD = {}, SG = null, OR = null, WP = null, WPU = null;   // WP: 수협 산지 위판(달 단위 파일데이터)   // OR: 실제 출하 금액(경락 원산지 기준)   // 경락가 최신값, 인허가 사업장 겹, 이상 신호(있을 때만)
   var BIZN = { feed: '사료 공장', slaughter: '도축장', hatchery: '부화장', breeding: '종축장', vet: '동물병원', pharmacy: '동물약국', ai_center: '인공수정소', vet_drug: '동물약품 도매', vet_equip: '동물 의료용구', milk: '집유장', processing: '축산 가공', packer: '식육 포장', manure_trans: '분뇨 수집운반', manure_fac: '분뇨 처리시설' };
   var ALL_SEA = { k: '모든 양식', g: '', all: true };
@@ -324,6 +325,7 @@
     else if (S.m === 's') { unit = '원'; title = (SP.all ? '' : SP.k + ' ') + '실제 출하 금액(도매시장 낙찰, 최근 ' + OR.months.length + '개월)'; }
     else { unit = '건'; title = (SP.all ? '지리적표시' : SP.k) + ' 등록 수'; }
     var lo = breaks[0], hi = breaks[breaks.length - 1];
+    if (!breaks.length || !hi) { el.innerHTML = '<h3>' + esc(title) + '</h3><div class="none"><i></i>' + (S.m === 's' ? '이 품목은 도매시장 낙찰 원산지 자료가 아직 없습니다(축산물은 경락가 화면에서)' : '자료 없음') + '</div>'; return; }
     el.innerHTML = '<h3>' + esc(title) + '</h3><div class="sw">' + R.map(function (c) { return '<span style="background:' + c + '"></span>'; }).join('') +
       '</div><div class="ticks"><span>' + man(lo) + unit + ' 아래</span><span>' + man(hi) + unit + ' 넘음</span></div><div class="none"><i></i>없음 또는 자료 없음</div>';
   }
@@ -567,8 +569,25 @@
   }
 
   /* ── 판: 농장 */
-  function cropBoard(title) {
-    return '<section class="sec"><p class="eyebrow"><span>' + esc(title || '오늘 도매시장 경락가') + ' <span class="tag mute">연동 전</span></span></p><p class="board-note" style="margin:0">농산물 경락가는 농림축산식품부 농넷(도매시장 통합홈페이지) 연동창구를 붙이면 품목·등급별로 들어옵니다. <a href="price/">경락가 조회 화면 →</a></p></section>';
+  function cropBoard(title, pin) {
+    if (WH) {
+      var note = '<p class="mini">한국농수산식품유통공사 전국 공영도매시장 정산정보 · ' + esc(WH.date) + ' 거래 · ㎏ 단위 거래만 ㎏당 값 계산 · 막대는 거래 금액. <a href="price/">경락가 화면 →</a></p>';
+      var rows;
+      if (pin) {   // 이 도매시장에서 많이 팔린 품목
+        var pn = pin.name.replace(/\s/g, '');
+        var mk = function (k) { var a = k.replace(/\s/g, ''); return pn.indexOf(a) >= 0 || (a.length > 2 && pn.indexOf(a.slice(0, 2)) === 0 && pn.indexOf(a.slice(2)) >= 0); };
+        rows = [];
+        WH.items.forEach(function (it) { (it.markets || []).forEach(function (m) { if (mk(m[0])) rows.push([it.item, m[2], m[1], null]); }); });
+        rows.sort(function (a, b) { return b[1] - a[1]; });
+        if (rows.length) return '<section class="sec"><p class="eyebrow"><span>' + esc(title || '이 도매시장 경락가') + '</span><span>원/㎏</span></p>' + wpTable(rows.slice(0, 10)) + note + '</section>';
+      } else if (!SP.all && SP.k) {   // 고른 품목
+        var it = WH.items.filter(function (x) { return x.item === SP.k || x.item.indexOf(SP.k) >= 0 || SP.k.indexOf(x.item) >= 0; })[0];
+        if (it) return '<section class="sec"><p class="eyebrow"><span>' + esc(WH.date) + ' ' + esc(it.item) + ' 전국 ' + (it.won_kg ? it.won_kg.toLocaleString('ko-KR') + '원/㎏' : '') + '</span><span>' + man(it.amt) + '원</span></p>' + wpTable((it.markets || []).filter(function (m) { return m[1]; }).slice(0, 8).map(function (m) { return [m[0], m[2], m[1], null]; })) + note + '</section>';
+      }
+      rows = WH.items.slice(0, 10).map(function (x) { return [x.item, x.amt, x.won_kg, null]; });
+      return '<section class="sec"><p class="eyebrow"><span>' + esc(WH.date) + ' 공영도매시장 거래 많은 품목</span><span>원/㎏</span></p>' + wpTable(rows) + note + '</section>';
+    }
+    return '<section class="sec"><p class="eyebrow"><span>' + esc(title || '오늘 도매시장 경락가') + ' <span class="tag mute">연동 전</span></span></p><p class="board-note" style="margin:0">농산물 경락가는 공영도매시장 정산정보가 들어오면 품목·도매시장별로 채워집니다. <a href="price/">경락가 조회 화면 →</a></p></section>';
   }
   function kindChips(items, unitList) {
     return '<div class="chips">' + items.map(function (it) {
@@ -611,7 +630,7 @@
         var us = Object.keys(CR.units).sort(function (a, b) { return CR.units[b].n - CR.units[a].n; }).slice(0, 8);
         h += topList('등록 품목 많은 시군', '건', us, function (u) { return CR.units[u].n; });
       } else {
-        var us2 = unitKeys();
+        var us2 = Object.keys(CR.units).filter(function (u) { return CR.units[u].items.indexOf(SP.k) >= 0; });   // 지리적표시 시군(색칠 기준이 출하 금액이어도 이 목록은 등록 시군)
         h += '<section class="sec"><h1 class="place">' + esc(SP.k) + '<small>' + esc(SP.kind) + ' · 지리적표시 ' + us2.length + '개 시군</small></h1>';
         h += '<p class="read">' + esc(SP.k) + ' 지리적표시를 가진 시군: ' + us2.map(unitFull).join(', ') + '</p></section>';
         h += cropBoard('오늘 ' + SP.k + ' 도매시장 경락가');
@@ -640,7 +659,7 @@
       } else h += board('소').replace('오늘 한우 거세 경락가', '오늘 이 공판장 한우 경락가');
     }
     else if (m.type === '위판장') h += seaBoard('이 위판장 시세', null, m);
-    else if (m.type === '도매시장') h += cropBoard('오늘 이 도매시장 경락가');
+    else if (m.type === '도매시장') h += cropBoard(WH ? WH.date + ' 이 도매시장 많이 팔린 품목' : '오늘 이 도매시장 경락가', WH ? m : null);
     var srcs = { '공판장': '위치: 박씨팜 정리본(공판장 13곳). 전화·주소 대조한 곳은 「대조함」으로 표시.', '가축시장': '가축시장 장날·위치는 공공 연동창구가 없어 직접 확인해 채우는 중입니다.',
       '위판장': '위판장은 수협 지구별 조합 기준 63곳. 공공 좌표가 없어 시군 중심에 두었고, 산지위판장 현황 자료의 주소로 바꿀 예정입니다.', '도매시장': '공영도매시장 32곳. 좌표는 근사(1~2㎞)이며 주소 대조 뒤 확정합니다.' };
     h += '<section class="sec"><p class="src">' + esc(srcs[m.type] || '') + '</p></section>';
@@ -795,10 +814,10 @@
   /* ── 시작 */
   function get(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error(u); return r.json(); }); }
   function opt(u) { return fetch(u).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json'), opt('data/origin.json'), opt('data/wipan.json')])
+  Promise.all([get('data/livestock.json'), get('data/units.json'), get('data/markets.json'), get('data/aqua.json'), get('data/crops.json'), get('data/places.json'), opt('data/price/latest.json'), opt('data/biz/index.json'), opt('data/price/abattoir.json'), opt('data/signals.json'), opt('data/origin.json'), opt('data/wipan.json'), opt('data/price/wholesale.json')])
     .then(function (res) {
       LS = res[0]; TOPO = res[1]; MK = res[2]; AQ = res[3]; CR = res[4]; PL = res[5]; YEARS = LS.years;
-      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9]; OR = res[10] && res[10].units ? res[10] : null; WP = res[11] && res[11].fish ? res[11] : null;
+      PR = res[6]; BIZ = res[7]; if (PR && res[8]) PR.abattoir = res[8]; SG = res[9]; OR = res[10] && res[10].units ? res[10] : null; WP = res[11] && res[11].fish ? res[11] : null; WH = res[12] && res[12].items && res[12].items.length ? res[12] : null;
       if (WP && !MODES.sea.measures.some(function (m) { return m[0] === 'w'; })) MODES.sea.measures.push(['w', '위판 금액']);
       FEAT = topojson.feature(TOPO, TOPO.objects.units);
       var q = new URLSearchParams(location.search);
