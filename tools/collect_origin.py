@@ -32,12 +32,13 @@ def to_unit(name):
     return cands[0] if len(cands) == 1 else None
 def fetch_day(ymd):
     rows = []; page = 1
-    for style in ('cond', 'plain'):
+    iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'   # 명세: 정산일자는 YYYY-MM-DD 형식이어야 정상 처리(공공데이터포털 15141810)
+    for style, d in (('cond', iso), ('cond', ymd), ('plain', iso)):
         rows = []; page = 1
         while True:
             params = {'serviceKey': KEY, 'pageNo': page, 'numOfRows': 1000, 'returnType': 'json'}
-            if style == 'cond': params['cond[trd_clcln_ymd::EQ]'] = ymd
-            else: params['trd_clcln_ymd'] = ymd
+            if style == 'cond': params['cond[trd_clcln_ymd::EQ]'] = d
+            else: params['trd_clcln_ymd'] = d
             j = json.loads(get(URL, params))
             body = j.get('response', j).get('body', j.get('body', {}))
             items = body.get('items', [])
@@ -54,7 +55,7 @@ try:
     rows = fetch_day(ymd)
     mpath = os.path.join(PRIVATE, 'origin', day.strftime('%Y-%m') + '.json')
     month = jload(mpath, {'days': [], 'agg': {}})
-    if ymd not in month['days']:
+    if rows and ymd not in month['days']:   # 0건인 날은 누적 일수에 넣지 않음
         agg = month['agg']; used = 0
         for r in rows:
             item = (r.get('gds_mclsf_nm') or r.get('corp_gds_item_nm') or '').strip()

@@ -8,12 +8,13 @@ if not KEY:
     status('wholesale', None, '열쇠 없음(DATA_GO_KR_KEY)'); print('열쇠 없음'); sys.exit(0)
 URL = 'https://apis.data.go.kr/B552845/katSale/trades'
 def fetch(ymd):
-    for style in ('cond', 'plain'):
+    iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'   # 명세: 정산일자는 YYYY-MM-DD 형식이어야 정상 처리(공공데이터포털 15141809)
+    for style, day in (('cond', iso), ('cond', ymd), ('plain', iso)):
         rows = []; page = 1
         while True:
             p = {'serviceKey': KEY, 'pageNo': page, 'numOfRows': 1000, 'returnType': 'json'}
-            if style == 'cond': p['cond[trd_clcln_ymd::EQ]'] = ymd
-            else: p['trd_clcln_ymd'] = ymd
+            if style == 'cond': p['cond[trd_clcln_ymd::EQ]'] = day
+            else: p['trd_clcln_ymd'] = day
             j = json.loads(get(URL, p)); body = j.get('response', j).get('body', j.get('body', {}))
             it = body.get('items', []); it = it.get('item', []) if isinstance(it, dict) else it
             if not it: break
