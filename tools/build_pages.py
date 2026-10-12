@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {}); OPPS = J('opps.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {}); OPPS = J('opps.json', {}); CROPS = J('cropsignal.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -457,7 +457,19 @@ def signal_page():
         b += '<h2>보합 — 평소대로</h2><p class="mini">' + E(', '.join(f'{i["item"]} {format(i["wonkg"], ",")}원' for i in rest)) + '</p>'
         if sc.get('months'):
             b += '<h2>적중 기록</h2><table class="t"><tr><th>신호 달 → 채점 달</th><th class="num">품목</th><th class="num">적중</th></tr>' + ''.join(f'<tr><td>{E(m["month"])} → {E(m["to"])}</td><td class="num">{m["n"]}</td><td class="num">{m["hit"]} ({round(m["hit"] / m["n"] * 100)}%)</td></tr>' for m in sc['months']) + '</table>'
-    b += '<h2>신호를 만드는 방법</h2><ul><li>창고 재고: 수협 물류센터·조합창고 재고가 한 달 새 15% 넘게 줄면 오를 쪽(+1), 늘면 내릴 쪽(−1).</li><li>달 안 흐름: 달 후반 위판 값이 전반보다 5% 넘게 오르면 +0.5, 내리면 −0.5. 앞달 대비 10% 넘게 움직이면 같은 방향으로 ±0.5.</li><li>폐사 위험 예보: 7일 안에 폐사 위험이면 +1, 고수온 주의면 +0.5(공급이 줄 수 있음).</li><li>합이 +1 이상이면 오를 쪽, −1 이하면 내릴 쪽. 채점은 다음 달 ㎏당 값이 3% 넘게 움직인 방향과 맞는지로 봅니다.</li><li>축산(소·돼지 경락가)·농산(도매시장 정산)은 공공데이터포털 열쇠가 들어오면 같은 틀로 붙입니다.</li></ul>'
+    C = CROPS
+    b += '<h2 id="crop">농산물 — 공영도매시장 값 흐름 <span class="tag">새로</span></h2>'
+    if C.get('items'):
+        sc2 = C.get('score') or {}
+        b += f'<p class="mini">거래일 {C["ndays"]}일치 · 맞히려는 것: {E(C["horizon"])} · 근거: {E(C["basis"])} · 적중 ' + (f'{sc2["hit"]}/{sc2["n"]}' if sc2.get('n') else '채점 대기(월요일 신호를 2주 뒤 자동 채점)') + '</p>'
+        for d, cls in (('오름 쪽', 'bad'), ('내림 쪽', 'ok')):
+            rows = [i for i in C['items'] if i['dir'] == d]
+            if rows: b += f'<h3>{"오를 쪽 — 앞당겨 확보 검토" if d == "오름 쪽" else "내릴 쪽 — 구매 미루기 검토"}</h3><table class="t"><tr><th>품목</th><th class="num">최근 ㎏당</th><th class="num">신호 세기</th><th>근거</th></tr>' + ''.join(f'<tr><td>{E(i["item"])}</td><td class="num">{format(i["wonkg"], ",")}원</td><td class="num {cls}">{i["score"]:+}</td><td class="mini">{E(" · ".join(i["why"]))}</td></tr>' for i in rows) + '</table>'
+        rest = [i for i in C['items'] if i['dir'] == '보합']
+        if rest: b += '<p class="mini">보합: ' + E(', '.join(f'{i["item"]} {format(i["wonkg"], ",")}원' for i in rest)) + '</p>'
+    else:
+        b += f'<p>전국 공영도매시장 26곳의 정산 자료를 거래일마다 쌓는 중입니다(지금 {C.get("ndays", 0)}거래일). 10거래일이 모이면 품목별 「앞으로 2주 오를 쪽·내릴 쪽」 신호가 여기에 자동으로 뜹니다. 그 전에도 <a href="/opps/#c1">도매시장 간 값 차이</a>는 지금 바로 볼 수 있습니다.</p>'
+    b += '<h2>신호를 만드는 방법</h2><ul><li>농산물: 최근 5거래일 ㎏당 값이 앞 15거래일보다 5% 넘게 오르면 +0.5, 반입 물량이 15% 넘게 줄면 +0.5(반대는 −). 합이 ±1이면 신호.</li><li>창고 재고: 수협 물류센터·조합창고 재고가 한 달 새 15% 넘게 줄면 오를 쪽(+1), 늘면 내릴 쪽(−1).</li><li>달 안 흐름: 달 후반 위판 값이 전반보다 5% 넘게 오르면 +0.5, 내리면 −0.5. 앞달 대비 10% 넘게 움직이면 같은 방향으로 ±0.5.</li><li>폐사 위험 예보: 7일 안에 폐사 위험이면 +1, 고수온 주의면 +0.5(공급이 줄 수 있음).</li><li>합이 +1 이상이면 오를 쪽, −1 이하면 내릴 쪽. 채점은 다음 달 ㎏당 값이 3% 넘게 움직인 방향과 맞는지로 봅니다.</li><li>축산(소·돼지 경락가)도 날짜별 값이 쌓이는 대로 같은 틀로 붙입니다.</li></ul>'
     b += '<p class="mini">이 신호는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않습니다.</p>'
     b += '<p><a href="/opps/">싸게 사는 산지 · 넘치는 품목 · 마르는 품목 · 어족 동향 보기 →</a></p>'
     b += '<h2>업체용</h2><p>품목·지역을 골라 매주 받는 구독(급식·식자재 유통·수산 가공·횟집 묶음)과, 우리 회사 구매 품목만 따로 보는 신호표를 준비하고 있습니다. <a href="/pro/">업체 등록에서 「시세 한 장 구독」 →</a></p>'
@@ -473,7 +485,11 @@ def opps_page():
     else:
         mo = O['month'].replace('-', '년 ') + '월'
         b += f'<p class="mini">기준: {E(mo)} · {E(O["basis"])} · 크기·선도(상품 규격)가 섞인 평균이므로 실제 매입 전 규격을 맞춰 보세요.</p>'
-        b += '<div class="toc"><a href="#o1">싸게 사는 산지</a><a href="#o2">공급 넘침</a><a href="#o3">공급 빠듯</a><a href="#o4">어족(자연산)</a><a href="#o5">자연산·양식 값 차이</a></div>'
+        b += '<div class="toc"><a href="#c1">농산물 도매시장 간 값 차이</a><a href="#o1">싸게 사는 산지</a><a href="#o2">공급 넘침</a><a href="#o3">공급 빠듯</a><a href="#o4">어족(자연산)</a><a href="#o5">자연산·양식 값 차이</a></div>'
+        if CROPS.get('spread'):
+            b += f'<h2 id="c1">농산물 — 같은 품목, 도매시장마다 다른 값 <span class="tag">{E(CROPS.get("date") or "")}</span></h2><p class="mini">한국농수산식품유통공사 공영도매시장 정산(㎏ 단위 거래, 거래 금액 5백만 원 넘는 곳만). 등급·크기가 섞인 평균이라 실제 매입 전 규격을 맞춰 보세요.</p>'
+            b += '<table class="t"><tr><th>품목</th><th class="num">전국 ㎏당</th><th>싸게 거래된 도매시장(㎏당 · 평균보다)</th><th>비싸게 거래된 곳</th><th class="num">차이</th></tr>' + ''.join(
+                f'<tr><td>{E(x["item"])}</td><td class="num">{format(x["avg"], ",")}원</td><td class="mini">{E(" · ".join(f"{m[0]} {m[1]:,}원(−{m[2]}%)" for m in x["cheap"]))}</td><td class="mini">{E(x["high"][0])} {x["high"][1]:,}원</td><td class="num">{x["gap"]}%</td></tr>' for x in CROPS['spread'][:15]) + '</table>'
         b += '<h2 id="o1">1. 싸게 사는 산지 — 같은 어종, 조합마다 다른 값</h2>'
         if O.get('spread'):
             b += '<table class="t"><tr><th>어종</th><th class="num">전국 ㎏당</th><th>싸게 판 조합(㎏당 · 물량 · 평균보다)</th><th>비싸게 판 곳</th><th class="num">차익 크기</th></tr>'
