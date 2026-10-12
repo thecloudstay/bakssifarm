@@ -4,7 +4,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 K = env('DATA_GO_KR_KEY'); B = 'http://data.ekape.or.kr/openapi-data/service/user/grade/'
 out = []
-for op, p in [('auct/cattle', {'startYmd': '20261008', 'endYmd': '20261008', 'breedCd': '024001', 'sexCd': '025003', 'qgradeYn': 'N', 'defectIncludeYn': 'Y'}),
+for op, p in [('auct/cattle', {'startYmd': '20261008', 'endYmd': '20261008', 'breedCd': '024001', 'sexCd': '025003', 'qgradeYn': 'Y', 'defectIncludeYn': 'Y'}),
+              ('auct/cattle', {'startYmd': '20261008', 'endYmd': '20261008', 'breedCd': '024001', 'sexCd': '025003', 'qgradeYn': 'N', 'defectIncludeYn': 'Y'}),
               ('auct/cattle', {'startYmd': '20261008', 'endYmd': '20261008'}),
               ('auct/pigGrade', {'startYmd': '20261008', 'endYmd': '20261008', 'skinYn': 'Y', 'egradeExceptYn': 'N'}),
               ('auct/pigGrade', {'startYmd': '20261008', 'endYmd': '20261008'})]:

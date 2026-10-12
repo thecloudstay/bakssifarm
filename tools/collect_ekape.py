@@ -33,7 +33,7 @@ def day(d): return d.strftime('%Y%m%d')
 today = now().date(); d1 = today - datetime.timedelta(days=1); d2 = today - datetime.timedelta(days=2)
 # 경매가 없는 날(주말·공휴일)은 비어 오므로, 자료가 있는 가장 가까운 날을 거꾸로 찾는다(최대 10일)
 CQ = dict(breedCd='024001', sexCd='025003', qgradeYn='N', defectIncludeYn='Y')
-def cattle(d): return grade_rows(call('auct/cattle', startYmd=day(d), endYmd=day(d), **CQ), ['1++', '1+', '1', '2', '3', '등외'])
+def cattle(d): return grade_rows(call('auct/cattle', startYmd=day(d), endYmd=day(d), **CQ), ['1++A', '1++B', '1++C', '1+A', '1+B', '1+C', '1A', '1B', '1C', '2A', '2B', '2C', '3A', '3B', '3C', '등외', '평균'])
 def back(d):
     for _ in range(10):
         d -= datetime.timedelta(days=1)
@@ -44,7 +44,7 @@ try:
     d1 = today; c1 = []
     for _ in range(10):
         d1 = back(d1); c1 = cattle(d1)
-        if any(r['g'] in ('1++', '1+', '1', '2', '3') for r in c1): break
+        if any(r['g'][:1] in '123' for r in c1): break   # 등급 이름은 1++A·1+B처럼 육량 등급이 붙어 옴
     d2 = d1; c0 = {}
     for _ in range(10):
         d2 = back(d2); c0 = {r['g']: r['p'] for r in cattle(d2)}
