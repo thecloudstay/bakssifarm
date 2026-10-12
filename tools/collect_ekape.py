@@ -32,8 +32,8 @@ def grade_rows(items, order):
 def day(d): return d.strftime('%Y%m%d')
 today = now().date(); d1 = today - datetime.timedelta(days=1); d2 = today - datetime.timedelta(days=2)
 # 경매가 없는 날(주말·공휴일)은 비어 오므로, 자료가 있는 가장 가까운 날을 거꾸로 찾는다(최대 10일)
-CQ = dict(breedCd='024001', sexCd='025003', qgradeYn='N', defectIncludeYn='Y')
-def cattle(d): return grade_rows(call('auct/cattle', startYmd=day(d), endYmd=day(d), **CQ), ['1++A', '1++B', '1++C', '1+A', '1+B', '1+C', '1A', '1B', '1C', '2A', '2B', '2C', '3A', '3B', '3C', '등외', '평균'])
+CQ = dict(breedCd='024001', sexCd='025003', qgradeYn='Y', defectIncludeYn='Y')   # 육질등급(1++·1+·1·2·3)만
+def cattle(d): return grade_rows(call('auct/cattle', startYmd=day(d), endYmd=day(d), **CQ), ['1++', '1+', '1', '2', '3', '등외'])
 def back(d):
     for _ in range(10):
         d -= datetime.timedelta(days=1)
