@@ -10,10 +10,14 @@ HD = os.path.join(PRIVATE, 'wholesale'); FD = os.path.join(PRIVATE, 'forecast');
 WH = jload(os.path.join(DATA, 'price', 'wholesale.json'), {})
 days = sorted(glob.glob(os.path.join(HD, '*.json')))
 hist = [(os.path.basename(p)[:10], jload(p, {})) for p in days]
+# 반쪽 장날(토요일 등 일부 도매시장만 연 날)은 물량이 적어 「공급 줄어듦」으로 잘못 읽히므로 뺌 — 하루 거래 금액이 중앙값의 60% 아래면 제외
+if hist:
+    tots = sorted(sum((v[2] or 0) for v in d.values()) for _, d in hist); med = tots[len(tots) // 2]
+    hist = [(k, d) for k, d in hist if sum((v[2] or 0) for v in d.values()) >= med * 0.6]
 out = {'at': stamp(), 'date': WH.get('date'), 'ndays': len(hist), 'items': [], 'spread': [], 'score': {'n': 0, 'hit': 0, 'rows': []},
        'basis': '한국농수산식품유통공사 전국 공영도매시장 정산정보(26곳, 거래일마다)', 'horizon': '앞으로 2주 공영도매시장 ㎏당 값'}
 def avg(vals): vals = [v for v in vals if v]; return sum(vals) / len(vals) if vals else None
-# 1) 신호
+# 1) 신호(온전한 거래일 10일 이상)
 if len(hist) >= 10:
     recent, prior = hist[-5:], hist[-20:-5]
     tot = collections.Counter()
