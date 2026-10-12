@@ -1,0 +1,32 @@
+{
+ "pages": {
+  "https://at.agromarket.kr/": {
+   "err": "HTTP Error 406: Not Acceptable"
+  },
+  "https://at.agromarket.kr/domeinfo/sanRealtime.do": {
+   "err": "HTTP Error 406: Not Acceptable"
+  },
+  "https://at.agromarket.kr/domeinfo/smallTrade.do": {
+   "err": "HTTP Error 406: Not Acceptable"
+  },
+  "https://at.agromarket.kr/openApi/apiInfo.do": {
+   "err": "HTTP Error 406: Not Acceptable"
+  },
+  "https://at.agromarket.kr/domeinfo/marketInfo.do": {
+   "err": "HTTP Error 406: Not Acceptable"
+  },
+  "https://api.agromarket.kr/sample/": {
+   "err": "HTTP Error 500: Internal Server Error"
+  },
+  "https://www.agromarket.kr/": {
+   "err": "<urlopen error [Errno 111] Connection refused>"
+  },
+  "https://at.agromarket.kr/statistics/daily.do": {
+   "err": "HTTP Error 406: Not Acceptable"
+  },
+  "https://at.agromarket.kr/mrktInfo/mrktList.do": {
+   "err": "HTTP Error 406: Not Acceptable"
+  }
+ },
+ "codes": {}
+}
