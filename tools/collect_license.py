@@ -89,7 +89,8 @@ for name, path, public, fn in SERVICES:
                 if TR and r.get('CRD_INFO_X') and r.get('CRD_INFO_Y'):
                     try: lng, lat = TR.transform(float(r['CRD_INFO_X']), float(r['CRD_INFO_Y']))
                     except Exception: pass
-                pins.append({'name': r.get('BPLC_NM'), 'addr': r.get('ROAD_NM_ADDR') or r.get('LOTNO_ADDR'), 'u': u, 'tel': r.get('TELNO'), 'kind': sp, 'lat': round(lat, 5) if lat else None, 'lng': round(lng, 5) if lng else None, 'since': r.get('LCPMT_YMD')})
+                raw_xy = {} if lat else {'x': r.get('CRD_INFO_X'), 'y': r.get('CRD_INFO_Y')}   # 좌표 바꿈 모듈이 없는 곳(국내 실행기)에서는 원좌표를 남겨 두고 올리기 단계에서 바꿈
+                pins.append({**raw_xy, 'name': r.get('BPLC_NM'), 'addr': r.get('ROAD_NM_ADDR') or r.get('LOTNO_ADDR'), 'u': u, 'tel': r.get('TELNO'), 'kind': sp, 'lat': round(lat, 5) if lat else None, 'lng': round(lng, 5) if lng else None, 'since': r.get('LCPMT_YMD')})
         pub = {u: {'n': v['n'], 'in12': v['in12'], 'out12': v['out12'], 'emd': dict(v['emd'].most_common()), 'sp': dict(v['sp'].most_common(8))} for u, v in by_u.items()}
         out = {'at': stamp(), 'name': name, 'total': len(rows), 'alive': len(alive), 'units': pub, 'source': '행정안전부 지방행정 인허가 데이터개방(공공데이터포털), 매일 갱신'}
         if public: out['pins'] = pins

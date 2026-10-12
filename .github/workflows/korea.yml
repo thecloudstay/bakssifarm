@@ -26,11 +26,18 @@ jobs:
       API_BUDGET_SEC: '2400'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.12' }
-      - name: 준비
-        shell: cmd
-        run: python -m pip install -q pyproj
+      - name: 파이썬 준비(설치 없이 압축본, 처음 한 번만 내려받음)
+        shell: powershell
+        run: |
+          $d = "C:\actions-runner\pyembed"
+          if (-not (Test-Path "$d\python.exe")) {
+            New-Item -ItemType Directory -Force -Path $d | Out-Null
+            Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.12.7/python-3.12.7-embed-amd64.zip -OutFile "$d\py.zip"
+            Expand-Archive -Path "$d\py.zip" -DestinationPath $d -Force
+            Remove-Item "$d\py.zip"
+          }
+          Add-Content -Path $env:GITHUB_PATH -Value $d
+          & "$d\python.exe" --version
       - name: 공영도매시장 경락가(정산)
         shell: cmd
         run: python tools/collect_wholesale.py
@@ -84,6 +91,7 @@ jobs:
           json.dump(a, open('site/data/status.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
           P
           rm -rf _korea
+          pip install -q pyproj && python3 tools/fix_pins.py
       - name: 기록하고 올리기
         run: |
           git config user.name "박씨팜 국내 수집"; git config user.email "bot@bakssifarm.local"
