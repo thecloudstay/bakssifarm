@@ -128,7 +128,8 @@ for s in order:
       ent.update({'state': '정상' if rows else '빈 응답', 'n': len(rows), 'at': stamp(), 'fields': len(fields), 'units': len(cnt), 'msg': (json.dumps(meta, ensure_ascii=False)[:120] if not rows else '')})
       ok += 1
     except Exception as e:
-        ent.update({'state': '실패', 'at': stamp(), 'msg': str(e)[:140]}); fail += 1
+        if '403' in str(e): ent.update({'state': '활용신청 필요', 'at': stamp(), 'msg': '공공데이터포털에서 이 연동창구 활용신청이 필요함'}); skip += 1
+        else: ent.update({'state': '실패', 'at': stamp(), 'msg': str(e)[:140]}); fail += 1
 reg['at'] = stamp(); reg['total'] = len(SPECS)
 reg['summary'] = dict(collections.Counter(v.get('state', '?') for v in reg['items'].values()))
 jsave(os.path.join(DATA, 'apis.json'), reg, indent=1)

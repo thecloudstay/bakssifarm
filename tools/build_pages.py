@@ -502,7 +502,7 @@ if os.path.isdir(_ad):
         try: APISUM[fn[:-5]] = json.load(open(os.path.join(_ad, fn), encoding='utf-8'))
         except Exception: pass
 EXTRA = {k: J('extra/' + k + '.json', {}) for k in ('kamis', 'fx', 'oil', 'kosis_livestock', 'usda_beef')}
-STATE_WORD = {'정상': ('연동 중', 'on'), '빈 응답': ('연동 중(어제 자료 없음)', 'on'), '전용 수집기': ('연동 중', 'on'), '열쇠 대기': ('열쇠 들어오면 바로', 'soon'), '제공처 열쇠': ('제공처 열쇠 필요', 'soon'), '실패': ('점검 중', 'off'), '명세 없음': ('명세 확인 중', 'soon')}
+STATE_WORD = {'활용신청 필요': ('활용신청 대기', 'soon'), '정상': ('연동 중', 'on'), '빈 응답': ('연동 중(어제 자료 없음)', 'on'), '전용 수집기': ('연동 중', 'on'), '열쇠 대기': ('열쇠 들어오면 바로', 'soon'), '제공처 열쇠': ('제공처 열쇠 필요', 'soon'), '실패': ('점검 중', 'off'), '명세 없음': ('명세 확인 중', 'soon')}
 def data_page():
     it = APIS.get('items', {})
     doms = ['동물농장', '어장', '농장', '공통']
@@ -543,7 +543,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('buysignal', '구매 신호(시험판)'), ('opps', '수급 기회(시험판)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('selfcheck', '자가 점검'), ('buysignal', '구매 신호(시험판)'), ('opps', '수급 기회(시험판)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'
@@ -556,10 +556,15 @@ def console_page():
     if ap.get('items'):
         sm = ap.get('summary', {})
         b += f'<h2>연동 대장 — 연동창구 {len(ap["items"])}건</h2><p class="mini">' + ' · '.join(f'{E(k)} {v}' for k, v in sm.items()) + f' · {E(ap.get("at", ""))}</p>'
-        order = {'정상': 0, '실패': 1, '빈 응답': 2, '전용 수집기': 3, '열쇠 대기': 4, '제공처 열쇠': 5, '명세 없음': 6}
+        order = {'정상': 0, '실패': 1, '빈 응답': 2, '활용신청 필요': 3, '전용 수집기': 4, '열쇠 대기': 5, '제공처 열쇠': 6, '명세 없음': 7}
         rows = sorted(ap['items'].items(), key=lambda kv: (order.get(kv[1].get('state'), 9), kv[1].get('dom', ''), kv[1].get('cat', '')))
         b += '<table class="t"><tr><th>연동창구</th><th>갈래</th><th>상태</th><th class="num">건수</th><th>메모</th></tr>' + ''.join(
             f'<tr><td>{E(v.get("title", ""))} <span class="mini">{E(k)}</span></td><td>{E(v.get("dom", ""))} · {E(v.get("cat", ""))}</td><td class="{"ok" if v.get("state") == "정상" else "bad" if v.get("state") == "실패" else "wait"}">{E(v.get("state", ""))}</td><td class="num">{v.get("n", "") if v.get("n") is not None else ""}</td><td class="mini">{E(v.get("msg", "") or v.get("at", ""))}</td></tr>' for k, v in rows) + '</table>'
+    sc = J('selfcheck.json', {})
+    if sc.get('todo') is not None:
+        b += f'<h2>자가 점검 — {E(sc.get("at", ""))}</h2><p class="mini">매일 아침 스스로 재고(수집기·자료 신선도·깨진 연결·빈 칸·적중률) 고칠 거리를 뽑습니다. 고침과 2주 뒤 검증은 아침 자가 개선 작업이 맡고, 기록은 docs/개선기록.md 에 남습니다.</p>'
+        b += '<dl class="kv">' + ''.join(f'<dt>{E(k)}</dt><dd>{E(str(v))}</dd>' for k, v in (sc.get('fresh') or {}).items()) + f'<dt>화면 수</dt><dd>{sc.get("pages", {}).get("n")}</dd><dt>깨진 내부 연결</dt><dd>{sc.get("pages", {}).get("broken_links")}</dd><dt>활용신청 대기</dt><dd>{sc.get("need_apply", 0)}건</dd></dl>'
+        b += '<table class="t"><tr><th>중요도</th><th>갈래</th><th>내용</th><th>고칠 방향</th></tr>' + ''.join(f'<tr><td class="{"bad" if t["level"] == "높음" else "wait"}">{E(t["level"])}</td><td>{E(t["kind"])}</td><td class="mini">{E(t["what"])}</td><td class="mini">{E(t["hint"])}</td></tr>' for t in sc['todo']) + '</table>'
     b += '<h2>양식(접수함)</h2><p>모집 열기·참여 신청·업체 등록·가격 알림은 넷리파이 양식으로 받습니다. 접수 내용은 넷리파이 콘솔의 「양식」에서 보고, 모집판 반영은 data/gongu.json 을 고쳐 다시 올리면 됩니다.</p>'
     write('/console/', shell('/console/', '콘솔 | 박씨팜', '박씨팜 수집기·열쇠·양식 상태', b, noindex=True))
 

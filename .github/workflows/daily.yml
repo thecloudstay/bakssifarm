@@ -60,6 +60,9 @@ jobs:
         run: python tools/build_signal.py
       - name: 수급 기회(산지 값 차이·공급 넘침·빠듯·어족)
         run: python tools/build_opps.py
+      - name: 자가 점검(재기·찾기)
+        run: python tools/self_check.py
+        continue-on-error: true
       - name: 글 화면·사이트 지도·새 소식
         run: python tools/build_pages.py
       - name: 미리보기 그림
