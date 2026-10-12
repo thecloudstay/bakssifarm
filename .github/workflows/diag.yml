@@ -21,4 +21,4 @@ jobs:
           git config user.name "박씨팜 진단"; git config user.email "bot@bakssifarm.local"
           git add -f tools/_debug 2>/dev/null || true
           git diff --cached --quiet || git commit -m "진단 $(date +%F)"
-          for i in 1 2 3; do git pull --rebase --autostash -q && git push && break; sleep 5; done
+          for i in 1 2 3; do git checkout -- . 2>/dev/null; git clean -fdq 2>/dev/null; git pull --rebase -X theirs -q && git push && break; sleep 5; done
