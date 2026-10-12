@@ -42,23 +42,14 @@ jobs:
       - run: pip install pillow pyproj
       - name: 경락가 수집(축산물품질평가원)
         run: python tools/collect_ekape.py
-      - name: 인허가 수집(행정안전부) — 월요일 아침, 또는 손으로 실행했을 때
-        run: |
-          if [ "$(date -u +%u)" = "7" ] || [ "${{ github.event.inputs.force }}" != "" ]; then python tools/collect_license.py; else echo "월요일 아침(일요일 밤 UTC)에만 수집"; fi
       - name: 양식 접수 반영(공동구매 모집판·구입가 시세판)
         run: python tools/sync_forms.py
-      - name: 공영도매시장 경락가(정산)
-        run: python tools/collect_wholesale.py
-      - name: 실제 출하 금액(도매시장 낙찰 원산지 기준)
-        run: python tools/collect_origin.py
       - name: 수협 산지 위판 시세(해양수산부 위탁판매 현황 파일, 열쇠 불필요)
         run: python tools/collect_wipan.py
       - name: 파일데이터 일괄(열쇠 불필요 — 사료값·수입가·부분육·도축·재고 등)
         run: pip install -q openpyxl && python tools/collect_files.py && python tools/build_files.py
         timeout-minutes: 15
         continue-on-error: true
-      - name: 연동 가능한 모든 연동창구(명세 기반 일괄 수집)
-        run: python tools/collect_all.py
       - name: 공공데이터포털 밖 제공처(농산물유통정보·환율·기름값·국가통계·미국 농무부)
         run: python tools/collect_extra.py
       - name: 이상 신호(고수온·급등락·전염병)
@@ -69,9 +60,6 @@ jobs:
         run: python tools/build_signal.py
       - name: 수급 기회(산지 값 차이·공급 넘침·빠듯·어족)
         run: python tools/build_opps.py
-      - name: 수입 단가(관세청 수출입실적) — 매달 3일
-        run: |
-          if [ "$(TZ=Asia/Seoul date +%d)" = "03" ] || [ "${{ github.event.inputs.force }}" != "" ]; then python tools/collect_trade.py; else echo "매달 3일 아침에만"; fi
       - name: 글 화면·사이트 지도·새 소식
         run: python tools/build_pages.py
       - name: 미리보기 그림

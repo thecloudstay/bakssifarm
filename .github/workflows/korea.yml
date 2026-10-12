@@ -1,0 +1,95 @@
+# 국내 수집 — 공공데이터포털 공통 주소(apis.data.go.kr)는 해외 접속을 끊으므로, 대표님 컴퓨터(국내)에 붙인 실행기에서 부른다.
+# 컴퓨터가 꺼져 있으면 켜질 때까지 대기열에 남고(가장 최근 것 하나만), 켜지면 바로 돈다. 아침 작업(daily)은 이것과 따로 돈다.
+name: 국내 수집(공공데이터포털)
+on:
+  schedule:
+    - cron: '20 20 * * *'   # 한국 시간 05:20
+  workflow_dispatch:
+    inputs:
+      force: { description: '인허가·수입 단가까지 지금 받기(아무 값)', required: false }
+concurrency:
+  group: korea
+  cancel-in-progress: false
+permissions:
+  contents: write
+  actions: write
+jobs:
+  korea:
+    runs-on: [self-hosted, Windows]
+    timeout-minutes: 120
+    env:
+      DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+      FOODSAFETY_KEY: ${{ secrets.FOODSAFETY_KEY }}
+      MAFRA_KEY: ${{ secrets.MAFRA_KEY }}
+      PYTHONUTF8: '1'
+      PYTHONIOENCODING: utf-8
+      API_BUDGET_SEC: '2400'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: 준비
+        shell: cmd
+        run: python -m pip install -q pyproj
+      - name: 공영도매시장 경락가(정산)
+        shell: cmd
+        run: python tools/collect_wholesale.py
+        continue-on-error: true
+      - name: 실제 출하 금액(낙찰 원산지)
+        shell: cmd
+        run: python tools/collect_origin.py
+        continue-on-error: true
+      - name: 인허가(월요일 또는 손으로 고를 때)
+        shell: powershell
+        run: |
+          $dow = [int](Get-Date).DayOfWeek
+          if ($dow -eq 1 -or "${{ github.event.inputs.force }}" -ne "") { python tools/collect_license.py } else { "월요일에만" }
+        continue-on-error: true
+      - name: 수입 단가(매달 3일 또는 손으로 고를 때)
+        shell: powershell
+        run: |
+          if ((Get-Date).Day -eq 3 -or "${{ github.event.inputs.force }}" -ne "") { python tools/collect_trade.py } else { "3일에만" }
+        continue-on-error: true
+      - name: 연동창구 일괄 수집
+        shell: cmd
+        run: python tools/collect_all.py
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: korea-data
+          path: |
+            site/data
+            private
+          retention-days: 3
+  publish:
+    needs: korea
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with: { name: korea-data, path: _korea }
+      - name: 국내 수집분만 덮어쓰기
+        run: |
+          set -e
+          for p in site/data/price site/data/biz site/data/api site/data/origin.json site/data/trade.json site/data/apis.json private/origin private/license private/api; do
+            if [ -e "_korea/$p" ]; then mkdir -p "$(dirname "$p")"; rm -rf "$p"; cp -r "_korea/$p" "$p"; fi
+          done
+          # 상태판은 국내 수집기 항목만 옮김
+          python3 - <<'P'
+          import json
+          a = json.load(open('site/data/status.json', encoding='utf-8')); b = json.load(open('_korea/site/data/status.json', encoding='utf-8'))
+          for k in ('wholesale', 'origin', 'license', 'trade', 'apis'):
+              if k in b.get('collectors', {}): a.setdefault('collectors', {})[k] = b['collectors'][k]
+          a.setdefault('keys', {}).update(b.get('keys', {}))
+          json.dump(a, open('site/data/status.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+          P
+          rm -rf _korea
+      - name: 기록하고 올리기
+        run: |
+          git config user.name "박씨팜 국내 수집"; git config user.email "bot@bakssifarm.local"
+          git add -A site/data private
+          git diff --cached --quiet || git commit -m "국내 수집 $(TZ=Asia/Seoul date +%Y-%m-%d)"
+          for i in 1 2 3; do git pull --rebase --autostash -X theirs -q && git push && break; sleep 5; done
+      - name: 화면 다시 만들기(올리기 작업 부르기)
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: gh workflow run pages.yml --ref main || true
