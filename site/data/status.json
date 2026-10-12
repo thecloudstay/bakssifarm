@@ -36,8 +36,8 @@
   },
   "apis": {
    "ok": false,
-   "at": "2026-10-12 21:39",
-   "msg": "정상 11 · 실패 67 · 건너뜀 60 / 625"
+   "at": "2026-10-12 22:51",
+   "msg": "정상 12 · 실패 244 · 건너뜀 369 / 625"
   },
   "license": {
    "ok": false,
@@ -45,14 +45,14 @@
    "msg": "가축사육업 실패 <urlopen error timed out> · 사료제조업 실패 <urlopen error timed out> · 도축업 실패 <urlopen error timed out> · 부화업 실패 <urlopen error timed out> · 종축업 실패 <urlopen error timed out> · 동물병원 실패 <urlopen error timed out> · 동물약국 실패 <urlopen error timed out> · 가축인공수정소 실패 <urlopen error timed out> · 동물용의약품도매상 "
   },
   "wholesale": {
-   "ok": false,
-   "at": "2026-10-12 20:59",
-   "msg": "<urlopen error timed out>"
+   "ok": true,
+   "at": "2026-10-12 22:41",
+   "msg": "2026-10-10 0건 · 0품목"
   },
   "origin": {
-   "ok": false,
-   "at": "2026-10-12 21:01",
-   "msg": "<urlopen error timed out>"
+   "ok": true,
+   "at": "2026-10-12 22:41",
+   "msg": "20261011 낙찰 0건 · 누적 1개월"
   },
   "trade": {
    "ok": false,

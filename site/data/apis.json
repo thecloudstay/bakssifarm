@@ -33,7 +33,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000330",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "3055523": {
    "title": "농림축산식품부 농림축산검역본부_가축질병발생정보",
@@ -44,7 +44,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151204000000000563&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "3055528": {
    "title": "농림축산식품부 농림축산검역본부_식물검역정보",
@@ -53,7 +53,7 @@
    "host": "openapi.pqis.go.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:14",
+   "at": "2026-10-12 22:48",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"SERVICE KEY IS NOT REGISTERED ERROR.\"}"
@@ -65,7 +65,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:14",
+   "at": "2026-10-12 22:48",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"00\", \"msg\": \"NORMAL SERVICE.\"}"
@@ -87,7 +87,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20150827000000000463&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15009422": {
    "title": "해양수산부 국립수산물품질관리원_수산물 방사능 조사현황",
@@ -103,8 +103,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:14",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15028143": {
    "title": "한국식품안전관리인증원_축산물 유통 HACCP업체 현황",
@@ -112,8 +112,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:15",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15029181": {
    "title": "전국농수축산물도매시장경락가격표준데이터",
@@ -124,7 +124,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000538",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15029182": {
    "title": "전국농수축산물조사가격표준데이터",
@@ -135,7 +135,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15033708": {
    "title": "해양수산부 국립해양측위정보원_해양기상 정보",
@@ -159,8 +159,8 @@
    "cat": "통계·집계",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:15",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15050553": {
    "title": "농림축산식품부_지역별 농기계보유현황",
@@ -183,7 +183,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000014&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15052495": {
    "title": "농림축산식품부_재배품목별 면세유 공급현황",
@@ -194,7 +194,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000020&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15056511": {
    "title": "해양수산부_수협 산지조합 위판장 정보",
@@ -202,8 +202,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:15",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056545": {
    "title": "해양수산부 국립해양조사원_지명정보",
@@ -219,8 +219,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:16",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056556": {
    "title": "해양수산부_수산물 품목별 수출입 현황",
@@ -228,8 +228,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:16",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056599": {
    "title": "농림축산식품부_시도별 농작물보험료 통계정보",
@@ -272,7 +272,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000494&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15056724": {
    "title": "해양수산부_양식어종수별 어가현황",
@@ -280,8 +280,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:16",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056733": {
    "title": "축산물품질평가원_축산물DNA동일성검사 업소정보",
@@ -290,7 +290,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:16",
+   "at": "2026-10-12 22:48",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
@@ -309,8 +309,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:17",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056874": {
    "title": "해양수산부_양식방법별 어가현황",
@@ -318,8 +318,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:17",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056898": {
    "title": "축산물품질평가원_쇠고기이력정보",
@@ -328,7 +328,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:17",
+   "at": "2026-10-12 22:49",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
@@ -342,7 +342,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000770",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15057101": {
    "title": "축산물품질평가원_축산물등급판정확인서 발급정보",
@@ -351,7 +351,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:17",
+   "at": "2026-10-12 22:49",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
@@ -378,8 +378,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:18",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057607": {
    "title": "해양수산부_국가별 수산물 수출입 현황",
@@ -387,8 +387,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:18",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057689": {
    "title": "해양수산부_일자별 위탁판매 현황",
@@ -396,8 +396,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:18",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057698": {
    "title": "농림수산식품교육문화정보원_농촌마을별 인원정보",
@@ -408,7 +408,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000772",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15057699": {
    "title": "기후에너지환경부 국립환경과학원_축산계 정보제공서비스",
@@ -416,8 +416,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:19",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057808": {
    "title": "농촌진흥청_표준사료 검색",
@@ -436,7 +436,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000668&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15057886": {
    "title": "농림축산식품부_시도별 사고원인 가축보험금지급 통계정보",
@@ -447,7 +447,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000663&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15057912": {
    "title": "축산물품질평가원_축산물경락가격정보",
@@ -456,7 +456,7 @@
    "host": "data.ekape.or.kr",
    "state": "정상",
    "n": 7,
-   "at": "2026-10-12 21:19",
+   "at": "2026-10-12 22:49",
    "fields": 2,
    "units": 0,
    "msg": ""
@@ -467,8 +467,8 @@
    "cat": "기타",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:19",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058005": {
    "title": "농림축산식품부_품목별 농작물보험료 통계정보",
@@ -484,8 +484,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:19",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058123": {
    "title": "해양수산부_품종별 수산가공품 생산량",
@@ -493,8 +493,8 @@
    "cat": "통계·집계",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:20",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058183": {
    "title": "해양수산부 국립수산물품질관리원_해외수산물생산위생시설현황",
@@ -537,7 +537,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170216000000000773",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15058568": {
    "title": "농림축산식품부 농림축산검역본부_도축장별 축종별 도축실적",
@@ -548,7 +548,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000678&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15058595": {
    "title": "농림축산식품부_소 브루셀라 검사결과현황",
@@ -559,7 +559,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000496&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15058693": {
    "title": "해양수산부 국립수산물품질관리원_품질인증수산물(API)",
@@ -584,7 +584,7 @@
    "host": "data.ekape.or.kr",
    "state": "정상",
    "n": 19,
-   "at": "2026-10-12 21:20",
+   "at": "2026-10-12 22:49",
    "fields": 9,
    "units": 0,
    "msg": ""
@@ -612,7 +612,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:20",
+   "at": "2026-10-12 22:49",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
@@ -623,8 +623,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:20",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059077": {
    "title": "해양수산부_수협 산지조합 정보",
@@ -632,8 +632,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:21",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059210": {
    "title": "해양수산부_수협 산지조합 창고 품목별 재고 현황",
@@ -641,8 +641,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:21",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059251": {
    "title": "축산물품질평가원_계란등급판정정보",
@@ -651,7 +651,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:21",
+   "at": "2026-10-12 22:49",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
@@ -673,7 +673,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000673&filter_ty=O&getBack=G&sort_id=&s_da",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15059357": {
    "title": "농림축산식품부_시도별 농작물 보험가입 통계정보",
@@ -689,8 +689,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:21",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059444": {
    "title": "해양수산부_수협 산지조합 창고 품목별 입출고 현황",
@@ -698,8 +698,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:22",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059457": {
    "title": "농림축산식품부_년도별 농작물 보험가입 통계정보",
@@ -718,7 +718,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000497&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15059494": {
    "title": "농림축산식품부_축종별 가축보험가입 통계정보",
@@ -729,7 +729,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000667&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15059973": {
    "title": "해양환경공단_해양환경측정망 관측서비스",
@@ -737,8 +737,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr/B553931/service/OceansNemoService2",
    "state": "실패",
-   "at": "2026-10-12 21:22",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15061340": {
    "title": "금융위원회_금융통계수산업협동조합정보",
@@ -746,8 +746,8 @@
    "cat": "통계·집계",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:23",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "The read operation timed out"
   },
   "15061948": {
    "title": "농림축산식품부_안심식당 정보",
@@ -758,7 +758,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200713000000001391&service_ty=&filter_ty=G&sort_id=regist_dt&s_data_nm=&cl_code=&instt_id=201410120001&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15062666": {
    "title": "한국환경연구원_국토환경성평가_습지보호지역",
@@ -843,8 +843,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:23",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:49",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15069189": {
    "title": "농림수산식품교육문화정보원_국가농식품통계",
@@ -861,7 +861,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:23",
+   "at": "2026-10-12 22:49",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"00\", \"msg\": \"NORMAL SERVICE.\"}"
@@ -872,8 +872,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:23",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15074310": {
    "title": "식품의약품안전처_축산물HACCP지정 정보",
@@ -908,8 +908,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:24",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075721": {
    "title": "해양수산부_연속정보 수온 (3분)",
@@ -917,8 +917,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:24",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075776": {
    "title": "해양수산부_국가어항 10KM 인구분포",
@@ -926,8 +926,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/apVhdService_Sk10pdV2",
    "state": "실패",
-   "at": "2026-10-12 21:24",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075777": {
    "title": "해양수산부_연안 1KM 시설물",
@@ -935,8 +935,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:25",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075778": {
    "title": "해양수산부_연안 3KM 시설물",
@@ -944,8 +944,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:25",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075779": {
    "title": "해양수산부_연안 5KM 시설물",
@@ -953,8 +953,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:26",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075817": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 15분 격자 D+1 예측값",
@@ -962,8 +962,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:26",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075826": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 15분 격자 D+2 예측값",
@@ -971,8 +971,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:26",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075835": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 3분 격자 D+1 예측값",
@@ -980,8 +980,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:27",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075839": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 3분 격자 D+2 예측값",
@@ -989,8 +989,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:27",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075845": {
    "title": "해양수산부_해양용도구역_어업활동",
@@ -998,8 +998,8 @@
    "cat": "구역·경계",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:27",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15076745": {
    "title": "국립암센터_대장암 라이브러리 환자 결핵 병력 여부",
@@ -1007,8 +1007,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:28",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15076771": {
    "title": "국립암센터_신장암 라이브러리 환자 결핵 병력 여부",
@@ -1016,8 +1016,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:28",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15077051": {
    "title": "국립암센터_폐암 라이브러리 환자 결핵 병력 여부",
@@ -1025,8 +1025,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:28",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15080637": {
    "title": "농림축산식품부 국립농산물품질관리원_GAP인증농가현황 OpenAPI",
@@ -1037,7 +1037,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000636&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15086484": {
    "title": "농촌진흥청_축산환경자가진단",
@@ -1053,8 +1053,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:29",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15096171": {
    "title": "국립암센터_간암_라이브러리_환자_결핵_병력_여부",
@@ -1062,8 +1062,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:29",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15096176": {
    "title": "국립암센터_위암_라이브러리_환자_결핵_병력_여부",
@@ -1071,8 +1071,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:30",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15096373": {
    "title": "국립암센터_전립선암_라이브러리_환자_결핵_병력_여부",
@@ -1080,8 +1080,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:30",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15097317": {
    "title": "해양수산부_수산자원보호구역",
@@ -1089,8 +1089,8 @@
    "cat": "구역·경계",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:30",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15097756": {
    "title": "해양수산부_인공어초 15KM 내 해조류 분포",
@@ -1098,8 +1098,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:31",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15098601": {
    "title": "국립암센터_췌장암_라이브러리_환자_결핵_병력_여부",
@@ -1107,8 +1107,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
    "state": "실패",
-   "at": "2026-10-12 21:31",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15101698": {
    "title": "농림축산식품부_과수거점산지유통센터건립지원사업 상세정보",
@@ -1119,7 +1119,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000752",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15101863": {
    "title": "행정안전부_생활안전지도 철새도래지",
@@ -1135,8 +1135,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1390906/brblInfo_gong",
    "state": "실패",
-   "at": "2026-10-12 21:31",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15102029": {
    "title": "농촌진흥청 국립축산과학원_축산 가격 동향",
@@ -1144,8 +1144,8 @@
    "cat": "시세·거래",
    "host": "apis.data.go.kr/1390906/nias_gong_api1",
    "state": "실패",
-   "at": "2026-10-12 21:32",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15102045": {
    "title": "농촌진흥청 국립축산과학원_젖소 유전능력 평가결과",
@@ -1153,8 +1153,8 @@
    "cat": "기타",
    "host": "apis.data.go.kr/1390906/hrnhAbltyEvlInq_gong",
    "state": "실패",
-   "at": "2026-10-12 21:32",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15102076": {
    "title": "농촌진흥청 국립축산과학원_가축사육기상정보_가축 더위지수",
@@ -1162,8 +1162,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390906/thiForecastApi_gongNew",
    "state": "실패",
-   "at": "2026-10-12 21:33",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15102408": {
    "title": "농림수산식품교육문화정보원_농업 수입지출 통계정보",
@@ -1174,7 +1174,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000071",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15102526": {
    "title": "농림수산식품교육문화정보원_농촌 마을 현황 정보",
@@ -1185,7 +1185,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151210000000000570",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15102748": {
    "title": "농림축산식품부_거점소독시설",
@@ -1196,7 +1196,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002114",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15102749": {
    "title": "농림축산식품부_통제초소",
@@ -1207,7 +1207,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002115",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15102819": {
    "title": "농림축산식품부 농림축산검역본부_축산관계시설등록통계",
@@ -1218,7 +1218,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002112",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15103013": {
    "title": "농림축산식품부 농림축산검역본부_농림축산식품부_농림축산검역본부 질병발생 통계",
@@ -1229,7 +1229,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220621000000002111",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15105524": {
    "title": "식품의약품안전처_축산물 판매업 폐업정보",
@@ -1237,8 +1237,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestSaleBsshClsbizInfo01",
    "state": "실패",
-   "at": "2026-10-12 21:33",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15105538": {
    "title": "식품의약품안전처_축산물 식육포장처리업 폐업정보",
@@ -1246,8 +1246,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestMeatPcknBsshClsbizInfo01",
    "state": "실패",
-   "at": "2026-10-12 21:33",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15106233": {
    "title": "축산물품질평가원_농장식별번호정보",
@@ -1256,7 +1256,7 @@
    "host": "data.ekape.or.kr",
    "state": "빈 응답",
    "n": 0,
-   "at": "2026-10-12 21:33",
+   "at": "2026-10-12 22:50",
    "fields": 0,
    "units": 0,
    "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
@@ -1270,7 +1270,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002359",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109070": {
    "title": "농림축산식품부_지역별 농장 통계 데이터 제공",
@@ -1281,7 +1281,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002331",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109071": {
    "title": "농림축산식품부_업종별 농장 통계 데이터 제공",
@@ -1292,7 +1292,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220824000000002330",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109072": {
    "title": "농림축산식품부_축종별 농장 통계 데이터 제공",
@@ -1303,7 +1303,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002329",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109073": {
    "title": "농림축산식품부_운영상태별 농장 통계 데이터 제공",
@@ -1314,7 +1314,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002328",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109074": {
    "title": "농림축산식품부_사육규모별 농장 통계 데이터 제공",
@@ -1325,7 +1325,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002327",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109075": {
    "title": "농림축산식품부_대상질병별 농장 통계 데이터 제공",
@@ -1336,7 +1336,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002326",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109076": {
    "title": "농림축산식품부_가축 통계 데이터",
@@ -1347,7 +1347,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002325",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109218": {
    "title": "농림수산식품교육문화정보원_원천조사가격목록조회",
@@ -1358,7 +1358,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000534",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109239": {
    "title": "농림수산식품교육문화정보원_원천산지위판장가격목록조회",
@@ -1369,7 +1369,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000535",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15111816": {
    "title": "식품의약품안전처_어류질병정보",
@@ -1386,8 +1386,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestBusnssClsbizInfo01",
    "state": "실패",
-   "at": "2026-10-12 21:34",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:50",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111985": {
    "title": "식품의약품안전처_축산물 가공업 폐업정보 조회",
@@ -1395,8 +1395,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestPrcssBsshClsbizInfo01",
    "state": "실패",
-   "at": "2026-10-12 21:34",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15114407": {
    "title": "해양수산부_해양보호구역 정보제공 서비스",
@@ -1404,8 +1404,8 @@
    "cat": "구역·경계",
    "host": "apis.data.go.kr/1192000/MarineProtectionAreaInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:34",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15115752": {
    "title": "해양수산부 국립수산물품질관리원_수산물 방사능 생산 지역별 안전 현황",
@@ -1453,8 +1453,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/MudFlatInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:35",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15127779": {
    "title": "해양수산부_실시간 해양수질자동측정망 관측소 측정자료정보",
@@ -1462,8 +1462,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192000/OceansWemoObvpRtmInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:35",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15127780": {
    "title": "해양수산부_실시간 해양수질자동측정망 관측정보 센서자료 정보",
@@ -1471,8 +1471,8 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192000/OceanWemoSnsrRtmInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:36",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15127782": {
    "title": "해양수산부_한국의 갯벌 세계유산 정보",
@@ -1480,8 +1480,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/KorUnescoMudFlatInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:36",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15128096": {
    "title": "식품의약품안전처_도축업 인허가 대장",
@@ -1489,8 +1489,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/SlauPrmtRgstr01",
    "state": "실패",
-   "at": "2026-10-12 21:36",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15129484": {
    "title": "농림축산식품부_농촌관광사업 등급 정보 현황",
@@ -1501,7 +1501,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141127000000000364",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15130187": {
    "title": "해양수산부 국립수산물품질관리원_매체별 이력 조회 현황",
@@ -1517,8 +1517,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471057/VdVdrugPhchInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:37",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15133584": {
    "title": "식품의약품안전처 식품의약품안전평가원_동물용의약품 용도 서비스",
@@ -1526,8 +1526,8 @@
    "cat": "기타",
    "host": "apis.data.go.kr/1471057/VdVdrugPrpsInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:37",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15133585": {
    "title": "식품의약품안전처 식품의약품안전평가원_동물용의약품 잔류허용기준 서비스",
@@ -1535,8 +1535,8 @@
    "cat": "방역·질병",
    "host": "apis.data.go.kr/1471057/VdVdrugRsdstdInfoService",
    "state": "실패",
-   "at": "2026-10-12 21:37",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15139440": {
    "title": "기상청_해양기상부이·파고부이 관측 조회서비스",
@@ -1563,7 +1563,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002459",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15141806": {
    "title": "농림축산식품부 국립농산물품질관리원_무항생제 인증정보",
@@ -1571,8 +1571,8 @@
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1543145/NANTBTCERTINFO",
    "state": "실패",
-   "at": "2026-10-12 21:38",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15141809": {
    "title": "한국농수산식품유통공사_전국 공영도매시장 정산정보",
@@ -1594,8 +1594,8 @@
    "cat": "기타",
    "host": "apis.data.go.kr/B552845/katCode",
    "state": "실패",
-   "at": "2026-10-12 21:38",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142145": {
    "title": "농림수산식품교육문화정보원_지역기상특보현황",
@@ -1606,7 +1606,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20250221000000002664",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15142447": {
    "title": "해양수산부 국립수산물품질관리원_수산물이력제 기본정보제공서비스 이력조회",
@@ -1662,8 +1662,8 @@
    "cat": "기타",
    "host": "apis.data.go.kr/1192136/fcstMudflatv2",
    "state": "실패",
-   "at": "2026-10-12 21:39",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142495": {
    "title": "해양수산부 국립해양조사원_지역 해양기후 수치모델 기반 미래 표층수온 상승 전망 조회",
@@ -1671,50 +1671,62 @@
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/changeClimateWtem",
    "state": "실패",
-   "at": "2026-10-12 21:39",
-   "msg": "<urlopen error timed out>"
+   "at": "2026-10-12 22:51",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142506": {
    "title": "해양수산부 국립해양조사원_조위관측소 실측 수온 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/surveyWaterTemp",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142507": {
    "title": "해양수산부 국립해양조사원_조위관측소 실측·예측 조위 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/surveyTideLevel",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142508": {
    "title": "해양수산부 국립해양조사원_조위관측소 실측 기온 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/surveyAirTemp",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142509": {
    "title": "해양수산부 국립해양조사원_조위관측소 실측 기압 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/surveyAirPress",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142518": {
    "title": "해양수산부 국립해양조사원_조위관측소 실측 풍향/풍속 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/surveyWind",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142519": {
    "title": "해양수산부 국립해양조사원_해무관측소 관측 데이터 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/surveySeafog",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15149541": {
    "title": "행정안전부_생활안전지도 가축전염병",
@@ -1888,49 +1900,63 @@
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/twRecent",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156013": {
    "title": "해양수산부 국립해양조사원_최극조위(조석성과)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/extrmTideLvl",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:41",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156015": {
    "title": "해양수산부 국립해양조사원_평균해면성과표(조석성과)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/meanSeaLvl",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156017": {
    "title": "해양수산부 국립해양조사원_1시간 조위(조석성과)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/hourlyTide",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156057": {
    "title": "한국농수산식품유통공사_일별 도,소매 가격정보 조회",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/perDay",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156062": {
    "title": "한국농수산식품유통공사_지역별 품목별 도,소매 가격정보 조회",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/perRegion",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156069": {
    "title": "한국농수산식품유통공사_가격 추이 정보 조회",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/priceSequel",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156746": {
    "title": "해양수산부 국립수산과학원_연구_적조정보",
@@ -1969,21 +1995,27 @@
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/FaclUsePrmisnFclty",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15160244": {
    "title": "농림축산식품부 국립농산물품질관리원_친환경인증정보조회서비스",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1543145/naqsenv",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15160412": {
    "title": "농촌진흥청 국립축산과학원_축종별 품종해설 정보(사슴)",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1390906/newDeerVariInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "ext-kamis": {
    "title": "농산물유통정보 축산·수산 소매·도매 가격",
@@ -2040,14 +2072,18 @@
    "dom": "농장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/1390804/NihhsRdaHorticulPriceInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059518": {
    "title": "기상청_작물별 농업주산지 상세날씨 조회서비스",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058386": {
    "title": "경기도_가축 사육업체 현황",
@@ -2074,14 +2110,16 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002347",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15057968": {
    "title": "부산광역시_경매전 농산물 잔류농약검사(엄궁, 반여) 서비스",
    "dom": "농장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109047": {
    "title": "농림수산식품교육문화정보원_농산물도매법인별경락가격조회",
@@ -2092,7 +2130,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220817000000002312",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109237": {
    "title": "농림수산식품교육문화정보원_원천실시간경락가격도매시장목록조회",
@@ -2119,7 +2157,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220818000000002315",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109234": {
    "title": "농림수산식품교육문화정보원_원천정산경락가격도매시장목록조회",
@@ -2138,7 +2176,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000533",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109236": {
    "title": "농림수산식품교육문화정보원_원천실시간경락가격품목목록조회",
@@ -2149,7 +2187,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151117000000000538",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109050": {
    "title": "농림수산식품교육문화정보원_화훼류농협공판장별경락가격조회",
@@ -2160,7 +2198,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002348",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15135883": {
    "title": "농림수산식품교육문화정보원_스마트팜코리아_노지 빅데이터 제공 서비스",
@@ -2175,21 +2213,27 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109845": {
    "title": "경상남도 남해군_축산농장정보 데이터 조회 서비스",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/5430000/livestockIndustry",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15157657": {
    "title": "농림축산식품부 농림축산검역본부_식물검역정보_통계",
    "dom": "공통",
    "cat": "수출입",
    "host": "apis.data.go.kr/1543061/plntQrantStats",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056913": {
    "title": "경기도_축산물 출하전 생체 잔류검사 집계 현황",
@@ -2208,7 +2252,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141216000000000372",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109058": {
    "title": "농림수산식품교육문화정보원_농수축산물지역별가격조회",
@@ -2219,14 +2263,16 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002322",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15012299": {
    "title": "산지공판장 경락가격정보",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 400: Bad Request"
   },
   "15109068": {
    "title": "농림수산식품교육문화정보원_산지공판장 유통통계정보 조회",
@@ -2237,7 +2283,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002358",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15101446": {
    "title": "농촌진흥청_농작물재해예방정보",
@@ -2252,7 +2298,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15140549": {
    "title": "농림축산식품부_도매시장 실시간 경락 정보",
@@ -2263,7 +2311,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002460",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15121330": {
    "title": "농림축산식품부_스마트팜 데이터 마트 노지 빅데이터 제공 서비스",
@@ -2282,7 +2330,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000495&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15101389": {
    "title": "농촌진흥청_축산분뇨 농가활용프로그램",
@@ -2301,7 +2349,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002467",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15140550": {
    "title": "농림축산식품부_도매시장 원천데이터 정산 가격",
@@ -2312,7 +2360,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002462",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15057828": {
    "title": "경기도_사료 제조업체 현황(수입)",
@@ -2367,35 +2415,45 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056673": {
    "title": "부산광역시_국제수산물도매시장 경락정보",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058271": {
    "title": "부산광역시_국제수산물도매시장 가격정보",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056542": {
    "title": "부산광역시_국제수산물도매시장 입하정보",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15141811": {
    "title": "한국농수산식품유통공사_온라인 도매시장 거래정보",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/katOnline",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109060": {
    "title": "농림수산식품교육문화정보원_임산물지역별가격조회",
@@ -2418,7 +2476,9 @@
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/noonMonthlyObs",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059179": {
    "title": "경기도_수산업 집계 현황",
@@ -2433,7 +2493,9 @@
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15089066": {
    "title": "해양수산부 국립수산과학원_어장환경관측자료",
@@ -2472,7 +2534,9 @@
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058300": {
    "title": "농림축산식품부_APC 산지유통관리시설현황",
@@ -2491,7 +2555,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141029000000000346",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15058328": {
    "title": "농림축산식품부 농림축산검역본부_닭 품종별 도축실적",
@@ -2502,7 +2566,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000676&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15059332": {
    "title": "농림축산식품부 농림축산검역본부_축종별 암수별 도축실적",
@@ -2513,7 +2577,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000674&filter_ty=O&getBack=G&sort_id=&s_da",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15059452": {
    "title": "농림축산식품부_시도별 산지유통관리시설현황",
@@ -2540,7 +2604,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000334",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15111641": {
    "title": "기후에너지환경부_맞춤형 물환경정보(축산계 오염원 분포현황)",
@@ -2567,7 +2631,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002465",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15140562": {
    "title": "농림축산식품부_정산가격 기간별 법인별 품목별 총물량 총금액",
@@ -2578,7 +2642,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002466",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15140560": {
    "title": "농림축산식품부_정산가격 기간별 법인별 총물량 총금액",
@@ -2589,7 +2653,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002464",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15058064": {
    "title": "경기도_종오리업 현황",
@@ -2612,7 +2676,9 @@
    "dom": "동물농장",
    "cat": "질병·이상",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15074332": {
    "title": "식품의약품안전처_수입쇠고기 유통이력 정보",
@@ -2632,14 +2698,16 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002360",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15078893": {
    "title": "충청북도_농산물 잔류농약 검사결과",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109066": {
    "title": "농림수산식품교육문화정보원_실시간경락 도매시장 유통통계 조회",
@@ -2650,7 +2718,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002356",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15109067": {
    "title": "농림수산식품교육문화정보원_정산경락 도매시장 유통통계 조회",
@@ -2661,28 +2729,34 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002357",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15141320": {
    "title": "부산광역시_국제수산물유통시설관리사업소_경매결과_일 정산내역",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/6260000/KjMarketAuction2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15141808": {
    "title": "한국농수산식품유통공사_전국 공영도매시장 실시간 경매정보",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/katRealTime2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156054": {
    "title": "한국농수산식품유통공사_전국 산지공판장 거래정보 조회",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/originTrialHall",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:42",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109059": {
    "title": "농림수산식품교육문화정보원_임산물품목별가격조회",
@@ -2693,56 +2767,70 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220823000000002323",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15156073": {
    "title": "한국농수산식품유통공사_친환경농산물 가격정보 조회",
    "dom": "농장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/ecoFriendly",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156060": {
    "title": "한국농수산식품유통공사_연월별 도,소매가격정보 조회",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/perYearMonth",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156026": {
    "title": "해양수산부 국립해양조사원_TideBED 예측 조위(1분)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/tidebed",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156018": {
    "title": "해양수산부 국립해양조사원_조석예보(고, 저조)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/tideFcstHghLw",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156022": {
    "title": "해양수산부 국립해양조사원_조석예보(시계열)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/tideFcstTime",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056670": {
    "title": "농림수산식품교육문화정보원_팜맵기반 병해충발생 조회 서비스",
    "dom": "농장",
    "cat": "질병·이상",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058627": {
    "title": "농림수산식품교육문화정보원_팜맵기반 농업기상 조회 서비스",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156865": {
    "title": "해양수산부 국립수산과학원_연구_정선해양관측정보",
@@ -2765,21 +2853,27 @@
    "dom": "어장",
    "cat": "수출입",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057215": {
    "title": "해양수산부_국가별 수산물 수출입 순위 정보",
    "dom": "어장",
    "cat": "수출입",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15056602": {
    "title": "해양수산부_수산물 HSK품목별 수출입 현황",
    "dom": "어장",
    "cat": "수출입",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15002034": {
    "title": "농촌진흥청_국가농작물병해충도감정보",
@@ -2802,35 +2896,45 @@
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/V4/InsttWeather",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15073274": {
    "title": "농촌진흥청 국립농업과학원_농업기상 관측지점 상세정보",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15095479": {
    "title": "농촌진흥청 국립농업과학원_농업기상 관측지대 정보 제공",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15108406": {
    "title": "농촌진흥청 국립농업과학원_농업기상 농작물 주산지 농업기상분석정보 조회 서비스",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/frcPlpd",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15095468": {
    "title": "농촌진흥청 국립농업과학원_농업기상 온량지수 정보 제공",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15052501": {
    "title": "농림축산식품부_친환경농업직접직불제 지원현황(지역별)",
@@ -2865,7 +2969,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161216000000000675&filter_ty=O&getBack=G&sort_id=&s_da",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15121325": {
    "title": "농림축산식품부_스마트팜 데이터 마트 품목별 데이터셋 제공 서비스",
@@ -2884,7 +2988,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002468",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15080743": {
    "title": "농림축산식품부 국립농산물품질관리원_ 농산물 잔류농약 분석결과 OpenAPI",
@@ -2895,7 +2999,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000639&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15128301": {
    "title": "대전광역시 서구_축산현황 및 가금류 사육현황",
@@ -2914,14 +3018,16 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151027000000000487&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:32"
+   "at": "2026-10-12 22:48"
   },
   "15097251": {
    "title": "경상북도 구미시_가축분뇨 배출시설 설치 허가 농가",
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15140557": {
    "title": "농림축산식품부_정산가격 기간별 도매시장별 총물량 총금액",
@@ -2932,7 +3038,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20240625000000002463",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15059478": {
    "title": "경기도_가축 분뇨 수집 운반업체 현황",
@@ -2967,7 +3073,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000028&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15056737": {
    "title": "경기도_가축 전염병 발생 현황",
@@ -3015,21 +3121,27 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15160312": {
    "title": "농촌진흥청 국립농업과학원_비료사용처방 정보 V2",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390802/SoilEnviron_FrtlzrUse_V2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15106661": {
    "title": "식품의약품안전처_수입축산물 부위별 검사통계",
    "dom": "동물농장",
    "cat": "수출입",
    "host": "apis.data.go.kr/1471000/ImportLivestInspStatsInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15087188": {
    "title": "농촌진흥청_화분매개곤충 농약적용",
@@ -3068,28 +3180,36 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156065": {
    "title": "한국농수산식품유통공사_기간별 소매가격 정보 조회",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/periodRetail",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156063": {
    "title": "한국농수산식품유통공사_최근일자 도,소매가격정보 조회",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/recent",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156064": {
    "title": "한국농수산식품유통공사_기간별 중도매인 가격정보 조회",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/periodWholesale",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109063": {
    "title": "농림수산식품교육문화정보원_농수축산물 유통단계별 변환 규칙 정보조회",
@@ -3100,49 +3220,61 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002353",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15156070": {
    "title": "한국농수산식품유통공사_가격 등락 정보 조회",
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/risesAndFalls",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:43",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057064": {
    "title": "해양수산부_수협 물류센터/공판장 품목별 입출고 현황",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "The read operation timed out"
   },
   "15058859": {
    "title": "해양수산부_수협 물류센터/공판장 품목별 재고 현황",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156002": {
    "title": "해양수산부 국립해양조사원_장단기 조석관측",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/lsTermTideObs",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156011": {
    "title": "해양수산부 국립해양조사원_편차계산표(조석성과)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/deviationCal",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15155994": {
    "title": "해양수산부 국립해양조사원_국가해양관측망 실측 파랑",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/noonWave",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109229": {
    "title": "농림수산식품교육문화정보원_수입농산물가격조회",
@@ -3165,14 +3297,18 @@
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/B553931/OceansNemoCtdService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059975": {
    "title": "해양환경공단_해양환경측정망 근해 관측서비스",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15086334": {
    "title": "농촌진흥청_잔류농약기준 위반현황",
@@ -3187,14 +3323,18 @@
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/V3/GnrlWeather",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15095484": {
    "title": "농촌진흥청 국립농업과학원_농업기상 기후생산력지수(벼)정보 제공",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15002220": {
    "title": "농림축산식품부_유기농업자재 현황",
@@ -3205,7 +3345,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200929000000001392&filter_ty=O&getBack=G&sort_id=regist_dt&s_data_nm=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15102820": {
    "title": "농림축산식품부 농림축산검역본부_축산차량통계",
@@ -3216,7 +3356,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20220622000000002113",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15041765": {
    "title": "농촌진흥청_축산실용기술모음",
@@ -3243,7 +3383,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200929000000001392&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "3055319": {
    "title": "농림축산식품부_과수고품질생산시설현대화지원사업",
@@ -3254,14 +3394,16 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000749&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15115478": {
    "title": "농촌진흥청 국립축산과학원_축종별 품종해설 정보(돼지)",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/newPigVariInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15080587": {
    "title": "농림축산식품부 국립농산물품질관리원_수입농산물검사정보 OpenAPI",
@@ -3272,7 +3414,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000637&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15079706": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리(GAP) 인증정보 OpenAPI",
@@ -3283,21 +3425,25 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141015000000000216&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15103485": {
    "title": "농촌진흥청 국립축산과학원_가축인공수정사 시험일정",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/newailicenseDate",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15130774": {
    "title": "농촌진흥청 국립축산과학원_축종별 품종해설 정보(닭)",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/newChickenVarInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15080629": {
    "title": "농림축산식품부 국립농산물품질관리원_지리적표시 등록정보 OpenAPI",
@@ -3308,7 +3454,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141224000000000399&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15080744": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물 중금속 분석결과 OpenAPI",
@@ -3319,21 +3465,25 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000640&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15104788": {
    "title": "농촌진흥청 국립축산과학원_가축인공수정사 면허시험 합격 통계",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/newgetAitStatusDtl",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15131208": {
    "title": "농촌진흥청 국립축산과학원_가축인공수정사 시험장소 정보",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/newailicenseLocation",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15101223": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물이력추적등록정보 OpenAPI",
@@ -3344,7 +3494,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000093",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15080607": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리(GAP) 관리시설정보 OpenAPI",
@@ -3355,7 +3505,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141015000000000218&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15080606": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리(GAP) 인증기관정보 OpenAPI",
@@ -3366,21 +3516,25 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141015000000000217&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15147274": {
    "title": "농촌진흥청 국립축산과학원_축종별 품종해설 정보(오리)",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/newDuckVariInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15141807": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물우수관리 인증정보",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/1543145/GAPCERTINFO",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059276": {
    "title": "경기도_가축 인공 수정소업체 현황",
@@ -3403,7 +3557,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1543145/FrmprdHistManageInfoInqireSvc",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058391": {
    "title": "경기도_도축업 현황",
@@ -3422,7 +3578,7 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141014000000000021&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15165612": {
    "title": "농림축산식품부_농산물 계약재배 물량 및 가격정보",
@@ -3445,7 +3601,9 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/5110000/animalBreeding",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15033044": {
    "title": "경기도 광명시_가축분뇨배출시설 현황",
@@ -3460,56 +3618,72 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15124970": {
    "title": "한국환경공단_돼지분뇨 배출량 정보",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/B552584/kecoapi/LseLnsnSttService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111416": {
    "title": "충청북도 보은군_우량 한우 개체 대상 기본정보",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/4420000/excellentKoreanCattleInfoService01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111417": {
    "title": "충청북도 보은군_우량 한우 개체 대상 각도별 사진",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/4420000/excellentKoreanCattlePhotoByAngleService01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:44",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111418": {
    "title": "충청북도 보은군_우량 한우 개체 대상 파노라마 사진",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/4420000/excellentKoreanCattlePhotoByPanoramaService01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075883": {
    "title": "농촌진흥청 국립농업과학원_비료사용처방 정보",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390802/SoilEnviron/FrtlzrUse",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15122361": {
    "title": "농촌진흥청 국립원예특작과학원_버섯일반명 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390804/NihhsMushroomGnrlNmInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15040631": {
    "title": "농촌진흥청_국립원예특작과학원_인삼특작 추출물정보 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15078191": {
    "title": "식품의약품안전처_쇠고기(국내)이력추적 정보",
@@ -3525,7 +3699,9 @@
    "dom": "동물농장",
    "cat": "수출입",
    "host": "apis.data.go.kr/1471000/IprtLstkRefrigSwicInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15097884": {
    "title": "식품의약품안전처_수입쇠고기 냉동전환 정보",
@@ -3541,7 +3717,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1471057/PesticideRsdstdInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111813": {
    "title": "식품의약품안전처_농축산물유통관리 허위표시공표정보",
@@ -3685,7 +3863,9 @@
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/katForecast",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15076053": {
    "title": "서울특별시농수산식품공사_품목별등급별가격(도매시장법인거래)",
@@ -3704,7 +3884,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002354",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15139765": {
    "title": "행정안전부_공유플랫폼_실시간_조석정보",
@@ -3727,7 +3907,9 @@
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15135912": {
    "title": "농림수산식품교육문화정보원_스마트팜코리아_ 품목별 데이터셋 제공 서비스",
@@ -3746,7 +3928,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20221205000000002355",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15153184": {
    "title": "행정안전부_수산검역_휴대품_통계",
@@ -3769,21 +3951,27 @@
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/SoilEnviron/SoilCharac/V3",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156040": {
    "title": "해양수산부 국립해양조사원_해황예보도 조회",
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1192136/oceanCondition",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15034081": {
    "title": "부산광역시_해양환경 측정(망) 정보",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15153185": {
    "title": "행정안전부_수산물수입검역통계",
@@ -3846,7 +4034,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058192": {
    "title": "농촌진흥청_병해충 예찰정보",
@@ -3901,7 +4091,9 @@
    "dom": "공통",
    "cat": "수출입",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15022797": {
    "title": "한국임업진흥원_임산물정보",
@@ -3916,7 +4108,9 @@
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15059969": {
    "title": "해양환경공단_해양환경측정망 근해 정점조회 서비스",
@@ -3942,21 +4136,27 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/nias_gong_api4",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15062920": {
    "title": "경상남도_축산농가",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6480000/gyeongnamlivestockfarmsituation",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15098510": {
    "title": "세종특별자치시_세종특별자치시 축산농가",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15041703": {
    "title": "농촌진흥청_축산분뇨 처리시설업체",
@@ -3971,7 +4171,9 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/nias_gong_api",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15101734": {
    "title": "농림축산식품부_시설채소",
@@ -3982,7 +4184,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20141020000000000321",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15101562": {
    "title": "농림축산식품부_2021년 시설원예 온실현황 및 에너지이용현황",
@@ -4001,14 +4203,16 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000748&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15102557": {
    "title": "농촌진흥청 국립축산과학원_가축유전체 동결자원(정액)",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390906/preservation",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15080635": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물검정정보 OpenAPI",
@@ -4019,7 +4223,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151027000000000490&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠로 연결 확인 5건",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15080746": {
    "title": "농림축산식품부 국립농산물품질관리원_농산물 방사능 검사현황 OpenAPI",
@@ -4030,7 +4234,7 @@
    "link": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161206000000000642&service_ty=O",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15038287": {
    "title": "서울특별시 동작구_축산가공업 인허가 정보",
@@ -4061,21 +4265,27 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/5100000/YeongcheonAnimalhospital",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15062459": {
    "title": "경상남도_가축시장",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6480000/gyeongnamanimalmarketsituation",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15124978": {
    "title": "한국환경공단_돼지액비 배출량 정보",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/B552584/kecoapi/LseLqftSttService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15087173": {
    "title": "농촌진흥청_곤충문헌검색",
@@ -4130,7 +4340,9 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/B553748/SmartCertLiveStockListService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15074319": {
    "title": "식품의약품안전처_축산물위생검사기관 지정 정보",
@@ -4146,7 +4358,9 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1471000/FoodHistTrckPrdtArctrLivestHistInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15076022": {
    "title": "서울특별시농수산식품공사_가락시장 반입물량(경매전)",
@@ -4169,14 +4383,18 @@
    "dom": "공통",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/B552845/katElectronicInvoice2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15102970": {
    "title": "전남광주통합특별시_해양수산과학원 수산속보 정보",
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6460000/jnOfsiNews",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15135894": {
    "title": "농림수산식품교육문화정보원_스마트팜코리아_작기별 데이터셋 제공 서비스",
@@ -4207,14 +4425,18 @@
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/5430000/enrollFishingBoat",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15164362": {
    "title": "부산광역시_부울경 연령대별 어업경영체 통계",
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6260000/FisheryBizAgeStatService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15064972": {
    "title": "식품의약품안전처_수산물 수입업체 현황 정보",
@@ -4246,21 +4468,27 @@
    "dom": "어장",
    "cat": "수출입",
    "host": "apis.data.go.kr/1471000/MprcInspInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:45",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142090": {
    "title": "경상북도_농기계 위치정보 및 실시간 사고정보 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6470000/VAspot",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15157819": {
    "title": "경상북도 영천시_농산물산지 현황",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/5100000/YeongcheonFarmproduction",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "3060748": {
    "title": "농촌진흥청_농축산물소득정보",
@@ -4283,21 +4511,27 @@
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/SoilEnviron/SoilExam/V2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15042594": {
    "title": "농촌진흥청_스마트팜 우수농가 공개용 데이터",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390000/SmartFarmData",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15063096": {
    "title": "농촌진흥청 국립원예특작과학원_버섯이미지 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15086337": {
    "title": "농촌진흥청_이달의 농업기술",
@@ -4320,7 +4554,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15101370": {
    "title": "농촌진흥청_비료 품질검사",
@@ -4351,7 +4587,9 @@
    "dom": "농장",
    "cat": "수출입",
    "host": "apis.data.go.kr/1471057/PesticideProgressInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15128503": {
    "title": "대전광역시 서구_농약판매업 등록 현황",
@@ -4366,7 +4604,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390802/FarmFrsaidSafeMovie",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15086493": {
    "title": "농촌진흥청_농기계 구입정보",
@@ -4397,14 +4637,18 @@
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15002002": {
    "title": "농촌진흥청_농업기계 안전정보",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "www.rda.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 404: Not Found"
   },
   "15057713": {
    "title": "국토교통부_영농여건불리농지도",
@@ -4427,7 +4671,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390802/FarmVideo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15075998": {
    "title": "서울특별시농수산식품공사_품목별 최근 5개년 가격",
@@ -4498,14 +4744,18 @@
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/5090000/farmlandOnlyService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15144182": {
    "title": "농촌진흥청 국립농업과학원_토양도 기반 작물별 토양적성 통계정보 V2",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/SoilEnviron/SoilFitStat/V2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15083593": {
    "title": "농촌진흥청_친환경농법사례",
@@ -4552,7 +4802,9 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15057668": {
    "title": "국토교통부_토양도",
@@ -4631,35 +4883,45 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1400119/InsectService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142775": {
    "title": "산림청 국립수목원_국가표준곤충목록 조회 서비스",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/AAAAAAA/KiniService1",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 400: Bad Request"
   },
   "15167890": {
    "title": "부산광역시_낙동강하구에코센터_곤충정보",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6260000/EcoInsectService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15062558": {
    "title": "경상남도_사료제조업체",
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/6480000/gyeongnamanimalfoodcompanysituation",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15028144": {
    "title": "한국식품안전관리인증원_사료제조 HACCP업체 현황",
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15032750": {
    "title": "경기도 광명시_동물병원 현황",
@@ -4674,7 +4936,9 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15028138": {
    "title": "한국식품안전관리인증원_축산물 HACCP 인증업체 상세정보",
@@ -4710,7 +4974,9 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/B553748/SellerCompanyListServiceV2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15064831": {
    "title": "식품의약품안전처_축산물 보관업영업허가대장",
@@ -4759,7 +5025,9 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/5110000/livestockSales",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15095544": {
    "title": "식품의약품안전처_축산물품목제조보고(원재료)",
@@ -4775,7 +5043,9 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15154861": {
    "title": "행정안전부_식품_축산물운반업 조회서비스",
@@ -4796,14 +5066,18 @@
    "dom": "동물농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/1471000/MeatIntSalePrcssBsshPrmtRgstr01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15105522": {
    "title": "식품의약품안전처_식육즉석판매가공업 폐업정보",
    "dom": "동물농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1471000/MeatIntSalePrcssBsshClsbizInfo01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058808": {
    "title": "경기도 수산자원 보호구역 관리 현황",
@@ -4818,7 +5092,9 @@
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6460000/jnOfsiReport",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15015139": {
    "title": "농림수산식품교육문화정보원_농업 마이스터대학 정보",
@@ -4829,21 +5105,25 @@
    "link": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20160201000000000580&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
    "need": "MAFRA_KEY",
    "msg": "견본 열쇠 응답 없음",
-   "at": "2026-10-12 09:33"
+   "at": "2026-10-12 22:48"
   },
   "15109842": {
    "title": "경상남도 남해군_농어촌체험휴양마을현황 데이터 조회 서비스",
    "dom": "어장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/5430000/fishAndFarm",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15159890": {
    "title": "한국수력원자력(주)_월성원자력본부 발전소 별 취수구 해수온도",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/B552041/swtemp",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15081274": {
    "title": "식품의약품안전처_식품원재료(식물,동물,미생물,수산물) 정보",
@@ -4867,21 +5147,27 @@
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/6460000/rest/jnMarineSafetyInfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:46",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15113321": {
    "title": "식품의약품안전처_검사부적합 현황(농산물)",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/1471000/PrsecImproptAgriprStusService01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15062922": {
    "title": "경상남도_토종농산물 재배현황",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111807": {
    "title": "식품의약품안전처_농산물 안전성검사기관 정보",
@@ -4897,7 +5183,9 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390803/AgriFood/FncltyEfcy1",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15027426": {
    "title": "농촌진흥청_농가맛집 정보",
@@ -4912,14 +5200,18 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390000/agriProductsCenter",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15109835": {
    "title": "경상남도 남해군_농업작목반 정보 데이터 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/5430000/cooperativeUnit",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15111829": {
    "title": "식품의약품안전처_토양지하수 토양실태조사정보",
@@ -4935,49 +5227,63 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15142729": {
    "title": "산림청 국립수목원_국가표준버섯목록 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1400119/KfniService3",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15143501": {
    "title": "산림청 국립수목원_버섯자원 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1400119/FungiService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15150620": {
    "title": "농촌진흥청 국립원예특작과학원_버섯분류검색 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390804/Nihhs_MsrTaxon",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15125691": {
    "title": "농촌진흥청_스마트팜 생산성 향상 모델 오픈 API 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390000/SmartFarmMdl",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15156441": {
    "title": "농촌진흥청 국립농업과학원_스마트팜 온실환경 및 작물생장 연구 데이터",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390802/SmartFarmGreenhouseEnvironmentAndCropGrowthDataset",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15144105": {
    "title": "농촌진흥청 국립농업과학원_토양도 기반 토양특성 단면정보 V2",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/SoilEnviron/SoilCharacSctnn/V2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15123788": {
    "title": "농촌진흥청_국가농작물병해충관리시스템 병해충 공개상담",
@@ -4992,35 +5298,45 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15098287": {
    "title": "세종특별자치시_세종특별자치시 4종복합비료생산업 등록업체 현황",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15160319": {
    "title": "농촌진흥청 국립농업과학원_비료사용처방 체험 정보 V2",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1390802/SoilEnviron_FrtlzrUseExp_V2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15144796": {
    "title": "농촌진흥청 국립농업과학원_토양도 기반 토양특성 통계정보 V2",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390802/SoilEnviron/SoilCharacStat/V2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15000937": {
    "title": "기후에너지환경부 국립환경과학원_골프장 농약사용량 DB",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15074323": {
    "title": "식품의약품안전처_농약의 잔류허용기준 정보",
@@ -5045,77 +5361,102 @@
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1471057/PesticidPrpsInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15133580": {
    "title": "식품의약품안전처 식품의약품안전평가원_농약 물리화학적 정보",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/1471057/PesticidPhchInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15076930": {
    "title": "전남광주통합특별시 광양시_농기계임대정보",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110764": {
    "title": "한국농촌경제연구원_농기계 제조사별 농기계 조회 오픈API 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/B090028/farmMachinCompanyGoods",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "3069087": {
    "title": "전북특별자치도 전주시_농기계수리업소",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "openapi.jeonju.go.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 22:47",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"30\", \"msg\": \"SERVICE KEY IS NOT REGISTERED ERROR.\"}"
   },
   "15085410": {
    "title": "충청북도 괴산군_농기계임대정보",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110743": {
    "title": "한국농촌경제연구원_농기계 제조사 조회 오픈API 조회 서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/B090028/farmMachin",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110566": {
    "title": "한국농촌경제연구원_농기계 임대사업소 조회 오픈API 조회 서비스",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/B090028/farmMachinOffice",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110724": {
    "title": "한국농촌경제연구원_임대사업소별 임대농기계 정보 조회 오픈API 조회 서비스",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/B090028/farmMachinRentOffice",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15113929": {
    "title": "충청남도 보령시_농업기계임대정보조회서비스",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/4510000/GetBrAgrMchService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15158647": {
    "title": "한국농업기술진흥원_농업기계 검정성적서_GW",
    "dom": "농장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/B554729/farmMachine",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15101988": {
    "title": "농촌진흥청_수출농업 동향자료",
@@ -5162,35 +5503,45 @@
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/4720000/wanjulocalfoodcetfinfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110512": {
    "title": "전라북도 완주군_로컬푸드 품목별 월별 판매현황 조회 서비스",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/4720000/wanjulocalfoodsalemonth",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:47",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110553": {
    "title": "전라북도 완주군_로컬푸드 품목별 작목 현황 조회 서비스",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/4720000/wanjulocalfooditeminfo",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15110510": {
    "title": "전라북도 완주군_로컬푸드 품목별 일별 판매현황 조회 서비스",
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr/4720000/wanjulocalfoodsaleday",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15078771": {
    "title": "충청북도_토양오염실태조사 결과보고",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15080936": {
    "title": "농촌진흥청_여성농업인 알림마당",
@@ -5221,7 +5572,9 @@
    "dom": "농장",
    "cat": "업체·인허가",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15081308": {
    "title": "농촌진흥청_치유농업 연구성과",
@@ -5252,21 +5605,27 @@
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15108113": {
    "title": "충청남도 서천군_서천군 갯벌정보 조회 서비스",
    "dom": "어장",
    "cat": "사육·생산",
    "host": "apis.data.go.kr/4580000/SCAPI09",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "15058347": {
    "title": "해양수산부_해양환경 영향평가정보 서비스",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 22:48",
+   "msg": "HTTP Error 403: Forbidden"
   },
   "file-15148899": {
    "title": "파일데이터_소 사료생산량 및 사료가격",
@@ -5519,15 +5878,14 @@
    "msg": "열쇠 없이 내려받음"
   }
  },
- "at": "2026-10-12 21:39",
+ "at": "2026-10-12 22:51",
  "total": 625,
  "summary": {
   "제공처 열쇠": 367,
-  "빈 응답": 9,
-  "실패": 67,
+  "빈 응답": 10,
+  "실패": 244,
   "명세 없음": 4,
   "정상": 9,
-  "전용 수집기": 21,
-  "열쇠 대기": 178
+  "전용 수집기": 21
  }
 }
