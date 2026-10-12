@@ -1,0 +1,24 @@
+# 진단(우분투) — 손으로 실행, 지정한 진단 스크립트 결과를 tools/_debug 에 기록
+name: 진단
+on:
+  workflow_dispatch:
+    inputs:
+      script: { description: 'tools/ 아래 스크립트 이름', required: true }
+permissions:
+  contents: write
+jobs:
+  diag:
+    runs-on: ubuntu-latest
+    env:
+      DATA_GO_KR_KEY: ${{ secrets.DATA_GO_KR_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: python tools/${{ github.event.inputs.script }}
+        continue-on-error: true
+      - run: |
+          git config user.name "박씨팜 진단"; git config user.email "bot@bakssifarm.local"
+          git add -f tools/_debug 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "진단 $(date +%F)"
+          for i in 1 2 3; do git pull --rebase --autostash -q && git push && break; sleep 5; done
