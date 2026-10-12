@@ -51,14 +51,24 @@
    "dom": "농장",
    "cat": "방역·질병",
    "host": "openapi.pqis.go.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:14",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"SERVICE KEY IS NOT REGISTERED ERROR.\"}"
   },
   "15000577": {
    "title": "축산물품질평가원_축산물유통정보",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:14",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"00\", \"msg\": \"NORMAL SERVICE.\"}"
   },
   "15001668": {
    "title": "해양수산부 국립수산물품질관리원_수산물재고동향",
@@ -92,14 +102,18 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:14",
+   "msg": "<urlopen error timed out>"
   },
   "15028143": {
    "title": "한국식품안전관리인증원_축산물 유통 HACCP업체 현황",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:15",
+   "msg": "<urlopen error timed out>"
   },
   "15029181": {
    "title": "전국농수축산물도매시장경락가격표준데이터",
@@ -144,7 +158,9 @@
    "dom": "어장",
    "cat": "통계·집계",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:15",
+   "msg": "<urlopen error timed out>"
   },
   "15050553": {
    "title": "농림축산식품부_지역별 농기계보유현황",
@@ -185,7 +201,9 @@
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:15",
+   "msg": "<urlopen error timed out>"
   },
   "15056545": {
    "title": "해양수산부 국립해양조사원_지명정보",
@@ -200,14 +218,18 @@
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:16",
+   "msg": "<urlopen error timed out>"
   },
   "15056556": {
    "title": "해양수산부_수산물 품목별 수출입 현황",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:16",
+   "msg": "<urlopen error timed out>"
   },
   "15056599": {
    "title": "농림축산식품부_시도별 농작물보험료 통계정보",
@@ -257,14 +279,21 @@
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:16",
+   "msg": "<urlopen error timed out>"
   },
   "15056733": {
    "title": "축산물품질평가원_축산물DNA동일성검사 업소정보",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:16",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
   },
   "15056813": {
    "title": "농림축산식품부_년도별 농작물보험료 통계정보",
@@ -279,21 +308,30 @@
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:17",
+   "msg": "<urlopen error timed out>"
   },
   "15056874": {
    "title": "해양수산부_양식방법별 어가현황",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:17",
+   "msg": "<urlopen error timed out>"
   },
   "15056898": {
    "title": "축산물품질평가원_쇠고기이력정보",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:17",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
   },
   "15056992": {
    "title": "농림수산식품교육문화정보원_행복마을만들기 선정마을정보",
@@ -311,7 +349,12 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:17",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
   },
   "15057221": {
    "title": "해양수산부 국립수산물품질관리원_국내수산물생산위생시설현황",
@@ -334,21 +377,27 @@
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:18",
+   "msg": "<urlopen error timed out>"
   },
   "15057607": {
    "title": "해양수산부_국가별 수산물 수출입 현황",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:18",
+   "msg": "<urlopen error timed out>"
   },
   "15057689": {
    "title": "해양수산부_일자별 위탁판매 현황",
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:18",
+   "msg": "<urlopen error timed out>"
   },
   "15057698": {
    "title": "농림수산식품교육문화정보원_농촌마을별 인원정보",
@@ -366,7 +415,9 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:19",
+   "msg": "<urlopen error timed out>"
   },
   "15057808": {
    "title": "농촌진흥청_표준사료 검색",
@@ -403,14 +454,21 @@
    "dom": "농장",
    "cat": "시세·거래",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "정상",
+   "n": 7,
+   "at": "2026-10-12 21:19",
+   "fields": 2,
+   "units": 0,
+   "msg": ""
   },
   "15057991": {
    "title": "해양수산부_시도별 수산가공품 생산고",
    "dom": "어장",
    "cat": "기타",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:19",
+   "msg": "<urlopen error timed out>"
   },
   "15058005": {
    "title": "농림축산식품부_품목별 농작물보험료 통계정보",
@@ -425,14 +483,18 @@
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:19",
+   "msg": "<urlopen error timed out>"
   },
   "15058123": {
    "title": "해양수산부_품종별 수산가공품 생산량",
    "dom": "어장",
    "cat": "통계·집계",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:20",
+   "msg": "<urlopen error timed out>"
   },
   "15058183": {
    "title": "해양수산부 국립수산물품질관리원_해외수산물생산위생시설현황",
@@ -520,7 +582,12 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "정상",
+   "n": 19,
+   "at": "2026-10-12 21:20",
+   "fields": 9,
+   "units": 0,
+   "msg": ""
   },
   "15058871": {
    "title": "해양수산부 국립해양조사원_시설안전",
@@ -543,35 +610,51 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:20",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
   },
   "15058980": {
    "title": "해양수산부_수협 산지조합 창고별 매출처 정보",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:20",
+   "msg": "<urlopen error timed out>"
   },
   "15059077": {
    "title": "해양수산부_수협 산지조합 정보",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:21",
+   "msg": "<urlopen error timed out>"
   },
   "15059210": {
    "title": "해양수산부_수협 산지조합 창고 품목별 재고 현황",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:21",
+   "msg": "<urlopen error timed out>"
   },
   "15059251": {
    "title": "축산물품질평가원_계란등급판정정보",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:21",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
   },
   "15059302": {
    "title": "연안정보도 도엽제공 서비스",
@@ -605,14 +688,18 @@
    "dom": "어장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:21",
+   "msg": "<urlopen error timed out>"
   },
   "15059444": {
    "title": "해양수산부_수협 산지조합 창고 품목별 입출고 현황",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:22",
+   "msg": "<urlopen error timed out>"
   },
   "15059457": {
    "title": "농림축산식품부_년도별 농작물 보험가입 통계정보",
@@ -649,14 +736,18 @@
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/B553931/service/OceansNemoService2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:22",
+   "msg": "<urlopen error timed out>"
   },
   "15061340": {
    "title": "금융위원회_금융통계수산업협동조합정보",
    "dom": "어장",
    "cat": "통계·집계",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:23",
+   "msg": "<urlopen error timed out>"
   },
   "15061948": {
    "title": "농림축산식품부_안심식당 정보",
@@ -751,7 +842,9 @@
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:23",
+   "msg": "<urlopen error timed out>"
   },
   "15069189": {
    "title": "농림수산식품교육문화정보원_국가농식품통계",
@@ -766,14 +859,21 @@
    "dom": "농장",
    "cat": "시세·거래",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:23",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"00\", \"msg\": \"NORMAL SERVICE.\"}"
   },
   "15074088": {
    "title": "해양수산부_낚시 어선업 신고정보",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:23",
+   "msg": "<urlopen error timed out>"
   },
   "15074310": {
    "title": "식품의약품안전처_축산물HACCP지정 정보",
@@ -807,98 +907,126 @@
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:24",
+   "msg": "<urlopen error timed out>"
   },
   "15075721": {
    "title": "해양수산부_연속정보 수온 (3분)",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:24",
+   "msg": "<urlopen error timed out>"
   },
   "15075776": {
    "title": "해양수산부_국가어항 10KM 인구분포",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/apVhdService_Sk10pdV2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:24",
+   "msg": "<urlopen error timed out>"
   },
   "15075777": {
    "title": "해양수산부_연안 1KM 시설물",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:25",
+   "msg": "<urlopen error timed out>"
   },
   "15075778": {
    "title": "해양수산부_연안 3KM 시설물",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:25",
+   "msg": "<urlopen error timed out>"
   },
   "15075779": {
    "title": "해양수산부_연안 5KM 시설물",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:26",
+   "msg": "<urlopen error timed out>"
   },
   "15075817": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 15분 격자 D+1 예측값",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:26",
+   "msg": "<urlopen error timed out>"
   },
   "15075826": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 15분 격자 D+2 예측값",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:26",
+   "msg": "<urlopen error timed out>"
   },
   "15075835": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 3분 격자 D+1 예측값",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:27",
+   "msg": "<urlopen error timed out>"
   },
   "15075839": {
    "title": "해양수산부_지식정보 생산모델 해수면 수온 3분 격자 D+2 예측값",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:27",
+   "msg": "<urlopen error timed out>"
   },
   "15075845": {
    "title": "해양수산부_해양용도구역_어업활동",
    "dom": "어장",
    "cat": "구역·경계",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:27",
+   "msg": "<urlopen error timed out>"
   },
   "15076745": {
    "title": "국립암센터_대장암 라이브러리 환자 결핵 병력 여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:28",
+   "msg": "<urlopen error timed out>"
   },
   "15076771": {
    "title": "국립암센터_신장암 라이브러리 환자 결핵 병력 여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:28",
+   "msg": "<urlopen error timed out>"
   },
   "15077051": {
    "title": "국립암센터_폐암 라이브러리 환자 결핵 병력 여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:28",
+   "msg": "<urlopen error timed out>"
   },
   "15080637": {
    "title": "농림축산식품부 국립농산물품질관리원_GAP인증농가현황 OpenAPI",
@@ -924,49 +1052,63 @@
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:29",
+   "msg": "<urlopen error timed out>"
   },
   "15096171": {
    "title": "국립암센터_간암_라이브러리_환자_결핵_병력_여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:29",
+   "msg": "<urlopen error timed out>"
   },
   "15096176": {
    "title": "국립암센터_위암_라이브러리_환자_결핵_병력_여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:30",
+   "msg": "<urlopen error timed out>"
   },
   "15096373": {
    "title": "국립암센터_전립선암_라이브러리_환자_결핵_병력_여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:30",
+   "msg": "<urlopen error timed out>"
   },
   "15097317": {
    "title": "해양수산부_수산자원보호구역",
    "dom": "어장",
    "cat": "구역·경계",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:30",
+   "msg": "<urlopen error timed out>"
   },
   "15097756": {
    "title": "해양수산부_인공어초 15KM 내 해조류 분포",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:31",
+   "msg": "<urlopen error timed out>"
   },
   "15098601": {
    "title": "국립암센터_췌장암_라이브러리_환자_결핵_병력_여부",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:31",
+   "msg": "<urlopen error timed out>"
   },
   "15101698": {
    "title": "농림축산식품부_과수거점산지유통센터건립지원사업 상세정보",
@@ -992,28 +1134,36 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1390906/brblInfo_gong",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:31",
+   "msg": "<urlopen error timed out>"
   },
   "15102029": {
    "title": "농촌진흥청 국립축산과학원_축산 가격 동향",
    "dom": "농장",
    "cat": "시세·거래",
    "host": "apis.data.go.kr/1390906/nias_gong_api1",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:32",
+   "msg": "<urlopen error timed out>"
   },
   "15102045": {
    "title": "농촌진흥청 국립축산과학원_젖소 유전능력 평가결과",
    "dom": "농장",
    "cat": "기타",
    "host": "apis.data.go.kr/1390906/hrnhAbltyEvlInq_gong",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:32",
+   "msg": "<urlopen error timed out>"
   },
   "15102076": {
    "title": "농촌진흥청 국립축산과학원_가축사육기상정보_가축 더위지수",
    "dom": "농장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1390906/thiForecastApi_gongNew",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:33",
+   "msg": "<urlopen error timed out>"
   },
   "15102408": {
    "title": "농림수산식품교육문화정보원_농업 수입지출 통계정보",
@@ -1086,21 +1236,30 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestSaleBsshClsbizInfo01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:33",
+   "msg": "<urlopen error timed out>"
   },
   "15105538": {
    "title": "식품의약품안전처_축산물 식육포장처리업 폐업정보",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestMeatPcknBsshClsbizInfo01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:33",
+   "msg": "<urlopen error timed out>"
   },
   "15106233": {
    "title": "축산물품질평가원_농장식별번호정보",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "data.ekape.or.kr",
-   "state": "열쇠 대기"
+   "state": "빈 응답",
+   "n": 0,
+   "at": "2026-10-12 21:33",
+   "fields": 0,
+   "units": 0,
+   "msg": "{\"code\": \"99\", \"msg\": \"등록되지 않은 서비스키\"}"
   },
   "15109069": {
    "title": "농림수산식품교육문화정보원_산지위판장 유통통계정보 조회",
@@ -1226,21 +1385,27 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestBusnssClsbizInfo01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:34",
+   "msg": "<urlopen error timed out>"
   },
   "15111985": {
    "title": "식품의약품안전처_축산물 가공업 폐업정보 조회",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/LivestPrcssBsshClsbizInfo01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:34",
+   "msg": "<urlopen error timed out>"
   },
   "15114407": {
    "title": "해양수산부_해양보호구역 정보제공 서비스",
    "dom": "어장",
    "cat": "구역·경계",
    "host": "apis.data.go.kr/1192000/MarineProtectionAreaInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:34",
+   "msg": "<urlopen error timed out>"
   },
   "15115752": {
    "title": "해양수산부 국립수산물품질관리원_수산물 방사능 생산 지역별 안전 현황",
@@ -1287,35 +1452,45 @@
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/MudFlatInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:35",
+   "msg": "<urlopen error timed out>"
   },
   "15127779": {
    "title": "해양수산부_실시간 해양수질자동측정망 관측소 측정자료정보",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192000/OceansWemoObvpRtmInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:35",
+   "msg": "<urlopen error timed out>"
   },
   "15127780": {
    "title": "해양수산부_실시간 해양수질자동측정망 관측정보 센서자료 정보",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192000/OceanWemoSnsrRtmInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:36",
+   "msg": "<urlopen error timed out>"
   },
   "15127782": {
    "title": "해양수산부_한국의 갯벌 세계유산 정보",
    "dom": "어장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1192000/KorUnescoMudFlatInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:36",
+   "msg": "<urlopen error timed out>"
   },
   "15128096": {
    "title": "식품의약품안전처_도축업 인허가 대장",
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471000/SlauPrmtRgstr01",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:36",
+   "msg": "<urlopen error timed out>"
   },
   "15129484": {
    "title": "농림축산식품부_농촌관광사업 등급 정보 현황",
@@ -1341,21 +1516,27 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1471057/VdVdrugPhchInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:37",
+   "msg": "<urlopen error timed out>"
   },
   "15133584": {
    "title": "식품의약품안전처 식품의약품안전평가원_동물용의약품 용도 서비스",
    "dom": "농장",
    "cat": "기타",
    "host": "apis.data.go.kr/1471057/VdVdrugPrpsInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:37",
+   "msg": "<urlopen error timed out>"
   },
   "15133585": {
    "title": "식품의약품안전처 식품의약품안전평가원_동물용의약품 잔류허용기준 서비스",
    "dom": "농장",
    "cat": "방역·질병",
    "host": "apis.data.go.kr/1471057/VdVdrugRsdstdInfoService",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:37",
+   "msg": "<urlopen error timed out>"
   },
   "15139440": {
    "title": "기상청_해양기상부이·파고부이 관측 조회서비스",
@@ -1389,7 +1570,9 @@
    "dom": "농장",
    "cat": "위치·시설",
    "host": "apis.data.go.kr/1543145/NANTBTCERTINFO",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:38",
+   "msg": "<urlopen error timed out>"
   },
   "15141809": {
    "title": "한국농수산식품유통공사_전국 공영도매시장 정산정보",
@@ -1410,7 +1593,9 @@
    "dom": "어장",
    "cat": "기타",
    "host": "apis.data.go.kr/B552845/katCode",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:38",
+   "msg": "<urlopen error timed out>"
   },
   "15142145": {
    "title": "농림수산식품교육문화정보원_지역기상특보현황",
@@ -1476,14 +1661,18 @@
    "dom": "어장",
    "cat": "기타",
    "host": "apis.data.go.kr/1192136/fcstMudflatv2",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:39",
+   "msg": "<urlopen error timed out>"
   },
   "15142495": {
    "title": "해양수산부 국립해양조사원_지역 해양기후 수치모델 기반 미래 표층수온 상승 전망 조회",
    "dom": "어장",
    "cat": "환경·관측",
    "host": "apis.data.go.kr/1192136/changeClimateWtem",
-   "state": "열쇠 대기"
+   "state": "실패",
+   "at": "2026-10-12 21:39",
+   "msg": "<urlopen error timed out>"
   },
   "15142506": {
    "title": "해양수산부 국립해양조사원_조위관측소 실측 수온 조회",
@@ -1801,7 +1990,7 @@
    "dom": "공통",
    "cat": "시세·거래",
    "state": "제공처 열쇠",
-   "at": "2026-10-12 09:33",
+   "at": "2026-10-12 21:39",
    "msg": "KAMIS_KEY, KAMIS_ID",
    "link": "https://www.kamis.or.kr/customer/reference/openapi_list.do",
    "host": "www.kamis.or.kr"
@@ -1811,7 +2000,7 @@
    "dom": "공통",
    "cat": "수출입",
    "state": "제공처 열쇠",
-   "at": "2026-10-12 09:33",
+   "at": "2026-10-12 21:39",
    "msg": "ECOS_KEY",
    "link": "https://ecos.bok.or.kr/api/",
    "host": "ecos.bok.or.kr"
@@ -1821,7 +2010,7 @@
    "dom": "공통",
    "cat": "원가",
    "state": "제공처 열쇠",
-   "at": "2026-10-12 09:33",
+   "at": "2026-10-12 21:39",
    "msg": "OPINET_KEY",
    "link": "https://www.opinet.co.kr/user/custapi/openApiInfo.do",
    "host": "www.opinet.co.kr"
@@ -1831,7 +2020,7 @@
    "dom": "동물농장",
    "cat": "사육·생산",
    "state": "제공처 열쇠",
-   "at": "2026-10-12 09:33",
+   "at": "2026-10-12 21:39",
    "msg": "KOSIS_KEY",
    "link": "https://kosis.kr/openapi/",
    "host": "kosis.kr"
@@ -1841,7 +2030,7 @@
    "dom": "동물농장",
    "cat": "수출입",
    "state": "제공처 열쇠",
-   "at": "2026-10-12 09:33",
+   "at": "2026-10-12 21:39",
    "msg": "USDA_KEY",
    "link": "https://mymarketnews.ams.usda.gov/mymarketnews-api",
    "host": "mymarketnews.ams.usda.gov"
@@ -5330,13 +5519,15 @@
    "msg": "열쇠 없이 내려받음"
   }
  },
- "at": "2026-10-12 09:33",
+ "at": "2026-10-12 21:39",
  "total": 625,
  "summary": {
   "제공처 열쇠": 367,
-  "열쇠 대기": 256,
+  "빈 응답": 9,
+  "실패": 67,
   "명세 없음": 4,
+  "정상": 9,
   "전용 수집기": 21,
-  "정상": 7
+  "열쇠 대기": 178
  }
 }
