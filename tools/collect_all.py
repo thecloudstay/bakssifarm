@@ -50,7 +50,11 @@ def items_of(raw):
 reg = jload(os.path.join(DATA, 'apis.json'), {'items': {}})
 day = (now().date() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 ok = fail = skip = 0
-for s in SPECS:
+import time as _t
+T0 = _t.time(); BUDGET = int(env('API_BUDGET_SEC', '1500'))   # 하루 25분 안에서 돌고, 남은 것은 다음 날 앞에서부터 이어 감
+order = sorted(SPECS, key=lambda s: (reg['items'].get(s['id'], {}).get('at', '') or ''))   # 오래 안 부른 것부터
+for s in order:
+    if _t.time() - T0 > BUDGET: break
     sid = s['id']; spec = s.get('spec'); host = (spec or {}).get('host') or s.get('host') or ''
     ent = reg['items'].setdefault(sid, {})
     ent.update({'title': s['title'], 'dom': s['dom'], 'cat': s['cat'], 'host': host})
@@ -109,7 +113,7 @@ for s in SPECS:
         rows = []; meta = None
         for page in range(1, MAX_PAGES + 1):
             params['pageNo'] = page
-            got, meta = items_of(get(base, params))
+            got, meta = items_of(get(base, params, timeout=20, retry=1))
             rows += got
             if len(got) < 1000: break
       fields = sorted({k for r in rows[:200] for k in r.keys()})
