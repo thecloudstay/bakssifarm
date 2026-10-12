@@ -57,7 +57,7 @@ def fetch_all(path):
         if not items: break
         rows += items
         total = int(body.get('totalCount') or 0)
-        if len(rows) >= total or len(items) < 1000: break
+        if len(rows) >= total or (not total and len(items) < 1000): break   # 한 쪽 최대 건수가 서비스마다 달라(100·1000) 전체 건수로 끝을 봄
         page += 1
         if page > 400: break
     return rows
