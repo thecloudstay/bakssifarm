@@ -44,7 +44,7 @@ jobs:
         run: python tools/collect_ekape.py
       - name: 인허가 수집(행정안전부) — 월요일 아침, 또는 손으로 실행했을 때
         run: |
-          if [ "$(date -u +%u)" = "7" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then python tools/collect_license.py; else echo "월요일 아침(일요일 밤 UTC)에만 수집"; fi
+          if [ "$(date -u +%u)" = "7" ] || [ "${{ github.event.inputs.force }}" != "" ]; then python tools/collect_license.py; else echo "월요일 아침(일요일 밤 UTC)에만 수집"; fi
       - name: 양식 접수 반영(공동구매 모집판·구입가 시세판)
         run: python tools/sync_forms.py
       - name: 공영도매시장 경락가(정산)
@@ -71,7 +71,7 @@ jobs:
         run: python tools/build_opps.py
       - name: 수입 단가(관세청 수출입실적) — 매달 3일
         run: |
-          if [ "$(TZ=Asia/Seoul date +%d)" = "03" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then python tools/collect_trade.py; else echo "매달 3일 아침에만"; fi
+          if [ "$(TZ=Asia/Seoul date +%d)" = "03" ] || [ "${{ github.event.inputs.force }}" != "" ]; then python tools/collect_trade.py; else echo "매달 3일 아침에만"; fi
       - name: 글 화면·사이트 지도·새 소식
         run: python tools/build_pages.py
       - name: 미리보기 그림
