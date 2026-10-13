@@ -1,14 +1,14 @@
 {
  "date": "2026-10-14",
- "at": "2026-10-14 07:50",
+ "at": "2026-10-14 08:35",
  "collectors": {
   "pages": {
    "ok": true,
-   "age_h": 23.2,
+   "age_h": 0.8,
    "msg": "181쪽"
   },
   "signals_sea": {
-   "ok": true,
+   "ok": false,
    "age_h": 0.0,
    "msg": "관측소 0곳 · 수온 신호 0건"
   },
@@ -34,27 +34,27 @@
   },
   "apis": {
    "ok": false,
-   "age_h": 32.7,
+   "age_h": 33.4,
    "msg": "정상 12 · 실패 244 · 건너뜀 369 / 625"
   },
   "license": {
    "ok": false,
-   "age_h": 32.5,
+   "age_h": 33.2,
    "msg": "가축사육업 103,237/199,626 · 사료제조업 100/100 · 도축업 71/100 · 부화업 실패 HTTP Error 403: Forbidden · 종축업 실패 HTTP Error 403: Forbidden"
   },
   "wholesale": {
    "ok": true,
-   "age_h": 23.0,
+   "age_h": 23.7,
    "msg": "2026-10-12 18,110건 · 80품목 · 쌓인 거래일 14"
   },
   "origin": {
    "ok": true,
-   "age_h": 23.0,
+   "age_h": 23.7,
    "msg": "20261012 낙찰 94,066건 · 누적 1개월"
   },
   "trade": {
    "ok": true,
-   "age_h": 32.5,
+   "age_h": 33.2,
    "msg": "10품목"
   },
   "wipan": {
@@ -113,6 +113,12 @@
   "rate": null
  },
  "todo": [
+  {
+   "level": "높음",
+   "kind": "수집 실패",
+   "what": "signals_sea: 관측소 0곳 · 수온 신호 0건",
+   "hint": "원인 확인 후 수집기 고침(끝점·변수·쪽 넘김)"
+  },
   {
    "level": "높음",
    "kind": "수집 실패",
