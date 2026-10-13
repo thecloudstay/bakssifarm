@@ -43,7 +43,8 @@ try:
         u = unit_for(st)
         if tw >= 28: items.append({'date': today.isoformat(), 'level': '경보' if tw >= 30 else '주의', 'kind': '고수온', 'title': f'{st["name"]} 앞바다 수온 {tw}℃', 'body': '고수온 주의 기준(28℃) 이상. 양식장은 사료 줄이기·산소 공급·출하 앞당기기 검토, 폐사 늘면 위판 가격이 흔들립니다.', 'area': u, 'src': '국립해양조사원 조위관측소 실측(해루낚 보관) ' + str(r.get('at', ''))})
         elif tw <= 4: items.append({'date': today.isoformat(), 'level': '주의', 'kind': '저수온', 'title': f'{st["name"]} 앞바다 수온 {tw}℃', 'body': '저수온 주의 기준(4℃) 이하. 넙치·돔류 양식장은 가온·먹이 조절, 폐사 대비.', 'area': u, 'src': '국립해양조사원 조위관측소 실측(해루낚 보관) ' + str(r.get('at', ''))})
-    status('signals_sea', True, f'관측소 {len(obs.get("s", {}))}곳 · 수온 신호 {sum(1 for i in items if i["kind"] in ("고수온", "저수온"))}건')
+    if not obs.get('s'): print('수온 원본 형식 확인:', type(obs).__name__, list(obs)[:10] if isinstance(obs, dict) else len(obs), str(obs)[:300])   # 관측소 0곳이면 원본 모양을 기록에 남김
+    status('signals_sea', True if obs.get('s') else False, f'관측소 {len(obs.get("s", {}))}곳 · 수온 신호 {sum(1 for i in items if i["kind"] in ("고수온", "저수온"))}건')
 except Exception as e:
     status('signals_sea', False, str(e)[:160])
 # 2) 경락가 급등락 — 최근 거래일 대비 중위값(직전 5거래일)에서 ±5% 넘게 벗어나면

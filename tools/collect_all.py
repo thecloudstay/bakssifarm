@@ -47,6 +47,10 @@ def items_of(raw):
     if not rows: rows = [{c.tag: (c.text or '').strip() for c in it} for it in root.iter('row')]
     code = root.findtext('.//resultCode') or root.findtext('.//returnReasonCode') or ''
     return rows, {'code': code, 'msg': root.findtext('.//resultMsg') or root.findtext('.//returnAuthMsg') or ''}
+ORGCODE = {}   # 기관 이름 → 공통 주소의 기관 번호(예: 산림청 국립수목원 → 1400119), 명세가 제대로 된 창구들에서 모음
+for _s in SPECS:
+    _m = re.match(r'apis\.data\.go\.kr/(\d{5,})/', ((_s.get('spec') or {}).get('host') or _s.get('host') or ''))
+    if _m: ORGCODE.setdefault(_s['title'].split('_')[0], _m.group(1))
 reg = jload(os.path.join(DATA, 'apis.json'), {'items': {}})
 day = (now().date() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 ok = fail = skip = 0
@@ -56,6 +60,8 @@ order = sorted(SPECS, key=lambda s: (reg['items'].get(s['id'], {}).get('at', '')
 for s in order:
     if _t.time() - T0 > BUDGET: break
     sid = s['id']; spec = s.get('spec'); host = (spec or {}).get('host') or s.get('host') or ''
+    if re.search(r'/A{4,}/', host) and ORGCODE.get(s['title'].split('_')[0]):   # 포털 명세에 기관 번호 자리가 「AAAAAAA」로 비어 있는 경우 — 같은 기관 다른 창구의 번호로 채움
+        host = re.sub(r'/A{4,}/', '/' + ORGCODE[s['title'].split('_')[0]] + '/', host); spec = dict(spec, host=host)
     ent = reg['items'].setdefault(sid, {})
     ent.update({'title': s['title'], 'dom': s['dom'], 'cat': s['cat'], 'host': host})
     if any(o in host for o in OWN): ent.update({'state': '전용 수집기'}); skip += 1; continue
