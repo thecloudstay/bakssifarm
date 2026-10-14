@@ -102,6 +102,8 @@ for s in order:
       if '_rows' in s: rows = s['_rows']; meta = None
       else:
         op = spec['ops'][0]; base = op.get('full') or (op['path'] if op['path'].startswith('http') else f"https://{host.rstrip('/')}{op['path']}")
+        deeper = [u for u in (s.get('plain') or {}).get('urls', []) if u.startswith(base.rstrip('/') + '/')]
+        if deeper: base = deeper[0]   # 명세 주소가 서비스 뿌리에서 끝나고(기능 이름 없음) 설명 쪽에 기능 주소가 있으면 그것으로 부름(예: 산지공판장 경락가격 → …/getJointMarketPriceList)
         params = {'serviceKey': KEY, 'pageNo': 1, 'numOfRows': 1000}
         names = [p['name'] for p in op.get('params', []) if p.get('name')]
         if 'resultType' in names: params['resultType'] = 'json'
