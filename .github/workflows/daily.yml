@@ -63,6 +63,9 @@ jobs:
       - name: 농산물 구매 신호·도매시장 간 값 차이
         run: python tools/build_crop_signal.py
         continue-on-error: true
+      - name: 화면 미리 만들기(자가 점검이 저장소의 옛 화면 대신 오늘 화면을 재도록)
+        run: python tools/build_pages.py
+        continue-on-error: true
       - name: 자가 점검(재기·찾기)
         run: python tools/self_check.py
         continue-on-error: true
