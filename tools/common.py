@@ -1,5 +1,5 @@
 # 수집기 공통: 경로, 상태 기록, 요청
-import json, os, datetime, urllib.request, urllib.parse, ssl, time
+import json, os, re, datetime, urllib.request, urllib.parse, ssl, time
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'site')
 DATA = os.path.join(SITE, 'data')
@@ -31,3 +31,15 @@ def get(url, params=None, timeout=40, retry=3, headers=None):
             last = e; time.sleep(2 + i * 3)
     raise last
 def env(k, default=None): return os.environ.get(k) or default
+def find_file(h, page, fetch):
+    # 공공데이터포털 파일데이터 화면에서 내려받기 번호(atchFileId, fileDetailSn) 찾기. fetch(url, ref, data) → (내용, 머리글)
+    #  1) 화면에 바로 받기 주소가 박혀 있는 옛 방식  2) 「fn_fileDataDown(번호, 상세번호, …)」 단추만 있는 새 방식 → 포털 화면 스크립트처럼 내려받기 번호를 물어봄
+    m = re.search(r'/cmm/cmm/fileDownload\.do\?atchFileId=(\w+)&(?:amp;)?fileDetailSn=(\d+)', h)
+    if m: return m.group(1), m.group(2)
+    m = re.search(r"fn_fileDataDown\('(\d+)',\s*'([^']+)',\s*'([^']*)',\s*'([^']*)'", h)
+    if not m: return None
+    b = fetch('https://www.data.go.kr/tcs/dss/selectFileDataDownload.do', page, {'publicDataDetailPk': m.group(2), 'publicDataPk': m.group(1), 'atchFileId': m.group(3),
+              'fileDetailSn': m.group(4), 'publicDataTyCode': 'PR0051', 'url': '/tcs/dss/selectFileDataDownload.do'})[0]
+    j = json.loads(b.decode('utf-8', 'replace'))
+    if not j.get('status') or not j.get('atchFileId'): raise RuntimeError('내려받기 번호 응답 이상: ' + (j.get('error') or str(j)[:80]))
+    return str(j['atchFileId']), str(j.get('fileDetailSn') or 1)

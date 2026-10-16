@@ -2,7 +2,7 @@
 # 낙찰 한 줄마다 위판일자·산지조합·위판장·어종·상태(활어/선어/냉동)·업종(어업 종류·양식)·중량·금액이 있음.
 # 공개: 조합별 상위 어종과 금액, 어종별 전국 ㎏당 단가(일별), 조합별 같은 어종 단가 비교 → site/data/wipan.json
 # 원자료(수십 ㎆)는 저장소에 넣지 않고, 달별 집계만 private/wipan/YYYY-MM.json 으로 쌓음.
-import sys, os, re, io, csv, json, collections, urllib.request, http.cookiejar
+import sys, os, re, io, csv, json, collections, urllib.request, urllib.parse, http.cookiejar
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
 PK = '15102791'
@@ -10,6 +10,10 @@ OP = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiej
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko;q=0.9'}
 def fetch(url, ref='https://www.data.go.kr/'):
     with OP.open(urllib.request.Request(url, headers=dict(UA, Referer=ref)), timeout=300) as r: return r.read()
+def fetch2(url, ref='https://www.data.go.kr/', data=None):   # 내려받기 번호 묻기용(find_file)
+    hd = dict(UA, Referer=ref)
+    if data is not None: hd.update({'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'})
+    with OP.open(urllib.request.Request(url, data=urllib.parse.urlencode(data).encode() if data is not None else None, headers=hd), timeout=120) as r: return r.read(), dict(r.headers)
 PD = os.path.join(PRIVATE, 'wipan'); os.makedirs(PD, exist_ok=True)
 STATE = os.path.join(PD, 'state.json'); st = jload(STATE, {})
 WH = jload(os.path.join(DATA, 'places.json'), {'wharfs': []})['wharfs']
@@ -32,9 +36,9 @@ def num(x):
 try:
     page_url = f'https://www.data.go.kr/data/{PK}/fileData.do'
     h = fetch(page_url).decode('utf-8', 'replace') if not env('WIPAN_FILE') else '/cmm/cmm/fileDownload.do?atchFileId=TEST&fileDetailSn=1'
-    m = re.search(r'/cmm/cmm/fileDownload\.do\?atchFileId=(\w+)&(?:amp;)?fileDetailSn=(\d+)', h)
+    m = find_file(h, page_url, fetch2)
     if not m: raise RuntimeError('내려받기 주소를 못 찾음')
-    fid = m.group(1) + '_' + m.group(2)
+    fid = m[0] + '_' + m[1]
     if st.get('fid') == fid and not env('WIPAN_FORCE'):
         pub = jload(os.path.join(DATA, 'wipan.json'), None)
         if pub:   # 조합 소재 시군 대응표가 바뀌었으면 다시 매김
@@ -44,7 +48,7 @@ try:
                 if c['u']: byu[c['u']]['amt'] += c['amt']; byu[c['u']]['coops'].append(c['name'])
             pub['units'] = byu; jsave(os.path.join(DATA, 'wipan.json'), pub)
         status('wipan', True, f'새 파일 없음({st.get("month")})'); print('새 파일 없음'); sys.exit(0)
-    raw = open(env('WIPAN_FILE'), 'rb').read() if env('WIPAN_FILE') else fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m.group(1)}&fileDetailSn={m.group(2)}&insertDataPrcus=N', page_url)
+    raw = open(env('WIPAN_FILE'), 'rb').read() if env('WIPAN_FILE') else fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m[0]}&fileDetailSn={m[1]}&insertDataPrcus=N', page_url)
     for enc in ('utf-8-sig', 'cp949'):
         try: text = raw.decode(enc); break
         except UnicodeDecodeError: continue

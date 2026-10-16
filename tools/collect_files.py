@@ -10,8 +10,11 @@ RAW = os.path.join(ROOT, '.cache', 'files'); os.makedirs(RAW, exist_ok=True)   #
 STATE = os.path.join(PD, 'state.json'); st = jload(STATE, {})
 OP = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/130 Safari/537.36', 'Accept-Language': 'ko-KR,ko;q=0.9'}
-def fetch(url, ref='https://www.data.go.kr/'):
-    with OP.open(urllib.request.Request(url, headers=dict(UA, Referer=ref)), timeout=120) as r: return r.read(), dict(r.headers)
+def fetch(url, ref='https://www.data.go.kr/', data=None):
+    hd = dict(UA, Referer=ref)
+    if data is not None: hd.update({'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'})
+    req = urllib.request.Request(url, data=urllib.parse.urlencode(data).encode() if data is not None else None, headers=hd)
+    with OP.open(req, timeout=120) as r: return r.read(), dict(r.headers)
 def decode(b):
     for enc in ('utf-8-sig', 'cp949'):
         try: return b.decode(enc)
@@ -42,16 +45,16 @@ for s in SETS:
     try:
         page = f'https://www.data.go.kr/data/{i}/fileData.do'
         h = fetch(page)[0].decode('utf-8', 'replace')
-        m = re.search(r'/cmm/cmm/fileDownload\.do\?atchFileId=(\w+)&(?:amp;)?fileDetailSn=(\d+)', h)
+        m = find_file(h, page, fetch)
         t = re.search(r'<title>([^<|]*)', h); title = t.group(1).strip() if t else s.get('title', '')
         upd = re.search(r'수정일</th>\s*<td[^>]*>\s*([\d-]+)', h)
         if not m:
             if '기관자체에서 다운로드' in h: st[i] = {'link': True, 'at': stamp(), 'title': title}; print('제공처 링크(로그인 필요)', i); continue
             raise RuntimeError('내려받기 주소 없음')
-        fid = m.group(1) + '_' + m.group(2)
+        fid = m[0] + '_' + m[1]
         if st.get(i, {}).get('fid') == fid and os.path.exists(os.path.join(PD, i + '.json')) and not env('FILES_FORCE'):
             same += 1; continue
-        b, hd = fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m.group(1)}&fileDetailSn={m.group(2)}&insertDataPrcus=N', page)
+        b, hd = fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m[0]}&fileDetailSn={m[1]}&insertDataPrcus=N', page)
         disp = urllib.parse.unquote(re.sub(r'.*filename="?([^";]+)"?.*', r'\1', hd.get('Content-Disposition', '') or 'x.csv'))
         ext = disp.rsplit('.', 1)[-1].lower() if '.' in disp else 'bin'
         if ext == 'zip':
