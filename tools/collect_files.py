@@ -38,16 +38,18 @@ def table(b, name):
         return []
     return [r for r in csv.reader(io.StringIO(decode(b)))]
 ok = fail = same = 0
-T0 = time.time()
+T0 = time.time(); tout = 0; down = False   # tout: 잇따른 접속 시간 초과 수
 for s in SETS:
     i = s['id']
     if time.time() - T0 > 600: print('10분 넘어 나머지는 다음에'); break
+    if tout >= 2: down = True; print('포털 접속이 2번 잇따라 시간 초과 — 나머지는 다음에'); break
     try:
         page = f'https://www.data.go.kr/data/{i}/fileData.do'
         h = fetch(page)[0].decode('utf-8', 'replace')
         m = find_file(h, page, fetch)
         t = re.search(r'<title>([^<|]*)', h); title = t.group(1).strip() if t else s.get('title', '')
         upd = re.search(r'수정일</th>\s*<td[^>]*>\s*([\d-]+)', h)
+        tout = 0
         if not m:
             if '기관자체에서 다운로드' in h: st[i] = {'link': True, 'at': stamp(), 'title': title}; print('제공처 링크(로그인 필요)', i); continue
             raise RuntimeError('내려받기 주소 없음')
@@ -67,8 +69,10 @@ for s in SETS:
         jsave(os.path.join(PD, i + '.json'), {'id': i, 'key': s.get('key'), 'title': title, 'file': disp, 'size': len(b), 'updated': upd.group(1) if upd else '', 'at': stamp(),
                                               'cols': rows[0] if rows else [], 'n': max(0, len(rows) - 1), 'head': rows[1:201]})
         st[i] = {'fid': fid, 'at': stamp(), 'file': disp, 'n': max(0, len(rows) - 1)}; ok += 1
-        print('받음', i, title[:30], disp, len(b), len(rows))
+        print('받음', i, title[:30], disp, len(b), len(rows)); tout = 0
     except Exception as e:
+        if 'timed out' in str(e): tout += 1   # 포털이 안 열리는 날: 예전 상태는 그대로 두고 오류만 적음
+        else: tout = 0
         st.setdefault(i, {})['err'] = str(e)[:160]; fail += 1; print('실패', i, e)
     time.sleep(1)
 jsave(STATE, st, indent=1)
@@ -85,4 +89,4 @@ for s in SETS:
 reg['summary'] = dict(collections.Counter(x.get('state', '?') for x in reg['items'].values()))
 jsave(os.path.join(DATA, 'apis.json'), reg, indent=1)
 nl = sum(1 for v in st.values() if isinstance(v, dict) and v.get('link'))
-status('files', fail == 0, f'파일데이터 {len(SETS)}종 · 새로 받음 {ok} · 그대로 {same} · 제공처 링크 {nl} · 실패 {fail}')
+status('files', fail == 0, f'파일데이터 {len(SETS)}종 · 새로 받음 {ok} · 그대로 {same} · 제공처 링크 {nl} · 실패 {fail}' + (' · 공공데이터포털 접속 시간 초과로 중단(예전 파일 그대로 씀)' if down else ''))
