@@ -37,43 +37,48 @@ def table(b, name):
             cols = list(arr[0].keys()); return [cols] + [[str(x.get(c, '')) for c in cols] for x in arr]
         return []
     return [r for r in csv.reader(io.StringIO(decode(b)))]
+def one(i, s):   # 한 종 처리 — 'link'·'same'·'ok' 를 돌려주고, 문제가 있으면 오류를 냄
+    page = f'https://www.data.go.kr/data/{i}/fileData.do'
+    h = fetch(page)[0].decode('utf-8', 'replace')
+    m = find_file(h, page, fetch)
+    t = re.search(r'<title>([^<|]*)', h); title = t.group(1).strip() if t else s.get('title', '')
+    upd = re.search(r'수정일</th>\s*<td[^>]*>\s*([\d-]+)', h)
+    if not m:
+        if '기관자체에서 다운로드' in h: st[i] = {'link': True, 'at': stamp(), 'title': title}; print('제공처 링크(로그인 필요)', i); return 'link'
+        raise RuntimeError('내려받기 주소 없음')
+    fid = m[0] + '_' + m[1]
+    if st.get(i, {}).get('fid') == fid and os.path.exists(os.path.join(PD, i + '.json')) and not env('FILES_FORCE'):
+        return 'same'
+    b, hd = fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m[0]}&fileDetailSn={m[1]}&insertDataPrcus=N', page)
+    disp = urllib.parse.unquote(re.sub(r'.*filename="?([^";]+)"?.*', r'\1', hd.get('Content-Disposition', '') or 'x.csv'))
+    ext = disp.rsplit('.', 1)[-1].lower() if '.' in disp else 'bin'
+    if ext == 'zip':
+        z = zipfile.ZipFile(io.BytesIO(b)); nm = max(z.namelist(), key=lambda n: z.getinfo(n).file_size); b = z.read(nm); disp = nm; ext = nm.rsplit('.', 1)[-1].lower()
+    rows = table(b, disp)
+    for f in os.listdir(PD):
+        if f.startswith(i + '.') and not f.endswith('.json'): os.remove(os.path.join(PD, f))
+    open(os.path.join(RAW, f'{i}.{ext}'), 'wb').write(b)
+    if len(b) <= 1024 * 1024: open(os.path.join(PD, f'{i}.{ext}'), 'wb').write(b)
+    jsave(os.path.join(PD, i + '.json'), {'id': i, 'key': s.get('key'), 'title': title, 'file': disp, 'size': len(b), 'updated': upd.group(1) if upd else '', 'at': stamp(),
+                                          'cols': rows[0] if rows else [], 'n': max(0, len(rows) - 1), 'head': rows[1:201]})
+    st[i] = {'fid': fid, 'at': stamp(), 'file': disp, 'n': max(0, len(rows) - 1)}
+    print('받음', i, title[:30], disp, len(b), len(rows)); return 'ok'
 ok = fail = same = 0
 T0 = time.time(); tout = 0; down = False   # tout: 잇따른 접속 시간 초과 수
 for s in SETS:
     i = s['id']
     if time.time() - T0 > 600: print('10분 넘어 나머지는 다음에'); break
     if tout >= 2: down = True; print('포털 접속이 2번 잇따라 시간 초과 — 나머지는 다음에'); break
-    try:
-        page = f'https://www.data.go.kr/data/{i}/fileData.do'
-        h = fetch(page)[0].decode('utf-8', 'replace')
-        m = find_file(h, page, fetch)
-        t = re.search(r'<title>([^<|]*)', h); title = t.group(1).strip() if t else s.get('title', '')
-        upd = re.search(r'수정일</th>\s*<td[^>]*>\s*([\d-]+)', h)
-        tout = 0
-        if not m:
-            if '기관자체에서 다운로드' in h: st[i] = {'link': True, 'at': stamp(), 'title': title}; print('제공처 링크(로그인 필요)', i); continue
-            raise RuntimeError('내려받기 주소 없음')
-        fid = m[0] + '_' + m[1]
-        if st.get(i, {}).get('fid') == fid and os.path.exists(os.path.join(PD, i + '.json')) and not env('FILES_FORCE'):
-            same += 1; continue
-        b, hd = fetch(f'https://www.data.go.kr/cmm/cmm/fileDownload.do?atchFileId={m[0]}&fileDetailSn={m[1]}&insertDataPrcus=N', page)
-        disp = urllib.parse.unquote(re.sub(r'.*filename="?([^";]+)"?.*', r'\1', hd.get('Content-Disposition', '') or 'x.csv'))
-        ext = disp.rsplit('.', 1)[-1].lower() if '.' in disp else 'bin'
-        if ext == 'zip':
-            z = zipfile.ZipFile(io.BytesIO(b)); nm = max(z.namelist(), key=lambda n: z.getinfo(n).file_size); b = z.read(nm); disp = nm; ext = nm.rsplit('.', 1)[-1].lower()
-        rows = table(b, disp)
-        for f in os.listdir(PD):
-            if f.startswith(i + '.') and not f.endswith('.json'): os.remove(os.path.join(PD, f))
-        open(os.path.join(RAW, f'{i}.{ext}'), 'wb').write(b)
-        if len(b) <= 1024 * 1024: open(os.path.join(PD, f'{i}.{ext}'), 'wb').write(b)
-        jsave(os.path.join(PD, i + '.json'), {'id': i, 'key': s.get('key'), 'title': title, 'file': disp, 'size': len(b), 'updated': upd.group(1) if upd else '', 'at': stamp(),
-                                              'cols': rows[0] if rows else [], 'n': max(0, len(rows) - 1), 'head': rows[1:201]})
-        st[i] = {'fid': fid, 'at': stamp(), 'file': disp, 'n': max(0, len(rows) - 1)}; ok += 1
-        print('받음', i, title[:30], disp, len(b), len(rows)); tout = 0
-    except Exception as e:
-        if 'timed out' in str(e): tout += 1   # 포털이 안 열리는 날: 예전 상태는 그대로 두고 오류만 적음
-        else: tout = 0
-        st.setdefault(i, {})['err'] = str(e)[:160]; fail += 1; print('실패', i, e)
+    for att in (0, 1):   # 접속 시간 초과 한 번은 5초 쉬고 다시 해 봄(한 번 끊긴 걸로 「실패」가 되지 않게)
+      try:
+        r = one(i, s)
+        if r == 'same': same += 1
+        elif r == 'ok': ok += 1
+        tout = 0; break
+      except Exception as e:
+        if 'timed out' in str(e) and att == 0: print('시간 초과, 다시 해 봄', i); time.sleep(5); continue
+        tout = 2 if 'timed out' in str(e) else 0   # 다시 해도 시간 초과면 포털이 안 열리는 날 → 다음 것에서 멈춤
+        st.setdefault(i, {})['err'] = str(e)[:160]; fail += 1; print('실패', i, e); break
     time.sleep(1)
 jsave(STATE, st, indent=1)
 # 연동 대장에 파일데이터도 올림
