@@ -26,6 +26,7 @@ def to_unit(addr):
     return None
 ADDR = re.compile(r'(addr|ADDR|Addr|adres|주소|LOTNO|ROAD_NM|sigun|SIGUN|sgg|SGG|ctpv|CTPV|area|AREA)')
 DATEP = re.compile(r'(ymd|YMD|Ymd|dt$|Dt$|DT$|de$|De$|DE$|date|Date|DATE|yyyymmdd|baseDate)')
+UNREG = re.compile(r'(NOT REGISTERED|등록되지 않은 서비스키)', re.I)   # 활용신청 전 키가 200 응답 안에 오류 부호로 오는 경우
 def items_of(raw):
     t = raw.lstrip()
     if t.startswith(b'{') or t.startswith(b'['):
@@ -133,7 +134,10 @@ for s in order:
       cnt.pop(None, None)
       jsave(os.path.join(PRIVATE, 'api', sid + '.json'), {'at': stamp(), 'rows': rows[:5000]})
       jsave(os.path.join(DATA, 'api', sid + '.json'), {'at': stamp(), 'title': s['title'], 'n': len(rows), 'fields': fields, 'by_unit': dict(cnt.most_common())})
-      ent.update({'state': '정상' if rows else '빈 응답', 'n': len(rows), 'at': stamp(), 'fields': len(fields), 'units': len(cnt), 'msg': (json.dumps(meta, ensure_ascii=False)[:120] if not rows else '')})
+      mtxt = json.dumps(meta, ensure_ascii=False) if not rows else ''
+      if not rows and UNREG.search(mtxt):   # 응답은 왔지만 「등록되지 않은 서비스키」 → 빈 자료가 아니라 활용신청 전
+        ent.update({'state': '활용신청 필요', 'n': 0, 'at': stamp(), 'msg': '공공데이터포털에서 이 연동창구 활용신청이 필요함(등록되지 않은 서비스키)'}); skip += 1; continue
+      ent.update({'state': '정상' if rows else '빈 응답', 'n': len(rows), 'at': stamp(), 'fields': len(fields), 'units': len(cnt), 'msg': mtxt[:120]})
       ok += 1
     except Exception as e:
         if '403' in str(e): ent.update({'state': '활용신청 필요', 'at': stamp(), 'msg': '공공데이터포털에서 이 연동창구 활용신청이 필요함'}); skip += 1

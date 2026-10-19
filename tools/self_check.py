@@ -45,7 +45,7 @@ if sc.get('n', 0) >= 10 and m['signal']['rate'] < 50: todo('보통', '신호 적
 # 3) 연동창구
 ap = jload(os.path.join(DATA, 'apis.json'), {'items': {}})
 c = collections.Counter(v.get('state') for v in ap['items'].values()); m['apis'] = dict(c)
-need = [[k, v['title']] for k, v in ap['items'].items() if v.get('state') == '활용신청 필요' or '403' in (v.get('msg') or '')]
+need = [[k, v['title']] for k, v in ap['items'].items() if v.get('state') == '활용신청 필요' or re.search(r'403|NOT REGISTERED|등록되지 않은 서비스키', v.get('msg') or '', re.I)]
 if need: todo('낮음', '활용신청 필요', f'공공데이터포털 활용신청이 안 된 연동창구 {len(need)}건', '대표가 할 일 목록으로 정리(콘솔 「자가 점검」에 표시)')
 m['apis_need_apply'] = need[:300]
 # 활용신청 우선순위 — 막힌 다른 수집을 풀어 주거나 유통업체가 돈 내고 볼 값·수급 자료부터(대표가 위에서부터 눌러 신청)
