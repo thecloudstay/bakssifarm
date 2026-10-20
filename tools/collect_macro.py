@@ -17,6 +17,9 @@ SERIES = [
     ('feeder',  '비육우 선물(시카고)',       '센트/파운드', 'GF=F',  'gf.f'),
     ('hog',     '돈육 선물(시카고)',         '센트/파운드', 'HE=F',  'he.f'),
     ('oil',     '서부텍사스유 선물',         '달러/배럴',   'CL=F',  'cl.f'),
+    ('diesel',  '경유·난방유 선물(뉴욕)',    '달러/갤런',   'HO=F',  'ho.f'),
+    ('brent',   '브렌트유 선물',             '달러/배럴',   'BZ=F',  'cb.f'),
+    ('natgas',  '천연가스 선물(미국)',       '달러/백만열량단위', 'NG=F', 'ng.f'),
     ('usdkrw',  '원/달러 환율',              '원',          'KRW=X', 'usdkrw'),
     ('freight', '건화물선 운임 대용 지표',   '달러',        'BDRY',  'bdry.us'),
 ]
@@ -73,5 +76,5 @@ for key, name, unit, ysym, ssym in SERIES:
         series[key] = dict(old['series'][key]); series[key]['stale'] = True
 jsave(P, {'at': stamp(), 'series': series})
 last = {k: v['d'][-1] for k, v in series.items() if v.get('d')}
-status('macro', ok >= 6, f'{ok}/{len(SERIES)}종 · ' + ' · '.join(f'{k} {v[0][5:]} {v[1]}' for k, v in list(last.items())[:4]) + (' · ' + '; '.join(msgs[:3]) if ok < len(SERIES) else ''))
+status('macro', ok >= 8, f'{ok}/{len(SERIES)}종 · ' + ' · '.join(f'{k} {v[0][5:]} {v[1]}' for k, v in list(last.items())[:4]) + (' · ' + '; '.join(msgs[:3]) if ok < len(SERIES) else ''))
 print('거시 지표', ok, '/', len(SERIES), msgs[:5])

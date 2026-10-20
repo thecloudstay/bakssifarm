@@ -478,6 +478,27 @@ def forecast_html():
             f'<tr><td class="{"bad" if a["level"] == "경보" else "wait"}">{E(a["level"])}</td><td>{E(a["title"])}<span class="mini"> {E(a.get("kind", ""))} · {E(a.get("date", ""))}</span></td><td class="mini">{E(a.get("react", ""))}</td></tr>' for a in al) + '</table>'
     else:
         b += '<p class="note">오늘은 기준을 넘은 급변이 없습니다.</p>'
+    secs = F.get('sectors') or []
+    if secs:
+        b += '<h2 id="sectors">농산·축산·수산 — 부문별 압력</h2><p class="mini">원가 쪽(해외 연료·환율·사료 원가, 국내 반영은 몇 주~몇 달 늦음)과 공급 쪽(국내 시세 신호·공식 관측)을 부문마다 나눠 봅니다. 「오름 쪽」은 값이 오를 압력이 크다는 뜻입니다.</p><div class="cards">'
+        def dcls(x): return 'bad' if x == '오름 쪽' else 'ok' if x == '내림 쪽' else ''
+        for sx in secs:
+            c = sx.get('cost') or {}
+            li = []
+            if c: li.append(f'<li>원가 압력 <b class="{dcls(c.get("dir"))}">{E(c.get("dir", ""))}</b> ({c.get("v", 0):+}%) — {E(" · ".join(c.get("why") or []))}</li>')
+            fp = sx.get('feed_pass')
+            if fp: li.append(f'<li>배합사료 전가 예상 {fp["exp"]:+}% (원가 지수 최근 3개월 평균 대 4~7개월 전 {fp["gap"]:+}%)</li>')
+            for t in sx.get('dom') or []: li.append(f'<li>{E(t)}</li>')
+            su = sx.get('supply')
+            if su and su.get('n'): li.append(f'<li>국내 시세 신호 {su["n"]}품목 중 오름 쪽 {su["up"]} · 내림 쪽 {su["down"]}</li>')
+            for n in sx.get('notes') or []:
+                li.append(f'<li><b class="{dcls(n.get("dir"))}">{E(n["item"])} {E(n.get("dir", ""))}</b> — {E(n["text"])} <span class="mini">({E(n["src"])})</span></li>')
+            b += f'<div class="card"><h3>{E(sx["sector"])}</h3><ul class="mini">' + ''.join(li) + '</ul>' + (f'<p class="mini">{E(sx["note"])}</p>' if sx.get('note') else '') + '</div>'
+        b += '</div>'
+        cm = F.get('common') or []
+        if cm:
+            b += '<p class="mini"><b>공통 요인</b> · ' + ' · '.join(f'{E(n["item"])} {E(n.get("dir", ""))}: {E(n["text"])} ({E(n["src"])})' for n in cm) + '</p>'
+        b += '<p class="mini">공식 관측·보도 메모는 확인한 것만 적고, 유효 기한이 지나면 자동으로 빠집니다.</p>'
     b += '<h2 id="decide">선매·매도 판단</h2><div class="cards">'
     for d in F.get('decisions') or []:
         cls = 'bad' if ('선매' in d['act'] or '늦추기 검토(값 오름' in d['act']) else 'ok' if ('늦추기' in d['act'] or '서두르기' in d['act']) else ''
@@ -525,7 +546,7 @@ def signal_page():
     S = BUYS; it = S.get('items') or []
     b = '<p class="crumb"><a href="/">박씨팜</a> › 예측·경보</p><h1 class="title">시장 예측·경보 — 미리 살까, 서둘러 팔까 <span class="tag">시험판</span></h1>'
     b += '<p class="lead">해외 곡물·축산 선물과 환율(거시)에 국내 경락가·위판·재고·반입량·수온(미시)을 묶어, 사료는 미리 사 둘지, 가축은 출하를 서두를지 늦출지, 원료는 사 둘지 미룰지를 근거·신뢰도와 함께 냅니다. 급변은 경보로 먼저 알리고, 모든 판단은 기록했다가 실제 값으로 채점해 그대로 공개합니다.</p>'
-    b += '<p class="toc"><a href="#alerts">경보</a> <a href="#decide">선매·매도</a> <a href="#feed">사료 원가</a> <a href="#macro">해외 선물</a> <a href="#micro">수산·농산</a> <a href="#track">적중 기록</a> <a href="#sea">수협 위판 신호</a></p>'
+    b += '<p class="toc"><a href="#alerts">경보</a> <a href="#sectors">농산·축산·수산</a> <a href="#decide">선매·매도</a> <a href="#feed">사료 원가</a> <a href="#macro">해외 선물</a> <a href="#micro">수산·농산</a> <a href="#track">적중 기록</a> <a href="#sea">수협 위판 신호</a></p>'
     b += forecast_html()
     b += '<h2 id="sea">수협 위판 — 다음 달 산지 값 방향</h2>'
     if not it:

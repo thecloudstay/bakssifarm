@@ -46,7 +46,7 @@ def adjust(k, d):
     mad = statistics.median(abs(x) for x in r) or 1e-6
     out = [list(d[0])]; v = d[0][1]
     for i, x in enumerate(r, 1):
-        if abs(x) > max(0.03, 7 * mad) and k not in ('oil', 'freight'):
+        if abs(x) > max(0.03, 7 * mad) and k not in ('oil', 'freight', 'diesel', 'brent', 'natgas'):
             ROLL[k] += 1; x = 0.0
         v *= math.exp(x); out.append([d[i][0], round(v, 4)])
     # 마지막 값을 실제 값에 맞춰 비율 이동(수준은 실제, 변화율은 보정)
@@ -206,6 +206,48 @@ def rate_of(js):
     sc = js.get('score') or {}; n = sc.get('n') or 0
     return {'n': n, 'hit': sc.get('hit') or 0, 'rate': round((sc.get('hit') or 0) / n * 100) if n else None}
 
+# ── 4-2. 부문별 흐름(농산·축산·수산) ─────────────────────────────
+#  원가 쪽(거시)과 공급 쪽(미시 신호·외부 전망 메모)을 부문마다 묶는다. 판단이 아니라 「어느 쪽 압력이 큰가」를 보여 준다.
+NOTES = [n for n in jload(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outlook_notes.json'), {}).get('notes', [])
+         if (n.get('until') or '9999') >= TODAY.isoformat()]
+def tile(k): return next((t for t in tiles if t['key'] == k), None)
+def chg_txt(k, nm, f='c60', lab='3개월'):
+    t = tile(k)
+    return (t[f], f'{nm} {lab} {t[f]:+}%') if t and t.get(f) is not None else (None, None)
+def cost_side(parts):
+    # parts: [(키, 이름, 비중)] — 3개월 변화의 가중 평균(국내 반영은 몇 주~몇 달 늦음)
+    tot = wsum = 0; why = []
+    for k, nm, w in parts:
+        v, txt = chg_txt(k, nm)
+        if v is None: continue
+        tot += v * w; wsum += w; why.append(txt)
+    if not wsum: return None
+    x = round(tot / wsum, 1)
+    return {'v': x, 'dir': '오름 쪽' if x >= 3 else '내림 쪽' if x <= -3 else '보합', 'why': why}
+def supply_side(js):
+    it = js.get('items') or []
+    up = sum(1 for i in it if i.get('dir') == '오름 쪽'); dn = sum(1 for i in it if i.get('dir') == '내림 쪽')
+    return {'n': len(it), 'up': up, 'down': dn}
+SEC = []
+# 축산: 사료 전가 압력 + 연료, 국내 경락가, 세계 축산 선물
+ls_cost = cost_side([('diesel', '경유 선물', 0.2), ('usdkrw', '원/달러', 0.3)])
+ls = {'sector': '축산', 'cost': ls_cost, 'feed_pass': PASS, 'dom': [], 'notes': [n for n in NOTES if n['sector'] == '축산']}
+for nm, sx in (('한우 거세', han_s), ('돼지 탕박', pig_s)):
+    if sx and sx.get('chg') is not None: ls['dom'].append(f'{nm} 최근 3거래일 {sx["chg"]:+}%' + (' (두수 적음)' if sx['thin'] else ''))
+for k, nm in (('hog', '세계 돼지 선물'), ('cattle', '세계 소 선물')):
+    v, txt = chg_txt(k, nm, 'c20', '1개월')
+    if txt: ls['dom'].append(txt + '(약한 참고)')
+SEC.append(ls)
+# 수산: 연료(경유)·환율(수입 수산물)·수온 위험 + 수협 위판 신호·재고
+fs_cost = cost_side([('diesel', '경유 선물', 0.6), ('brent', '브렌트유', 0.2), ('usdkrw', '원/달러', 0.2)])
+SEC.append({'sector': '수산', 'cost': fs_cost, 'supply': supply_side(BUY), 'notes': [n for n in NOTES if n['sector'] == '수산'],
+            'note': '수협 위판 품목 신호(오름 쪽·내림 쪽 품목 수)와 수온 예보를 함께 봅니다. 수입 수산물은 환율, 어선 원가는 경유 값이 좌우합니다.'})
+# 농산: 연료·비료 원료(천연가스)·환율 + 공영도매시장 신호
+cs_cost = cost_side([('diesel', '경유 선물', 0.4), ('natgas', '천연가스', 0.3), ('usdkrw', '원/달러', 0.3)])
+SEC.append({'sector': '농산', 'cost': cs_cost, 'supply': supply_side(CROP), 'notes': [n for n in NOTES if n['sector'] == '농산'],
+            'note': '채소·과일 값은 원가보다 날씨·반입 물량이 크게 좌우합니다. 원가 쪽은 시설 난방(경유·등유)·비료·운송비로 몇 달에 걸쳐 들어옵니다.'})
+COMMON = [n for n in NOTES if n['sector'] == '공통']
+
 # ── 5. 조기 경보 ────────────────────────────────────────────────
 A = PR['alert']; alerts = []
 REACT = {
@@ -214,6 +256,9 @@ REACT = {
     'wheat': '소맥 원가 변동 — 사료 원가와 밀가루 쓰는 가공 업체 원가 확인',
     'usdkrw': '환율 급변 — 수입 원료(옥수수·대두박·어분)와 수입 고기 원화 값이 함께 움직임. 수입 원료는 결제 시점 분산',
     'oil': '유가 급변 — 운송·난방(하우스·축사·어선) 원가 점검',
+    'brent': '국제 유가 급변 — 국내 경유·등유 값에 2~4주 뒤 반영, 어선 출어·하우스 난방 계획 점검',
+    'diesel': '경유 값 급변 — 어선 연료(면세유)·농기계·운송비 직격. 출어 횟수 조정, 연료 미리 확보 검토',
+    'natgas': '천연가스 급변 — 질소비료 원가와 시설 난방비에 시차를 두고 반영',
     'hog': '세계 돼지 시세 급변 — 수입 돼지고기 값과 국내 시세 영향 점검',
     'cattle': '세계 소 시세 급변 — 수입 소고기 값 영향 점검',
     'feeder': '세계 송아지(비육우) 시세 급변 — 수입 소고기 공급 전망 점검',
@@ -301,7 +346,7 @@ for d in decisions:
         d['weak'] = True; d['conf'] = '낮음'
 
 out = {'at': stamp(), 'tiles': tiles, 'feed': {'d': feed[-520:], 'stats': fst, 'w': PR['feed_w'], 'backtest': feed_bt},
-       'decisions': decisions, 'micro': micro, 'micro_track': {'수산': rate_of(BUY), '농산': rate_of(CROP)},
+       'decisions': decisions, 'sectors': SEC, 'common': COMMON, 'micro': micro, 'micro_track': {'수산': rate_of(BUY), '농산': rate_of(CROP)},
        'alerts': alerts, 'track': track, 'params': {'w': PR['w'], 'alert': PR['alert'], 'calib': (PR.get('calib_log') or [])[-5:]},
        'basis': '해외 선물·환율(야후 금융·스투크·미국 연준) × 축산물품질평가원 경락가 × 수협 위판·재고 × 공영도매시장 정산 × 수온 예보'}
 jsave(os.path.join(DATA, 'forecast.json'), out)

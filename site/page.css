@@ -94,3 +94,4 @@ table.t tr.ex td{color:var(--faint)}
 .cards .card h3{margin:2px 0 6px;font-size:17px}
 .cards .card ul{margin:8px 0;padding-left:18px}
 svg.chart{width:100%;height:auto;max-width:720px;display:block;margin:8px 0;background:var(--wash);border-radius:12px}
+.cards li b{display:inline;font-size:inherit} .cards li .mini{display:inline}
