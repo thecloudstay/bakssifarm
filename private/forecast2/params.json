@@ -1,8 +1,8 @@
 {
  "feed_w": {
-  "corn": 0.55,
-  "soymeal": 0.25,
-  "wheat": 0.2
+  "corn": 0.65,
+  "soymeal": 0.21,
+  "wheat": 0.14
  },
  "w": {
   "feed": 1.0,

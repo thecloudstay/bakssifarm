@@ -496,6 +496,9 @@ def forecast_html():
         b += f'<h2 id="feed">사료 원가 지수(원/㎏)</h2><p class="mini">시카고 옥수수 {int(w.get("corn", 0) * 100)}% · 대두박 {int(w.get("soymeal", 0) * 100)}% · 소맥 {int(w.get("wheat", 0) * 100)}% 가중 × 원/달러. 국내 배합사료 값은 이 원가를 몇 달 늦게, 덜 따라갑니다(근거: 예측 기법 검토).</p>'
         b += svg_line(fd['d'][-260:])
         b += f'<p class="mini">지금 {st.get("last", 0):,.0f}원/㎏ · 1개월 {st.get("c20") or 0:+}% · 3개월 {st.get("c60") or 0:+}% · 1년 {st.get("c250") or 0:+}% · 1년 범위 중 {st.get("pctl", "–")}% 위치</p>'
+        fdec = next((d for d in F.get('decisions', []) if d.get('id') == 'feed'), None)
+        if fdec and (fdec.get('expect') or {}).get('note'):
+            b += f'<p class="mini">{E(fdec["expect"]["note"])}</p>'
         bt = fd.get('backtest')
         if bt: b += f'<p class="mini">검증: 「{E(bt["rule"])}」 규칙은 지난 3년 {bt["n"]}번 중 {bt["hit"]}번({bt["rate"]}%) 맞아 기준선({bt["base_rate"]}%)과 차이가 없습니다 — 그래서 원가의 앞날을 맞히려 하지 않고, 이미 움직인 원가가 사료값에 늦게 반영되는 시차만 판단에 씁니다.</p>'
     b += '<h2 id="macro">해외 선물·환율·운임</h2><table class="t"><tr><th>지표</th><th class="num">마지막</th><th class="num">1주</th><th class="num">1개월</th><th class="num">3개월</th><th class="num">1년</th><th>흐름</th></tr>'

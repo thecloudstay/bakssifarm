@@ -17,8 +17,10 @@ FD = os.path.join(PRIVATE, 'forecast2'); os.makedirs(FD, exist_ok=True)
 PP = os.path.join(FD, 'params.json')
 TODAY = now().date()
 DEFAULT = {
-    # 배합사료 원료 비중(옥수수·대두박·소맥) — docs/예측기법_검토.md 근거로 조정
-    'feed_w': {'corn': 0.55, 'soymeal': 0.25, 'wheat': 0.20},
+    # 배합사료 원료 비중(옥수수 43.6·대두박 14.5·소맥 9.1 → 정규화) — docs/예측기법_검토.md 4번
+    'feed_w': {'corn': 0.65, 'soymeal': 0.21, 'wheat': 0.14},
+    # 전가: 국제 곡물값은 4~7개월 뒤 국내 사료값에 반영, 수입곡물 10% → 사료 물가 상승 5.4%·하락 4.8% (검토 문서 1·2번)
+    'pass': {'up': 0.54, 'down': 0.48, 'th': 3.0},
     # 판단 갈래별 가중치(0.2~1.0) — 채점 결과로 매주 조정
     'w': {'feed': 1.0, 'hanwoo': 0.6, 'pig': 0.6, 'macro_hog': 0.3, 'macro_cattle': 0.3},
     # 경보 기준
@@ -134,24 +136,38 @@ han_s = dom_signal(han, PR['alert']['price_min_heads']); pig_s = dom_signal(pig,
 def clip(x, a, b): return max(a, min(b, x))
 def conf_word(c): return '높음' if c >= 0.7 else '보통' if c >= 0.45 else '낮음'
 decisions = []
-if fst:
-    m60 = fst['c60'] or 0; m20 = fst['c20'] or 0
-    sc = clip(m60 / 5, -2, 2) * 0.6 + clip(m20 / 3, -1, 1) * 0.4
-    act = '선매·가격 고정 검토' if sc >= 0.8 else '구매 늦추기·분할 구매' if sc <= -0.8 else '관망(평소대로)'
-    why = [f'사료 원가 지수 3개월 {m60:+}% · 1개월 {m20:+}% (원료 선물 × 원/달러)']
+# 시차 전가 압력: 지금 국내 사료값에 이미 반영된 원가(4~7개월 전 평균) 대비 아직 반영 안 된 원가(최근 3개월 평균)
+#  → 앞으로 1~4개월 국내 배합사료 예상 변화 = 차이 × 전가율(오름 0.54 / 내림 0.48)
+def month_avg(fd):
+    m = collections.defaultdict(list)
+    for d, v in fd: m[d[:7]].append(v)
+    return [(k, statistics.mean(v)) for k, v in sorted(m.items())]
+def pass_pressure(fd):
+    ma = month_avg(fd)
+    if len(ma) < 8: return None
+    vals = [v for _, v in ma]
+    recent = statistics.mean(vals[-3:]); done = statistics.mean(vals[-8:-4])
+    gap = (recent / done - 1) * 100
+    P = PR['pass']; exp = gap * (P['up'] if gap > 0 else P['down'])
+    return {'gap': round(gap, 1), 'exp': round(exp, 1), 'recent_m': [k for k, _ in ma[-3:]], 'done_m': [k for k, _ in ma[-8:-4]]}
+PASS = pass_pressure(feed) if feed else None
+if fst and PASS:
+    m60 = fst['c60'] or 0; m20 = fst['c20'] or 0; th = PR['pass']['th']
+    sc = clip(PASS['exp'] / th, -2, 2)
+    act = '선매·가격 고정 검토' if PASS['exp'] >= th else '구매 늦추기·분할 구매' if PASS['exp'] <= -th else '관망(평소대로)'
+    why = [f'원가 지수 최근 3개월 평균이 4~7개월 전 평균보다 {PASS["gap"]:+}% → 국내 배합사료 예상 {PASS["exp"]:+}% (전가율 반영)',
+           f'사료 원가 지수 3개월 {m60:+}% · 1개월 {m20:+}% (원료 선물 × 원/달러)']
     fxs = next((t for t in tiles if t['key'] == 'usdkrw'), None)
     if fxs and fxs.get('c20') is not None: why.append(f'원/달러 1개월 {fxs["c20"]:+}%')
     for k, nm in (('corn', '옥수수'), ('soymeal', '대두박'), ('wheat', '소맥')):
         t = next((t for t in tiles if t['key'] == k), None)
         if t and t.get('c60') is not None: why.append(f'{nm} 3개월 {t["c60"]:+}%')
-    reli = 0.5
-    if feed_bt and feed_bt['rate'] is not None:
-        edge = feed_bt['rate'] - feed_bt['base_rate']
-        reli = clip(0.5 + edge / 40, 0.2, 0.85)
+    # 신뢰도: 시차·전가율은 국내 연구 근거가 있으나 국내 실제 배합사료값으로 아직 채점 전 → 「보통」을 넘지 않게 묶음
+    reli = 0.55
     c = clip(abs(sc) / 2, 0, 1) * reli * PR['w']['feed'] + (1 - reli) * 0.1
     decisions.append({'id': 'feed', 'who': '농가·사료 구매', 'item': '배합사료', 'act': act, 'score': round(sc, 2), 'conf': conf_word(c), 'c': round(c, 2),
-                      'horizon': '앞으로 1~3개월(국내 사료값은 원료 선물보다 몇 달 늦게 따라감)', 'why': why,
-                      'expect': {'m60': m60, 'note': '원가 지수 변화가 그대로 사료값이 되지는 않습니다. 원료 비중·재고·업체 가격 정책에 따라 늦게, 덜 움직입니다.'},
+                      'horizon': '앞으로 1~4개월(국제 원료값은 4~7개월 뒤 국내 사료값에 반영)', 'why': why,
+                      'expect': {'m60': m60, 'pass': PASS, 'note': '근거: 국제 곡물값은 4~7개월 뒤 국내에 반영되고, 수입곡물 10% 변동이 사료 물가를 4.8~5.4% 움직입니다(한국농촌경제연구원·농촌경제 2020). 업체 재고·가격 정책에 따라 어긋날 수 있습니다.'},
                       'track': feed_bt})
 def live_decision(did, item, s, macro_key, wkey, season_note):
     if not s: return None
