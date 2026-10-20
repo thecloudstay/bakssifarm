@@ -1,27 +1,27 @@
 {
- "built": "2026-10-20 07:28",
+ "built": "2026-10-20 23:14",
  "counts": {
   "pages": 181
  },
  "collectors": {
   "pages": {
    "ok": true,
-   "at": "2026-10-20 07:28",
+   "at": "2026-10-20 23:14",
    "msg": "181쪽"
   },
   "signals_sea": {
-   "ok": true,
-   "at": "2026-10-20 07:28",
-   "msg": "관측소 21곳 · 수온 신호 0건"
+   "ok": false,
+   "at": "2026-10-20 23:16",
+   "msg": "<urlopen error Tunnel connection failed: 403 Forbidden>"
   },
   "signals_price": {
    "ok": true,
-   "at": "2026-10-20 07:28",
+   "at": "2026-10-20 23:16",
    "msg": "8일치 비교"
   },
   "signals_disease": {
    "ok": null,
-   "at": "2026-10-20 07:28",
+   "at": "2026-10-20 23:16",
    "msg": "열쇠 없음(SAFETYDATA_KEY)"
   },
   "ekape_price": {
@@ -98,9 +98,15 @@
    "ok": true,
    "at": "2026-10-20 23:11",
    "msg": "10/10종 · corn 10-20 464.0 · soymeal 10-20 351.4 · soy 10-20 1253.75 · wheat 10-20 655.5"
+  },
+  "forecast": {
+   "ok": true,
+   "at": "2026-10-20 23:13",
+   "msg": "지표 10 · 판단 3 · 경보 4(경보 2) · 채점 0건 · 사료 원가 검증 24%(기준선 27%)"
   }
  },
  "keys": {
-  "data_go_kr": true
+  "data_go_kr": true,
+  "telegram": false
  }
 }

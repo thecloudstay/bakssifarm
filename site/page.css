@@ -83,3 +83,14 @@ table.t tr.ex td{color:var(--faint)}
 .form.calc{align-self:start}
 #cab label{display:block;margin:8px 0 10px;font-size:14px;color:var(--mute)}
 #cab select{display:block;width:100%;height:42px;margin-top:6px;padding:0 10px;border:1px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:inherit}
+/* 예측·경보 (2026-10-20) */
+.alertbar{display:block;margin:0 0 16px;padding:10px 14px;border-radius:12px;font-size:14px;text-decoration:none!important;color:var(--ink)!important;border:1px solid var(--line)}
+.alertbar b{margin-right:6px}
+.alertbar.alarm{background:#fbeceb;border-color:#e7b9b3}
+.alertbar.alarm b{color:var(--brick)}
+.alertbar.warn{background:#fbf5e6;border-color:#ead9a8}
+.alertbar.warn b{color:var(--grain)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin:10px 0 6px}
+.cards .card h3{margin:2px 0 6px;font-size:17px}
+.cards .card ul{margin:8px 0;padding-left:18px}
+svg.chart{width:100%;height:auto;max-width:720px;display:block;margin:8px 0;background:var(--wash);border-radius:12px}

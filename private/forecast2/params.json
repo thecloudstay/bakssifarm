@@ -1,0 +1,30 @@
+{
+ "feed_w": {
+  "corn": 0.55,
+  "soymeal": 0.25,
+  "wheat": 0.2
+ },
+ "w": {
+  "feed": 1.0,
+  "hanwoo": 0.6,
+  "pig": 0.6,
+  "macro_hog": 0.3,
+  "macro_cattle": 0.3
+ },
+ "alert": {
+  "day_z_warn": 2.5,
+  "day_z_alarm": 3.5,
+  "m20_warn": 8.0,
+  "m20_alarm": 15.0,
+  "fx5_warn": 2.0,
+  "fx5_alarm": 3.5,
+  "price_min_heads": 20,
+  "price_dev_warn": 7.0,
+  "price_dev_alarm": 12.0
+ },
+ "horizon": {
+  "feed": 60,
+  "livestock": 10
+ },
+ "calib_log": []
+}

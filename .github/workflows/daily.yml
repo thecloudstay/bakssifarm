@@ -63,6 +63,12 @@ jobs:
       - name: 농산물 구매 신호·도매시장 간 값 차이
         run: python tools/build_crop_signal.py
         continue-on-error: true
+      - name: 거시 지표(해외 곡물·축산 선물·환율·유가·운임, 열쇠 불필요)
+        run: python tools/collect_macro.py
+        continue-on-error: true
+      - name: 시장 예측·경보(선매·매도 판단, 기록·채점·주간 보정)
+        run: python tools/build_forecast.py
+        continue-on-error: true
       - name: 화면 미리 만들기(자가 점검이 저장소의 옛 화면 대신 오늘 화면을 재도록)
         run: python tools/build_pages.py
         continue-on-error: true

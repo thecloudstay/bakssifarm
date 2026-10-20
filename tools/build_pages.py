@@ -18,7 +18,7 @@ def J(p, default=None):
     if not os.path.exists(fp): return default
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
-PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {}); OPPS = J('opps.json', {}); CROPS = J('cropsignal.json', {})
+PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {}); OPPS = J('opps.json', {}); CROPS = J('cropsignal.json', {}); FC = J('forecast.json', {})
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -53,7 +53,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/risk/', '위험 예보'), ('/signal/', '구매 신호'), ('/opps/', '수급 기회'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '지도'), ('/price/', '경락가'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/calc/', '수익 계산'), ('/sheet/', '시세 한 장'), ('/risk/', '위험 예보'), ('/signal/', '예측·경보'), ('/opps/', '수급 기회'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
@@ -89,6 +89,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
   <nav class="modes pagenav" aria-label="화면">{nav}</nav>
 </header>
 <main class="wrap">
+{alert_bar(path)}
 {body}
 {FORM_JS % (json.dumps(FORM_ENDPOINT), PREFIX)}
 <footer class="foot">
@@ -447,10 +448,83 @@ def risk_page():
     write('/risk/', shell('/risk/', '수급 위험 예보 — 양식 폐사·가축 더위 위험과 값 움직임 7일 | 박씨팜', '7일 바다 수온·기온·습도 예보로 양식 품종별 폐사 위험 해역, 가축 더위·추위 위험 시군과 노출 두수를 매기고 위판 값·수산 재고와 함께 보여 줍니다.', b, '/og/price.png'), '0.8')
 
 # ── 구매 신호(시험판) — 유통·가공·급식 업체용 「사 둘까, 미룰까」
+
+def alert_bar(path=''):
+    al = (FC.get('alerts') or [])
+    if not al or path == '/signal/': return ''
+    n2 = sum(1 for a in al if a['level'] == '경보'); top = al[0]
+    cls = 'alarm' if n2 else 'warn'
+    return f'<a class="alertbar {cls}" href="/signal/#alerts"><b>{"경보" if n2 else "주의"} {len(al)}건</b> {E(top["title"])} — 사전 대응 보기 →</a>'
+def svg_line(pts, w=640, h=170, pad=26, color='var(--moss)'):
+    if len(pts) < 2: return ''
+    vs = [p[1] for p in pts]; lo, hi = min(vs), max(vs); rng = (hi - lo) or 1
+    X = lambda i: pad + (w - 2 * pad) * i / (len(pts) - 1); Y = lambda v: h - pad - (h - 2 * pad) * (v - lo) / rng
+    d = 'M' + ' L'.join(f'{X(i):.1f},{Y(v):.1f}' for i, v in enumerate(vs))
+    ticks = [0, len(pts) // 2, len(pts) - 1]
+    lab = ''.join(f'<text x="{X(i):.0f}" y="{h - 6}" font-size="11" text-anchor="middle" fill="var(--faint)">{pts[i][0][2:7].replace("-", ".")}</text>' for i in ticks)
+    yl = f'<text x="4" y="{Y(hi) + 4:.0f}" font-size="11" fill="var(--faint)">{hi:,.0f}</text><text x="4" y="{Y(lo) + 4:.0f}" font-size="11" fill="var(--faint)">{lo:,.0f}</text>'
+    return f'<svg viewBox="0 0 {w} {h}" class="chart" role="img" aria-label="추이 그래프"><path d="{d}" fill="none" stroke="{color}" stroke-width="2"/><circle cx="{X(len(vs) - 1):.1f}" cy="{Y(vs[-1]):.1f}" r="3.5" fill="{color}"/>{lab}{yl}</svg>'
+def pct_cell(v):
+    if v is None: return '<td class="num">–</td>'
+    return f'<td class="num {"bad" if v > 0 else "ok" if v < 0 else ""}">{v:+.1f}%</td>'
+def forecast_html():
+    F = FC
+    if not F.get('tiles'): return '<p class="note">해외 선물·환율을 받는 중입니다. 다음 아침 작업부터 예측·경보가 이 자리에 뜹니다.</p>'
+    b = ''
+    al = F.get('alerts') or []
+    b += '<h2 id="alerts">오늘 경보와 사전 대응</h2>'
+    if al:
+        b += '<table class="t"><tr><th>단계</th><th>무엇이</th><th>미리 할 일</th></tr>' + ''.join(
+            f'<tr><td class="{"bad" if a["level"] == "경보" else "wait"}">{E(a["level"])}</td><td>{E(a["title"])}<span class="mini"> {E(a.get("kind", ""))} · {E(a.get("date", ""))}</span></td><td class="mini">{E(a.get("react", ""))}</td></tr>' for a in al) + '</table>'
+    else:
+        b += '<p class="note">오늘은 기준을 넘은 급변이 없습니다.</p>'
+    b += '<h2 id="decide">선매·매도 판단</h2><div class="cards">'
+    for d in F.get('decisions') or []:
+        cls = 'bad' if ('선매' in d['act'] or '늦추기 검토(값 오름' in d['act']) else 'ok' if ('늦추기' in d['act'] or '서두르기' in d['act']) else ''
+        tr = d.get('track') or d.get('live_track')
+        trs = ''
+        if d.get('live_track'): t = d['live_track']; trs = f'실제 채점 {t["n"]}건 · 적중 {t["rate"]}% (기준선 {t["base_rate"]}%)'
+        elif d['id'] == 'feed': trs = '사료값 실제 채점은 배합사료 가격 자료가 붙으면 시작(지금은 연구 근거의 시차 규칙)'
+        else: trs = f'채점 대기 — 판단 기록 후 10거래일 뒤 자동 채점'
+        b += (f'<div class="card"><p class="mini">{E(d["who"])} · {E(d["horizon"])}</p><h3>{E(d["item"])}</h3>'
+              f'<p class="{cls}" style="font-size:17px">{E(d["act"])}</p><p class="mini">신뢰도 {E(d["conf"])}{" · 참고용(기준선보다 못함)" if d.get("weak") else ""} · 점수 {d["score"]:+}</p>'
+              f'<ul class="mini">' + ''.join(f'<li>{E(w)}</li>' for w in d['why']) + f'</ul><p class="mini">{E(trs)}</p></div>')
+    b += '</div>'
+    fd = (F.get('feed') or {}); st = fd.get('stats') or {}
+    if fd.get('d'):
+        w = fd.get('w') or {}
+        b += f'<h2 id="feed">사료 원가 지수(원/㎏)</h2><p class="mini">시카고 옥수수 {int(w.get("corn", 0) * 100)}% · 대두박 {int(w.get("soymeal", 0) * 100)}% · 소맥 {int(w.get("wheat", 0) * 100)}% 가중 × 원/달러. 국내 배합사료 값은 이 원가를 몇 달 늦게, 덜 따라갑니다(근거: 예측 기법 검토).</p>'
+        b += svg_line(fd['d'][-260:])
+        b += f'<p class="mini">지금 {st.get("last", 0):,.0f}원/㎏ · 1개월 {st.get("c20") or 0:+}% · 3개월 {st.get("c60") or 0:+}% · 1년 {st.get("c250") or 0:+}% · 1년 범위 중 {st.get("pctl", "–")}% 위치</p>'
+        bt = fd.get('backtest')
+        if bt: b += f'<p class="mini">검증: 「{E(bt["rule"])}」 규칙은 지난 3년 {bt["n"]}번 중 {bt["hit"]}번({bt["rate"]}%) 맞아 기준선({bt["base_rate"]}%)과 차이가 없습니다 — 그래서 원가의 앞날을 맞히려 하지 않고, 이미 움직인 원가가 사료값에 늦게 반영되는 시차만 판단에 씁니다.</p>'
+    b += '<h2 id="macro">해외 선물·환율·운임</h2><table class="t"><tr><th>지표</th><th class="num">마지막</th><th class="num">1주</th><th class="num">1개월</th><th class="num">3개월</th><th class="num">1년</th><th>흐름</th></tr>'
+    for t in F['tiles']:
+        b += f'<tr><td>{E(t["name"])}<span class="mini"> {E(t["unit"])}{" · 만기 이월 보정" if t.get("rolls") else ""}</span></td><td class="num">{t["last"]:,}</td>{pct_cell(t.get("c5"))}{pct_cell(t.get("c20"))}{pct_cell(t.get("c60"))}{pct_cell(t.get("c250"))}<td>{E(t["trend"])}</td></tr>'
+    b += f'</table><p class="mini">자료: {E(", ".join(sorted(set(t["src"] for t in F["tiles"]))))} 하루 한 번 종가 · 기준 {E(F.get("at", ""))}</p>'
+    mi = F.get('micro') or []
+    if mi:
+        b += '<h2 id="micro">수산·농산 — 사 둘까, 미룰까</h2><table class="t"><tr><th>갈래</th><th>품목</th><th>방향</th><th>근거</th></tr>' + ''.join(
+            f'<tr><td>{E(m["kind"])}</td><td>{E(m["item"])}</td><td class="{"bad" if m["dir"] == "오름 쪽" else "ok"}">{E(m["dir"])} · {E(m["act"])}</td><td class="mini">{E(" · ".join(m["why"]))}</td></tr>' for m in mi) + '</table>'
+    tk = F.get('micro_track') or {}
+    rows = []
+    for k, v in (F.get('track') or {}).items(): rows.append((({'feed': '사료 원가', 'hanwoo': '한우 출하', 'pig': '돼지 출하'}).get(k, k), v['n'], f'{v["rate"]}%', f'{v["base_rate"]}%'))
+    for k, v in tk.items():
+        if v.get('n'): rows.append((k + ' 구매 신호', v['n'], f'{v["rate"]}%', '–'))
+    b += '<h2 id="track">적중 기록 — 숨기지 않고 공개</h2>'
+    b += ('<table class="t"><tr><th>갈래</th><th class="num">채점</th><th class="num">적중</th><th class="num">기준선(보합)</th></tr>' + ''.join(f'<tr><td>{E(r[0])}</td><td class="num">{r[1]}</td><td class="num">{r[2]}</td><td class="num">{r[3]}</td></tr>' for r in rows) + '</table>') if rows else '<p class="mini">채점이 쌓이는 중입니다.</p>'
+    b += '<p class="mini">모든 판단은 그날 기록해 두고 기한(사료 60거래일·출하 10거래일)이 오면 실제 값으로 자동 채점합니다. 기준선은 「값이 그대로」라고 찍었을 때의 적중률입니다. 20건 넘게 채점됐는데 기준선보다 못한 갈래는 「참고용」으로 낮추고, 매주 월요일 가중치를 정해진 범위(0.2~1.0) 안에서 스스로 조정합니다.</p>'
+    cal = (F.get('params') or {}).get('calib') or []
+    if cal: b += '<p class="mini">최근 자가 조정: ' + E(' / '.join(f'{c["date"]} ' + ', '.join(c['changes']) for c in cal[-3:])) + '</p>'
+    return b
+
 def signal_page():
     S = BUYS; it = S.get('items') or []
-    b = '<p class="crumb"><a href="/">박씨팜</a> › 구매 신호</p><h1 class="title">구매 신호 — 사 둘까, 미룰까 <span class="tag">시험판</span></h1>'
-    b += '<p class="lead">품목마다 다음 달 산지 값이 오를 쪽인지 내릴 쪽인지를 근거와 함께 냅니다. 오를 쪽이면 미리 사 두거나 재고를 늘리고, 내릴 쪽이면 구매를 미루는 판단에 씁니다. 신호는 달마다 기록해 두고 다음 달 실제 값으로 자동 채점해 적중률을 그대로 공개합니다.</p>'
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 예측·경보</p><h1 class="title">시장 예측·경보 — 미리 살까, 서둘러 팔까 <span class="tag">시험판</span></h1>'
+    b += '<p class="lead">해외 곡물·축산 선물과 환율(거시)에 국내 경락가·위판·재고·반입량·수온(미시)을 묶어, 사료는 미리 사 둘지, 가축은 출하를 서두를지 늦출지, 원료는 사 둘지 미룰지를 근거·신뢰도와 함께 냅니다. 급변은 경보로 먼저 알리고, 모든 판단은 기록했다가 실제 값으로 채점해 그대로 공개합니다.</p>'
+    b += '<p class="toc"><a href="#alerts">경보</a> <a href="#decide">선매·매도</a> <a href="#feed">사료 원가</a> <a href="#macro">해외 선물</a> <a href="#micro">수산·농산</a> <a href="#track">적중 기록</a> <a href="#sea">수협 위판 신호</a></p>'
+    b += forecast_html()
+    b += '<h2 id="sea">수협 위판 — 다음 달 산지 값 방향</h2>'
     if not it:
         b += '<p>첫 신호를 만드는 중입니다.</p>'
     else:
@@ -484,7 +558,7 @@ def signal_page():
     b += '<p class="mini">이 신호는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않습니다.</p>'
     b += '<p><a href="/opps/">싸게 사는 산지 · 넘치는 품목 · 마르는 품목 · 어족 동향 보기 →</a></p>'
     b += '<h2>업체용</h2><p>품목·지역을 골라 매주 받는 구독(급식·식자재 유통·수산 가공·횟집 묶음)과, 우리 회사 구매 품목만 따로 보는 신호표를 준비하고 있습니다. <a href="/pro/">업체 등록에서 「시세 한 장 구독」 →</a></p>'
-    write('/signal/', shell('/signal/', '구매 신호 — 품목별 산지 값 방향과 적중 기록(시험판) | 박씨팜', '수협 위판 값·창고 재고·폐사 위험 예보로 품목별 다음 달 산지 값이 오를 쪽인지 내릴 쪽인지 근거와 함께. 신호는 다음 달 실제 값으로 자동 채점해 공개.', b, '/og/price.png'), '0.8')
+    write('/signal/', shell('/signal/', '시장 예측·경보 — 사료 선매·출하 매도 판단과 적중 기록 | 박씨팜', '시카고 옥수수·대두박 선물과 환율로 만든 사료 원가 지수, 한우·돼지 출하 판단, 수산·농산 값 방향, 급변 조기 경보와 사전 대응. 모든 판단은 자동 채점해 공개.', b, '/og/price.png'), '0.8')
 
 # ── 수급 기회 — 수요·공급이 어긋나는 곳을 유통업체용 추천으로
 def opps_page():

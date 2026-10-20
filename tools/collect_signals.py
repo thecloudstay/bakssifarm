@@ -56,11 +56,13 @@ try:
         last = hist[-1]; prev = hist[:-1]
         for sec in last.get('ekape', []):
             for r in sec['rows']:
+                # 2026-10-20 두수가 적은 등급(예: 4두)은 한두 마리 값에 휘둘려 헛경보가 난다 → 20두 미만은 건너뜀
+                if (r.get('n') or 0) < 20: continue
                 ps = [x['p'] for h in prev for s2 in h.get('ekape', []) if s2['title'] == sec['title'] for x in s2['rows'] if x['g'] == r['g']]
                 if len(ps) < 2: continue
                 m = statistics.median(ps); ch = r['p'] / m - 1
                 if abs(ch) >= 0.05:
-                    items.append({'date': last.get('date', today.isoformat()), 'level': '경보' if abs(ch) >= 0.1 else '주의', 'kind': '가격 급등' if ch > 0 else '가격 급락', 'title': f'{sec["title"]} {r["g"]} {r["p"]:,}원/㎏ ({ch * 100:+.1f}%)', 'body': f'직전 {len(ps)}거래일 중위값 {m:,.0f}원 대비. 출하 시점을 다시 보세요.', 'area': '전국', 'src': '축산물품질평가원 등급별 경락가'})
+                    items.append({'date': last.get('date', today.isoformat()), 'level': '경보' if abs(ch) >= 0.1 else '주의', 'kind': '가격 급등' if ch > 0 else '가격 급락', 'title': f'{sec["title"]} {r["g"]} {r["p"]:,}원/㎏ ({ch * 100:+.1f}%)', 'body': f'직전 {len(ps)}거래일 중위값 {m:,.0f}원 대비({r.get("n")}두). 출하 시점을 다시 보세요.', 'area': '전국', 'src': '축산물품질평가원 등급별 경락가'})
         status('signals_price', True, f'{len(files)}일치 비교')
     else:
         status('signals_price', None, '경락가 이력 3일 미만')

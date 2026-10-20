@@ -18,6 +18,11 @@ if price.get('ekape'):
         lines.append(f'{sec["title"]}({price.get("date", "")}): ' + ' · '.join(f'{r["g"]} {r["p"]:,}' + (f'({r["d"]:+,})' if r.get('d') is not None else '') for r in top))
 sig = jload(os.path.join(DATA, 'signals.json'), {}).get('items', [])
 if sig: lines.append('⚠️ 이상 신호 ' + str(len(sig)) + '건: ' + ' · '.join(f'{i["kind"]} {i["title"]}' for i in sig[:4]))
+fc = jload(os.path.join(DATA, 'forecast.json'), {})
+al = [a for a in fc.get('alerts', []) if a.get('level') == '경보']
+if al: lines.append('🚨 시장 경보 ' + str(len(al)) + '건: ' + ' · '.join(a.get('title', '') for a in al[:3]))
+dec = [d for d in fc.get('decisions', []) if '관망' not in d.get('act', '')]
+if dec: lines.append('판단: ' + ' · '.join(f'{d.get("item", "")} {d.get("act", "")}' for d in dec[:3]) + ' — https://thecloudstay.github.io/bakssifarm/signal/')
 items = gongu.get('items', [])
 if items:
     lines.append(f'공동구매 모집 {len(items)}건: ' + ' · '.join(f'{i["id"]} {i["item"]} {i["area"]} {i["status"]}' for i in items[:3]))
