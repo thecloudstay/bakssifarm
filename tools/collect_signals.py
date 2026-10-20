@@ -8,6 +8,11 @@ today = now().date()
 # 1) 수온 — 해루낚이 매시간 올리는 국립해양조사원 조위관측소 실측(수온 tw)
 try:
     obs = json.loads(get('https://haerunak.com/data/obs.json'))
+    # 2026-10-21 해루낚이 매시간 파일을 새로 올리는 틈에 받으면 관측소가 0곳으로 옴(10월 14·21일) → 1분 간격으로 두 번 더 받아 봄
+    import time
+    for _ in range(2):
+        if obs.get('s'): break
+        time.sleep(60); obs = json.loads(get('https://haerunak.com/data/obs.json'))
     sts = {s['code']: s for s in json.loads(get('https://haerunak.com/data/tide-stations.json'))['stations']}
     units = json.load(open(os.path.join(DATA, 'units.json'), encoding='utf-8'))
     # 시군 중심(경계 상자 가운데)으로 가장 가까운 시군 찾기
