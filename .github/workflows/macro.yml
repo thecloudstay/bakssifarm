@@ -1,0 +1,25 @@
+# 거시 지표·예측만 빠르게 다시 돌리기(손으로 실행) — 아침 작업을 기다리지 않고 선물·환율·예측을 새로 받을 때
+name: 거시 지표와 예측
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: daily
+jobs:
+  macro:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: 거시 지표(선물·환율·운임)
+        run: python tools/collect_macro.py
+      - name: 예측·선매/매도·경보
+        run: '[ -f tools/build_forecast.py ] && python tools/build_forecast.py || echo 예측 엔진 아직 없음'
+      - name: 저장소에 기록
+        run: |
+          git config user.name "박씨팜 아침 작업"
+          git config user.email "bot@bakssifarm.local"
+          git add -A site/data private || true
+          git commit -m "거시 지표·예측 $(TZ=Asia/Seoul date +%F' '%H:%M)" || exit 0
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done
