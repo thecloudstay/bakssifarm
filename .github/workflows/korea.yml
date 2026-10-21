@@ -86,7 +86,8 @@ jobs:
       - name: 국내 수집분만 덮어쓰기
         run: |
           set -e
-          for p in site/data/price site/data/biz site/data/api site/data/origin.json site/data/trade.json site/data/apis.json private/origin private/license private/api private/wholesale tools/whsl_markets.json; do
+          # 경락가(price/latest.json·abattoir.json·history)는 아침 작업이 만드므로 덮지 않는다(국내 실행기의 옛 사본이 새 값을 하루 전으로 되돌리던 문제)
+          for p in site/data/price/wholesale.json site/data/biz site/data/api site/data/origin.json site/data/trade.json site/data/apis.json private/origin private/license private/api private/wholesale tools/whsl_markets.json; do
             if [ -e "_korea/$p" ]; then mkdir -p "$(dirname "$p")"; rm -rf "$p"; cp -r "_korea/$p" "$p"; fi
           done
           # 상태판은 국내 수집기 항목만 옮김
