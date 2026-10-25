@@ -30,6 +30,9 @@ for k in ('center', 'coop'):
     for it in (SS.get(k) or {}).get('items', []):
         if it[3] is not None and it[1] >= 5000 and abs(it[3]) <= 300: stock[base(it[0])].append((k, it[3], it[2]))   # 달 초 재고가 아주 적으면 % 가 튀므로 뺌
 risk = {base(s['sp']): s['lv'] for s in RK.get('species', [])}
+# 2026-10-26 자가 개선: 8월 신호 채점(9월 값)에서 근거별 적중 — 달 후반 흐름 26건 중 19건(73%), 창고 재고 7건 중 2건(29%).
+# 달 후반 흐름 무게 0.5로는 혼자 신호가 안 돼 보합이 31건(적중 4)이었음 → 무게 1로 올림(한 가지 기준만). 2주 뒤 10월 값 채점으로 검증.
+TW = 1.0; RULE = '달 후반 흐름 무게 1 · 2026-10-26'
 items = []
 for b, x in sorted(g.items(), key=lambda kv: -kv[1]['amt'])[:40]:
     if x['kg'] <= 0: continue
@@ -43,8 +46,8 @@ for b, x in sorted(g.items(), key=lambda kv: -kv[1]['amt'])[:40]:
         if stc <= -15: sc += 1; why.append(f'창고 재고 {stc:+}%(물량 빠듯)')
         elif stc >= 15: sc -= 1; why.append(f'창고 재고 {stc:+}%(물량 쌓임)')
     if trend is not None:
-        if trend >= 5: sc += 0.5; why.append(f'달 후반 값 {trend:+}%')
-        elif trend <= -5: sc -= 0.5; why.append(f'달 후반 값 {trend:+}%')
+        if trend >= 5: sc += TW; why.append(f'달 후반 값 {trend:+}%')
+        elif trend <= -5: sc -= TW; why.append(f'달 후반 값 {trend:+}%')
     if mom is not None:
         if mom >= 10: sc += 0.5; why.append(f'앞달 대비 {mom:+}%')
         elif mom <= -10: sc -= 0.5; why.append(f'앞달 대비 {mom:+}%')
@@ -56,11 +59,16 @@ for b, x in sorted(g.items(), key=lambda kv: -kv[1]['amt'])[:40]:
     items.append({'item': b, 'names': x['names'][:4], 'wonkg': wonkg, 'amt': x['amt'], 'trend': trend, 'mom': mom, 'stock': stc, 'risk': rl, 'score': sc, 'dir': d, 'act': act, 'why': why})
 # 예측 기록(자료 달 기준 한 번) + 채점
 fp = os.path.join(FD, month + '.json')
+rec = {'made': stamp(), 'month': month, 'rule': RULE, 'items': [{k: i[k] for k in ('item', 'wonkg', 'dir', 'score')} for i in items]}
 if not os.path.exists(fp):
-    jsave(fp, {'made': stamp(), 'month': month, 'items': [{k: i[k] for k in ('item', 'wonkg', 'dir', 'score')} for i in items]})
-score = {'months': [], 'n': 0, 'hit': 0}
+    jsave(fp, rec)
+elif jload(fp, {}).get('rule') != RULE and not os.path.exists(os.path.join(FD, month + '.새기준.json')):
+    jsave(os.path.join(FD, month + '.새기준.json'), rec)   # 이미 남긴 예측은 고치지 않고, 바뀐 기준의 예측은 따로 남겨 따로 채점
+score = {'months': [], 'n': 0, 'hit': 0, 'trial': {'rule': RULE, 'months': [], 'n': 0, 'hit': 0}}
 for f in sorted(os.listdir(FD)):
-    if not f.endswith('.json') or f[:7] >= month: continue
+    m_ = re.match(r'(\d{4}-\d\d)(\.새기준)?\.json$', f)
+    if not m_ or m_.group(1) >= month: continue
+    tgt = score['trial'] if m_.group(2) else score
     old = jload(os.path.join(FD, f), {}); cur = {i['item']: i['wonkg'] for i in items}
     n = hit = 0; rows = []
     for i in old.get('items', []):
@@ -69,7 +77,7 @@ for f in sorted(os.listdir(FD)):
         real = '오름 쪽' if chg >= 3 else '내림 쪽' if chg <= -3 else '보합'
         ok = real == i['dir'] or (i['dir'] == '보합' and abs(chg) < 5)
         n += 1; hit += ok; rows.append([i['item'], i['dir'], round(chg, 1), ok])
-    if n: score['months'].append({'month': f[:7], 'to': month, 'n': n, 'hit': hit, 'rows': rows}); score['n'] += n; score['hit'] += hit
+    if n: tgt['months'].append({'month': f[:7], 'to': month, 'n': n, 'hit': hit, 'rows': rows}); tgt['n'] += n; tgt['hit'] += hit
 out = {'at': stamp(), 'month': month, 'horizon': '다음 달 수협 산지 위판 ㎏당 값', 'items': items, 'score': score,
        'basis': '수협 산지 위판(해양수산부 위탁판매 현황) · 수협 물류센터·조합창고 재고 · 7일 폐사 위험 예보'}
 jsave(os.path.join(DATA, 'buysignal.json'), out)
