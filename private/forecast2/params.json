@@ -26,5 +26,11 @@
   "feed": 60,
   "livestock": 10
  },
- "calib_log": []
+ "calib_log": [],
+ "pass": {
+  "up": 0.54,
+  "down": 0.48,
+  "th": 3.0
+ },
+ "last_calib": "2026-10-26"
 }
