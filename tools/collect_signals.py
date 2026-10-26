@@ -13,6 +13,16 @@ try:
     for _ in range(2):
         if obs.get('s'): break
         time.sleep(60); obs = json.loads(get('https://haerunak.com/data/obs.json'))
+    # 2026-10-27 원본이 두 시간 넘게 비어 있던 날(05:31 파일이 빈 채 07:45까지)도 있어, 마지막으로 제대로 받은 관측을 남겨 두고 26시간 안이면 그것을 씀(관측소별 시각은 출처 칸에 그대로)
+    last_p = os.path.join(PRIVATE, 'sea_obs_last.json'); used_last = ''
+    if obs.get('s'):
+        json.dump(obs, open(last_p, 'w', encoding='utf-8'), ensure_ascii=False)
+    elif os.path.exists(last_p):
+        try:
+            lo = json.load(open(last_p, encoding='utf-8'))
+            age = (now().replace(tzinfo=None) - datetime.datetime.strptime(lo.get('at', ''), '%Y-%m-%d %H:%M')).total_seconds() / 3600
+            if lo.get('s') and age <= 26: print('수온 원본 비어 있음 → 지난 관측', lo['at'], '사용'); obs = lo; used_last = f' · 원본 비어 지난 관측({lo["at"]}) 사용'
+        except Exception as e: print('지난 관측 읽기 실패', e)
     sts = {s['code']: s for s in json.loads(get('https://haerunak.com/data/tide-stations.json'))['stations']}
     units = json.load(open(os.path.join(DATA, 'units.json'), encoding='utf-8'))
     # 시군 중심(경계 상자 가운데)으로 가장 가까운 시군 찾기
@@ -49,7 +59,7 @@ try:
         if tw >= 28: items.append({'date': today.isoformat(), 'level': '경보' if tw >= 30 else '주의', 'kind': '고수온', 'title': f'{st["name"]} 앞바다 수온 {tw}℃', 'body': '고수온 주의 기준(28℃) 이상. 양식장은 사료 줄이기·산소 공급·출하 앞당기기 검토, 폐사 늘면 위판 가격이 흔들립니다.', 'area': u, 'src': '국립해양조사원 조위관측소 실측(해루낚 보관) ' + str(r.get('at', ''))})
         elif tw <= 4: items.append({'date': today.isoformat(), 'level': '주의', 'kind': '저수온', 'title': f'{st["name"]} 앞바다 수온 {tw}℃', 'body': '저수온 주의 기준(4℃) 이하. 넙치·돔류 양식장은 가온·먹이 조절, 폐사 대비.', 'area': u, 'src': '국립해양조사원 조위관측소 실측(해루낚 보관) ' + str(r.get('at', ''))})
     if not obs.get('s'): print('수온 원본 형식 확인:', type(obs).__name__, list(obs)[:10] if isinstance(obs, dict) else len(obs), str(obs)[:300])   # 관측소 0곳이면 원본 모양을 기록에 남김
-    status('signals_sea', True if obs.get('s') else False, f'관측소 {len(obs.get("s", {}))}곳 · 수온 신호 {sum(1 for i in items if i["kind"] in ("고수온", "저수온"))}건')
+    status('signals_sea', True if obs.get('s') else False, f'관측소 {len(obs.get("s", {}))}곳 · 수온 신호 {sum(1 for i in items if i["kind"] in ("고수온", "저수온"))}건' + used_last)
 except Exception as e:
     status('signals_sea', False, str(e)[:160])
 # 2) 경락가 급등락 — 최근 거래일 대비 중위값(직전 5거래일)에서 ±5% 넘게 벗어나면
