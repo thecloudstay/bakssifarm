@@ -108,6 +108,9 @@ def news_titles(q, n=3):
         g = gnews(q); out = g.get('titles') or []
     return out
 def lv_from_news(g):
+    """뉴스 흐름만으로는 「주의」(1)까지만 — 경보(2)는 측정값(엘니뇨 지수·수온·상품값·지진·태풍 경보·달력)이 있을 때만"""
+    return min(1, _lv_news_raw(g))
+def _lv_news_raw(g):
     z, r = g.get('z'), g.get('ratio')
     if z is None or r is None: return 0
     if g.get('src', '').startswith('구글'):   # 2주 비교는 거칠어서 기사 수 하한을 둠
@@ -347,8 +350,8 @@ for r in R.get('rules', []):
             aff = (r.get('affects_up') if direction > 0 else r.get('affects_down')) if worst else []
         elif typ == 'jtwc+gdelt':
             JT = JT if JT is not None else jtwc(); g = news(dt['q']); ev['news'] = g
-            lv = max(1 if JT else 0, lv_from_news(g))
-            if JT and lv_from_news(g) >= 1: lv = 2
+            lv = 0
+            if JT and 6 <= TODAY.month <= 11: lv = 2 if lv_from_news(g) >= 1 else 1   # 실제 태풍 경보가 있어야 켬, 한반도 뉴스까지 많으면 경보
             ev.update({'level': lv, 'value': f'서태평양 활동 {len(JT or [])}개', 'text': ('서태평양 태풍 경보 ' + ', '.join(JT[:3]) if JT else '서태평양 태풍 경보 없음' if JT is not None else '태풍 경보 자료 못 받음') + (f' · 한반도 태풍 뉴스 평소의 {g["ratio"]}배' if g.get('ratio') else '')})
         elif typ in ('tiles', 'tiles+gdelt'):
             vals = [(t['name'], t['c20'], t.get('c60')) for t in (tile(k) for k in dt.get('keys', [])) if t and t.get('c20') is not None]
