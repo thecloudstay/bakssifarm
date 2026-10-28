@@ -54,12 +54,14 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '가격 예보'), ('/signal/', '근거·적중'), ('/risk/', '위험 예보'), ('/opps/', '수급 기회'), ('/price/', '경락가'), ('/sheet/', '시세 한 장'), ('/map/', '지도'), ('/calc/', '수익 계산'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
+NAV = [('/', '오늘 예보'), ('/f/', '품목별'), ('/alerts/', '경보'), ('/track/', '적중 기록'), ('/risk/', '위험 예보'), ('/price/', '시세'), ('/map/', '지도')]   # 2026-10-28 예측 중심 개편
+MORE = [('/signal/', '근거·방법'), ('/opps/', '수급 기회'), ('/sheet/', '시세 한 장'), ('/calc/', '수익 계산'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
 def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=False):
     url = BASE + path
     nav = ''.join(f'<a href="{p}"{" aria-current=page" if p == path else ""}>{E(t)}</a>' for p, t in NAV)
+    nav += '<details class="morenav"><summary' + (' class="cur"' if any(p == path for p, _ in MORE) else '') + '>더보기</summary><div>' + ''.join(f'<a href="{p}"{" aria-current=page" if p == path else ""}>{E(t)}</a>' for p, t in MORE) + '</div></details>'
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ''
     return f'''<!doctype html>
 <html lang="ko">
@@ -95,7 +97,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 {FORM_JS % (json.dumps(FORM_ENDPOINT), PREFIX)}
 <footer class="foot">
   <p>박씨팜 — 농축수산물 가격 예보. 축산·수산·농산 품목의 값 방향을 근거와 적중률과 함께 매일 아침 알려 드립니다. 물건을 사고팔지 않으며, 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
-  <p><a href="/">가격 예보</a><a href="/signal/">근거·적중</a><a href="/map/">지도</a><a href="/price/">경락가</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
+  <p><a href="/">오늘 예보</a><a href="/f/">품목별</a><a href="/alerts/">경보</a><a href="/track/">적중 기록</a><a href="/signal/">근거·방법</a><a href="/map/">지도</a><a href="/price/">시세</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
 </footer>
 </main>
 </body>
@@ -452,10 +454,10 @@ def risk_page():
 
 def alert_bar(path=''):
     al = (FC.get('alerts') or [])
-    if not al or path == '/signal/': return ''
+    if not al or path in ('/signal/', '/alerts/', '/'): return ''
     n2 = sum(1 for a in al if a['level'] == '경보'); top = al[0]
     cls = 'alarm' if n2 else 'warn'
-    return f'<a class="alertbar {cls}" href="/signal/#alerts"><b>{"경보" if n2 else "주의"} {len(al)}건</b> {E(top["title"])} — 사전 대응 보기 →</a>'
+    return f'<a class="alertbar {cls}" href="/alerts/"><b>{"경보" if n2 else "주의"} {len(al)}건</b> {E(top["title"])} — 미리 할 일 보기 →</a>'
 def svg_line(pts, w=640, h=170, pad=26, color='var(--moss)'):
     if len(pts) < 2: return ''
     vs = [p[1] for p in pts]; lo, hi = min(vs), max(vs); rng = (hi - lo) or 1
@@ -545,7 +547,7 @@ def forecast_html():
 
 def signal_page():
     S = BUYS; it = S.get('items') or []
-    b = '<p class="crumb"><a href="/">박씨팜</a> › 예측·경보</p><h1 class="title">시장 예측·경보 — 미리 살까, 서둘러 팔까 <span class="tag">시험판</span></h1>'
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 근거·방법</p><h1 class="title">예측의 근거와 방법 — 거시에서 미시까지</h1>'
     b += '<p class="lead">해외 곡물·축산 선물과 환율(거시)에 국내 경락가·위판·재고·반입량·수온(미시)을 묶어, 사료는 미리 사 둘지, 가축은 출하를 서두를지 늦출지, 원료는 사 둘지 미룰지를 근거·신뢰도와 함께 냅니다. 급변은 경보로 먼저 알리고, 모든 판단은 기록했다가 실제 값으로 채점해 그대로 공개합니다.</p>'
     b += '<p class="toc"><a href="#alerts">경보</a> <a href="#sectors">농산·축산·수산</a> <a href="#decide">선매·매도</a> <a href="#feed">사료 원가</a> <a href="#macro">해외 선물</a> <a href="#micro">수산·농산</a> <a href="#track">적중 기록</a> <a href="#sea">수협 위판 신호</a></p>'
     b += forecast_html()
@@ -769,68 +771,6 @@ def sigun_pages():
     write('/p/', shell('/p/', '시군별 농장·어장·동물농장 — 161개 시군 | 박씨팜', '전국 161개 시군의 가축 사육, 양식 면허, 대표 판매 품목을 시군별로.', b), '0.7')
 
 
-# ── 첫 화면: 오늘의 농축수산물 가격 예보판 (2026-10-28 컨셉 확정 — 박씨팜 = 농축수산물 가격 예보)
-CROPS2 = J('cropsignal.json', {}); FC = J('forecast.json', {}); RISK2 = J('risk.json', {})
-def home_page():
-    DIRW = {'오름 쪽': ('오름', 'up'), '내림 쪽': ('내림', 'dn'), '보합': ('보합', 'flat')}
-    def badge(d): w, c = DIRW.get(d, (d or '보합', 'flat')); return f'<span class="fx {c}">{E(w)}</span>'
-    def won(v): return f'{v:,}원' if isinstance(v, (int, float)) and v else ''
-    today = (FC.get('at') or stamp())[:10]
-    b = f'<p class="crumb">{E(today)} 아침 기준 · 매일 갱신</p><h1 class="title">농축수산물 가격 예보</h1>'
-    b += '<p class="lead">축산·수산·농산 품목이 앞으로 오를지 내릴지를 근거와 함께 매일 아침 알려 드립니다. 지난 예보는 실제 값으로 채점해 적중률까지 공개합니다. 박씨팜은 물건을 사고팔지 않는, 이해관계 없는 예보처입니다.</p>'
-    # 경보
-    al = list(FC.get('alerts') or [])
-    for x in RISK2.get('species', []):
-        if x.get('lv') in ('위험', '주의'): al.append({'level': '경보' if x['lv'] == '위험' else '주의', 'kind': '폐사 위험', 'title': f'{x.get("sp")} 고수온·폐사 {x["lv"]}', 'react': '공급이 줄 수 있음 — 수산 예보 참고'})
-    if al:
-        al.sort(key=lambda a: 0 if a.get('level') == '경보' else 1)
-        b += '<h2>오늘의 경보</h2><ul class="alerts">' + ''.join(f'<li><span class="lv {"hi" if a.get("level") == "경보" else "mid"}">{E(a.get("level", ""))}</span><b>{E(a.get("kind", ""))}</b> {E(a.get("title", ""))}<div class="mini">{E(a.get("react", ""))}</div></li>' for a in al[:6]) + '</ul>'
-    # 세 갈래 예보판
-    dec = {d['id']: d for d in FC.get('decisions', [])}; mt = FC.get('micro_track') or {}
-    def rate(k):
-        t = mt.get(k) or {}
-        return f'적중 {t["hit"]}/{t["n"]}({t["rate"]}%)' if t.get('n') else '채점 대기'
-    # 축산
-    ca = '<div class="fc-card"><div class="fc-h"><b>축산</b><span class="mini">앞으로 2주 · 경락가</span></div><table class="t fc">'
-    for k, nm in (('hanwoo', '한우 거세'), ('pig', '돼지 탕박')):
-        d = dec.get(k)
-        if d:
-            dr = '내림 쪽' if '내림' in d['act'] or '매도' in d['act'] else '오름 쪽' if '오름' in d['act'] or '미루' in d['act'] else '보합'
-            ca += f'<tr><td>{E(nm)}</td><td>{badge(dr)}</td><td class="mini">{E(d["act"])}<br>{E((d.get("why") or [""])[0])}</td></tr>'
-    for n in (next((s for s in FC.get('sectors', []) if s['sector'] == '축산'), {}).get('notes') or [])[:3]:
-        ca += f'<tr><td>{E(n["item"])}</td><td>{badge(n["dir"])}</td><td class="mini">{E(n["text"][:70])} <span class="src">{E(n["src"][:30])}</span></td></tr>'
-    d = dec.get('feed')
-    if d: ca += f'<tr><td>배합사료(원가)</td><td>{badge("보합" if "관망" in d["act"] else "오름 쪽" if "선매" in d["act"] or "앞당" in d["act"] else "내림 쪽")}</td><td class="mini">{E(d["act"])} · {E(d["horizon"][:22])}</td></tr>'
-    ca += '</table><p class="mini">근거: 축산물품질평가원 경락가 · 해외 선물 · 관측 기관 전망</p></div>'
-    # 수산
-    bi = [i for i in (BUYS.get('items') or []) if i['dir'] != '보합']; bi.sort(key=lambda i: -abs(i['score']))
-    sa = f'<div class="fc-card"><div class="fc-h"><b>수산</b><span class="mini">다음 달 · 산지 위판가 · {E(rate("수산"))}</span></div><table class="t fc">'
-    sa += ''.join(f'<tr><td>{E(i["item"])}</td><td>{badge(i["dir"])}</td><td class="mini">{won(i["wonkg"])}/㎏ · {E((i.get("why") or [""])[0])}</td></tr>' for i in bi[:8]) or '<tr><td colspan="3" class="mini">뚜렷한 방향이 없는 달입니다(전 품목 보합).</td></tr>'
-    sa += f'</table><p class="mini">근거: 수협 산지 위판 · 창고 재고 · 폐사 위험 예보 · 보합 {sum(1 for i in BUYS.get("items") or [] if i["dir"] == "보합")}품목</p></div>'
-    # 농산
-    ci = [i for i in (CROPS2.get('items') or []) if i['dir'] != '보합']; ci.sort(key=lambda i: -abs(i['score']))
-    na = f'<div class="fc-card"><div class="fc-h"><b>농산</b><span class="mini">앞으로 2주 · 도매시장가 · {E(rate("농산"))}</span></div><table class="t fc">'
-    na += ''.join(f'<tr><td>{E(i["item"])}</td><td>{badge(i["dir"])}</td><td class="mini">{won(i["wonkg"])}/㎏ · {E((i.get("why") or [""])[0])}</td></tr>' for i in ci[:8]) or '<tr><td colspan="3" class="mini">뚜렷한 방향이 없는 주입니다(전 품목 보합).</td></tr>'
-    na += f'</table><p class="mini">근거: 공영도매시장 26곳 정산 {E(str(CROPS2.get("ndays", 0)))}거래일 · 보합 {sum(1 for i in CROPS2.get("items") or [] if i["dir"] == "보합")}품목</p></div>'
-    b += '<h2>품목별 예보</h2><div class="fc-grid">' + ca + sa + na + '</div>'
-    b += '<p class="mini">「오름」이면 미리 사 두거나 출하를 늦추는 쪽, 「내림」이면 구매를 미루거나 출하를 서두르는 쪽으로 검토하세요. 품목마다 자세한 근거와 지난 적중 기록은 <a href="/signal/">근거·적중</a>에 있습니다.</p>'
-    # 원가 압력
-    secs = FC.get('sectors') or []
-    if secs:
-        b += '<h2>원가 압력 — 기름값·환율·원료가</h2><div class="grid3">' + ''.join(f'<div class="card"><h3>{E(x["sector"])} {badge((x.get("cost") or {}).get("dir"))}</h3><div class="big">{(x.get("cost") or {}).get("v", 0):+}<i>%</i></div><p>{E(" · ".join(((x.get("cost") or {}).get("why") or [])[:3]))}</p></div>' for x in secs) + '</div>'
-        cm = FC.get('common') or []
-        if cm: b += '<ul class="mini">' + ''.join(f'<li>{E(n["item"])}: {E(n["text"][:110])} <span class="src">({E(n["src"][:36])})</span></li>' for n in cm[:3]) + '</ul>'
-    # 해외 선물·환율
-    tl = FC.get('tiles') or []
-    if tl:
-        b += '<h2>세계 시세 — 선물·환율</h2><table class="t"><tr><th>지표</th><th class="num">최근</th><th class="num">1개월</th><th class="num">3개월</th><th>흐름</th></tr>' + ''.join(
-            f'<tr><td>{E(t["name"])}</td><td class="num">{t["last"]:,}</td><td class="num">{t.get("c20", 0):+}%</td><td class="num">{t.get("c60", 0):+}%</td><td>{E(t.get("trend", ""))}</td></tr>' for t in tl[:13]) + '</table>'
-    # 받아 보기
-    b += '<h2>예보 받아 보기</h2><div class="grid2"><div class="card"><h3>유통·가공·급식 업체</h3><p>우리 회사가 사는 품목만 골라 매주 예보와 경보를 받는 구독을 준비하고 있습니다.</p><p style="margin-top:10px;"><a class="btn prime" href="/pro/">업체 등록·구독 신청</a></p></div><div class="card"><h3>농가·어가</h3><p>오늘 시세와 예보를 한 장에 담은 「시세 한 장」을 무료로 받아 보세요.</p><p style="margin-top:10px;"><a class="btn" href="/sheet/">시세 한 장 보기</a></p></div></div>'
-    b += f'<p class="mini" style="margin-top:22px;">자료: {E(FC.get("basis", ""))}. 예보는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 지도로 보려면 <a href="/map/">시군별 지도</a>.</p>'
-    ld = {'@context': 'https://schema.org', '@type': 'WebSite', 'name': '박씨팜', 'url': BASE + '/', 'description': '농축수산물 가격 예보 — 축산·수산·농산 품목별 값 방향, 경보, 적중 기록'}
-    write('/', shell('/', '박씨팜 — 농축수산물 가격 예보(축산·수산·농산) | 오늘 오를 품목·내릴 품목', '한우·돼지 경락가, 수협 위판가, 공영도매시장 값이 앞으로 오를지 내릴지를 근거와 적중률과 함께 매일 아침 예보합니다. 사료·기름값 원가 압력, 해외 선물·환율, 폐사 경보까지.', b, jsonld=ld), '1.0')
-
 def misc():
     write('/404.html', shell('/404.html', '그런 화면이 없습니다 | 박씨팜', '없는 화면', '<h1 class="title">그런 화면이 없습니다</h1><p class="lead">주소가 바뀌었거나 잘못 적힌 것 같습니다. <a href="/">지도로 돌아가기</a> · <a href="/p/">시군별 보기</a></p>', noindex=True))
     # 사이트 지도
@@ -855,5 +795,7 @@ def misc():
     open(os.path.join(ROOT, 'tools', 'urls.txt'), 'w', encoding='utf-8').write('\n'.join(BASE + urllib.parse.quote(p) for p, d, pr in pages) + '\n')
 
 if __name__ == '__main__':
-    inject_index(); home_page(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); risk_page(); signal_page(); opps_page(); data_page(); console_page(); misc()
-    print('글 화면', len(PAGES) + 1)
+    inject_index(); price_page(); buy_page(); gongu_page(); sheet_page(); calc_page(); partner_page(); pro_page(); about_page(); sigun_pages(); risk_page(); signal_page(); opps_page(); data_page(); console_page()
+    import forecast_pages; FP = forecast_pages.build(globals())   # 첫 화면·품목별·품목 예보·경보·적중 기록 (사이트 지도에 넣으려면 misc() 앞)
+    misc()
+    print('글 화면', len(PAGES) + 1, '예보 품목', FP)
