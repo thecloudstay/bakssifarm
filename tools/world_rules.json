@@ -392,7 +392,7 @@
    "name": "패류독소·노로바이러스(채취 금지)",
    "detect": {
     "type": "gdelt",
-    "q": "(패류독소 OR 노로바이러스) (채취 OR 금지 OR 굴) sourcelang:korean"
+    "q": "(패류독소 OR 노로바이러스) (채취금지 OR 기준초과 OR 생굴) sourcelang:korean"
    },
    "lag": "0~3주",
    "why": "채취 금지 해역이 넓어지면 굴·홍합·바지락 공급 중단",
@@ -613,7 +613,7 @@
    "name": "중국·일본 수입 규제(우리 수출 수산물)",
    "detect": {
     "type": "gdelt",
-    "q": "중국 (수입금지 OR 통관 OR 검역) (수산물 OR 김 OR 전복) sourcelang:korean"
+    "q": "중국 (수입금지 OR 통관 OR 검역) (한국산 OR 국산) (수산물 OR 마른김 OR 전복) sourcelang:korean"
    },
    "lag": "0~6주",
    "why": "수출 길이 막히면 김·전복·굴이 국내에 남아 값 내림",
@@ -634,7 +634,7 @@
    "name": "수산물 수출 호조(김·전복·참치)",
    "detect": {
     "type": "gdelt",
-    "q": "(김 OR 전복 OR 수산식품) 수출 (최대 OR 역대 OR 증가) sourcelang:korean"
+    "q": "(마른김 OR 조미김 OR 전복 OR 수산식품) 수출 (최대 OR 역대 OR 증가) sourcelang:korean"
    },
    "lag": "1~3개월",
    "why": "수출이 늘면 국내 물량이 빠져 값 오름(마른김 원초값)",
@@ -709,15 +709,8 @@
    "cat": "정책",
    "name": "비료·요소 값(세계 요소 시세)",
    "detect": {
-    "type": "fred",
-    "series": [
-     "PUREAUSDM",
-     "PUREANUSDM",
-     "PDAPUSDM",
-     "PFERTUSDM"
-    ],
-    "warn": 10,
-    "alarm": 20
+    "type": "gdelt",
+    "q": "(요소비료 OR 비료값 OR 요소 수출) (인상 OR 급등 OR 제한 OR 대란) sourcelang:korean"
    },
    "lag": "3~6개월",
    "why": "요소·인산 상승은 다음 작기 농산물 원가",
@@ -730,7 +723,7 @@
      "w": 0.1
     }
    ],
-   "src": "국제통화기금 상품값(미 연준 경제자료 경유)"
+   "src": "뉴스 흐름(국제통화기금 요소 지표는 공개 경로 없음)"
   },
   {
    "id": "fishmeal",

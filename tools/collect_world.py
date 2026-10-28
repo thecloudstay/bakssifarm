@@ -50,7 +50,7 @@ def gdelt_raw(params, timeout=25):
             s = str(e)
             if '429' in s:
                 gd_429 += 1; time.sleep(20)
-                if gd_429 >= 4: gd_off = True; MSG.append('GDELT 429 연속 — 오늘은 구글 뉴스로 대신'); return None
+                if gd_429 >= 2: gd_off = True; MSG.append('GDELT 429 연속 — 오늘은 구글 뉴스로 대신'); return None
                 continue
             MSG.append('gdelt ' + s[:60]); return None
     return None
@@ -92,7 +92,7 @@ def news(q, want_titles=False):
     if res['ratio'] is None and not over():
         g = gnews(q)
         if g.get('ratio') is not None:
-            r = g['ratio']; res.update({'ratio': r, 'z': round((r - 1) * 2, 2), 'src': f'구글 뉴스 2주({g["last7"]}/{g["prev7"]}건)', 'titles': g.get('titles') or []})
+            r = g['ratio']; res.update({'ratio': r, 'z': round((r - 1) * 2, 2), 'last7': g['last7'], 'prev7': g['prev7'], 'src': f'구글 뉴스 2주({g["last7"]}/{g["prev7"]}건)', 'titles': g.get('titles') or []})
         else: res['err'] = g.get('err', '')
     _gd_cache[q] = res; return res
 def news_titles(q, n=3):
@@ -110,8 +110,9 @@ def news_titles(q, n=3):
 def lv_from_news(g):
     z, r = g.get('z'), g.get('ratio')
     if z is None or r is None: return 0
-    if g.get('src', '').startswith('구글'):   # 2주 비교는 거칠어서 기준을 높임
-        return 2 if r >= 3.0 and g.get('last7', 0) >= 8 else 1 if r >= 1.8 else 0
+    if g.get('src', '').startswith('구글'):   # 2주 비교는 거칠어서 기사 수 하한을 둠
+        n7 = g.get('last7', 0)
+        return 2 if r >= 3.0 and n7 >= 20 else 1 if r >= 1.8 and n7 >= 6 else 0
     if z >= 3 and r >= 2.0: return 2
     if z >= 1.5 and r >= 1.4: return 1
     return 0
@@ -218,6 +219,7 @@ def jtwc():
         MSG.append('jtwc ' + str(e)[:50]); return None
 def tile(key): return next((t for t in (FC.get('tiles') or []) if t.get('key') == key), None)
 
+FROST_OCT = {'배추', '무', '풋고추', '홍고추', '꽈리고추', '깻잎', '상추', '시금치', '대파', '쪽파', '감귤', '단감', '떫은감', '오이', '호박', '가지', '토마토', '방울토마토', '파프리카', '멜론', '부추', '열무', '얼갈이배추', '청경채', '미나리'}
 def crop_weather():
     """주산지 32곳 7일 예보 → 서리·폭염·호우·강풍 사건"""
     pts = CP.get('points') or []
@@ -232,7 +234,9 @@ def crop_weather():
     for p, x in zip(pts, arr):
         d = x.get('daily') or {}; tmin = d.get('temperature_2m_min') or []; tmax = d.get('temperature_2m_max') or []; pr = d.get('precipitation_sum') or []; gu = d.get('wind_gusts_10m_max') or []
         ev = []
-        if tmin and m in (3, 4, 5, 10, 11) and min(v for v in tmin if v is not None) <= 1.0: ev.append(('서리', f'최저 {min(v for v in tmin if v is not None):.0f}℃', 2 if min(v for v in tmin if v is not None) <= -2 else 1))
+        tm = min((v for v in tmin if v is not None), default=99)
+        if m in (4, 5) and tm <= 1.0: ev.append(('서리', f'최저 {tm:.0f}℃(개화·정식기)', 2 if tm <= -1 else 1))
+        elif m == 10 and tm <= 0.0 and any(c in FROST_OCT for c in p['crops']): ev.append(('서리', f'최저 {tm:.0f}℃(첫서리)', 1))
         hot = sum(1 for v in tmax if v is not None and v >= 33)
         if hot >= 2: ev.append(('폭염', f'33℃ 넘는 날 {hot}일', 2 if hot >= 4 else 1))
         p3 = max((sum(v for v in pr[i:i + 3] if v is not None) for i in range(max(1, len(pr) - 2))), default=0)
@@ -413,7 +417,9 @@ for c in t1 + rot:
         base['parts'].append(part)
         if part.get('level'):
             lv = max(lv, part['level']); txt.append(f'{ch["name"]} 뉴스 평소의 {part.get("ratio")}배' + ('(어제 값)' if part.get('stale') else ''))
-            for a in country_affects(cko, ch['w'] * part['level'], ch['dir'], ch['name'] + ' 뉴스 급증'): aff.setdefault((a['sector'], a['item']), a)
+            for a in country_affects(cko, ch['w'] * part['level'], ch['dir'], ch['name'] + ' 뉴스 급증'):
+                k = (a['sector'], a['item'])
+                if k not in aff or aff[k]['w'] < a['w']: aff[k] = a
             if not base['titles'] and not part.get('stale'): base['titles'] = (g.get('titles') or news_titles(q))
     # 통화
     fx = fx_of(c)
@@ -424,7 +430,7 @@ for c in t1 + rot:
             for a in country_affects(cko, FXT['w'] * l, d, f'통화 {"강세" if d == "오름 쪽" else "약세"}'): aff.setdefault((a['sector'], a['item']), a)
     # 엘니뇨·라니냐 영향권
     if ONI and ONI['phase'] in (c.get('enso') or {}):
-        e = c['enso'][ONI['phase']]; l = 2 if ONI['strong'] else 1
+        e = c['enso'][ONI['phase']]; l = 2 if (ONI['strong'] and c.get('enso_core')) else 1
         lv = max(lv, l); txt.append(f'{ONI["phase"]} 영향권: {e["text"]}')
         for a in country_affects(cko, OR.get('enso_w', 0.3) * l, e['dir'], ONI['phase'] + ' 영향'): aff.setdefault((a['sector'], a['item']), a)
     base.update({'level': lv, 'text': ' · '.join(txt) if txt else '조용함', 'affects': list(aff.values()) if lv else [], 'affects_all': country_affects(cko, 0.45, '오름 쪽', '공급 충격'), 'why': c.get('standing', ''), 'react': '수입 단가 변동 전 계약 조건 점검', 'lag': '2~8주(투입재는 2~7개월)', 'src': '뉴스 흐름 · 미 연준 경제자료 환율 · 엘니뇨 지수'})
@@ -438,7 +444,7 @@ if CW:
     grp = collections.defaultdict(list)
     for e in CW: grp[e['kind']].append(e)
     for kind, es in grp.items():
-        lv = max(e['level'] for e in es); crops = sorted({c for e in es for c in e['crops']})
+        lv = max(e['level'] for e in es); crops = sorted({c for e in es for c in e['crops'] if kind != '서리' or TODAY.month != 10 or c in FROST_OCT})
         events.append({'id': 'kr_weather_' + {'서리': 'frost', '폭염': 'heat', '호우': 'rain', '강풍': 'wind'}.get(kind, kind), 'cat': '국내 날씨', 'name': f'주산지 {kind} 예보', 'kind': 'meteo', 'level': lv,
                        'text': '7일 안 ' + ', '.join(f'{e["point"]}({e["text"]})' for e in es[:8]) + (f' 외 {len(es) - 8}곳' if len(es) > 8 else ''), 'why': {'서리': '꽃·어린 과채 냉해로 착과·출하 감소', '폭염': '엽채 생육 불량·시들음, 과채 일소', '호우': '침수·병해·수확 지연', '강풍': '낙과·시설 파손'}.get(kind, ''),
                        'react': '해당 산지 품목 1~2주치 앞당겨 확보', 'lag': '0~3주', 'src': '오픈메테오 7일 예보 × 주산지 32곳', 'titles': [],
