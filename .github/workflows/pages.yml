@@ -34,6 +34,9 @@ jobs:
       - name: 농산물 구매 신호·도매시장 간 값 차이(국내 수집 직후 반영)
         run: python tools/build_crop_signal.py
         continue-on-error: true
+      - name: 물가 지수(갈래·종합·원가 압력, 경향 계량)
+        run: python tools/build_index.py
+        continue-on-error: true
       - name: 글 화면·사이트 지도 생성(열쇠 주입 포함)
         run: python tools/build_pages.py
       - name: 페이지 설정(처음이면 자동으로 켬)

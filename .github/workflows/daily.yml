@@ -75,6 +75,9 @@ jobs:
       - name: 화면 미리 만들기(자가 점검이 저장소의 옛 화면 대신 오늘 화면을 재도록)
         run: python tools/build_pages.py
         continue-on-error: true
+      - name: 물가 지수(갈래·종합·원가 압력, 경향 계량)
+        run: python tools/build_index.py
+        continue-on-error: true
       - name: 자가 점검(재기·찾기)
         run: python tools/self_check.py
         continue-on-error: true

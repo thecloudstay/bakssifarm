@@ -78,7 +78,9 @@ try:
     month = max(days)[:7] if days else ''
     def wk(a): return round(a[0] / a[1]) if a[1] > 0 else None
     agg = {'month': month, 'rows': n, 'coops': {c: {k: [round(v[0]), round(v[1], 1)] for k, v in d.items()} for c, d in coop.items()},
-           'fish': {k: [round(v[0]), round(v[1], 1)] for k, v in fish.items()}, 'src': {k: [round(x) for x in v] for k, v in src.items()}, 'kind': dict(kind), 'farm': dict(farm)}
+           'fish': {k: [round(v[0]), round(v[1], 1)] for k, v in fish.items()}, 'src': {k: [round(x) for x in v] for k, v in src.items()}, 'kind': dict(kind), 'farm': dict(farm),
+           # 2026-10-28 물가 지수용: 금액 상위 60어종의 일별 [날짜, ㎏당 값, ㎏] — 달이 바뀌어도 일별 지수가 이어지게
+           'daily': {k: [[d, wk(x), round(x[1])] for d, x in sorted(fishday[k].items()) if wk(x)] for k, _ in sorted(fish.items(), key=lambda x: -x[1][0])[:60]}}
     jsave(os.path.join(PD, month + '.json'), agg)
     # 공개 집계
     topfish = sorted(fish.items(), key=lambda x: -x[1][0])[:80]
