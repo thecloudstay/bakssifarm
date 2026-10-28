@@ -3,98 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>박씨팜 — 농장·어장·동물농장 한 지도</title>
-<meta name="description" content="전국 시군별 가축 사육, 양식 어장 면허, 지리적표시 대표 품목을 한 지도에서. 공판장·가축시장·수협 위판장·공영도매시장 위치와 경락가 조회, 사료·자재 공동구매 모집판까지.">
+<title>박씨팜 — 농축수산물 가격 예보(축산·수산·농산) | 오늘 오를 품목·내릴 품목</title>
+<meta name="description" content="한우·돼지 경락가, 수협 위판가, 공영도매시장 값이 앞으로 오를지 내릴지를 근거와 적중률과 함께 매일 아침 예보합니다. 사료·기름값 원가 압력, 해외 선물·환율, 폐사 경보까지.">
+
 <meta name="theme-color" content="#ffffff">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="박씨팜">
-<meta property="og:title" content="박씨팜 — 농장·어장·동물농장 한 지도">
-<meta property="og:description" content="전국 시군별 가축 사육, 양식 어장 면허, 대표 판매 품목을 한 지도에서. 공판장·위판장·도매시장 위치와 경락가, 공동구매 모집판.">
-<meta property="og:image" content="https://thecloudstay.github.io/bakssifarm/og/home.png">
-<meta property="og:url" content="https://thecloudstay.github.io/bakssifarm/">
-<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://thecloudstay.github.io/bakssifarm/">
-<link rel="alternate" type="application/rss+xml" title="박씨팜 새 소식" href="rss.xml">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="박씨팜">
+<meta property="og:title" content="박씨팜 — 농축수산물 가격 예보(축산·수산·농산) | 오늘 오를 품목·내릴 품목">
+<meta property="og:description" content="한우·돼지 경락가, 수협 위판가, 공영도매시장 값이 앞으로 오를지 내릴지를 근거와 적중률과 함께 매일 아침 예보합니다. 사료·기름값 원가 압력, 해외 선물·환율, 폐사 경보까지.">
+<meta property="og:url" content="https://thecloudstay.github.io/bakssifarm/">
+<meta property="og:image" content="https://thecloudstay.github.io/bakssifarm/og/home.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="박씨팜 새 소식" href="/bakssifarm/rss.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/leaflet.css">
-<link rel="stylesheet" href="style.css">
-<!--head-extra--><!--/head-extra-->
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"박씨팜","url":"https://thecloudstay.github.io/bakssifarm/","description":"전국 시군별 가축 사육·양식 어장·대표 품목 지도와 공판장·위판장·도매시장 위치, 경락가 조회, 공동구매 모집판","inLanguage":"ko"}
-</script>
+<link rel="stylesheet" href="/bakssifarm/style.css">
+<link rel="stylesheet" href="/bakssifarm/page.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "박씨팜", "url": "https://thecloudstay.github.io/bakssifarm/", "description": "농축수산물 가격 예보 — 축산·수산·농산 품목별 값 방향, 경보, 적중 기록"}</script>
 </head>
-<body>
+<body class="page">
 <header class="bar">
-  <a class="brand" href="./" aria-label="박씨팜 처음 화면">
-    <svg class="seal" viewBox="0 0 32 32" aria-hidden="true">
-      <rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/>
-      <path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/>
-      <path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/>
-    </svg>
-    <span class="word">박씨팜</span>
-  </a>
-  <nav class="modes" id="modes" role="tablist" aria-label="지도 종류">
-    <button type="button" role="tab" data-mode="ani" aria-selected="true">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.5c0-3 2.5-5 6.5-5s6.5 2 6.5 5v2.5c0 1.5-1 2.5-2.5 2.5h-8c-1.5 0-2.5-1-2.5-2.5Z M7 14.5v2.5M13 14.5v2.5M3.5 9.5 2 7M16.5 9.5 18 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>동물농장</span></button>
-    <button type="button" role="tab" data-mode="sea" aria-selected="false">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 12.5c2-2 4-2 6 0s4 2 6 0 3 0 3 0M2.5 16c2-2 4-2 6 0s4 2 6 0 3 0 3 0M10 3.5c-3 0-5 2-5 4.5h10c0-2.5-2-4.5-5-4.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>어장</span></button>
-    <button type="button" role="tab" data-mode="crop" aria-selected="false">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17V9M10 9c0-3.5-2.5-5.5-6-5.5 0 3.5 2.5 5.6 6 5.5ZM10 7.5c.3-3.8 3-6 7-6-.3 3.8-3 6.1-7 6ZM4 17h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <span>농장</span></button>
-  </nav>
-  <div class="row2" id="row2">
-    <button class="pick" id="pickBtn" type="button" aria-haspopup="dialog" aria-controls="pickSheet">
-      <span class="pick-k" id="pickName">한우</span>
-      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>
-    <div class="seg" role="radiogroup" aria-label="지도에 칠할 값" id="seg"></div>
-  </div>
-  <div class="find">
-    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-    <input id="findInput" type="search" placeholder="시군 이름으로 찾기" autocomplete="off" aria-label="시군 이름으로 찾기">
-    <ul class="find-list" id="findList" role="listbox" hidden></ul>
-  </div>
-  <nav class="more" aria-label="다른 화면">
-    <a href="price/">경락가</a>
-    <a href="buy/">구입가</a>
-    <a href="gongu/">공동구매</a>
-    <a href="signal/" class="hot">예측·경보</a>
-    <a href="risk/">위험 예보</a>
-    <a href="pro/">데이터·업체</a>
-  </nav>
+  <a class="brand" href="/bakssifarm/" aria-label="박씨팜 처음 화면"><svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg><span class="word">박씨팜</span></a>
+  <nav class="modes pagenav" aria-label="화면"><a href="/bakssifarm/" aria-current=page>가격 예보</a><a href="/bakssifarm/signal/">근거·적중</a><a href="/bakssifarm/risk/">위험 예보</a><a href="/bakssifarm/opps/">수급 기회</a><a href="/bakssifarm/price/">경락가</a><a href="/bakssifarm/sheet/">시세 한 장</a><a href="/bakssifarm/map/">지도</a><a href="/bakssifarm/calc/">수익 계산</a><a href="/bakssifarm/buy/">구입가</a><a href="/bakssifarm/gongu/">공동구매</a><a href="/bakssifarm/pro/">업체·데이터</a><a href="/bakssifarm/data/">자료 대장</a><a href="/bakssifarm/p/">시군별</a><a href="/bakssifarm/about/">소개</a></nav>
 </header>
-
-<main class="stage">
-  <aside class="panel" id="panel" aria-live="polite">
-    <button class="grip" id="grip" type="button" aria-label="자세히 펼치기"><span></span></button>
-    <div class="panel-in" id="panelIn"></div>
-  </aside>
-  <div class="mapwrap">
-    <div id="map" aria-label="전국 시군 지도"></div>
-    <div class="layers" id="layers" role="group" aria-label="지도에 보일 것"></div>
-    <div class="legend" id="legend"></div>
-    <div class="hint" id="hint" hidden></div>
-    <div class="credit" id="credit"></div>
-  </div>
+<main class="wrap">
+<a class="alertbar alarm" href="/bakssifarm/signal/#alerts"><b>경보 7건</b> 돈육 선물(시카고) 62.15 (하루 변동이 평소의 3.9배(표준점수)·1개월 -11.1%) — 사전 대응 보기 →</a>
+<p class="crumb">2026-10-28 아침 기준 · 매일 갱신</p><h1 class="title">농축수산물 가격 예보</h1><p class="lead">축산·수산·농산 품목이 앞으로 오를지 내릴지를 근거와 함께 매일 아침 알려 드립니다. 지난 예보는 실제 값으로 채점해 적중률까지 공개합니다. 박씨팜은 물건을 사고팔지 않는, 이해관계 없는 예보처입니다.</p><h2>오늘의 경보</h2><ul class="alerts"><li><span class="lv hi">경보</span><b>해외 시세</b> 돈육 선물(시카고) 62.15 (하루 변동이 평소의 3.9배(표준점수)·1개월 -11.1%)<div class="mini">세계 돼지 시세 급변 — 수입 돼지고기 값과 국내 시세 영향 점검</div></li><li><span class="lv hi">경보</span><b>해외 시세</b> 천연가스 선물(미국) 3.059 (하루 변동이 평소의 6.1배(표준점수))<div class="mini">천연가스 급변 — 질소비료 원가와 시설 난방비에 시차를 두고 반영</div></li><li><span class="lv hi">경보</span><b>사료 원가</b> 사료 원가 지수 1개월 -13.5%<div class="mini">오르는 쪽이면 다음 사료 주문 전 단가 확인·선매 검토, 내리는 쪽이면 장기 고정 계약 미루기</div></li><li><span class="lv mid">주의</span><b>해외 시세</b> 옥수수 선물(시카고) 450.0 (1개월 -13.8%)<div class="mini">배합사료 인상 가능성 — 사료 업체에 다음 달 단가 확인, 여유 자금이 있으면 1~2개월분 선매·고정 검토</div></li><li><span class="lv mid">주의</span><b>해외 시세</b> 소맥 선물(시카고) 611.0 (1개월 -11.8%)<div class="mini">소맥 원가 변동 — 사료 원가와 밀가루 쓰는 가공 업체 원가 확인</div></li><li><span class="lv mid">주의</span><b>해외 시세</b> 서부텍사스유 선물 100.17 (1개월 +12.1%)<div class="mini">유가 급변 — 운송·난방(하우스·축사·어선) 원가 점검</div></li></ul><h2>품목별 예보</h2><div class="fc-grid"><div class="fc-card"><div class="fc-h"><b>축산</b><span class="mini">앞으로 2주 · 경락가</span></div><table class="t fc"><tr><td>한우 거세</td><td><span class="fx flat">보합</span></td><td class="mini">관망(평소 출하)<br>최근 3거래일 경락가 -0.0% (두수 2324)</td></tr><tr><td>돼지 탕박</td><td><span class="fx dn">내림</span></td><td class="mini">출하 서두르기·매도 검토(값 내림 쪽)<br>최근 3거래일 경락가 -6.3% (두수 7343)</td></tr><tr><td>한우</td><td><span class="fx up">오름</span></td><td class="mini">사육·도축 두수 감소로 2026년 거세우 연평균 경락가가 전년보다 약 14.5% 높을 전망(추석기 도축 전년 대비 -13.7% <span class="src">한국농촌경제연구원 9월 축산 관측(축산신문 2026-0</span></td></tr><tr><td>돼지</td><td><span class="fx dn">내림</span></td><td class="mini">10월 출하 164만 1천 두(전년 대비 +9%), 12월을 빼고 내년 3월까지 출하가 전년 수준을 웃돌 전망 · 10월 지육 <span class="src">한돈연구소 10월 수급 전망(축산신문 2026-10-0</span></td></tr><tr><td>계란</td><td><span class="fx dn">내림</span></td><td class="mini">산란계 마릿수·하루 생산량이 조금 늘어 산지 값 약세(10개 2,100원 안팎) <span class="src">한국농촌경제연구원 9월 축산 관측(축산신문 2026-0</span></td></tr><tr><td>배합사료(원가)</td><td><span class="fx flat">보합</span></td><td class="mini">관망(평소대로) · 앞으로 1~4개월(국제 원료값은 4~7개</td></tr></table><p class="mini">근거: 축산물품질평가원 경락가 · 해외 선물 · 관측 기관 전망</p></div><div class="fc-card"><div class="fc-h"><b>수산</b><span class="mini">다음 달 · 산지 위판가 · 적중 6/35(17%)</span></div><table class="t fc"><tr><td>꽃게</td><td><span class="fx up">오름</span></td><td class="mini">10,760원/㎏ · 창고 재고 -16.8%(물량 빠듯)</td></tr><tr><td>방어</td><td><span class="fx dn">내림</span></td><td class="mini">3,077원/㎏ · 창고 재고 +41.2%(물량 쌓임)</td></tr><tr><td>아귀</td><td><span class="fx dn">내림</span></td><td class="mini">3,885원/㎏ · 창고 재고 +21.7%(물량 쌓임)</td></tr><tr><td>갈치</td><td><span class="fx dn">내림</span></td><td class="mini">8,839원/㎏ · 달 후반 값 -21.3%</td></tr><tr><td>넙치</td><td><span class="fx up">오름</span></td><td class="mini">21,654원/㎏ · 달 후반 값 +16.8%</td></tr><tr><td>참조기</td><td><span class="fx up">오름</span></td><td class="mini">10,544원/㎏ · 달 후반 값 +33.3%</td></tr><tr><td>삼치</td><td><span class="fx up">오름</span></td><td class="mini">2,993원/㎏ · 창고 재고 -35.1%(물량 빠듯)</td></tr><tr><td>병어</td><td><span class="fx dn">내림</span></td><td class="mini">14,816원/㎏ · 달 후반 값 -22.8%</td></tr></table><p class="mini">근거: 수협 산지 위판 · 창고 재고 · 폐사 위험 예보 · 보합 16품목</p></div><div class="fc-card"><div class="fc-h"><b>농산</b><span class="mini">앞으로 2주 · 도매시장가 · 채점 대기</span></div><table class="t fc"><tr><td>사과</td><td><span class="fx up">오름</span></td><td class="mini">3,290원/㎏ · 최근 5거래일 값 +5.8%</td></tr><tr><td>감귤</td><td><span class="fx dn">내림</span></td><td class="mini">1,931원/㎏ · 최근 5거래일 값 -24.4%</td></tr><tr><td>포도</td><td><span class="fx up">오름</span></td><td class="mini">3,107원/㎏ · 최근 5거래일 값 +9.3%</td></tr><tr><td>떫은감</td><td><span class="fx dn">내림</span></td><td class="mini">2,085원/㎏ · 최근 5거래일 값 -21.2%</td></tr><tr><td>호박</td><td><span class="fx up">오름</span></td><td class="mini">1,325원/㎏ · 최근 5거래일 값 +43.5%</td></tr><tr><td>파프리카</td><td><span class="fx up">오름</span></td><td class="mini">3,662원/㎏ · 최근 5거래일 값 +24.1%</td></tr><tr><td>시금치</td><td><span class="fx dn">내림</span></td><td class="mini">2,667원/㎏ · 최근 5거래일 값 -22.1%</td></tr><tr><td>상추</td><td><span class="fx up">오름</span></td><td class="mini">1,846원/㎏ · 최근 5거래일 값 +6.8%</td></tr></table><p class="mini">근거: 공영도매시장 26곳 정산 31거래일 · 보합 37품목</p></div></div><p class="mini">「오름」이면 미리 사 두거나 출하를 늦추는 쪽, 「내림」이면 구매를 미루거나 출하를 서두르는 쪽으로 검토하세요. 품목마다 자세한 근거와 지난 적중 기록은 <a href="/bakssifarm/signal/">근거·적중</a>에 있습니다.</p><h2>원가 압력 — 기름값·환율·원료가</h2><div class="grid3"><div class="card"><h3>축산 <span class="fx up">오름</span></h3><div class="big">+3.1<i>%</i></div><p>경유 선물 3개월 +18.5% · 원/달러 3개월 -7.1%</p></div><div class="card"><h3>수산 <span class="fx up">오름</span></h3><div class="big">+15.9<i>%</i></div><p>경유 선물 3개월 +18.5% · 브렌트유 3개월 +30.9% · 원/달러 3개월 -7.1%</p></div><div class="card"><h3>농산 <span class="fx up">오름</span></h3><div class="big">+8.3<i>%</i></div><p>경유 선물 3개월 +18.5% · 천연가스 3개월 +10.0% · 원/달러 3개월 -7.1%</p></div></div><ul class="mini"><li>경유·연료: 호르무즈 원유 수송은 회복 중이나 정제 연료(경유 등) 수출은 전쟁 전보다 약 40% 적어 경유 선물이 원유의 약 2배, 원유와 경유 값 차이가 사상 최대 — 어선·농기계·하우스 난방·운송 원가 부 <span class="src">(뉴시스 2026-10-02(월스트리트저널 인용))</span></li><li>비료: 무기질비료 값 평균 5.1% 인하, 가격 보조는 유지 <span class="src">(농림축산식품부(뉴스핌·세계일보 2026-10-20))</span></li></ul><h2>세계 시세 — 선물·환율</h2><table class="t"><tr><th>지표</th><th class="num">최근</th><th class="num">1개월</th><th class="num">3개월</th><th>흐름</th></tr><tr><td>옥수수 선물(시카고)</td><td class="num">450.0</td><td class="num">-13.8%</td><td class="num">+0.2%</td><td>내림</td></tr><tr><td>대두박 선물(시카고)</td><td class="num">334.6</td><td class="num">-7.1%</td><td class="num">+6.8%</td><td>오름</td></tr><tr><td>대두 선물(시카고)</td><td class="num">1,243.25</td><td class="num">-4.2%</td><td class="num">+6.4%</td><td>옆걸음</td></tr><tr><td>소맥 선물(시카고)</td><td class="num">611.0</td><td class="num">-11.8%</td><td class="num">-6.1%</td><td>내림</td></tr><tr><td>생우 선물(시카고)</td><td class="num">230.825</td><td class="num">+6.3%</td><td class="num">+4.0%</td><td>오름</td></tr><tr><td>비육우 선물(시카고)</td><td class="num">347.125</td><td class="num">+4.0%</td><td class="num">-0.2%</td><td>오름</td></tr><tr><td>돈육 선물(시카고)</td><td class="num">62.15</td><td class="num">-11.1%</td><td class="num">-15.6%</td><td>내림</td></tr><tr><td>서부텍사스유 선물</td><td class="num">100.17</td><td class="num">+12.1%</td><td class="num">+24.7%</td><td>오름</td></tr><tr><td>경유·난방유 선물(뉴욕)</td><td class="num">4.5958</td><td class="num">-6.2%</td><td class="num">+18.5%</td><td>오름</td></tr><tr><td>브렌트유 선물</td><td class="num">109.67</td><td class="num">+6.9%</td><td class="num">+30.9%</td><td>오름</td></tr><tr><td>천연가스 선물(미국)</td><td class="num">3.059</td><td class="num">+1.6%</td><td class="num">+10.0%</td><td>오름</td></tr><tr><td>원/달러 환율</td><td class="num">1,326.63</td><td class="num">-1.8%</td><td class="num">-7.1%</td><td>내림</td></tr><tr><td>건화물선 운임 대용 지표</td><td class="num">12.57</td><td class="num">-13.1%</td><td class="num">-9.9%</td><td>내림</td></tr></table><h2>예보 받아 보기</h2><div class="grid2"><div class="card"><h3>유통·가공·급식 업체</h3><p>우리 회사가 사는 품목만 골라 매주 예보와 경보를 받는 구독을 준비하고 있습니다.</p><p style="margin-top:10px;"><a class="btn prime" href="/bakssifarm/pro/">업체 등록·구독 신청</a></p></div><div class="card"><h3>농가·어가</h3><p>오늘 시세와 예보를 한 장에 담은 「시세 한 장」을 무료로 받아 보세요.</p><p style="margin-top:10px;"><a class="btn" href="/bakssifarm/sheet/">시세 한 장 보기</a></p></div></div><p class="mini" style="margin-top:22px;">자료: 해외 선물·환율(야후 금융·스투크·미국 연준) × 축산물품질평가원 경락가 × 수협 위판·재고 × 공영도매시장 정산 × 수온 예보. 예보는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 지도로 보려면 <a href="/bakssifarm/map/">시군별 지도</a>.</p>
+<script>(function(){var EP="";document.querySelectorAll('form.form').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();var b=f.querySelector('button[type=submit]');b.disabled=true;b.textContent='보내는 중…';var fd=new FormData(f);var body=new URLSearchParams(fd);var url=EP||f.getAttribute('action');fetch(url,{method:'POST',body:body,mode:EP?'no-cors':'cors'}).then(function(r){if(!EP&&!r.ok)throw new Error(r.status);location.href=f.getAttribute('action').replace(/^https?:\/\/[^/]+/,'/bakssifarm');}).catch(function(){b.disabled=false;b.textContent='다시 보내기';var m=f.querySelector('.form-msg');m.hidden=false;m.textContent='지금은 접수 창구가 응답하지 않습니다. 잠시 뒤 다시 눌러 주세요.';});});});})();</script>
+<footer class="foot">
+  <p>박씨팜 — 농축수산물 가격 예보. 축산·수산·농산 품목의 값 방향을 근거와 적중률과 함께 매일 아침 알려 드립니다. 물건을 사고팔지 않으며, 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/bakssifarm/about/">소개</a>에 있습니다.</p>
+  <p><a href="/bakssifarm/">가격 예보</a><a href="/bakssifarm/signal/">근거·적중</a><a href="/bakssifarm/map/">지도</a><a href="/bakssifarm/price/">경락가</a><a href="/bakssifarm/buy/">구입가</a><a href="/bakssifarm/gongu/">공동구매</a><a href="/bakssifarm/pro/">데이터·업체</a><a href="/bakssifarm/p/">시군별</a><a href="/bakssifarm/rss.xml">새 소식</a><a href="/bakssifarm/sitemap.xml">사이트 지도</a></p>
+</footer>
 </main>
-
-<div class="sheet-dim" id="pickDim" hidden></div>
-<section class="pick-sheet" id="pickSheet" role="dialog" aria-modal="true" aria-labelledby="pickTitle" hidden>
-  <div class="pick-head">
-    <h2 id="pickTitle">어떤 품목을 보시나요</h2>
-    <button type="button" class="x" id="pickClose" aria-label="닫기">
-      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-  <div class="pick-body" id="pickBody"></div>
-</section>
-
-<script src="assets/leaflet.js"></script>
-<script src="assets/topojson-client.min.js"></script>
-<script src="app.js"></script>
 </body>
 </html>

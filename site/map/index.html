@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<base href="/bakssifarm/">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>박씨팜 지도 — 농장·어장·동물농장 시군별 한 지도</title>
+<meta name="description" content="전국 시군별 가축 사육, 양식 어장 면허, 지리적표시 대표 품목을 한 지도에서. 공판장·가축시장·수협 위판장·공영도매시장 위치와 경락가 조회, 사료·자재 공동구매 모집판까지.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="박씨팜">
+<meta property="og:title" content="박씨팜 지도 — 농장·어장·동물농장 시군별 한 지도">
+<meta property="og:description" content="전국 시군별 가축 사육, 양식 어장 면허, 대표 판매 품목을 한 지도에서. 공판장·위판장·도매시장 위치와 경락가, 공동구매 모집판.">
+<meta property="og:image" content="https://thecloudstay.github.io/bakssifarm/og/home.png">
+<meta property="og:url" content="https://thecloudstay.github.io/bakssifarm/map/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://thecloudstay.github.io/bakssifarm/map/">
+<link rel="alternate" type="application/rss+xml" title="박씨팜 새 소식" href="rss.xml">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/leaflet.css">
+<link rel="stylesheet" href="style.css">
+<!--head-extra--><!--/head-extra-->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"박씨팜","url":"https://thecloudstay.github.io/bakssifarm/","description":"전국 시군별 가축 사육·양식 어장·대표 품목 지도와 공판장·위판장·도매시장 위치, 경락가 조회, 공동구매 모집판","inLanguage":"ko"}
+</script>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="./" aria-label="박씨팜 가격 예보(처음 화면)">
+    <svg class="seal" viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/>
+      <path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/>
+      <path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/>
+    </svg>
+    <span class="word">박씨팜</span>
+  </a>
+  <nav class="modes" id="modes" role="tablist" aria-label="지도 종류">
+    <button type="button" role="tab" data-mode="ani" aria-selected="true">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 9.5c0-3 2.5-5 6.5-5s6.5 2 6.5 5v2.5c0 1.5-1 2.5-2.5 2.5h-8c-1.5 0-2.5-1-2.5-2.5Z M7 14.5v2.5M13 14.5v2.5M3.5 9.5 2 7M16.5 9.5 18 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>동물농장</span></button>
+    <button type="button" role="tab" data-mode="sea" aria-selected="false">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M2.5 12.5c2-2 4-2 6 0s4 2 6 0 3 0 3 0M2.5 16c2-2 4-2 6 0s4 2 6 0 3 0 3 0M10 3.5c-3 0-5 2-5 4.5h10c0-2.5-2-4.5-5-4.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>어장</span></button>
+    <button type="button" role="tab" data-mode="crop" aria-selected="false">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17V9M10 9c0-3.5-2.5-5.5-6-5.5 0 3.5 2.5 5.6 6 5.5ZM10 7.5c.3-3.8 3-6 7-6-.3 3.8-3 6.1-7 6ZM4 17h12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>농장</span></button>
+  </nav>
+  <div class="row2" id="row2">
+    <button class="pick" id="pickBtn" type="button" aria-haspopup="dialog" aria-controls="pickSheet">
+      <span class="pick-k" id="pickName">한우</span>
+      <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="seg" role="radiogroup" aria-label="지도에 칠할 값" id="seg"></div>
+  </div>
+  <div class="find">
+    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+    <input id="findInput" type="search" placeholder="시군 이름으로 찾기" autocomplete="off" aria-label="시군 이름으로 찾기">
+    <ul class="find-list" id="findList" role="listbox" hidden></ul>
+  </div>
+  <nav class="more" aria-label="다른 화면">
+    <a href="./" class="hot">가격 예보</a>
+    <a href="price/">경락가</a>
+    <a href="buy/">구입가</a>
+    <a href="gongu/">공동구매</a>
+    <a href="signal/">예측 근거·적중</a>
+    <a href="risk/">위험 예보</a>
+    <a href="pro/">데이터·업체</a>
+  </nav>
+</header>
+
+<main class="stage">
+  <aside class="panel" id="panel" aria-live="polite">
+    <button class="grip" id="grip" type="button" aria-label="자세히 펼치기"><span></span></button>
+    <div class="panel-in" id="panelIn"></div>
+  </aside>
+  <div class="mapwrap">
+    <div id="map" aria-label="전국 시군 지도"></div>
+    <div class="layers" id="layers" role="group" aria-label="지도에 보일 것"></div>
+    <div class="legend" id="legend"></div>
+    <div class="hint" id="hint" hidden></div>
+    <div class="credit" id="credit"></div>
+  </div>
+</main>
+
+<div class="sheet-dim" id="pickDim" hidden></div>
+<section class="pick-sheet" id="pickSheet" role="dialog" aria-modal="true" aria-labelledby="pickTitle" hidden>
+  <div class="pick-head">
+    <h2 id="pickTitle">어떤 품목을 보시나요</h2>
+    <button type="button" class="x" id="pickClose" aria-label="닫기">
+      <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 5l10 10M15 5 5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="pick-body" id="pickBody"></div>
+</section>
+
+<script src="assets/leaflet.js"></script>
+<script src="assets/topojson-client.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

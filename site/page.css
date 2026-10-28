@@ -95,3 +95,21 @@ table.t tr.ex td{color:var(--faint)}
 .cards .card ul{margin:8px 0;padding-left:18px}
 svg.chart{width:100%;height:auto;max-width:720px;display:block;margin:8px 0;background:var(--wash);border-radius:12px}
 .cards li b{display:inline;font-size:inherit} .cards li .mini{display:inline}
+/* 가격 예보판(첫 화면) 2026-10-28 */
+.fc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:10px 0}
+.fc-card{border:1px solid var(--line);border-radius:14px;padding:14px 14px 10px;background:var(--paper);min-width:0}
+.fc-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:2px solid var(--moss);padding-bottom:8px}
+.fc-h b{font-size:18px;letter-spacing:-.02em}
+table.t.fc{font-size:13.5px;margin:4px 0 6px}
+table.t.fc td{padding:7px 4px}
+table.t.fc td:first-child{font-weight:650;white-space:nowrap}
+.fx{display:inline-block;min-width:38px;text-align:center;font-size:12px;font-weight:720;padding:2px 7px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.fx.up{color:#fff;background:var(--brick);border-color:var(--brick)}
+.fx.dn{color:#fff;background:#2f5f8a;border-color:#2f5f8a}
+.fx.flat{color:var(--mute);background:var(--wash)}
+.src{color:var(--faint)}
+ul.alerts{list-style:none;padding:0;margin:8px 0;display:grid;gap:6px}
+ul.alerts li{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:14px;background:var(--paper)}
+ul.alerts .lv{display:inline-block;font-size:11.5px;font-weight:740;padding:1px 7px;border-radius:6px;margin-right:8px}
+ul.alerts .lv.hi{background:var(--brick);color:#fff} ul.alerts .lv.mid{background:var(--grain);color:#fff}
+@media (max-width:900px){.fc-grid{grid-template-columns:1fr}}

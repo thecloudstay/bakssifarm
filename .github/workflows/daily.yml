@@ -83,7 +83,7 @@ jobs:
         run: |
           git config user.name "박씨팜 아침 작업"
           git config user.email "bot@bakssifarm.local"
-          git add -A site/data site/index.html tools/urls.txt private || true
+          git add -A site/data site/map/index.html tools/urls.txt private || true
           git diff --cached --quiet || git commit -m "아침 수집 $(TZ=Asia/Seoul date +%Y-%m-%d)"
           git checkout -- . 2>/dev/null; git clean -fdq -e _korea 2>/dev/null; for i in 1 2 3 4 5; do git pull --rebase -X theirs -q && git push && break; git rebase --abort 2>/dev/null; sleep 7; done || true
       - name: 넷리파이에도 올리기(토큰이 있을 때만)
