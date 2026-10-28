@@ -155,6 +155,79 @@ def build(G):
         it['url'] = slug(it['sector'], it['item']); it['w'], it['cls'] = dirw(it['dir'])
     by_url = {it['url']: it for it in items}
     SEC_ORDER = {'축산': 0, '수산': 1, '농산': 2}
+    # ── 경향 계량(품목) + 날마다 기록 + 14일 뒤 채점 ─────────────
+    for it in items:
+        it['tm'] = tmetrics(it['series']) if len(it['series']) >= 5 else None
+    TR_DIR = os.path.join(PRIVATE, 'trend'); os.makedirs(TR_DIR, exist_ok=True)
+    def _d(s): return datetime.date.fromisoformat(s[:10])
+    idx_list = [('종합', PX.get('total') or {})] + [(k, v) for k, v in (PX.get('sectors') or {}).items()] + [('원가 압력', PX.get('cost') or {})]
+    snap = {'date': TODAY, 'items': [[it['sector'], it['item'], it['tm']['last'], it['tm']['regime'], it['tm'].get('slope'), it['tm'].get('date')] for it in items if it.get('tm') and it['tm'].get('n', 0) >= 3],
+            'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('slope'), v['metrics'].get('date')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}}
+    try: json.dump(snap, open(os.path.join(TR_DIR, TODAY + '.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    except Exception: pass
+    HOR = 14   # 달력일(≈10거래일)
+    def price_at(series, d0):
+        for d, v in series:
+            if d >= d0: return d, v
+        return None, None
+    ser_by = {(it['sector'], it['item']): it['series'] for it in items}
+    idx_ser = {k: (v.get('daily') or []) for k, v in idx_list}
+    TSC = {'items': [], 'index': []}
+    for p in sorted(glob.glob(os.path.join(TR_DIR, '2*.json'))):
+        d0 = os.path.basename(p)[:10]
+        if (_d(TODAY) - _d(d0)).days < HOR: continue
+        try: sp = json.load(open(p, encoding='utf-8'))
+        except Exception: continue
+        due = (_d(d0) + datetime.timedelta(days=HOR)).isoformat()
+        for row in sp.get('items', []):
+            sec, item, last, regime = row[0], row[1], row[2], row[3]
+            if regime not in ('상승 추세', '하락 추세', '횡보') or not last: continue
+            dd, v = price_at(ser_by.get((sec, item)) or [], due)
+            if v is None: continue
+            chg = round((v / last - 1) * 100, 1)
+            hit = (chg >= 2) if regime == '상승 추세' else (chg <= -2) if regime == '하락 추세' else abs(chg) < 3
+            TSC['items'].append({'d': d0, 'sector': sec, 'item': item, 'regime': regime, 'chg': chg, 'hit': hit, 'to': dd})
+        for k, row in (sp.get('index') or {}).items():
+            last, regime = row[0], row[1]
+            if regime not in ('상승 추세', '하락 추세', '횡보') or not last: continue
+            dd, v = price_at(idx_ser.get(k) or [], due)
+            if v is None: continue
+            chg = round((v / last - 1) * 100, 1)
+            hit = (chg >= 1) if regime == '상승 추세' else (chg <= -1) if regime == '하락 추세' else abs(chg) < 1.5
+            TSC['index'].append({'d': d0, 'item': k, 'regime': regime, 'chg': chg, 'hit': hit, 'to': dd})
+    def tsc_sum(rows):
+        out = {}
+        for r in rows: a = out.setdefault(r['regime'], [0, 0]); a[0] += 1; a[1] += int(r['hit'])
+        n = len(rows); h = sum(int(r['hit']) for r in rows)
+        base = round(sum(1 for r in rows if r['chg'] >= 2) / n * 100) if n else None   # 「무조건 오른다」고 했을 때 맞을 비율
+        return {'n': n, 'hit': h, 'rate': round(h / n * 100) if n else None, 'by': {k: {'n': v[0], 'hit': v[1], 'rate': round(v[1] / v[0] * 100)} for k, v in out.items()}, 'base_up': base}
+    TSC['sum_items'] = tsc_sum(TSC['items']); TSC['sum_index'] = tsc_sum(TSC['index']); TSC['n_days'] = len(glob.glob(os.path.join(TR_DIR, '2*.json')))
+    try: json.dump(TSC, open(os.path.join(TR_DIR, 'score.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    except Exception: pass
+    # 경향 순위(최근 7일 안에 값이 있는 품목만 — 지난달 자료뿐인 갈래는 제외)
+    def fresh(it):
+        """순위에 올릴 품목: 점 10개 이상, 7일 안 값, 변동성 20%/일 아래(들쭉날쭉한 규격 혼합 제외), 최근 5일 물량 중앙값 1톤 이상(철 끝물 제외)"""
+        m = it.get('tm')
+        if not (m and m.get('n', 0) >= 10 and m.get('slope') is not None and (_d(TODAY) - _d(m['date'])).days <= 7): return False
+        if (m.get('vol') or 0) > 20: return False
+        vq = [q for _, q in (it.get('vols') or [])[-5:] if q]
+        if vq and sorted(vq)[len(vq) // 2] < 1000: return False
+        return True
+    TR_UP = sorted([it for it in items if fresh(it) and it['tm']['regime'] == '상승 추세'], key=lambda it: -it['tm']['slope'])
+    TR_DN = sorted([it for it in items if fresh(it) and it['tm']['regime'] == '하락 추세'], key=lambda it: it['tm']['slope'])
+    TR_X = sorted([it for it in items if fresh(it) and it['tm'].get('cross') and it['tm']['cross']['ago'] <= 3], key=lambda it: it['tm']['cross']['ago'])
+    def ago_word(n): return '오늘' if n == 0 else '어제' if n == 1 else f'{n}일 전'
+    def tr_row(it):
+        m = it['tm']; c = m.get('cross')
+        return (f'<tr><td><a href="{it["url"]}"><b>{E(it["item"])}</b></a> <small>{E(it["sector"])}</small></td><td class="num">{E(won(m["last"]))}</td><td>{regime_badge(m)}</td><td class="num">{(m["slope"] or 0):+.2f}</td>'
+                f'<td class="num">{(m["chg_s"] if m.get("chg_s") is not None else 0):+}% · {(m["chg_l"] if m.get("chg_l") is not None else 0):+}%</td><td class="num">{m.get("vol") if m.get("vol") is not None else "–"}</td><td>{badge(it["dir"])}</td><td class="mini">{(ago_word(c["ago"]) + " " + c["kind"]) if c else ""}</td><td>{spark([v for _, v in it["series"][-30:]], w=90, h=26, cls="up" if m["regime"] == "상승 추세" else "dn" if m["regime"] == "하락 추세" else "flat")}</td></tr>')
+    def tr_table(rows):
+        return '<div class="tscroll"><table class="t"><tr><th>품목</th><th class="num">지금</th><th>추세</th><th class="num">20일선 기울기(%/일)</th><th class="num">5일 · 20일</th><th class="num">변동성</th><th>예보</th><th>교차</th><th>30일</th></tr>' + ''.join(tr_row(it) for it in rows) + '</table></div>' if rows else '<p class="mini">해당 품목 없음.</p>'
+    def tsc_html(sm, what):
+        th = '상승 추세 → +2% 넘게 오르면 적중, 하락 추세 → −2% 넘게 내리면 적중, 횡보 → ±3% 안이면 적중' if what == '품목' else '지수는 움직임이 작아 상승 +1%·하락 −1%·횡보 ±1.5%'
+        if not sm.get('n'): return f'<p class="mini">{what} 경향 판정은 날마다 기록해 두고 14일 뒤 실제 값으로 채점합니다({th}, 전환 중은 채점 안 함). 기록 {TSC["n_days"]}일째, 첫 채점은 11월 11일쯤.</p>'
+        by = ' · '.join(f'{k} {v["hit"]}/{v["n"]}({v["rate"]}%)' for k, v in sm['by'].items())
+        return f'<p><b>{what} 경향 판정 채점</b>: {sm["n"]}건 중 {sm["hit"]}건 적중({sm["rate"]}%) — {by}. 기준선(무조건 「오른다」 했을 때) {sm["base_up"]}%. 틀린 판정도 지우지 않습니다.</p>'
     def rank(it): return (0 if it['dir'] != '보합' else 1, -it['strength'], -(it.get('amt') or 0), it['item'])
     items.sort(key=rank)
     counts = collections.Counter(it['w'] for it in items)
@@ -221,7 +294,11 @@ def build(G):
             cards.append(f'<a class="card px {cls}" href="/index/#{E(k)}"><h3>{E(k)} 지수 {regime_badge(m)}</h3><div class="big">{(m.get("last") or ser[-1][1]):.1f}</div>'
                          f'<p class="mini">{("20일 " if m.get("chg_l") is not None else "5일 ") + f"{ch:+}%" if ch is not None else "변화 계산 전"} · {len(ser)}일 · 시작 = 100</p>{spark([x[1] for x in ser[-40:]], cls=cls)}</a>')
         if not cards: return ''
-        return '<h2 id="px">물가 지수 — 천천히 오르나, 내리나</h2><p class="mini">흩어진 경락가·위판가·도매가를 거래금액 가중으로 한 줄의 지수로 묶고, 주식 차트처럼 5일선·20일선·기울기로 경향을 잽니다. 하루 값이 아니라 흐름을 봅니다.</p><div class="grid4">' + ''.join(cards) + '</div><p class="mini"><a href="/index/">지수 차트·계량 요약·원가 압력 지수 전체 →</a></p>'
+        rk = ''
+        if TR_UP or TR_DN:
+            f = lambda it: f'<a href="{it["url"]}">{E(it["item"])}</a> <span class="mini">{it["tm"]["slope"]:+.2f}%/일</span>'
+            rk = '<p class="mini" style="margin-top:8px;">오르는 추세 가파른 순: ' + (' · '.join(f(it) for it in TR_UP[:4]) or '없음') + ' / 내리는 추세: ' + (' · '.join(f(it) for it in TR_DN[:4]) or '없음') + f' — <a href="/index/#rank">경향 순위 전체 →</a></p>'
+        return '<h2 id="px">물가 지수 — 천천히 오르나, 내리나</h2><p class="mini">흩어진 경락가·위판가·도매가를 거래금액 가중으로 한 줄의 지수로 묶고, 주식 차트처럼 5일선·20일선·기울기로 경향을 잽니다. 하루 값이 아니라 흐름을 봅니다.</p><div class="grid4">' + ''.join(cards) + '</div><p class="mini"><a href="/index/">지수 차트·계량 요약·원가 압력 지수 전체 →</a></p>' + rk
     def index_page():
         if not PX or not PX.get('sectors'):
             write('/index/', shell('/index/', '물가 지수 — 준비 중 | 박씨팜', '박씨팜 물가 지수는 자료가 쌓이는 대로 열립니다.', '<p class="crumb"><a href="/">박씨팜</a> › 물가 지수</p><h1 class="title">물가 지수</h1><p class="note">지수를 만들 자료가 아직 쌓이지 않았습니다. 매일 아침 자동으로 다시 계산합니다.</p>'), '0.5'); return
@@ -259,7 +336,21 @@ def build(G):
             b += '<h3>월별 수산 지수</h3>' + block('수산(월별)', sv, monthly=True, color='#2f5f8a')
         elif sv.get('monthly'):
             b += '<p class="mini">월별 수산 지수: ' + ' → '.join(f'{d[2:].replace(chr(45), ".")}월 {v:,.1f}' for d, v in sv['monthly']) + ' (달 집계가 4개 넘게 쌓이면 월별 차트를 그립니다)</p>'
-        b += '<h2 id="농산">농산 지수</h2>' + block('농산', px_sector('농산'), color='var(--moss)', note='공영도매시장 26곳의 ㎏ 단위 정산 거래만 씁니다. 토요일 반쪽 장(거래 금액이 평소의 6할 아래)은 뺍니다. 가을에는 배추·무 같은 김장 채소 비중이 커져 지수가 그 품목의 계절 흐름을 많이 따릅니다.')
+        b += '<h2 id="농산">농산 지수</h2>' + block('농산', px_sector('농산'), color='var(--moss)', note='공영도매시장 26곳의 ㎏ 단위 정산 거래만 씁니다(도매시장 안 수산 부류·가공품은 뺌). 토요일 반쪽 장(거래 금액이 평소의 6할 아래)은 뺍니다. 가을에는 배추·무 같은 김장 채소 비중이 커져 지수가 그 품목의 계절 흐름을 많이 따릅니다.')
+        gr = px_sector('농산').get('groups') or {}
+        if gr:
+            b += '<h3>부류별 — 어느 부류가 끌고 가나</h3><div class="tscroll"><table class="t"><tr><th>부류</th><th class="num">거래금액 비중</th><th class="num">품목</th><th class="num">지수</th><th>추세</th><th class="num">5일 · 20일</th><th class="num">20일선 기울기</th><th class="num">변동성</th><th>흐름</th></tr>'
+            for g, v in sorted(gr.items(), key=lambda x: -x[1].get('share', 0)):
+                m = v.get('metrics') or {}
+                if not m.get('n'): continue
+                cls = 'up' if m['regime'] == '상승 추세' else 'dn' if m['regime'] == '하락 추세' else 'flat'
+                b += f'<tr><td><b>{E(g)}</b></td><td class="num">{v.get("share", 0)}%</td><td class="num">{v.get("items", 0)}</td><td class="num">{m["last"]:,.1f}</td><td>{regime_badge(m)}</td><td class="num">{pc(m.get("chg_s"))} · {pc(m.get("chg_l"))}</td><td class="num">{(m.get("slope") or 0):+.2f}</td><td class="num">{m.get("vol") if m.get("vol") is not None else "–"}</td><td>{spark([x[1] for x in v["daily"][-40:]], w=90, h=26, cls=cls)}</td></tr>'
+            b += '</table></div><p class="mini">부류는 tools/crop_groups.json 의 표로 나눕니다(과일·채소·양념채소·서류·곡물·버섯). 비중은 그린 기간의 거래금액.</p>'
+        # 품목별 경향 순위
+        b += '<h2 id="rank">품목별 경향 순위 — 가장 가파르게 오르는·내리는 품목</h2><p class="mini">최근 7일 안에 값이 있고, 하루 1톤 넘게 거래되며, 변동성이 20%/일 아래인 품목만(20일선 기울기 순 — 규격이 섞여 값이 널뛰는 품목과 철 끝물은 뺌). 추세는 「지금까지의 흐름」이지 예보가 아니며, 예보 칸은 품목 화면의 예보와 같습니다. 두 칸이 어긋나는 품목(오르는 추세인데 내림 예보)이 바로 전환 후보입니다.</p>'
+        b += f'<h3>오르는 추세 {len(TR_UP)}품목</h3>' + tr_table(TR_UP[:12]) + (f'<p class="mini">외 {len(TR_UP) - 12}품목은 <a href="/f/">품목별</a>에서.</p>' if len(TR_UP) > 12 else '')
+        b += f'<h3>내리는 추세 {len(TR_DN)}품목</h3>' + tr_table(TR_DN[:12]) + (f'<p class="mini">외 {len(TR_DN) - 12}품목.</p>' if len(TR_DN) > 12 else '')
+        if TR_X: b += f'<h3>최근 3일 안 교차 발생 {len(TR_X)}품목</h3><p class="mini">5일선이 20일선을 뚫은 품목. 골든(위로)은 오름 전환, 데드(아래로)는 내림 전환의 초기 신호로 읽되, 변동성이 높은 품목은 가짜 교차가 잦습니다.</p>' + tr_table(TR_X[:12])
         # 원가 압력
         b += '<h2 id="원가 압력">원가 압력 지수 — 사료·기름·환율·가스</h2><p class="mini">값을 밀어 올리는 쪽의 지수입니다. 2년치라 20일선·골든/데드 크로스가 제대로 보입니다. 원가가 산지 값에 옮겨 가는 데는 보통 1~4개월이 걸립니다(사료 → 돼지·닭 3~6개월).</p>'
         b += block('원가 압력', C, color='#8a5a2f')
@@ -277,6 +368,7 @@ def build(G):
             b += f'<p class="mini">{E(wd[0][0])} ~ {E(wd[-1][0])} · 오늘 {wd[-1][1]}점(경보 {(WS.get("alarms") or [[0, 0]])[-1][1]}건 · 켜진 요인 {(WS.get("n") or [[0, 0]])[-1][1]}건). {E(WS.get("src", ""))}. 이 점수가 오르는데 갈래 지수가 아직 안 움직였다면, 몇 주 뒤의 값 변화를 먼저 보고 있는 것일 수 있습니다.</p>'
         else:
             b += f'<p class="mini">세계 요인 감시는 2026-10-28부터 날마다 기록합니다(오늘 {wd[-1][1] if wd else 0}점, 경보 {(WS.get("alarms") or [[0, 0]])[-1][1]}건). 점이 쌓이면 여기에 선으로 그립니다. <a href="/world/">오늘 켜진 요인 →</a></p>'
+        b += '<h2 id="score">경향 판정은 맞았나</h2>' + tsc_html(TSC['sum_items'], '품목') + tsc_html(TSC['sum_index'], '지수')
         # 읽는 법
         b += '<h2 id="how">읽는 법과 판정 기준</h2><table class="t"><tr><th>항목</th><th>뜻</th><th>기준</th></tr>'
         for a, bb, c in (('5일선 · 20일선', '최근 5일(단기)·20일(장기) 평균. 월별 지수는 1개월·3개월', '단기선이 장기선을 아래에서 위로 뚫으면 골든 크로스(오름 전환 신호), 위에서 아래로 뚫으면 데드 크로스'),
@@ -499,6 +591,9 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         for did, nm in (('hanwoo', '축산 · 한우 거세 출하'), ('pig', '축산 · 돼지 탕박 출하')):
             d = dec.get(did) or {}; lt = d.get('live_track') or {}
             b += f'<tr><td>{E(nm)}</td><td class="mini">날마다 · 10거래일 뒤 경락가</td><td class="num">{lt.get("n", 0)}</td><td class="num">{lt.get("hit", "–") if lt else "–"}</td><td class="num">{f"{lt["rate"]}%" if lt.get("n") else f"대기({d.get("ndays") or 0}일째 기록)"}</td><td class="mini">{f"{lt["base_rate"]}%" if lt.get("n") else "–"}</td></tr>'
+        ts = TSC['sum_items']
+        ts_rate = f'{ts["rate"]}%' if ts['n'] else f'대기({TSC["n_days"]}일째 기록)'; ts_note = f'무조건 오른다 {ts["base_up"]}%' if ts['n'] else '첫 채점 11월 11일쯤 · '
+        b += f'<tr><td>경향 판정(품목)</td><td class="mini">날마다 · 14일 뒤 값(상승 +2%·하락 −2%·횡보 ±3%)</td><td class="num">{ts["n"]}</td><td class="num">{ts["hit"] if ts["n"] else "–"}</td><td class="num">{E(ts_rate)}</td><td class="mini">{E(ts_note)}<a href="/index/#score">물가 지수</a></td></tr>'
         bt = (FC.get('feed') or {}).get('backtest') or {}
         b += f'<tr><td>축산 · 배합사료 원가</td><td class="mini">60거래일 · 과거 3년 되돌려 검증</td><td class="num">{bt.get("n", "–")}</td><td class="num">{bt.get("hit", "–")}</td><td class="num">{f"{bt["rate"]}%" if bt.get("n") else "–"}</td><td class="mini">{f"{bt["base_rate"]}% — 기준선과 같아 방향 예측 대신 전가 계산만" if bt.get("n") else "–"}</td></tr></table>'
         tr = (BUYS.get('score') or {}).get('trial') or {}

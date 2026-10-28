@@ -23,6 +23,15 @@ al = [a for a in fc.get('alerts', []) if a.get('level') == '경보']
 if al: lines.append('🚨 시장 경보 ' + str(len(al)) + '건: ' + ' · '.join(a.get('title', '') for a in al[:3]))
 dec = [d for d in fc.get('decisions', []) if '관망' not in d.get('act', '')]
 if dec: lines.append('판단: ' + ' · '.join(f'{d.get("item", "")} {d.get("act", "")}' for d in dec[:3]) + ' — https://thecloudstay.github.io/bakssifarm/signal/')
+px = jload(os.path.join(DATA, 'pindex.json'), {})
+if px.get('sectors'):
+    parts = []
+    for k, v in [('종합', px.get('total') or {})] + [(k, (px.get('sectors') or {}).get(k) or {}) for k in ('축산', '수산', '농산')]:
+        m = v.get('metrics') or {}
+        if m.get('n'): parts.append(f'{k} {m["last"]:.1f} {m["regime"]}' + (f'({m["chg_l"]:+}%/20일)' if m.get('chg_l') is not None else ''))
+    cm = (px.get('cost') or {}).get('metrics') or {}
+    if cm.get('n'): parts.append(f'원가 압력 {cm["last"]:.1f} {cm["regime"]}')
+    if parts: lines.append('물가 지수: ' + ' · '.join(parts) + ' — https://thecloudstay.github.io/bakssifarm/index/')
 items = gongu.get('items', [])
 if items:
     lines.append(f'공동구매 모집 {len(items)}건: ' + ' · '.join(f'{i["id"]} {i["item"]} {i["area"]} {i["status"]}' for i in items[:3]))

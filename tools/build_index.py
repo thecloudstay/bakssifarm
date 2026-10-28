@@ -35,19 +35,40 @@ def chain(days):
     return out
 
 # ── 농산 ─────────────────────────────────────────────────────
+CG = jload(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'crop_groups.json'), {})
+_grp_of = {}
+for g, names in CG.items():
+    if g.startswith('_'): continue
+    for nm in names: _grp_of.setdefault(nm, g)
+def crop_group(name):
+    """품목 → 부류(과일·양념채소·서류·곡물·버섯·채소), '제외' 면 농산 지수에서 뺌"""
+    if name in _grp_of: return _grp_of[name]
+    if '버섯' in name: return '버섯'
+    return '채소'
+FARM_GROUPS = ('채소', '과일', '양념채소', '서류·곡물', '버섯')
+
 def farm_index():
     files = sorted(glob.glob(os.path.join(PRIVATE, 'wholesale', '*.json')))
     days = []
     for p in files:
         try: d = json.load(open(p, encoding='utf-8'))
         except Exception: continue
+        d = {k: v for k, v in d.items() if crop_group(k) != '제외'}   # 도매시장 안 수산 부류·가공품·화훼는 농산 지수에서 뺌
         tot = sum((v[2] or 0) for v in d.values())
         days.append((os.path.basename(p)[:10], d, tot))
     if not days: return None
     med = sorted(x[2] for x in days)[len(days) // 2]
     days = [(d, {k: (v[0], v[2]) for k, v in dd.items() if v[0] and v[1] and v[1] >= 1000}, t) for d, dd, t in days if t >= med * 0.6]
     ser = chain([(d, dd) for d, dd, _ in days])
-    return {'daily': ser, 'items': round(statistics.mean(len(dd) for _, dd, _ in days)) if days else 0, 'src': '공영도매시장 26곳 정산 ㎏당 값 — 품목 거래금액 가중 고정 기하 지수(처음 5일 평균 = 100)', 'vol': [(d, round(t / 1e8, 1)) for d, _, t in days]}
+    # 부류별 하위 지수(채소·과일·양념채소·서류·곡물·버섯) — 어느 부류가 전체를 끌고 가는지 보려고
+    groups = {}
+    for g in FARM_GROUPS:
+        gd = [(d, {k: v for k, v in dd.items() if crop_group(k) == g}) for d, dd, _ in days]
+        gd = [(d, dd) for d, dd in gd if dd]
+        if len(gd) >= 3:
+            gs = chain(gd)
+            if gs: groups[g] = {'daily': gs, 'items': round(statistics.mean(len(dd) for _, dd in gd)), 'share': round(sum(v[1] for _, dd in gd for v in dd.values()) / max(1, sum(v[1] for _, dd, _ in days for v in dd.values())) * 100)}
+    return {'daily': ser, 'items': round(statistics.mean(len(dd) for _, dd, _ in days)) if days else 0, 'src': '공영도매시장 26곳 정산 ㎏당 값(도매시장 안 수산 부류·가공품 제외) — 품목 거래금액 가중 고정 기하 지수(처음 5일 평균 = 100)', 'vol': [(d, round(t / 1e8, 1)) for d, _, t in days], 'groups': groups}
 
 # ── 축산 ─────────────────────────────────────────────────────
 def live_index():
@@ -155,6 +176,8 @@ for k, v in sect.items():
     v['metrics'] = M(v.get('daily'))
     if v.get('monthly'): v['metrics_m'] = M(v['monthly'], monthly=True)
     if v.get('parts'): v['parts_metrics'] = {pk: M(pv) for pk, pv in v['parts'].items()}
+    if v.get('groups'):
+        for g in v['groups'].values(): g['metrics'] = M(g['daily'])
     out['sectors'][k] = v
 if tot: tot['metrics'] = M(tot['daily']); out['total'] = tot
 if cost:
