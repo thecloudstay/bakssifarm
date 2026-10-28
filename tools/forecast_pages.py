@@ -373,7 +373,7 @@ def build(G):
         b += '<h2 id="세계">세계 요인 활성 점수</h2>'
         wd = WS.get('daily') or []
         if len(wd) >= 2:
-            b += svg_line([x[1] for x in wd], w=720, h=140) if svg_line else ''
+            b += svg_line([(str(x[0]), x[1]) for x in wd], w=720, h=140) if svg_line else ''
             b += f'<p class="mini">{E(wd[0][0])} ~ {E(wd[-1][0])} · 오늘 {wd[-1][1]}점(경보 {(WS.get("alarms") or [[0, 0]])[-1][1]}건 · 켜진 요인 {(WS.get("n") or [[0, 0]])[-1][1]}건). {E(WS.get("src", ""))}. 이 점수가 오르는데 갈래 지수가 아직 안 움직였다면, 몇 주 뒤의 값 변화를 먼저 보고 있는 것일 수 있습니다.</p>'
         else:
             b += f'<p class="mini">세계 요인 감시는 2026-10-28부터 날마다 기록합니다(오늘 {wd[-1][1] if wd else 0}점, 경보 {(WS.get("alarms") or [[0, 0]])[-1][1]}건). 점이 쌓이면 여기에 선으로 그립니다. <a href="/world/">오늘 켜진 요인 →</a></p>'
