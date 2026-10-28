@@ -15,6 +15,20 @@ def build(G):
     BASE = G['BASE']; ROOT = G['ROOT']; PRIVATE = os.path.join(ROOT, 'private')
     FC = J('forecast.json', {}); BUYS = J('buysignal.json', {}); CROPS = J('cropsignal.json', {}); OPPS = J('opps.json', {})
     WPN = J('wipan.json', {}); RISK = J('risk.json', {}); SIG = J('signals.json', {'items': []}); PRICE = J('price/latest.json', {}); WORLD = J('world.json', {'events': []})
+    try: IM = json.load(open(os.path.join(ROOT, 'tools', 'import_matrix.json'), encoding='utf-8'))
+    except Exception: IM = {'items': []}
+    EXPO = WORLD.get('exposure') or {}; OLV = WORLD.get('origin_level') or {}
+    AK = {'한우 거세': '한우', '돼지 탕박': '돼지', '배합사료 원가': '사료'}   # 축산 품목 이름 → 규칙에서 쓰는 짧은 이름
+    def akey(sector, item): return AK.get(item, item) if sector == '축산' else item
+    def exposure_of(sector, item):
+        item = akey(sector, item); out = []
+        for k, v in EXPO.items():
+            sec, pat = k.split('|', 1)
+            if sec != sector: continue
+            try: ok = pat == '.' or re.fullmatch('(?:' + pat + ')', item)
+            except re.error: ok = False
+            if ok: out += v
+        return out
     TODAY = (FC.get('at') or BUYS.get('at') or datetime.date.today().isoformat())[:10]
 
     def base(n):
@@ -174,13 +188,17 @@ def build(G):
     def aff_links(affs):
         out = []
         for a in affs[:4]:
-            names = [it['item'] for it in items if it['sector'] == a.get('sector') and (a.get('item') == '.' or re.fullmatch('(?:' + (a.get('item') or '.') + ')', it['item']))]
+            names = [it['item'] for it in items if it['sector'] == a.get('sector') and (a.get('item') == '.' or re.fullmatch('(?:' + (a.get('item') or '.') + ')', akey(it['sector'], it['item'])))]
             arrow = '↑' if a.get('dir') == '오름 쪽' else '↓' if a.get('dir') == '내림 쪽' else ''
             if names: out.append(f'{E(a["sector"])} ' + ', '.join(f'<a href="{slug(a["sector"], n)}">{E(n)}</a>' for n in names[:6]) + (f' 외 {len(names) - 6}' if len(names) > 6 else '') + f' {arrow}')
             else: out.append(f'{E(a["sector"])} <span class="mini">{E((a.get("item") or "").replace("|", "·")[:40])}</span> {arrow} <span class="mini">(지금 수집 품목에 없음)</span>')
         return ' · '.join(out)
     def world_card(e):
-        return (f'<li class="wli"><div class="wh">{wlv(e["level"])}<b>{E(e["name"])}</b> <span class="mini">{E(e["cat"])}</span></div>'
+        extra = ''
+        if e.get('kind') == 'origin':
+            extra = '<div class="mini">수입: ' + ', '.join(f'{E(n)} {int(s * 100)}%' for n, s in (e.get('imports') or [])[:6]) + (f' · 항로 {E(e["route"])}' if e.get('route') else '') + '</div>'
+            if e.get('standing'): extra += f'<details class="mini"><summary>상시 배경 위험</summary>{E(e["standing"])}</details>'
+        return (f'<li class="wli"><div class="wh">{wlv(e["level"])}<b>{E(e["name"])}</b> <span class="mini">{E(e["cat"])}</span>' + (' <span class="mini">(어제 값)</span>' if e.get('stale') else '') + '</div>' + extra +
                 f'<div class="mini">{E(e.get("text", ""))}</div>' + (f'<div class="mini"><b>영향</b> {aff_links(e.get("affects") or [])}</div>' if e.get('affects') else '') +
                 (f'<div class="mini"><b>미리 할 일</b> {E(e.get("react", ""))}</div>' if e.get('react') else '') +
                 (('<ul class="titles">' + ''.join(f'<li><a href="{E(t["u"])}" target="_blank" rel="noopener nofollow">{E(t["t"])}</a> <span class="mini">{E(t["s"])} {E(t["d"][4:6])}.{E(t["d"][6:8])}</span></li>' for t in e.get('titles') or []) + '</ul>') if e.get('titles') else '') + '</li>')
@@ -194,10 +212,31 @@ def build(G):
     def world_page():
         b = '<p class="crumb"><a href="/">박씨팜</a> › 세계 요인</p><h1 class="title">세계 요인 감시 — 값을 흔드는 바깥일</h1>'
         b += f'<p class="lead">브라질 조류인플루엔자, 후쿠시마 처리수, 엘니뇨, 호르무즈, 할당관세, 명절처럼 품목 밖에서 값을 흔드는 요인 {WORLD.get("n_rules", 0)}개를 매일 아침 재서 예보 점수에 더합니다. {E((WORLD.get("at") or "")[:16])} 기준 · 활성 {len(WACT)}(경보 {sum(1 for e in WACT if e["level"] == 2)}).</p>'
-        b += '<div class="statusbar">' + ''.join(f'<span class="{"off" if any(e["level"] == 2 and e["cat"] == c for e in WACT) else "soon" if any(e["cat"] == c for e in WACT) else "on"}"><i></i>{E(c)} {sum(1 for e in WACT if e["cat"] == c)}/{sum(1 for e in WEV if e["cat"] == c)}</span>' for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '수요·달력')) + '</div>'
+        CATS = ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '수요·달력', '원산지', '국내 날씨', '국내 수급')
+        b += '<div class="statusbar">' + ''.join(f'<span class="{"off" if any(e["level"] == 2 and e["cat"] == c for e in WACT) else "soon" if any(e["cat"] == c for e in WACT) else "on"}"><i></i>{E(c)} {sum(1 for e in WACT if e["cat"] == c)}/{sum(1 for e in WEV if e["cat"] == c)}</span>' for c in CATS if any(e['cat'] == c for e in WEV)) + '</div>'
+        b += f'<p class="mini">감시 범위: 주제 요인 {WORLD.get("n_topic", 0)} · 원산지 나라 {WORLD.get("n_origin_all", 0)}(오늘 측정 {WORLD.get("n_origin", 0)}) · 수입 품목 {WORLD.get("n_import_items", 0)} · 국내 주산지 {WORLD.get("n_crop_points", 0)}곳 · 뉴스 자료 {E(WORLD.get("news_src", ""))} · 측정 {WORLD.get("elapsed_sec", 0)}초. 방법은 <a href="/method/">예측 기법</a>에.</p>'
         if WACT: b += '<h2>지금 활성</h2><ul class="alerts world">' + ''.join(world_card(e) for e in WACT) + '</ul>'
+        # 수입 품목 원산지 지도
+        if IM.get('items'):
+            b += '<h2 id="imports">수입 품목 원산지 지도 — 어디서 오나, 오늘 거기는 어떤가</h2><p class="mini">주요 수입 농축수산물·투입재 ' + str(len(IM['items'])) + '개의 원산지 비중(근사치)과 그 나라의 오늘 단계. 원산지 사건은 비중 × 전가 무게로 국내 경쟁·하류 품목 점수에 들어갑니다. 비중은 공개 통계 기반 근사치이며 해마다 갱신합니다.</p>'
+            for grp in IM.get('groups') or []:
+                rows = [it for it in IM['items'] if it.get('group') == grp]
+                if not rows: continue
+                b += f'<h3>{E(grp)}</h3><table class="t imtab"><tr><th>수입 품목</th><th>원산지(비중)</th><th>국내 영향</th></tr>'
+                for it in rows:
+                    org = ' · '.join(f'<span class="org {("hi" if OLV.get(re.sub(r"\(.*?\)", "", c).strip()) == 2 else "mid" if OLV.get(re.sub(r"\(.*?\)", "", c).strip()) == 1 else "")}">{E(c)} {int(s * 100)}%</span>' for c, s in it.get('origins', []))
+                    t = it.get('competes') or it.get('inputs_for') or {}
+                    names = [x['item'] for x in items if x['sector'] == t.get('sector') and (t.get('item') == '.' or re.fullmatch('(?:' + (t.get('item') or '.') + ')', akey(x['sector'], x['item'])))] if t else []
+                    dom = ('경쟁: ' if it.get('competes') else '투입: ') + (', '.join(f'<a href="{slug(t["sector"], n)}">{E(n)}</a>' for n in names[:6]) if names else f'<span class="mini">{E(t.get("sector", ""))} {E((t.get("item") or "").replace("|", "·")[:30])}</span>') + f' <span class="mini">전가 {it.get("pt", "")} · 시차 {E(it.get("lag", ""))}' + (' · 수출 품목' if it.get('export') else '') + '</span>'
+                    b += f'<tr><td><b>{E(it["name"])}</b>' + (f'<div class="mini">{E(it.get("scale", ""))}</div>' if it.get('scale') else '') + (f'<div class="mini">{E(it.get("note", ""))}</div>' if it.get('note') else '') + f'</td><td>{org}</td><td class="mini">{dom}</td></tr>'
+                b += '</table>'
+            b += '<p class="mini">원산지 표시 색: 빨강 = 오늘 경보, 노랑 = 주의. 나라별 상세는 아래 「원산지별 판」에.</p>'
+        # 원산지별 판
+        oe = [e for e in WEV if e.get('kind') == 'origin']
+        if oe:
+            b += '<h2 id="origins">원산지별 판 — 오늘 측정한 나라</h2><p class="mini">나라마다 공급 충격 뉴스·정치/무역 뉴스·통화 3개월 변동·엘니뇨 영향권을 잽니다. 1군(' + str(sum(1 for e in oe if e.get("tier") == 1)) + '개 나라)은 매일, 2군은 돌아가며 측정합니다.</p><ul class="alerts world">' + ''.join(world_card(e) for e in sorted(oe, key=lambda e: (-e['level'], -(e.get('tier') == 1), e['name']))) + '</ul>'
         b += '<h2>감시하는 요인 전부</h2><p class="mini">조용한 요인도 매일 잽니다. 단계가 오르면 그날 예보 점수에 들어가고, 이 화면과 첫 화면에 올라옵니다.</p>'
-        for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '수요·달력', '확인 메모'):
+        for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '국내 날씨', '국내 수급', '수요·달력', '확인 메모'):
             es = [e for e in WEV if e['cat'] == c]
             if not es: continue
             b += f'<h3>{E(c)}</h3><table class="t wtab"><tr><th>요인</th><th>오늘</th><th>재는 법 · 시차</th><th>영향 품목</th></tr>'
@@ -311,6 +350,13 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         if it.get('risk'):
             r = it['risk']; b += f'<div class="note"><b>폐사 위험 {E(r["lv"])}</b> — 7일 수온 예보가 {E(it["item"])} 한계 수온에 닿는 해역이 있습니다(양식 면허 {r.get("ha") or 0}㏊, {E(", ".join(u.split("|")[-1] for u in r.get("units", [])[:4]))}). 공급이 줄 수 있습니다. <a href="/risk/">위험 예보 →</a></div>'
         if it.get('opp'): b += f'<p class="mini">수급 기회에서 「{E(it["opp"])}」 품목으로 잡혀 있습니다. <a href="/opps/">수급 기회 →</a></p>'
+        ex = exposure_of(s, it['item'])
+        if ex:
+            b += '<h2>수입·원산지 노출</h2><p class="mini">이 품목 값에 닿는 수입 품목과 그 원산지. 원산지에서 공급 충격·정치·무역·통화·엘니뇨 사건이 나면 비중 × 전가 무게로 이 품목 점수에 들어갑니다(갈래 상한 안). 비중은 근사치.</p><table class="t"><tr><th>수입 품목</th><th>관계</th><th>원산지(비중 · 오늘)</th><th>집중도</th></tr>'
+            for x in ex[:6]:
+                org = ' · '.join(f'<span class="org {("hi" if OLV.get(re.sub(r"\(.*?\)", "", c).strip()) == 2 else "mid" if OLV.get(re.sub(r"\(.*?\)", "", c).strip()) == 1 else "")}">{E(c)} {int(sh * 100)}%</span>' for c, sh in x.get('origins', []))
+                b += f'<tr><td><b>{E(x["import"])}</b>' + (f'<div class="mini">{E(x.get("note", ""))}</div>' if x.get('note') else '') + f'</td><td class="mini">{E(x["role"])}' + (' · 수출' if x.get('export') else '') + f'<br>전가 {x.get("pt")} · 시차 {E(x.get("lag", ""))}</td><td>{org}</td><td class="num">{x.get("hhi")}</td></tr>'
+            b += '</table><p class="mini">집중도는 원산지 비중 제곱의 합(1에 가까울수록 한 나라 의존). <a href="/world/#imports">수입 품목 원산지 지도 →</a></p>'
         if it['where']:
             b += f'<h2>어디서 싸게 거래되나</h2><table class="t"><tr><th>{"조합" if s == "수산" else "도매시장"}</th><th class="num">㎏당</th><th class="num">평균보다</th></tr>' + ''.join(f'<tr><td>{E(str(c[0]).replace("수산업협동조합", "수협"))}</td><td class="num">{c[1]:,}원</td><td class="num ok">−{c[2]}%</td></tr>' for c in it['where'][:5]) + f'</table><p class="mini">{E(it["where_src"])} · 규격·선도가 섞인 평균이니 매입 전 규격을 맞춰 보세요.</p>'
         subs = [(x, slug('수산', x)) for x in it['subs']]
@@ -390,7 +436,37 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         b += '<h2>채점 방법</h2><ul><li>방향은 「오름·내림·보합」 셋 중 하나로 적고, 실제 값이 ±3% 넘게 움직인 방향과 같으면 맞음으로 셉니다(보합 예보는 ±5% 안이면 맞음).</li><li>기준선은 「값이 그대로」라고만 찍었을 때의 적중률입니다. 20건 넘게 채점됐는데 기준선보다 못한 갈래는 「참고용」으로 내립니다.</li><li>예보를 낸 뒤에는 고치지 않습니다. 기준을 바꾸면 그 뒤 예보부터 적용하고 따로 채점합니다.</li></ul>'
         write('/track/', shell('/track/', '적중 기록 — 예보가 실제로 맞았나 | 박씨팜', '수산·농산·축산 가격 예보의 채점 결과를 품목별로 공개합니다. 틀린 예보도 그대로. 채점 방법과 자가 조정 기록.', b), '0.8')
 
+    def method_page():
+        mdp = os.path.join(ROOT, 'docs', '예측기법_박씨팜.md')
+        if not os.path.exists(mdp): return
+        md = open(mdp, encoding='utf-8').read()
+        def inline(t):
+            t = E(t); t = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', t); t = re.sub(r'`(.+?)`', r'<code>\1</code>', t); return t
+        out = []; lines = md.splitlines(); i = 0; first = True
+        while i < len(lines):
+            l = lines[i]
+            if l.startswith('# '):
+                if first: first = False; i += 1; continue   # 제목은 shell 이 그림
+                out.append(f'<h2>{inline(l[2:])}</h2>')
+            elif l.startswith('## '): out.append(f'<h2>{inline(l[3:])}</h2>')
+            elif l.startswith('### '): out.append(f'<h3>{inline(l[4:])}</h3>')
+            elif l.startswith('|'):
+                rows = []
+                while i < len(lines) and lines[i].startswith('|'):
+                    if not re.match(r'^\|[\s\-:|]+\|$', lines[i]): rows.append([c.strip() for c in lines[i].strip().strip('|').split('|')])
+                    i += 1
+                if rows: out.append('<table class="t"><tr>' + ''.join(f'<th>{inline(c)}</th>' for c in rows[0]) + '</tr>' + ''.join('<tr>' + ''.join(f'<td class="mini">{inline(c)}</td>' for c in r) + '</tr>' for r in rows[1:]) + '</table>')
+                continue
+            elif l.startswith('- '):
+                its = []
+                while i < len(lines) and lines[i].startswith('- '): its.append(lines[i][2:]); i += 1
+                out.append('<ul>' + ''.join(f'<li>{inline(x)}</li>' for x in its) + '</ul>'); continue
+            elif l.strip(): out.append(f'<p>{inline(l)}</p>')
+            i += 1
+        b = '<p class="crumb"><a href="/">박씨팜</a> › 예측 기법</p><h1 class="title">박씨팜 수급·가격 예측 기법</h1><p class="lead">학계·기관이 검증한 이론과 실증을 우리가 가진 공개 자료에 맞게 조립한 틀. 모든 판단은 기록·채점되어 기준이 스스로 고쳐집니다.</p>' + '\n'.join(out)
+        b += '<p class="mini">관련 화면: <a href="/world/">세계·원산지 요인</a> · <a href="/track/">적중 기록</a> · <a href="/signal/">거시 근거</a></p>'
+        write('/method/', shell('/method/', '박씨팜 예측 기법 — 거미집·전가·아밍턴·엘니뇨·브라이어 점수를 우리 자료에 맞게 | 박씨팜', '국내 미시 신호, 원산지 노출, 세계 요인, 수요 달력을 갈래 상한 안에서 더하고 실제 값으로 채점하는 박씨팜의 예측 틀과 근거 문헌.', b), '0.7')
     home(); list_page()
     for it in items: item_page(it)
-    alerts_page(); track_page(); world_page()
+    alerts_page(); track_page(); world_page(); method_page()
     return {'items': len(items), 'up': counts['오름'], 'dn': counts['내림'], 'alerts': len(AL)}

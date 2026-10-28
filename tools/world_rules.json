@@ -711,7 +711,9 @@
    "detect": {
     "type": "fred",
     "series": [
+     "PUREAUSDM",
      "PUREANUSDM",
+     "PDAPUSDM",
      "PFERTUSDM"
     ],
     "warn": 10,
@@ -737,6 +739,7 @@
    "detect": {
     "type": "fred+gdelt",
     "series": [
+     "PFISHUSDM",
      "PFSHMEALUSDM"
     ],
     "warn": 8,
