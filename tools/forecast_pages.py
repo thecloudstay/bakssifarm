@@ -212,7 +212,7 @@ def build(G):
     def world_page():
         b = '<p class="crumb"><a href="/">박씨팜</a> › 세계 요인</p><h1 class="title">세계 요인 감시 — 값을 흔드는 바깥일</h1>'
         b += f'<p class="lead">브라질 조류인플루엔자, 후쿠시마 처리수, 엘니뇨, 호르무즈, 할당관세, 명절처럼 품목 밖에서 값을 흔드는 요인 {WORLD.get("n_rules", 0)}개를 매일 아침 재서 예보 점수에 더합니다. {E((WORLD.get("at") or "")[:16])} 기준 · 활성 {len(WACT)}(경보 {sum(1 for e in WACT if e["level"] == 2)}).</p>'
-        CATS = ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '수요·달력', '원산지', '국내 날씨', '국내 수급')
+        CATS = ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '원가·경기', '수요·달력', '원산지', '국내 날씨', '국내 수급')
         b += '<div class="statusbar">' + ''.join(f'<span class="{"off" if any(e["level"] == 2 and e["cat"] == c for e in WACT) else "soon" if any(e["cat"] == c for e in WACT) else "on"}"><i></i>{E(c)} {sum(1 for e in WACT if e["cat"] == c)}/{sum(1 for e in WEV if e["cat"] == c)}</span>' for c in CATS if any(e['cat'] == c for e in WEV)) + '</div>'
         b += f'<p class="mini">감시 범위: 주제 요인 {WORLD.get("n_topic", 0)} · 원산지 나라 {WORLD.get("n_origin_all", 0)}(오늘 측정 {WORLD.get("n_origin", 0)}) · 수입 품목 {WORLD.get("n_import_items", 0)} · 국내 주산지 {WORLD.get("n_crop_points", 0)}곳 · 뉴스 자료 {E(WORLD.get("news_src", ""))} · 측정 {WORLD.get("elapsed_sec", 0)}초. 방법은 <a href="/method/">예측 기법</a>에.</p>'
         if WACT: b += '<h2>지금 활성</h2><ul class="alerts world">' + ''.join(world_card(e) for e in WACT) + '</ul>'
@@ -236,7 +236,7 @@ def build(G):
         if oe:
             b += '<h2 id="origins">원산지별 판 — 오늘 측정한 나라</h2><p class="mini">나라마다 공급 충격 뉴스·정치/무역 뉴스·통화 3개월 변동·엘니뇨 영향권을 잽니다. 1군(' + str(sum(1 for e in oe if e.get("tier") == 1)) + '개 나라)은 매일, 2군은 돌아가며 측정합니다.</p><ul class="alerts world">' + ''.join(world_card(e) for e in sorted(oe, key=lambda e: (-e['level'], -(e.get('tier') == 1), e['name']))) + '</ul>'
         b += '<h2>감시하는 요인 전부</h2><p class="mini">조용한 요인도 매일 잽니다. 단계가 오르면 그날 예보 점수에 들어가고, 이 화면과 첫 화면에 올라옵니다.</p>'
-        for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '국내 날씨', '국내 수급', '수요·달력', '확인 메모'):
+        for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '원가·경기', '국내 날씨', '국내 수급', '수요·달력', '확인 메모'):
             es = [e for e in WEV if e['cat'] == c]
             if not es: continue
             b += f'<h3>{E(c)}</h3><table class="t wtab"><tr><th>요인</th><th>오늘</th><th>재는 법 · 시차</th><th>영향 품목</th></tr>'

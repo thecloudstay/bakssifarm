@@ -366,6 +366,36 @@ for r in R.get('rules', []):
             g = news(dt['q']); ev['news'] = g
             if g.get('ratio') is None: ev['_news_failed'] = True; ev['text'] = '뉴스 흐름 자료 못 받음 ' + g.get('err', '')
             else: ev.update({'level': lv_from_news(g), 'value': f'뉴스 {g["ratio"]}배', 'text': f'최근 7일 관련 기사가 평소의 {g["ratio"]}배 ({g["src"]})', 'titles': g.get('titles') or []})
+        elif typ == 'fred_yoy':   # 전년 동월 대비 %
+            got = next((g for g in (fred(sid) for sid in dt.get('series', [])) if g), None)
+            if got and got.get('c12') is not None:
+                v = got['c12']; ev.update({'level': lv_from_pct(max(v, 0), dt.get('warn', 3), dt.get('alarm', 4.5)), 'value': f'{v:+.1f}%(전년 대비)', 'text': f'{got["date"]} 기준 전년 동월 대비 {v:+.1f}% · 3개월 {(got["c3"] or 0):+.1f}%'})
+                if v < 0: aff = []
+            else: ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
+        elif typ == 'fred_diff':   # 3개월 전 대비 %p(금리)
+            got = None
+            for sid in dt.get('series', []):
+                try:
+                    b2 = fetch('https://fred.stlouisfed.org/graph/fredgraph.csv', {'id': sid}, timeout=30, retry=1).decode('utf-8', 'replace')
+                    rows = [(r[0], float(r[1])) for r in csv.reader(io.StringIO(b2)) if len(r) > 1 and r[0][:2].isdigit() and r[1] not in ('', '.')]
+                    if len(rows) >= 4: got = {'date': rows[-1][0][:7], 'last': rows[-1][1], 'd3': round(rows[-1][1] - rows[-4][1], 2), 'd12': round(rows[-1][1] - rows[-13][1], 2) if len(rows) > 12 else None}; break
+                except Exception as e: MSG.append(f'fred {sid} {str(e)[:40]}')
+            if got:
+                v = got['d3']; ev.update({'level': lv_from_pct(v, dt.get('warn', 0.5), dt.get('alarm', 1.0)), 'value': f'{got["last"]:.2f}% ({v:+.2f}%p/3개월)', 'text': f'{got["date"]} 기준 {got["last"]:.2f}% · 3개월 전 대비 {v:+.2f}%p' + (f' · 1년 전 대비 {got["d12"]:+.2f}%p' if got.get('d12') is not None else '')})
+                aff = (r.get('affects_up') if v > 0 else r.get('affects_down')) if ev['level'] else []
+            else: ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
+        elif typ == 'fred_level':   # 수준 지표(소비자심리): 기준 아래면 켬
+            got = next((g for g in (fred(sid) for sid in dt.get('series', [])) if g), None)
+            if got:
+                v = got['last']; ev.update({'level': 2 if v <= dt.get('alarm', 98) else 1 if v <= dt.get('warn', 99) else 0, 'value': f'{v:.1f}', 'text': f'{got["date"]} 기준 {v:.1f} (100 아래면 비관) · 3개월 {(got["c3"] or 0):+.1f}%'})
+            else: ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
+        elif typ == 'minwage':   # 최저임금 표: 그해 인상률, 1~4월에 켬
+            tb = dt.get('table') or {}; y = str(TODAY.year); y0 = str(TODAY.year - 1)
+            if y in tb and y0 in tb:
+                pct = round((tb[y] / tb[y0] - 1) * 100, 1)
+                on = TODAY.month <= 4
+                ev.update({'level': (lv_from_pct(pct, dt.get('warn', 3), dt.get('alarm', 5)) if on else 0), 'value': f'{tb[y]:,}원({pct:+.1f}%)', 'text': f'{y}년 시급 {tb[y]:,}원, 전년 대비 {pct:+.1f}%' + ('' if on else ' — 연초(1~4월)에만 점수 반영')})
+            else: ev['text'] = f'{y}년 결정액이 표에 없음 — 확인 메모로 추가'
         elif typ == 'cal':
             lv, txt, ph = cal_state(dt.get('kind', '')); ev.update({'level': lv, 'text': txt or '해당 구간 아님'})
             aff = (r.get('affects_before') if ph == 'before' else r.get('affects_after') if ph == 'after' else []) or []
