@@ -5,6 +5,7 @@
 #   sector(축산·수산·농산) · item · dir(오름/내림/보합) · strength(0~5) · score · price(현재 ㎏당) · unit · horizon(무엇을 언제 맞히나)
 #   why[](근거 문장) · act(행동 제안) · series[(날짜, 값)](값 흐름) · where(싸게 거래된 곳) · subs(대체 품목) · note(관측 기관 메모) · hist(지난 예보와 결과)
 import os, re, json, glob, datetime, collections, urllib.parse
+from trend_lib import metrics as tmetrics, stock_svg, metrics_html, regime_badge, regime_text
 
 DIRW = {'오름 쪽': ('오름', 'up'), '내림 쪽': ('내림', 'dn'), '보합': ('보합', 'flat')}
 SECT_H = {'축산': '앞으로 2주 · 경락가', '수산': '다음 달 · 산지 위판가', '농산': '앞으로 2주 · 도매시장가'}
@@ -18,6 +19,7 @@ def build(G):
     try: IM = json.load(open(os.path.join(ROOT, 'tools', 'import_matrix.json'), encoding='utf-8'))
     except Exception: IM = {'items': []}
     EXPO = WORLD.get('exposure') or {}; OLV = WORLD.get('origin_level') or {}
+    PX = J('pindex.json', {}) or {}   # 물가 지수(build_index.py 생성물)
     AK = {'한우 거세': '한우', '돼지 탕박': '돼지', '배합사료 원가': '사료'}   # 축산 품목 이름 → 규칙에서 쓰는 짧은 이름
     def akey(sector, item): return AK.get(item, item) if sector == '축산' else item
     def exposure_of(sector, item):
@@ -84,9 +86,10 @@ def build(G):
     for i in BUYS.get('items') or []:
         f = fish_daily.get((i.get('names') or [''])[0]) or {}
         series = [(f'{mo[:4]}-{d}', v) for d, v in f.get('daily', []) if v] if mo else []
+        kgm = {d: q for d, q in f.get('daily_kg', [])}; vols = [(f'{mo[:4]}-{d}', kgm.get(d) or 0) for d, v in f.get('daily', []) if v] if mo else []
         rk = risk_sp.get(i['item'])
         items.append({'sector': '수산', 'item': i['item'], 'names': i.get('names') or [], 'dir': i['dir'], 'score': i['score'], 'price': i['wonkg'], 'unit': '원/㎏',
-                      'horizon': BUYS.get('horizon', '다음 달 수협 산지 위판 ㎏당 값'), 'why': i.get('why') or [], 'act': i.get('act', ''), 'series': series,
+                      'horizon': BUYS.get('horizon', '다음 달 수협 산지 위판 ㎏당 값'), 'why': i.get('why') or [], 'act': i.get('act', ''), 'series': series, 'vols': vols if any(q for _, q in vols) else None,
                       'where': [[c[0], c[1], c[3]] for x in sp_by.get(i['item'], [])[:1] for c in x['cheap']], 'where_src': '수협 산지 위판(조합별 ㎏당 값, ' + mo.replace('-', '년 ') + '월)' if mo else '',
                       'subs': (tight.get(i['item']) or {}).get('sub') or [], 'risk': rk, 'hist': hist_sea.get(i['item'], []), 'notes': notes_by.get(('수산', i['item']), []),
                       'opp': '공급 빠듯' if i['item'] in tight else '공급 넘침' if i['item'] in glut else '', 'amt': i.get('amt')})
@@ -100,9 +103,10 @@ def build(G):
     for r in (CROPS.get('score') or {}).get('rows', []): hist_crop[r[1]].append((r[0], r[2], r[3], r[4]))
     for i in CROPS.get('items') or []:
         series = [(d, v[i['item']][0]) for d, v in sorted(wd.items()) if v.get(i['item']) and v[i['item']][0]]
+        vols = [(d, v[i['item']][1]) for d, v in sorted(wd.items()) if v.get(i['item']) and v[i['item']][0]]
         x = csp.get(i['item'])
         items.append({'sector': '농산', 'item': i['item'], 'names': [], 'dir': i['dir'], 'score': i['score'], 'price': i['wonkg'], 'unit': '원/㎏',
-                      'horizon': CROPS.get('horizon', '앞으로 2주 공영도매시장 ㎏당 값'), 'why': i.get('why') or [], 'act': i.get('act', ''), 'series': series,
+                      'horizon': CROPS.get('horizon', '앞으로 2주 공영도매시장 ㎏당 값'), 'why': i.get('why') or [], 'act': i.get('act', ''), 'series': series, 'vols': vols if any(q for _, q in vols) else None,
                       'where': [[c[0], c[1], c[2]] for c in (x['cheap'] if x else [])], 'where_src': f'공영도매시장 정산({CROPS.get("date", "")} 거래, ㎏ 단위 거래만)',
                       'subs': [], 'risk': None, 'hist': hist_crop.get(i['item'], []), 'notes': notes_by.get(('농산', i['item']), []), 'opp': '', 'amt': None})
     # 축산 — 판단(한우·돼지·사료) + 관측 기관 메모
@@ -202,6 +206,91 @@ def build(G):
                 f'<div class="mini">{E(e.get("text", ""))}</div>' + (f'<div class="mini"><b>영향</b> {aff_links(e.get("affects") or [])}</div>' if e.get('affects') else '') +
                 (f'<div class="mini"><b>미리 할 일</b> {E(e.get("react", ""))}</div>' if e.get('react') else '') +
                 (('<ul class="titles">' + ''.join(f'<li><a href="{E(t["u"])}" target="_blank" rel="noopener nofollow">{E(t["t"])}</a> <span class="mini">{E(t["s"])} {E(t["d"][4:6])}.{E(t["d"][6:8])}</span></li>' for t in e.get('titles') or []) + '</ul>') if e.get('titles') else '') + '</li>')
+    def px_sector(k):
+        v = (PX.get('sectors') or {}).get(k) or {}
+        return v
+    def px_strip():
+        """첫 화면: 물가 지수 띠(종합·축산·수산·농산) — 마지막 값, 추세, 20일 변화, 작은 그래프"""
+        if not PX or not PX.get('sectors'): return ''
+        cards = []
+        for k, v in [('종합', PX.get('total') or {})] + [(k, px_sector(k)) for k in ('축산', '수산', '농산')]:
+            m = v.get('metrics') or {}; ser = v.get('daily') or []
+            if not ser: continue
+            cls = 'up' if m.get('regime') == '상승 추세' else 'dn' if m.get('regime') == '하락 추세' else 'flat'
+            ch = m.get('chg_l') if m.get('chg_l') is not None else m.get('chg_s')
+            cards.append(f'<a class="card px {cls}" href="/index/#{E(k)}"><h3>{E(k)} 지수 {regime_badge(m)}</h3><div class="big">{(m.get("last") or ser[-1][1]):.1f}</div>'
+                         f'<p class="mini">{("20일 " if m.get("chg_l") is not None else "5일 ") + f"{ch:+}%" if ch is not None else "변화 계산 전"} · {len(ser)}일 · 시작 = 100</p>{spark([x[1] for x in ser[-40:]], cls=cls)}</a>')
+        if not cards: return ''
+        return '<h2 id="px">물가 지수 — 천천히 오르나, 내리나</h2><p class="mini">흩어진 경락가·위판가·도매가를 거래금액 가중으로 한 줄의 지수로 묶고, 주식 차트처럼 5일선·20일선·기울기로 경향을 잽니다. 하루 값이 아니라 흐름을 봅니다.</p><div class="grid4">' + ''.join(cards) + '</div><p class="mini"><a href="/index/">지수 차트·계량 요약·원가 압력 지수 전체 →</a></p>'
+    def index_page():
+        if not PX or not PX.get('sectors'):
+            write('/index/', shell('/index/', '물가 지수 — 준비 중 | 박씨팜', '박씨팜 물가 지수는 자료가 쌓이는 대로 열립니다.', '<p class="crumb"><a href="/">박씨팜</a> › 물가 지수</p><h1 class="title">물가 지수</h1><p class="note">지수를 만들 자료가 아직 쌓이지 않았습니다. 매일 아침 자동으로 다시 계산합니다.</p>'), '0.5'); return
+        T = PX.get('total') or {}; C = PX.get('cost') or {}; WS = PX.get('world') or {}
+        def block(k, v, monthly=False, color='var(--moss)', unit='', note=''):
+            ser = v.get('monthly' if monthly else 'daily') or []
+            m = v.get('metrics_m' if monthly else 'metrics') or {}
+            if len(ser) < 2: return f'<p class="mini">{E(k)}: 아직 2점이 안 되어 그릴 수 없습니다.</p>'
+            vols = v.get('monthly_vol' if monthly else 'vol') or None
+            b = f'<div class="pxhead"><div class="big">{(m.get("last") or ser[-1][1]):,.2f}</div><div>{regime_badge(m)}<p class="mini">{E(ser[0][0])} ~ {E(ser[-1][0])} · {len(ser)}{"개월" if monthly else "일"}' + (f' · 구성 {v["items"]}품목' if v.get('items') else '') + '</p></div></div>'
+            b += stock_svg(ser, vols=vols, color=color, monthly=monthly, label=k)
+            b += f'<p class="mini">{E(v.get("src", ""))}' + (f'. 아래 막대는 {"거래 금액(억 원)" if vols and k != "축산" else "두수" if vols else ""}' if vols else '') + '</p>'
+            if m and m.get('n', 0) >= 3: b += metrics_html(m, unit=unit or '') + f'<p class="note"><b>경향 읽기</b> — {E(regime_text(m))}.</p>'
+            else: b += '<p class="mini">점이 3개 넘게 쌓이면 추세·변동성·교차가 계산됩니다.</p>'
+            if note: b += f'<p class="mini">{note}</p>'
+            return b
+        b = '<p class="crumb"><a href="/">박씨팜</a> › 물가 지수</p><h1 class="title">박씨팜 물가 지수 — 경향 분석</h1>'
+        b += '<p class="lead">한우·돼지 경락가, 수협 위판가, 공영도매시장 정산가를 거래금액 가중으로 묶어 갈래 지수와 종합 지수를 날마다 다시 계산합니다. 농축수산물 값은 하루아침에 뒤집히기보다 천천히 오르고 천천히 내리므로, 주식 차트처럼 <b>5일선·20일선·기울기·±2σ 띠·교차</b>로 경향을 잽니다. 모든 숫자는 공개 자료에서 자동 계산되며 손으로 고치지 않습니다.</p>'
+        # 요약 표
+        def pc(x): return f'{x:+}%' if x is not None else '–'
+        rows = []
+        for k, v in [('종합', T)] + [(k, px_sector(k)) for k in ('축산', '수산', '농산')] + [('원가 압력', C)]:
+            m = (v or {}).get('metrics') or {}
+            if not m or not m.get('n'): continue
+            c = m.get('cross'); ctxt = (str(c['ago']) + '일 전 ' + c['kind']) if c else '없음'
+            rows.append(f'<tr><td><a href="#{E(k)}"><b>{E(k)}</b></a></td><td class="num">{m["last"]:,.2f}</td><td>{regime_badge(m)}</td><td class="num">{pc(m.get("chg_s"))}</td><td class="num">{pc(m.get("chg_l"))}</td><td class="num">{(m.get("slope") or 0):+.2f}</td><td class="num">{m.get("vol") if m.get("vol") is not None else "–"}</td><td class="num">{m.get("pos")}%</td><td class="mini">{E(ctxt)}</td></tr>')
+        if rows: b += '<h2>한눈에</h2><div class="tscroll"><table class="t"><tr><th>지수</th><th class="num">지금</th><th>추세</th><th class="num">5일</th><th class="num">20일</th><th class="num">20일선 기울기(%/일)</th><th class="num">변동성(%/일)</th><th class="num">기간 내 위치</th><th>최근 교차</th></tr>' + ''.join(rows) + '</table></div>'
+        b += f'<h2 id="종합">종합 지수</h2>' + block('종합', T, color='var(--ink)', note='종합은 세 갈래가 모두 있는 날부터 시작합니다. 축산 기록이 2026-09-28부터라 아직 한 달치입니다 — 날마다 한 점씩 길어집니다.')
+        b += '<h2 id="축산">축산 지수</h2>' + block('축산', px_sector('축산'), color='var(--brick)')
+        pm = (px_sector('축산').get('parts_metrics') or {})
+        if pm: b += '<h3>구성 품목</h3><div class="tscroll"><table class="t"><tr><th>품목</th><th class="num">지금(원/㎏)</th><th>추세</th><th class="num">5일</th><th class="num">20일선 대비</th><th class="num">변동성</th></tr>' + ''.join(f'<tr><td><a href="{slug("축산", pk)}">{E(pk)}</a></td><td class="num">{m["last"]:,.0f}</td><td>{regime_badge(m)}</td><td class="num">{pc(m.get("chg_s"))}</td><td class="num">{(m["last"] / m["ma_l"] - 1) * 100:+.1f}%</td><td class="num">{m.get("vol") if m.get("vol") is not None else "–"}</td></tr>' for pk, m in pm.items() if m and m.get('n', 0) >= 3) + '</table></div>'
+        sv = px_sector('수산')
+        b += '<h2 id="수산">수산 지수</h2>' + block('수산', sv, color='#2f5f8a', note='일별은 수협 위판 자료가 올라오는 달의 거래일(금액 상위 어종, 하루 1톤 이상 거래만)로 만듭니다. 달이 바뀌면 그달 일별을 저장해 두고 이어 붙입니다.')
+        if sv.get('monthly') and len(sv['monthly']) >= 4:
+            b += '<h3>월별 수산 지수</h3>' + block('수산(월별)', sv, monthly=True, color='#2f5f8a')
+        elif sv.get('monthly'):
+            b += '<p class="mini">월별 수산 지수: ' + ' → '.join(f'{d[2:].replace(chr(45), ".")}월 {v:,.1f}' for d, v in sv['monthly']) + ' (달 집계가 4개 넘게 쌓이면 월별 차트를 그립니다)</p>'
+        b += '<h2 id="농산">농산 지수</h2>' + block('농산', px_sector('농산'), color='var(--moss)', note='공영도매시장 26곳의 ㎏ 단위 정산 거래만 씁니다. 토요일 반쪽 장(거래 금액이 평소의 6할 아래)은 뺍니다. 가을에는 배추·무 같은 김장 채소 비중이 커져 지수가 그 품목의 계절 흐름을 많이 따릅니다.')
+        # 원가 압력
+        b += '<h2 id="원가 압력">원가 압력 지수 — 사료·기름·환율·가스</h2><p class="mini">값을 밀어 올리는 쪽의 지수입니다. 2년치라 20일선·골든/데드 크로스가 제대로 보입니다. 원가가 산지 값에 옮겨 가는 데는 보통 1~4개월이 걸립니다(사료 → 돼지·닭 3~6개월).</p>'
+        b += block('원가 압력', C, color='#8a5a2f')
+        if C.get('metrics_1y'): b += f'<p class="mini">최근 1년만 보면: {regime_badge(C["metrics_1y"])} {E(regime_text(C["metrics_1y"]))}.</p>'
+        cpm = C.get('parts_metrics') or {}
+        NM = {'feed': '사료 원가 지수(원/㎏)', 'diesel': '경유 선물(달러/갤런)', 'usdkrw': '원/달러', 'natgas': '천연가스 선물(달러)'}
+        if cpm:
+            def ctx(m): c = m.get('cross'); return (str(c['ago']) + '일 전 ' + c['kind']) if c else '없음'
+            b += '<h3>구성 지표</h3><div class="tscroll"><table class="t"><tr><th>지표</th><th class="num">지금</th><th>추세</th><th class="num">5일</th><th class="num">20일</th><th class="num">20일선 대비</th><th>최근 교차</th></tr>' + ''.join(f'<tr><td>{E(NM.get(pk, pk))} <small>무게 {PX.get("cost_weights", {}).get(pk, "")}</small></td><td class="num">{m["last"]:,.2f}</td><td>{regime_badge(m)}</td><td class="num">{pc(m.get("chg_s"))}</td><td class="num">{pc(m.get("chg_l"))}</td><td class="num">{(m["last"] / m["ma_l"] - 1) * 100:+.1f}%</td><td class="mini">{E(ctx(m))}</td></tr>' for pk, m in cpm.items() if m and m.get('n', 0) >= 3) + '</table></div>'
+        # 세계 요인 활성 점수
+        b += '<h2 id="세계">세계 요인 활성 점수</h2>'
+        wd = WS.get('daily') or []
+        if len(wd) >= 2:
+            b += svg_line([x[1] for x in wd], w=720, h=140) if svg_line else ''
+            b += f'<p class="mini">{E(wd[0][0])} ~ {E(wd[-1][0])} · 오늘 {wd[-1][1]}점(경보 {(WS.get("alarms") or [[0, 0]])[-1][1]}건 · 켜진 요인 {(WS.get("n") or [[0, 0]])[-1][1]}건). {E(WS.get("src", ""))}. 이 점수가 오르는데 갈래 지수가 아직 안 움직였다면, 몇 주 뒤의 값 변화를 먼저 보고 있는 것일 수 있습니다.</p>'
+        else:
+            b += f'<p class="mini">세계 요인 감시는 2026-10-28부터 날마다 기록합니다(오늘 {wd[-1][1] if wd else 0}점, 경보 {(WS.get("alarms") or [[0, 0]])[-1][1]}건). 점이 쌓이면 여기에 선으로 그립니다. <a href="/world/">오늘 켜진 요인 →</a></p>'
+        # 읽는 법
+        b += '<h2 id="how">읽는 법과 판정 기준</h2><table class="t"><tr><th>항목</th><th>뜻</th><th>기준</th></tr>'
+        for a, bb, c in (('5일선 · 20일선', '최근 5일(단기)·20일(장기) 평균. 월별 지수는 1개월·3개월', '단기선이 장기선을 아래에서 위로 뚫으면 골든 크로스(오름 전환 신호), 위에서 아래로 뚫으면 데드 크로스'),
+                         ('추세 판정', '20일선의 최근 10점 회귀 기울기(마지막 값 대비 %/일)와 값이 20일선 위·아래 어디인지', '기울기 +0.15%/일 넘고 값이 선 위 → 상승 추세 · −0.15%/일 아래이고 값이 선 아래 → 하락 추세 · ±0.15% 안 → 횡보 · 엇갈림 → 전환 중(월별은 ±2%/월)'),
+                         ('±2σ 띠', '20일 표준편차의 2배 폭. 띠 밖은 평소 흐름에서 벗어난 값', '띠 위로 나가면 과열, 아래로 나가면 과매도 쪽 — 되돌림이 잦음'),
+                         ('변동성', '일별 수익률(로그 변화)의 20일 표준편차', '1.5% 아래 낮음 · 3.5% 아래 보통 · 그 위 높음(높으면 하루 값에 끌려가지 말 것)'),
+                         ('기간 내 위치', '그린 기간의 최저 0% ~ 최고 100% 사이 지금 위치', '90% 위·10% 아래는 추세가 늙었을 가능성'),
+                         ('지수 만드는 법', '품목별 값 ÷ 그 품목 기준값(처음 보인 5일 평균)의 로그를 거래금액 비중으로 가중 평균 → 지수. 고정 가중 기하 지수(라스파이레스 계열)', '그날 없는 품목은 빼고 가중치를 다시 정규화 · 반쪽 장 제외 · 한 품목 변동은 ±120%로 자름')):
+            b += f'<tr><td><b>{E(a)}</b></td><td class="mini">{E(bb)}</td><td class="mini">{E(c)}</td></tr>'
+        b += '</table><p class="note"><b>한계</b> — 기록이 2026년 9월 중순부터라 20일선·교차는 이제 막 의미를 갖기 시작했고, 1년 전 같은 달과 비교하는 계절 조정은 내년 가을부터 가능합니다. 지수는 「무엇을 살지」가 아니라 「지금 어느 쪽으로 흐르는지」를 보여 줍니다. 품목별 예보는 <a href="/f/">품목별</a>에서, 지수가 왜 움직였는지는 <a href="/world/">세계 요인</a>과 <a href="/signal/">거시 근거</a>에서 봅니다.</p>'
+        b += '<p class="mini">같이 보기: <a href="/">오늘 예보</a> · <a href="/method/">예측 기법</a> · <a href="/track/">적중 기록</a> · <a href="/data/">자료 대장</a></p>'
+        ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': '박씨팜 물가 지수', 'url': BASE + '/index/', 'description': '한우·돼지 경락가, 수협 위판가, 공영도매시장 정산가를 거래금액 가중으로 묶은 농축수산물 물가 지수와 원가 압력 지수. 5일선·20일선·기울기로 경향 판정.', 'dateModified': TODAY, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'creator': {'@type': 'Organization', 'name': '박씨팜'}}
+        tm = T.get('metrics') or {}
+        write('/index/', shell('/index/', f'농축수산물 물가 지수 {TODAY} — 종합 {tm.get("last", "")} {tm.get("regime", "")} | 박씨팜', '경락가·위판가·도매가를 한 줄 지수로 묶어 주식 차트처럼 5일선·20일선·기울기·변동성으로 경향을 잽니다. 축산·수산·농산·종합·원가 압력 지수.', b, jsonld=ld), '0.9')
     def world_home():
         if not WEV: return ''
         b = f'<h2>세계 요인 — 지금 값에 작용하는 것 <span class="mini">{WORLD.get("n_rules", len(WEV))}개 요인 감시 · 활성 {len(WACT)}</span></h2>'
@@ -269,6 +358,7 @@ def build(G):
             if it['url'] not in seen: pick.append(it); seen.add(it['url'])
         pick.sort(key=rank)
         b += '<h2>오늘 주목할 예보</h2><div class="fgrid">' + ''.join(feature_card(it) for it in pick) + '</div>' if pick else '<h2>오늘 주목할 예보</h2><p class="note">오늘은 뚜렷한 방향이 잡힌 품목이 없습니다.</p>'
+        b += px_strip()
         b += '<h2>갈래별 예보</h2><div class="cols3">'
         for s in ('축산', '수산', '농산'):
             li = [it for it in items if it['sector'] == s and it['dir'] != '보합']; fl = [it for it in items if it['sector'] == s and it['dir'] == '보합']
@@ -337,8 +427,12 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
             b += f'<div class="grid2 acts"><div class="card"><h3>유통·가공·급식</h3><p>{E(acts[0])}</p></div><div class="card"><h3>농가·어가</h3><p>{E(acts[1])}</p></div></div>'
         if it['series'] and len(it['series']) >= 2:
             vs = [v for _, v in it['series']]; c1 = round((vs[-1] / vs[0] - 1) * 100, 1) if vs[0] else None
-            b += f'<h2>값 흐름</h2>{chart([(d, v) for d, v in it["series"]], color="var(--brick)" if w == "오름" else "#2f5f8a" if w == "내림" else "var(--moss)")}'
+            tm = tmetrics(it['series']); col = "var(--brick)" if w == "오름" else "#2f5f8a" if w == "내림" else "var(--moss)"
+            b += f'<h2>값 흐름과 경향 {regime_badge(tm) if tm and tm.get("n", 0) >= 3 else ""}</h2>'
+            b += stock_svg(it['series'], vols=it.get('vols') or None, color=col, label=it['item']) if len(vs) >= 5 else chart([(d, v) for d, v in it['series']], color=col)
             b += f'<p class="mini">{E(it["series"][0][0])} ~ {E(it["series"][-1][0])} · {len(vs)}개 점 · 기간 변동 {c1:+}% · ' + E({'수산': '수협 산지 위판 ㎏당 값(금액÷중량, 가장 많이 팔린 상태 기준)', '농산': '공영도매시장 26곳 정산 ㎏당 값(㎏ 단위 거래만)', '축산': '축산물품질평가원 등급별 경락가(등외 제외 평균)' if it['item'] != '배합사료 원가' else '사료 원가 지수(시카고 곡물 선물 × 원/달러, 원/㎏)'}[s]) + '</p>'
+            if tm and tm.get('n', 0) >= 3:
+                b += metrics_html(tm, unit=it['unit']) + (f'<p class="note"><b>경향 읽기</b> — {E(regime_text(tm))}. 하루 값이 아니라 {tm["long"]}{tm["unit_word"]}선의 기울기와 값이 그 선 위·아래 어디에 있는지로 판단합니다. <a href="/index/#how">판정 기준 →</a></p>')
         b += '<h2>왜 그렇게 보나</h2>'
         if it['why']: b += '<ul class="why">' + ''.join(f'<li>{E(x)}</li>' for x in it['why']) + '</ul>'
         else: b += '<p class="mini">근거 없음(뚜렷한 신호가 없어 보합).</p>'
@@ -468,5 +562,5 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         write('/method/', shell('/method/', '박씨팜 예측 기법 — 거미집·전가·아밍턴·엘니뇨·브라이어 점수를 우리 자료에 맞게 | 박씨팜', '국내 미시 신호, 원산지 노출, 세계 요인, 수요 달력을 갈래 상한 안에서 더하고 실제 값으로 채점하는 박씨팜의 예측 틀과 근거 문헌.', b), '0.7')
     home(); list_page()
     for it in items: item_page(it)
-    alerts_page(); track_page(); world_page(); method_page()
-    return {'items': len(items), 'up': counts['오름'], 'dn': counts['내림'], 'alerts': len(AL)}
+    alerts_page(); track_page(); world_page(); method_page(); index_page()
+    return {'items': len(items), 'up': counts['오름'], 'dn': counts['내림'], 'alerts': len(AL), 'pindex': bool(PX.get('sectors'))}

@@ -54,7 +54,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '오늘 예보'), ('/f/', '품목별'), ('/alerts/', '경보'), ('/world/', '세계 요인'), ('/track/', '적중 기록'), ('/risk/', '위험 예보'), ('/price/', '시세'), ('/map/', '지도')]   # 2026-10-28 예측 중심 개편
+NAV = [('/', '오늘 예보'), ('/f/', '품목별'), ('/alerts/', '경보'), ('/world/', '세계 요인'), ('/index/', '물가 지수'), ('/track/', '적중 기록'), ('/risk/', '위험 예보'), ('/price/', '시세'), ('/map/', '지도')]   # 2026-10-28 예측 중심 개편
 MORE = [('/method/', '예측 기법'), ('/signal/', '거시 근거'), ('/opps/', '수급 기회'), ('/sheet/', '시세 한 장'), ('/calc/', '수익 계산'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
