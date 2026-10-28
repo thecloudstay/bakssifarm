@@ -54,7 +54,7 @@ def inject_index():
     json.dump(st, open(os.path.join(SITE, 'data', 'status.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 ICON = "data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect x=%271%27 y=%271%27 width=%2730%27 height=%2730%27 rx=%277%27 fill=%27%232c5530%27/%3E%3Cpath d=%27M6 24.5h20M16 24.5V14.5%27 stroke=%27%23fff%27 stroke-width=%272%27 stroke-linecap=%27round%27/%3E%3Cpath d=%27M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z%27 fill=%27%23fff%27/%3E%3Cpath d=%27M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z%27 fill=%27%23fff%27/%3E%3C/svg%3E"
 SEAL = '''<svg class="seal" viewBox="0 0 32 32" aria-hidden="true"><rect x="1" y="1" width="30" height="30" rx="7" fill="var(--moss)"/><path d="M6 24.5h20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 24.5V14.5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16.2c-.4-3.9-3.3-6.3-7.4-6.3.3 3.9 3.1 6.4 7.4 6.3Z" fill="#fff"/><path d="M16 14.6c.4-4.3 3.4-7 8-7-.3 4.3-3.4 7.1-8 7Z" fill="#fff"/></svg>'''
-NAV = [('/', '오늘 예보'), ('/f/', '품목별'), ('/alerts/', '경보'), ('/track/', '적중 기록'), ('/risk/', '위험 예보'), ('/price/', '시세'), ('/map/', '지도')]   # 2026-10-28 예측 중심 개편
+NAV = [('/', '오늘 예보'), ('/f/', '품목별'), ('/alerts/', '경보'), ('/world/', '세계 요인'), ('/track/', '적중 기록'), ('/risk/', '위험 예보'), ('/price/', '시세'), ('/map/', '지도')]   # 2026-10-28 예측 중심 개편
 MORE = [('/signal/', '근거·방법'), ('/opps/', '수급 기회'), ('/sheet/', '시세 한 장'), ('/calc/', '수익 계산'), ('/buy/', '구입가'), ('/gongu/', '공동구매'), ('/pro/', '업체·데이터'), ('/data/', '자료 대장'), ('/p/', '시군별'), ('/about/', '소개')]
 BUY = J('buyprice.json', {'items': [], 'n': 0})
 
@@ -97,7 +97,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 {FORM_JS % (json.dumps(FORM_ENDPOINT), PREFIX)}
 <footer class="foot">
   <p>박씨팜 — 농축수산물 가격 예보. 축산·수산·농산 품목의 값 방향을 근거와 적중률과 함께 매일 아침 알려 드립니다. 물건을 사고팔지 않으며, 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
-  <p><a href="/">오늘 예보</a><a href="/f/">품목별</a><a href="/alerts/">경보</a><a href="/track/">적중 기록</a><a href="/signal/">근거·방법</a><a href="/map/">지도</a><a href="/price/">시세</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
+  <p><a href="/">오늘 예보</a><a href="/f/">품목별</a><a href="/alerts/">경보</a><a href="/world/">세계 요인</a><a href="/track/">적중 기록</a><a href="/signal/">근거·방법</a><a href="/map/">지도</a><a href="/price/">시세</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
 </footer>
 </main>
 </body>
@@ -673,7 +673,7 @@ def console_page():
     b += '</div>'
     b += '<h2>수집기</h2><table class="t"><tr><th>수집기</th><th>마지막 실행</th><th>결과</th><th>메모</th></tr>'
     cols = st.get('collectors') or {}
-    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('selfcheck', '자가 점검'), ('buysignal', '구매 신호(시험판)'), ('opps', '수급 기회(시험판)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
+    for k, t in [('ekape_price', '축평원 등급별 경락가'), ('wholesale', '공영도매시장 정산 경락가'), ('origin', '실제 출하 금액(낙찰 원산지)'), ('wipan', '수협 산지 위판(파일, 열쇠 불필요)'), ('files', '파일데이터 일괄(열쇠 불필요)'), ('risk', '수급 위험 예보(7일)'), ('world', '세계 요인 감시'), ('selfcheck', '자가 점검'), ('buysignal', '구매 신호(시험판)'), ('opps', '수급 기회(시험판)'), ('trade', '관세청 수입 단가'), ('license', '지방행정 인허가(가축사육업 등)'), ('signals_sea', '이상 신호 — 수온'), ('signals_price', '이상 신호 — 경락가 급등락'), ('signals_disease', '이상 신호 — 가축전염병'), ('apis', '연동창구 일괄 수집'), ('forms', '접수함(제보·모집·업체)'), ('pages', '글 화면·사이트 지도·새 소식'), ('indexnow', '색인 알림')]:
         c = cols.get(k) or {}
         ok = c.get('ok'); cls = 'ok' if ok else ('bad' if ok is False else 'wait')
         b += f'<tr><td>{E(t)}</td><td>{E(c.get("at", "–"))}</td><td class="{cls}">{"정상" if ok else ("실패" if ok is False else "대기")}</td><td>{E(c.get("msg", ""))}</td></tr>'

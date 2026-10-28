@@ -56,6 +56,9 @@ jobs:
         run: python tools/collect_signals.py
       - name: 수급 위험 예보(7일 수온·기온·습도 → 양식 폐사·가축 더위 위험, 열쇠 불필요)
         run: python tools/collect_risk.py
+      - name: 세계 요인 감시(기후·질병·지정학·정책·세계 상품·달력 → 예보 점수)
+        run: python tools/collect_world.py
+        continue-on-error: true
       - name: 구매 신호(품목별 값 방향·적중 채점)
         run: python tools/build_signal.py
       - name: 수급 기회(산지 값 차이·공급 넘침·빠듯·어족)

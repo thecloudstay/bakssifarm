@@ -14,7 +14,7 @@ def build(G):
     E = G['E']; J = G['J']; write = G['write']; shell = G['shell']; svg_line = G['svg_line']; man = G['man']
     BASE = G['BASE']; ROOT = G['ROOT']; PRIVATE = os.path.join(ROOT, 'private')
     FC = J('forecast.json', {}); BUYS = J('buysignal.json', {}); CROPS = J('cropsignal.json', {}); OPPS = J('opps.json', {})
-    WPN = J('wipan.json', {}); RISK = J('risk.json', {}); SIG = J('signals.json', {'items': []}); PRICE = J('price/latest.json', {})
+    WPN = J('wipan.json', {}); RISK = J('risk.json', {}); SIG = J('signals.json', {'items': []}); PRICE = J('price/latest.json', {}); WORLD = J('world.json', {'events': []})
     TODAY = (FC.get('at') or BUYS.get('at') or datetime.date.today().isoformat())[:10]
 
     def base(n):
@@ -167,6 +167,52 @@ def build(G):
     def alert_li(a):
         return f'<li><span class="lv {"hi" if a["level"] == "경보" else "mid"}">{E(a["level"])}</span><b>{E(a["kind"])}</b> <a href="{a["url"]}">{E(a["title"])}</a><div class="mini">{E(a["react"])}</div></li>'
 
+    # ── 세계 요인 조각 ───────────────────────────────────────────
+    WEV = WORLD.get('events') or []; WACT = sorted([e for e in WEV if e.get('level')], key=lambda e: (-e['level'], e['cat']))
+    LVW = {2: ('경보', 'hi'), 1: ('주의', 'mid'), 0: ('조용', 'quiet')}
+    def wlv(l): w, c = LVW.get(l, LVW[0]); return f'<span class="lv {c}">{w}</span>'
+    def aff_links(affs):
+        out = []
+        for a in affs[:4]:
+            names = [it['item'] for it in items if it['sector'] == a.get('sector') and (a.get('item') == '.' or re.fullmatch('(?:' + (a.get('item') or '.') + ')', it['item']))]
+            arrow = '↑' if a.get('dir') == '오름 쪽' else '↓' if a.get('dir') == '내림 쪽' else ''
+            if names: out.append(f'{E(a["sector"])} ' + ', '.join(f'<a href="{slug(a["sector"], n)}">{E(n)}</a>' for n in names[:6]) + (f' 외 {len(names) - 6}' if len(names) > 6 else '') + f' {arrow}')
+            else: out.append(f'{E(a["sector"])} <span class="mini">{E((a.get("item") or "").replace("|", "·")[:40])}</span> {arrow} <span class="mini">(지금 수집 품목에 없음)</span>')
+        return ' · '.join(out)
+    def world_card(e):
+        return (f'<li class="wli"><div class="wh">{wlv(e["level"])}<b>{E(e["name"])}</b> <span class="mini">{E(e["cat"])}</span></div>'
+                f'<div class="mini">{E(e.get("text", ""))}</div>' + (f'<div class="mini"><b>영향</b> {aff_links(e.get("affects") or [])}</div>' if e.get('affects') else '') +
+                (f'<div class="mini"><b>미리 할 일</b> {E(e.get("react", ""))}</div>' if e.get('react') else '') +
+                (('<ul class="titles">' + ''.join(f'<li><a href="{E(t["u"])}" target="_blank" rel="noopener nofollow">{E(t["t"])}</a> <span class="mini">{E(t["s"])} {E(t["d"][4:6])}.{E(t["d"][6:8])}</span></li>' for t in e.get('titles') or []) + '</ul>') if e.get('titles') else '') + '</li>')
+    def world_home():
+        if not WEV: return ''
+        b = f'<h2>세계 요인 — 지금 값에 작용하는 것 <span class="mini">{WORLD.get("n_rules", len(WEV))}개 요인 감시 · 활성 {len(WACT)}</span></h2>'
+        if WACT: b += '<ul class="alerts world">' + ''.join(world_card(e) for e in WACT[:5]) + '</ul>'
+        else: b += '<p class="note">오늘은 기준을 넘은 세계 요인이 없습니다(달력 요인 포함).</p>'
+        b += f'<p class="mini"><a href="/world/">기후·질병·지정학·정책·세계 상품·달력 요인 {WORLD.get("n_rules", len(WEV))}개의 오늘 상태 →</a></p>'
+        return b
+    def world_page():
+        b = '<p class="crumb"><a href="/">박씨팜</a> › 세계 요인</p><h1 class="title">세계 요인 감시 — 값을 흔드는 바깥일</h1>'
+        b += f'<p class="lead">브라질 조류인플루엔자, 후쿠시마 처리수, 엘니뇨, 호르무즈, 할당관세, 명절처럼 품목 밖에서 값을 흔드는 요인 {WORLD.get("n_rules", 0)}개를 매일 아침 재서 예보 점수에 더합니다. {E((WORLD.get("at") or "")[:16])} 기준 · 활성 {len(WACT)}(경보 {sum(1 for e in WACT if e["level"] == 2)}).</p>'
+        b += '<div class="statusbar">' + ''.join(f'<span class="{"off" if any(e["level"] == 2 and e["cat"] == c for e in WACT) else "soon" if any(e["cat"] == c for e in WACT) else "on"}"><i></i>{E(c)} {sum(1 for e in WACT if e["cat"] == c)}/{sum(1 for e in WEV if e["cat"] == c)}</span>' for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '수요·달력')) + '</div>'
+        if WACT: b += '<h2>지금 활성</h2><ul class="alerts world">' + ''.join(world_card(e) for e in WACT) + '</ul>'
+        b += '<h2>감시하는 요인 전부</h2><p class="mini">조용한 요인도 매일 잽니다. 단계가 오르면 그날 예보 점수에 들어가고, 이 화면과 첫 화면에 올라옵니다.</p>'
+        for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '수요·달력', '확인 메모'):
+            es = [e for e in WEV if e['cat'] == c]
+            if not es: continue
+            b += f'<h3>{E(c)}</h3><table class="t wtab"><tr><th>요인</th><th>오늘</th><th>재는 법 · 시차</th><th>영향 품목</th></tr>'
+            for e in es:
+                b += f'<tr><td><b>{E(e["name"])}</b><div class="mini">{E(e.get("why", "")[:90])}</div></td><td>{wlv(e["level"])}<div class="mini">{E(e.get("text", "")[:80])}</div></td><td class="mini">{E(e.get("src", ""))}<br>시차 {E(e.get("lag", ""))}</td><td class="mini">{aff_links(e.get("affects") or e.get("affects_all") or [])}</td></tr>'
+            b += '</table>'
+        caps = WORLD.get('caps') or {}
+        b += '<h2>점수에 넣는 법</h2><ul><li>요인마다 「주의」면 정해진 무게를, 「경보」면 두 배를 영향 품목 점수에 더합니다. 품목 하나에 더하는 합은 갈래별 상한' + E(f'(수산 ±{caps.get("수산", 1)}, 농산 ±{caps.get("농산", 0.5)}, 축산 ±{caps.get("축산", 0.6)})') + '을 넘지 않습니다 — 세계 요인만으로 신호가 뒤집히지 않고, 국내 자료와 같은 쪽일 때 세기가 커집니다.</li>'
+        b += '<li>뉴스 흐름은 「그 이야기가 평소보다 많이 나온다」는 뜻이지 사실 확인이 아닙니다. 최근 7일 기사 비중이 앞 11주 평균의 1.4배(표준점수 1.5)를 넘으면 주의, 2배(표준점수 3)를 넘으면 경보로 봅니다. 기사 제목을 같이 보여 드리니 사람이 확인하세요.</li>'
+        b += '<li>엘니뇨 지수는 ±0.5 넘으면 해당 국면, ±1.0 넘으면 강함. 위성 수온 이상은 7개 해역 평균 평년 대비 +1.0℃(주의)·+1.5℃(경보), −1.0℃는 냉수 주의. 세계 상품값은 3개월 변동 ±8~10% 주의·±15~20% 경보. 지진은 일본·한반도 근해 규모 6.0 주의·7.0 경보.</li>'
+        b += '<li>달력 요인(설·추석 45일 전부터, 김장철, 휴가철, 개학)은 해마다 되풀이되는 수요라 자료 없이도 켜집니다. 명절·김장 뒤에는 반대 방향(되돌림)으로 켜집니다.</li>'
+        b += '<li>세계 요인을 더한 뒤의 예보도 똑같이 채점합니다. 요인별로 맞힌 비율이 쌓이면 무게를 월요일마다 조정하고 <a href="/track/">적중 기록</a>에 남깁니다.</li></ul>'
+        b += f'<p class="mini">자료: {E(WORLD.get("basis", ""))}. 모두 열쇠 없는 공개 자료이며, 품목에 없는 영향(고추냉이·천일염 등)은 수집 품목이 늘면 자동으로 이어집니다.</p>'
+        write('/world/', shell('/world/', f'세계 요인 감시 — 기후·질병·지정학·정책이 농축수산물 값에 미치는 영향 ({TODAY}) | 박씨팜', '엘니뇨·수온 이상·조류인플루엔자·후쿠시마·호르무즈·할당관세·명절 수요 등 36개 바깥 요인의 오늘 상태와 영향 품목, 예보 점수 반영 방법.', b), '0.8')
+
     # ── 1. 첫 화면 ───────────────────────────────────────────────
     def home():
         nf = [it for it in items if it['dir'] != '보합' and not it.get('obs_only')]
@@ -202,6 +248,7 @@ def build(G):
         hd = dec.get('hanwoo') or {}
         b += f'<div class="card"><h3>축산</h3><div class="big">대기</div><p>한우·돼지 판단 {hd.get("ndays") or 0}거래일째 기록 중 — 10거래일 뒤부터 채점</p></div></div>'
         b += '<p class="mini">틀린 예보도 지우지 않고 그대로 둡니다. <a href="/track/">적중 기록 전체와 채점 방법 →</a></p>'
+        b += world_home()
         # 원가 압력
         secs = FC.get('sectors') or []
         if secs:
@@ -277,7 +324,9 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
             b += f'<p class="mini">날마다 판단을 기록해 두고 10거래일 뒤 실제 경락가로 채점합니다(사료는 60거래일). 지금 {len(dh)}일째 기록 중, 첫 채점 전.</p><details><summary>기록 {len(dh)}건 보기</summary><table class="t"><tr><th>날짜</th><th>판단</th><th class="num">기준값</th></tr>' + ''.join(f'<tr><td>{E(d)}</td><td>{badge(dec_dir(a))} <span class="mini">{E(a)}</span></td><td class="num">{E(won(bse))}</td></tr>' for d, a, bse in reversed(dh)) + '</table></details>'
         else:
             b += '<p class="mini">' + E({'수산': '달마다 예보를 남기고 다음 달 위판 값으로 채점합니다. 이 품목은 아직 채점된 예보가 없습니다.', '농산': '월요일마다 예보를 남기고 2주 뒤 도매시장 값으로 채점합니다. 첫 채점은 11월 초입니다.', '축산': '첫 채점 전입니다.'}[s]) + '</p>'
-        b += '<h2>같이 보기</h2><p class="links">' + ' · '.join(f'<a href="{u}">{t}</a>' for u, t in (('/f/#' + s, f'{s} 품목 전체'), ('/track/', '적중 기록'), ('/alerts/', '오늘의 경보'), ('/price/', '오늘 시세'), ('/opps/', '수급 기회'), ('/map/', '지도'))) + '</p>'
+        wl = [w for w in it['why'] if w.startswith('세계 요인')]
+        if wl: b += '<p class="mini">세계 요인이 이 품목 점수에 들어가 있습니다(갈래 상한 안에서). <a href="/world/">세계 요인 감시 →</a></p>'
+        b += '<h2>같이 보기</h2><p class="links">' + ' · '.join(f'<a href="{u}">{t}</a>' for u, t in (('/f/#' + s, f'{s} 품목 전체'), ('/world/', '세계 요인'), ('/track/', '적중 기록'), ('/alerts/', '오늘의 경보'), ('/price/', '오늘 시세'), ('/opps/', '수급 기회'), ('/map/', '지도'))) + '</p>'
         b += '<p class="mini">예보는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않으며, 이 숫자에 이해관계가 없습니다.</p>'
         desc = f'{it["item"]} {it["horizon"]} {w} 예보. ' + ' · '.join(it['why'][:2])[:120]
         ld = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': f'{it["item"]} 가격 예보', 'url': BASE + it['url'], 'dateModified': TODAY, 'description': desc, 'isPartOf': {'@type': 'WebSite', 'name': '박씨팜', 'url': BASE + '/'}}
@@ -343,5 +392,5 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
 
     home(); list_page()
     for it in items: item_page(it)
-    alerts_page(); track_page()
+    alerts_page(); track_page(); world_page()
     return {'items': len(items), 'up': counts['오름'], 'dn': counts['내림'], 'alerts': len(AL)}

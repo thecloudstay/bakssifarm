@@ -5,6 +5,7 @@
 import sys, os, re, json, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
+from world_lib import world_adjust
 WP = jload(os.path.join(DATA, 'wipan.json'), {}); SS = jload(os.path.join(DATA, 'seastock.json'), {}); RK = jload(os.path.join(DATA, 'risk.json'), {})
 FD = os.path.join(PRIVATE, 'forecast'); os.makedirs(FD, exist_ok=True)
 ALIAS = {'우렁쉥이': '멍게', '살오징어': '오징어', '피뿔고둥': '소라', '참굴': '굴', '흰베도라치': '실치', '민대구': '대구', '코다리': '명태', '명태포': '명태', '오징어포': '오징어'}
@@ -32,7 +33,7 @@ for k in ('center', 'coop'):
 risk = {base(s['sp']): s['lv'] for s in RK.get('species', [])}
 # 2026-10-26 자가 개선: 8월 신호 채점(9월 값)에서 근거별 적중 — 달 후반 흐름 26건 중 19건(73%), 창고 재고 7건 중 2건(29%).
 # 달 후반 흐름 무게 0.5로는 혼자 신호가 안 돼 보합이 31건(적중 4)이었음 → 무게 1로 올림(한 가지 기준만). 2주 뒤 10월 값 채점으로 검증.
-TW = 1.0; RULE = '달 후반 흐름 무게 1 · 2026-10-26'
+TW = 1.0; RULE = '달 후반 흐름 무게 1 · 세계 요인 반영 · 2026-10-28'
 items = []
 for b, x in sorted(g.items(), key=lambda kv: -kv[1]['amt'])[:40]:
     if x['kg'] <= 0: continue
@@ -54,9 +55,11 @@ for b, x in sorted(g.items(), key=lambda kv: -kv[1]['amt'])[:40]:
     rl = risk.get(b)
     if rl == '위험': sc += 1; why.append('폐사 위험 예보(공급 줄 수 있음)')
     elif rl == '주의': sc += 0.5; why.append('고수온 주의 예보')
+    wd, wwhy, wids = world_adjust('수산', b)   # 2026-10-28 세계 요인(질병·기후·지정학·달력) — 갈래 상한 ±1
+    if wd: sc += wd; why += wwhy
     d = '오름 쪽' if sc >= 1 else '내림 쪽' if sc <= -1 else '보합'
     act = {'오름 쪽': '지금 사 두기·재고 늘리기 검토', '내림 쪽': '구매 미루기·재고 줄이기 검토', '보합': '평소대로'}[d]
-    items.append({'item': b, 'names': x['names'][:4], 'wonkg': wonkg, 'amt': x['amt'], 'trend': trend, 'mom': mom, 'stock': stc, 'risk': rl, 'score': sc, 'dir': d, 'act': act, 'why': why})
+    items.append({'item': b, 'names': x['names'][:4], 'wonkg': wonkg, 'amt': x['amt'], 'trend': trend, 'mom': mom, 'stock': stc, 'risk': rl, 'score': sc, 'dir': d, 'act': act, 'why': why, 'world': wd, 'world_ids': wids})
 # 예측 기록(자료 달 기준 한 번) + 채점
 fp = os.path.join(FD, month + '.json')
 rec = {'made': stamp(), 'month': month, 'rule': RULE, 'items': [{k: i[k] for k in ('item', 'wonkg', 'dir', 'score')} for i in items]}

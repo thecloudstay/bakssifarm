@@ -192,6 +192,17 @@ pig_season = '계절: 돼지값은 대체로 봄~초여름에 강하고 가을~�
 for d in (live_decision('hanwoo', '한우 거세 출하', han_s, 'cattle', 'macro_cattle', ''),
           live_decision('pig', '돼지 출하', pig_s, 'hog', 'macro_hog', pig_season)):
     if d: decisions.append(d)
+# 2026-10-28 세계 요인(질병·기후·지정학·정책·달력) — 축산 상한 ±0.6, 더한 뒤 행동 문구를 같은 기준으로 다시 정함
+from world_lib import world_adjust
+for d in decisions:
+    nm = {'feed': '사료', 'hanwoo': '한우', 'pig': '돼지'}.get(d['id'], d['item'])
+    wd, wwhy, wids = world_adjust('축산', nm)
+    d['world'] = wd; d['world_ids'] = wids
+    if not wd: continue
+    d['score'] = round(d['score'] + wd, 2); d['why'] = d['why'] + wwhy
+    if d['id'] in ('hanwoo', 'pig'):
+        d['act'] = '출하 늦추기 검토(값 오름 쪽)' if d['score'] >= 0.8 else '출하 서두르기·매도 검토(값 내림 쪽)' if d['score'] <= -0.8 else '관망(평소 출하)'
+        d['c'] = round(clip(abs(d['score']) / 2, 0, 1) * PR['w'][d['id']], 2); d['conf'] = conf_word(d['c'])
 
 # 수산·농산 기존 신호를 같은 판에 묶어 보여 줌(채점은 각 신호가 따로 함)
 BUY = jload(os.path.join(DATA, 'buysignal.json'), {}); CROP = jload(os.path.join(DATA, 'cropsignal.json'), {})

@@ -6,6 +6,7 @@
 import sys, os, json, glob, datetime, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import *
+from world_lib import world_adjust
 HD = os.path.join(PRIVATE, 'wholesale'); FD = os.path.join(PRIVATE, 'forecast'); os.makedirs(FD, exist_ok=True)
 WH = jload(os.path.join(DATA, 'price', 'wholesale.json'), {})
 days = sorted(glob.glob(os.path.join(HD, '*.json')))
@@ -33,8 +34,10 @@ if len(hist) >= 10:
         elif pt <= -5: sc -= 0.5; why.append(f'최근 5거래일 값 {pt:+}%')
         if qt <= -15: sc += 0.5; why.append(f'반입 물량 {qt:+}%(공급 줄어듦)')
         elif qt >= 15: sc -= 0.5; why.append(f'반입 물량 {qt:+}%(공급 늘어남)')
+        wd, wwhy, wids = world_adjust('농산', k)   # 2026-10-28 세계 요인 — 갈래 상한 ±0.5
+        if wd: sc += wd; why += wwhy
         dr = '오름 쪽' if sc >= 1 else '내림 쪽' if sc <= -1 else '보합'
-        out['items'].append({'item': k, 'wonkg': round(pr), 'pt': pt, 'qt': qt, 'score': sc, 'dir': dr, 'why': why,
+        out['items'].append({'item': k, 'wonkg': round(pr), 'pt': pt, 'qt': qt, 'score': sc, 'dir': dr, 'why': why, 'world': wd,
                              'act': {'오름 쪽': '필요 물량 앞당겨 확보 검토', '내림 쪽': '구매 미루기·소량 나눠 사기 검토', '보합': '평소대로'}[dr]})
     today = now().date()
     fp = os.path.join(FD, f'crop-{today.isoformat()}.json')
