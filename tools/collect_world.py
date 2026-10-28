@@ -179,6 +179,26 @@ def fred(series_id):
         return {'id': series_id, 'date': out[-1][0][:7], 'last': last, 'c1': round((last / m1 - 1) * 100, 1) if m1 else None, 'c3': round((last / m3 - 1) * 100, 1) if m3 else None, 'c12': round((last / y1 - 1) * 100, 1) if y1 else None, 'n': len(out)}
     except Exception as e:
         MSG.append(f'fred {series_id} {str(e)[:40]}'); return None
+def stale(ym, months=8):
+    """연월 문자열이 지금보다 months 개월 넘게 오래됐으면 참(끊긴 지표를 2023년 값으로 쓰는 일 막기)"""
+    try: y, m = int(ym[:4]), int(ym[5:7]); return (TODAY.year - y) * 12 + (TODAY.month - m) > months
+    except Exception: return False
+def oecd_series(key, flow='OECD.SDD.TPS,DSD_PRICES@DF_PRICES_ALL,1.0', n=18):
+    """경제협력개발기구 공개 통계(열쇠 없음) — 월별 [(연월, 값)] 최근 n개"""
+    try:
+        b = fetch(f'https://sdmx.oecd.org/public/rest/data/{flow}/{key}', {'lastNObservations': n, 'format': 'csvfile'}, timeout=40, retry=1).decode('utf-8', 'replace')
+        rows = list(csv.reader(io.StringIO(b)))
+        if not rows: return None
+        hd = rows[0]; it = hd.index('TIME_PERIOD') if 'TIME_PERIOD' in hd else None; iv = hd.index('OBS_VALUE') if 'OBS_VALUE' in hd else None
+        if it is None or iv is None: MSG.append('oecd 열 이름 다름 ' + ','.join(hd)[:60]); return None
+        out = []
+        for r in rows[1:]:
+            try: out.append((r[it][:7], float(r[iv])))
+            except (ValueError, IndexError): pass
+        out.sort()
+        return out or None
+    except Exception as e:
+        MSG.append(f'oecd {key[:24]} {str(e)[:40]}'); return None
 def fred_daily(series_id, back=66):
     """일별 환율: 마지막 값과 3개월(66거래일) 전 대비 %"""
     try:
@@ -366,12 +386,20 @@ for r in R.get('rules', []):
             g = news(dt['q']); ev['news'] = g
             if g.get('ratio') is None: ev['_news_failed'] = True; ev['text'] = '뉴스 흐름 자료 못 받음 ' + g.get('err', '')
             else: ev.update({'level': lv_from_news(g), 'value': f'뉴스 {g["ratio"]}배', 'text': f'최근 7일 관련 기사가 평소의 {g["ratio"]}배 ({g["src"]})', 'titles': g.get('titles') or []})
-        elif typ == 'fred_yoy':   # 전년 동월 대비 %
-            got = next((g for g in (fred(sid) for sid in dt.get('series', [])) if g), None)
-            if got and got.get('c12') is not None:
-                v = got['c12']; ev.update({'level': lv_from_pct(max(v, 0), dt.get('warn', 3), dt.get('alarm', 4.5)), 'value': f'{v:+.1f}%(전년 대비)', 'text': f'{got["date"]} 기준 전년 동월 대비 {v:+.1f}% · 3개월 {(got["c3"] or 0):+.1f}%'})
+        elif typ == 'fred_yoy':   # 전년 동월 대비 % — 경제협력개발기구 직접(열쇠 없음) 먼저, 미 연준 경유는 보조
+            got = None
+            if dt.get('oecd'):
+                o = oecd_series(dt['oecd'])
+                if o and not stale(o[-1][0]):
+                    got = {'date': o[-1][0], 'c12': round(o[-1][1], 1), 'c3': round(o[-1][1] - o[-4][1], 1) if len(o) > 3 else None, 'src': '경제협력개발기구 직접'}
+            if not got:
+                f = next((g for g in (fred(sid) for sid in dt.get('series', [])) if g), None)
+                if f and f.get('c12') is not None and not stale(f['date']): got = {'date': f['date'], 'c12': f['c12'], 'c3': f['c3'], 'src': '미 연준 경제자료 경유'}
+                elif f: ev['text'] = f'자료가 오래됨({f["date"]}까지) — 점수 반영 안 함'
+            if got:
+                v = got['c12']; ev.update({'level': lv_from_pct(max(v, 0), dt.get('warn', 3), dt.get('alarm', 4.5)), 'value': f'{v:+.1f}%(전년 대비)', 'text': f'{got["date"]} 기준 전년 동월 대비 {v:+.1f}%' + (f' · 3개월 전 상승률 대비 {got["c3"]:+.1f}%p' if got.get('c3') is not None else '') + f' ({got["src"]})'})
                 if v < 0: aff = []
-            else: ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
+            elif not ev.get('text'): ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
         elif typ == 'fred_diff':   # 3개월 전 대비 %p(금리)
             got = None
             for sid in dt.get('series', []):
@@ -386,8 +414,10 @@ for r in R.get('rules', []):
             else: ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
         elif typ == 'fred_level':   # 수준 지표(소비자심리): 기준 아래면 켬
             got = next((g for g in (fred(sid) for sid in dt.get('series', [])) if g), None)
-            if got:
-                v = got['last']; ev.update({'level': 2 if v <= dt.get('alarm', 98) else 1 if v <= dt.get('warn', 99) else 0, 'value': f'{v:.1f}', 'text': f'{got["date"]} 기준 {v:.1f} (100 아래면 비관) · 3개월 {(got["c3"] or 0):+.1f}%'})
+            if got and stale(got['date']): ev['text'] = f'자료가 오래됨({got["date"]}까지) — 점수 반영 안 함'
+            elif got:
+                v = got['last']; nt = dt.get('neutral_text', '100 아래면 비관')
+                ev.update({'level': 2 if v <= dt.get('alarm', 98) else 1 if v <= dt.get('warn', 99) else 0, 'value': f'{v:.1f}', 'text': f'{got["date"]} 기준 {v:.1f} ({nt})'})
             else: ev['text'] = '자료 못 받음(지표 이름 확인 필요)'
         elif typ == 'minwage':   # 최저임금 표: 그해 인상률, 1~4월에 켬
             tb = dt.get('table') or {}; y = str(TODAY.year); y0 = str(TODAY.year - 1)
