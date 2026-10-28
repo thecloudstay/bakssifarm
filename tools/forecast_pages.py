@@ -32,6 +32,7 @@ def build(G):
             if ok: out += v
         return out
     TODAY = (FC.get('at') or BUYS.get('at') or datetime.date.today().isoformat())[:10]
+    def _d(s): return datetime.date.fromisoformat(s[:10])
 
     def base(n):
         n = re.sub(r'\(.*?\)', '', n or '').strip(); n = re.sub(r'^기타', '', n); n = re.sub(r'류$', '', n)
@@ -159,7 +160,6 @@ def build(G):
     for it in items:
         it['tm'] = tmetrics(it['series']) if len(it['series']) >= 5 else None
     TR_DIR = os.path.join(PRIVATE, 'trend'); os.makedirs(TR_DIR, exist_ok=True)
-    def _d(s): return datetime.date.fromisoformat(s[:10])
     idx_list = [('종합', PX.get('total') or {})] + [(k, v) for k, v in (PX.get('sectors') or {}).items()] + [('원가 압력', PX.get('cost') or {})]
     snap = {'date': TODAY, 'items': [[it['sector'], it['item'], it['tm']['last'], it['tm']['regime'], it['tm'].get('slope'), it['tm'].get('date')] for it in items if it.get('tm') and it['tm'].get('n', 0) >= 3],
             'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('slope'), v['metrics'].get('date')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}}
@@ -253,6 +253,15 @@ def build(G):
         for k, v in (RISK.get('livestock') or {}).items():
             for lv in ('위험', '경고', '주의'):
                 if v.get(lv): out.append({'level': '경보' if lv == '위험' else '주의', 'kind': '가축 더위', 'title': f'{k} 더위 {lv} 시군 {v[lv]}곳', 'react': '급수·환기 점검, 출하 일정 조정', 'date': RISK.get('at', '')[:10], 'src': '7일 기온·습도 예보(온습도지수)', 'url': '/risk/'})
+        # 물가 지수: 지수선 교차(이틀 안)·±2σ 띠 이탈은 「주의」로 알림(품목 단위는 넣지 않음 — 잡음)
+        for k, v in [('종합', PX.get('total') or {})] + [(k, (PX.get('sectors') or {}).get(k) or {}) for k in ('축산', '수산', '농산')] + [('원가 압력', PX.get('cost') or {})]:
+            m = v.get('metrics') or {}
+            if not m.get('n') or m.get('n', 0) < 10: continue
+            c = m.get('cross')
+            if c and c.get('ago', 9) <= 1 and (_d(TODAY) - _d(m['date'])).days <= 3:
+                out.append({'level': '주의', 'kind': '물가 지수', 'title': f'{k} 지수 {"오늘" if c["ago"] == 0 else "어제"} {c["kind"]} 크로스 — 5일선이 20일선을 {"위로" if c["kind"] == "골든" else "아래로"} 뚫음({m["last"]:,.1f}, {m["regime"]})', 'react': '추세 전환의 초기 신호 — 품목별 경향 순위와 같이 볼 것', 'date': m['date'], 'src': '박씨팜 물가 지수(5일선·20일선)', 'url': '/index/#' + k})
+            elif m.get('band_hi') and (m['last'] > m['band_hi'] or m['last'] < m['band_lo']) and (_d(TODAY) - _d(m['date'])).days <= 3:
+                out.append({'level': '주의', 'kind': '물가 지수', 'title': f'{k} 지수 {m["last"]:,.1f} — 20일 ±2σ 띠 {"위로" if m["last"] > m["band_hi"] else "아래로"} 벗어남({m["band_lo"]:,.1f}~{m["band_hi"]:,.1f})', 'react': '평소 흐름을 벗어난 값 — 되돌림이 잦으니 하루 값에 끌려가지 말 것', 'date': m['date'], 'src': '박씨팜 물가 지수(20일 표준편차)', 'url': '/index/#' + k})
         out.sort(key=lambda a: (0 if a['level'] == '경보' else 1, a.get('date', ''))); return out
     AL = alerts_all()
     def alert_li(a):
@@ -379,6 +388,7 @@ def build(G):
                          ('지수 만드는 법', '품목별 값 ÷ 그 품목 기준값(처음 보인 5일 평균)의 로그를 거래금액 비중으로 가중 평균 → 지수. 고정 가중 기하 지수(라스파이레스 계열)', '그날 없는 품목은 빼고 가중치를 다시 정규화 · 반쪽 장 제외 · 한 품목 변동은 ±120%로 자름')):
             b += f'<tr><td><b>{E(a)}</b></td><td class="mini">{E(bb)}</td><td class="mini">{E(c)}</td></tr>'
         b += '</table><p class="note"><b>한계</b> — 기록이 2026년 9월 중순부터라 20일선·교차는 이제 막 의미를 갖기 시작했고, 1년 전 같은 달과 비교하는 계절 조정은 내년 가을부터 가능합니다. 지수는 「무엇을 살지」가 아니라 「지금 어느 쪽으로 흐르는지」를 보여 줍니다. 품목별 예보는 <a href="/f/">품목별</a>에서, 지수가 왜 움직였는지는 <a href="/world/">세계 요인</a>과 <a href="/signal/">거시 근거</a>에서 봅니다.</p>'
+        b += f'<h2 id="data">자료 내려받기·인용</h2><p>지수 원자료(날짜별 값·계량 요약)는 <a href="/data/pindex.json">pindex.json</a>으로 공개합니다(저작자 표시 4.0, 갱신 {E(PX.get("at", "")[:16])}). 인용은 「박씨팜 농축수산물 물가 지수, {E(TODAY)}, thecloudstay.github.io/bakssifarm/index/」로 적어 주세요. 산식·판정 기준은 위 표와 <a href="/method/">예측 기법</a> 5-1절에, 바뀐 내용은 개선 기록에 남깁니다.</p>'
         b += '<p class="mini">같이 보기: <a href="/">오늘 예보</a> · <a href="/method/">예측 기법</a> · <a href="/track/">적중 기록</a> · <a href="/data/">자료 대장</a></p>'
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': '박씨팜 물가 지수', 'url': BASE + '/index/', 'description': '한우·돼지 경락가, 수협 위판가, 공영도매시장 정산가를 거래금액 가중으로 묶은 농축수산물 물가 지수와 원가 압력 지수. 5일선·20일선·기울기로 경향 판정.', 'dateModified': TODAY, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'creator': {'@type': 'Organization', 'name': '박씨팜'}}
         tm = T.get('metrics') or {}
