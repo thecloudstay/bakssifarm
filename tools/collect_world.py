@@ -22,6 +22,8 @@ FC = jload(os.path.join(DATA, 'forecast.json'), {})
 TODAY = now().date(); TS = TODAY.isoformat()
 UA = {'User-Agent': 'Mozilla/5.0 (compatible; bakssifarm-world/1.0; +https://thecloudstay.github.io/bakssifarm/)'}
 DBG = {}; MSG = []
+T0 = time.time(); BUDGET = int(os.environ.get('WORLD_BUDGET_SEC') or 900)   # 전체 15분 안에 끝냄 — 넘으면 남은 뉴스 흐름 질의는 건너뜀
+def over(): return time.time() - T0 > BUDGET
 OUT_LOG = os.path.join(PRIVATE, 'world'); os.makedirs(OUT_LOG, exist_ok=True)
 OLD = jload(os.path.join(DATA, 'world.json'), {})
 
@@ -34,8 +36,9 @@ def gdelt(q):
     """최근 12주 일별 기사 비중 → 최근 7일 평균 대 앞 기간 평균. (z, ratio, last7, titles)"""
     if q in _gd_cache: return _gd_cache[q]
     res = {'z': None, 'ratio': None, 'last7': None, 'titles': [], 'err': ''}
+    if over(): res['err'] = '시간 예산 초과로 건너뜀'; _gd_cache[q] = res; return res
     try:
-        b = fetch('https://api.gdeltproject.org/api/v2/doc/doc', {'query': q, 'mode': 'timelinevol', 'timespan': '12w', 'format': 'json'}, timeout=40)
+        b = fetch('https://api.gdeltproject.org/api/v2/doc/doc', {'query': q, 'mode': 'timelinevol', 'timespan': '12w', 'format': 'json'}, timeout=25, retry=1)
         j = json.loads(b.decode('utf-8', 'replace'))
         data = ((j.get('timeline') or [{}])[0].get('data') or [])
         vals = [float(x.get('value') or 0) for x in data]
@@ -49,8 +52,9 @@ def gdelt(q):
     time.sleep(1.2)
     _gd_cache[q] = res; return res
 def gdelt_titles(q, n=3):
+    if over(): return []
     try:
-        b = fetch('https://api.gdeltproject.org/api/v2/doc/doc', {'query': q, 'mode': 'artlist', 'maxrecords': 8, 'sort': 'datedesc', 'format': 'json'}, timeout=40)
+        b = fetch('https://api.gdeltproject.org/api/v2/doc/doc', {'query': q, 'mode': 'artlist', 'maxrecords': 8, 'sort': 'datedesc', 'format': 'json'}, timeout=25, retry=1)
         arts = json.loads(b.decode('utf-8', 'replace')).get('articles') or []
         seen, out = set(), []
         for a in arts:
