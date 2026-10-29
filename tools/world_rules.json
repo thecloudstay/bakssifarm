@@ -1280,6 +1280,329 @@
     }
    ],
    "src": "뉴스 흐름"
+  },
+  {
+   "id": "eu_pork_price",
+   "cat": "원산지 시세",
+   "name": "유럽연합 돼지고기 도축장 값(S·E등급)",
+   "detect": {
+    "type": "global",
+    "series": "eu_pig_s",
+    "window": "w4",
+    "warn": 6,
+    "alarm": 12
+   },
+   "lag": "3~8주",
+   "why": "스페인·네덜란드·독일·덴마크가 우리 수입 돼지고기의 3분의 1 — 유럽 도축장 값이 오르면 수입 삼겹·앞다리 계약 단가가 한두 달 뒤 오르고 국산 돼지 경쟁이 느슨해짐",
+   "react": "수입육 가공·급식은 선계약, 양돈 농가는 출하 조절 여지",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "돼지",
+     "dir": "오름 쪽",
+     "w": 0.1,
+     "why": "수입 돼지고기 단가 ↑"
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "돼지",
+     "dir": "내림 쪽",
+     "w": 0.1,
+     "why": "수입 돼지고기 단가 ↓"
+    }
+   ],
+   "src": "유럽연합 집행위 농식품 창구(주간, 7개국 평균)"
+  },
+  {
+   "id": "us_beef_price",
+   "cat": "원산지 시세",
+   "name": "미국 쇠고기 박스육 초이스 도매값",
+   "detect": {
+    "type": "global",
+    "series": "us_beef_choice",
+    "window": "w4",
+    "warn": 5,
+    "alarm": 10
+   },
+   "lag": "4~10주",
+   "why": "미국이 수입 쇠고기의 절반 — 미국 도매값이 오르면 수입 쇠고기 소비자 체감가가 올라 한우 하위 등급 수요가 받쳐짐",
+   "react": "한우 하위 등급·수입육 대체 구매 검토",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "한우",
+     "dir": "오름 쪽",
+     "w": 0.08,
+     "why": "수입 쇠고기 단가 ↑"
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "한우",
+     "dir": "내림 쪽",
+     "w": 0.08,
+     "why": "수입 쇠고기 단가 ↓"
+    }
+   ],
+   "src": "미국 농무부 의무보고 LM_XB459(주간)"
+  },
+  {
+   "id": "us_hog_price",
+   "cat": "원산지 시세",
+   "name": "미국 생돈 순가격",
+   "detect": {
+    "type": "global",
+    "series": "us_hog_net",
+    "window": "w4",
+    "warn": 8,
+    "alarm": 15
+   },
+   "lag": "3~8주",
+   "why": "미국이 수입 돼지고기의 30% — 생돈 값이 한 달 새 크게 움직이면 수입 단가에 먼저 닿음",
+   "react": "수입 돼지고기 계약 시점 조정",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "돼지",
+     "dir": "오름 쪽",
+     "w": 0.08
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "돼지",
+     "dir": "내림 쪽",
+     "w": 0.08
+    }
+   ],
+   "src": "미국 농무부 의무보고 LM_HG201(일별)"
+  },
+  {
+   "id": "br_chicken_price",
+   "cat": "원산지 시세",
+   "name": "브라질 육계 산지 지표",
+   "detect": {
+    "type": "global",
+    "series": "br_chicken",
+    "window": "w4",
+    "warn": 8,
+    "alarm": 15
+   },
+   "lag": "2~6주",
+   "why": "브라질이 수입 닭고기의 83% — 브라질 육계 값이 오르면 수입 닭다리·날개 단가가 오르고 국산 닭·계란 경쟁이 느슨해짐",
+   "react": "치킨·급식 업체 선계약, 육계 농가 출하 조절",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "닭|육계|계란",
+     "dir": "오름 쪽",
+     "w": 0.12,
+     "why": "수입 닭고기 단가 ↑"
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "닭|육계|계란",
+     "dir": "내림 쪽",
+     "w": 0.12,
+     "why": "수입 닭고기 단가 ↓"
+    }
+   ],
+   "src": "상파울루대 세페아 지표(일별)"
+  },
+  {
+   "id": "br_soy_price",
+   "cat": "원산지 시세",
+   "name": "브라질 대두·옥수수 산지 지표",
+   "detect": {
+    "type": "global",
+    "series": "br_soy",
+    "window": "w4",
+    "warn": 8,
+    "alarm": 15
+   },
+   "lag": "4~7개월",
+   "why": "브라질이 대두박의 55% — 산지 대두 값은 시카고 선물과 다른 현지 수급(환율·물류)을 담아 사료 원가에 몇 달 뒤 닿음",
+   "react": "사료 선매 검토(오를 때)",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "사료",
+     "dir": "오름 쪽",
+     "w": 0.08
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "사료",
+     "dir": "내림 쪽",
+     "w": 0.08
+    }
+   ],
+   "src": "상파울루대 세페아 지표(일별)"
+  },
+  {
+   "id": "no_salmon_price",
+   "cat": "원산지 시세",
+   "name": "노르웨이 연어 수출가",
+   "detect": {
+    "type": "global",
+    "series": "no_salmon_fresh",
+    "window": "w4",
+    "warn": 8,
+    "alarm": 15
+   },
+   "lag": "2~6주",
+   "why": "노르웨이가 수입 연어의 75% — 연어 값이 오르면 횟집·마트가 방어·참돔·넙치로 옮겨 국산 횟감 수요가 늘고, 내리면 반대",
+   "react": "횟감 양식장은 연어 값 하락기 출하 서두르기",
+   "affects_up": [
+    {
+     "sector": "수산",
+     "item": "방어|참돔|넙치",
+     "dir": "오름 쪽",
+     "w": 0.08,
+     "why": "연어 대체 수요"
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "수산",
+     "item": "방어|참돔|넙치",
+     "dir": "내림 쪽",
+     "w": 0.08,
+     "why": "연어로 수요 이동"
+    }
+   ],
+   "src": "노르웨이 통계청 03024(주간)"
+  },
+  {
+   "id": "fao_meat_index",
+   "cat": "세계 상품",
+   "name": "세계 육류가격지수(식량농업기구)",
+   "detect": {
+    "type": "global",
+    "series": "fao_fpi_meat",
+    "window": "w4",
+    "warn": 4,
+    "alarm": 8
+   },
+   "lag": "1~3개월",
+   "why": "세계 육류 값이 석 달 새 크게 움직이면 모든 수입 육류 단가가 같은 방향으로",
+   "react": "수입육 계약 조건 점검",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "한우|돼지|닭",
+     "dir": "오름 쪽",
+     "w": 0.05
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "한우|돼지|닭",
+     "dir": "내림 쪽",
+     "w": 0.05
+    }
+   ],
+   "src": "유엔 식량농업기구 식량가격지수(월별)"
+  },
+  {
+   "id": "fao_cereal_index",
+   "cat": "세계 상품",
+   "name": "세계 곡물가격지수(식량농업기구)",
+   "detect": {
+    "type": "global",
+    "series": "fao_fpi_cereals",
+    "window": "w4",
+    "warn": 5,
+    "alarm": 10
+   },
+   "lag": "3~6개월",
+   "why": "세계 곡물 값은 사료 원가의 바탕",
+   "react": "사료 선매·계약 검토",
+   "affects_up": [
+    {
+     "sector": "축산",
+     "item": "사료",
+     "dir": "오름 쪽",
+     "w": 0.06
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "축산",
+     "item": "사료",
+     "dir": "내림 쪽",
+     "w": 0.06
+    }
+   ],
+   "src": "유엔 식량농업기구 식량가격지수(월별)"
+  },
+  {
+   "id": "fert_urea_price",
+   "cat": "세계 상품",
+   "name": "요소 비료 세계값(세계은행)",
+   "detect": {
+    "type": "global",
+    "series": "wb_urea",
+    "window": "w4",
+    "warn": 12,
+    "alarm": 25
+   },
+   "lag": "2~6개월",
+   "why": "요소 값은 다음 작기 비료 원가 — 값이 오른 뒤 한두 작기 지나 채소·과일 생산비에 닿음",
+   "react": "비료 선구매·시비 계획",
+   "affects_up": [
+    {
+     "sector": "농산",
+     "item": ".",
+     "dir": "오름 쪽",
+     "w": 0.05,
+     "why": "비료 원가 ↑"
+    }
+   ],
+   "affects_down": [],
+   "src": "세계은행 상품값(월별)"
+  },
+  {
+   "id": "fishmeal_wb_price",
+   "cat": "세계 상품",
+   "name": "어분 세계값(세계은행)",
+   "detect": {
+    "type": "global",
+    "series": "wb_fishmeal",
+    "window": "w4",
+    "warn": 10,
+    "alarm": 20
+   },
+   "lag": "2~5개월",
+   "why": "양식 사료 원가의 핵심 — 페루 어기와 엘니뇨에 따라 크게 움직임",
+   "react": "양식 사료 선매 검토",
+   "affects_up": [
+    {
+     "sector": "수산",
+     "item": "넙치|조피볼락|참돔|새우|대하|방어|뱀장어|능성어|돌돔|농어|숭어",
+     "dir": "오름 쪽",
+     "w": 0.06,
+     "why": "양식 사료 원가 ↑"
+    }
+   ],
+   "affects_down": [
+    {
+     "sector": "수산",
+     "item": "넙치|조피볼락|참돔|새우|대하|방어|뱀장어|능성어|돌돔|농어|숭어",
+     "dir": "내림 쪽",
+     "w": 0.04
+    }
+   ],
+   "src": "세계은행 상품값(월별)"
   }
  ],
  "holidays": {

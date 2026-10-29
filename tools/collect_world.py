@@ -19,6 +19,8 @@ IM = jload(os.path.join(HERE, 'import_matrix.json'), {'items': []})
 OR = jload(os.path.join(HERE, 'origin_risks.json'), {'countries': []})
 CP = jload(os.path.join(HERE, 'crop_points.json'), {'points': []})
 NOTES = jload(os.path.join(HERE, 'world_notes.json'), {}).get('notes', [])
+GL = jload(os.path.join(DATA, 'global.json'), {}) or {}   # 세계 공개 연동창구(collect_global.py) — 원산지 시세·세계 상품값·재난·주산지 날씨
+GSER = GL.get('series') or {}
 FC = jload(os.path.join(DATA, 'forecast.json'), {})
 OLD = jload(os.path.join(DATA, 'world.json'), {})
 OLD_EV = {e['id']: e for e in OLD.get('events') or []}
@@ -426,6 +428,18 @@ for r in R.get('rules', []):
                 on = TODAY.month <= 4
                 ev.update({'level': (lv_from_pct(pct, dt.get('warn', 3), dt.get('alarm', 5)) if on else 0), 'value': f'{tb[y]:,}원({pct:+.1f}%)', 'text': f'{y}년 시급 {tb[y]:,}원, 전년 대비 {pct:+.1f}%' + ('' if on else ' — 연초(1~4월)에만 점수 반영')})
             else: ev['text'] = f'{y}년 결정액이 표에 없음 — 확인 메모로 추가'
+        elif typ == 'global':   # 세계 공개 연동창구 계열(collect_global.py): 창(w1·w4·m3·y1) 변화율로 단계, 오르면 affects_up·내리면 affects_down
+            g = GSER.get(dt.get('series') or '')
+            if not g: ev['text'] = '자료 못 받음(세계 창구 ' + str(dt.get('series')) + ')'; aff = []
+            else:
+                win = dt.get('window', 'w4'); v = (g.get('chg') or {}).get(win)
+                WN = {'w1': '1주', 'w4': '4주', 'm3': '3개월', 'y1': '1년'} if g.get('freq') in ('주', '월') else {'w1': '1주', 'w4': '1개월', 'm3': '3개월', 'y1': '1년'}
+                if g.get('freq') == '월': WN = {'w1': '1개월', 'w4': '3개월', 'm3': '6개월', 'y1': '1년'}
+                if v is None: ev['text'] = f'{g["name"]} {g["last"]:,.2f} {g["unit"]} ({g["date"]}) — 비교할 지난 값이 아직 없음'; aff = []
+                else:
+                    ev.update({'level': lv_from_pct(abs(v), dt.get('warn', 8), dt.get('alarm', 15)), 'value': f'{v:+.1f}%({WN.get(win, win)})',
+                               'text': f'{g["name"]} {g["last"]:,.2f} {g["unit"]} ({g["date"]}) · {WN.get(win, win)} {v:+.1f}%' + (' · 1년 ' + f'{g["chg"]["y1"]:+.1f}%' if (g.get('chg') or {}).get('y1') is not None else '') + (' (어제 값)' if g.get('stale') else ''), 'series': g['points'][-30:], 'unit': g.get('unit')})
+                    aff = (r.get('affects_up') if v > 0 else r.get('affects_down')) or []
         elif typ == 'cal':
             lv, txt, ph = cal_state(dt.get('kind', '')); ev.update({'level': lv, 'text': txt or '해당 구간 아님'})
             aff = (r.get('affects_before') if ph == 'before' else r.get('affects_after') if ph == 'after' else []) or []
@@ -463,8 +477,15 @@ CH = OR.get('channels') or {}; FXT = OR.get('fx_thresholds') or {'warn': 5, 'ala
 countries = OR.get('countries') or []
 t1 = [c for c in countries if c.get('tier', 2) == 1]; t2 = [c for c in countries if c.get('tier', 2) != 1]
 pos = CUR.get('tier2_pos', 0) % max(1, len(t2)); rot = (t2[pos:] + t2[:pos])[:12]   # 2군은 하루 12개 나라씩 돌아가며
+GD_BY = {}
+for g in GL.get('gdacs') or []:
+    for ko in g.get('ko') or []: GD_BY.setdefault(ko, []).append(g)
+WX_BY = {}
+for w in GL.get('weather') or []:
+    if w.get('level'): WX_BY.setdefault(w['ko'], []).append(w)
+extra = [c for c in t2 if c not in rot and (c['ko'] in GD_BY or c['ko'] in WX_BY)]   # 재난·날씨가 잡힌 나라는 순번과 무관하게 오늘 본다
 origin_events = []
-for c in t1 + rot:
+for c in t1 + rot + extra:
     cko = c['ko']; imports = by_country.get(cko, [])
     base = {'id': 'origin-' + cko, 'cat': '원산지', 'name': f'{cko} — ' + ', '.join(sorted({it['name'] for it, _ in imports})[:5]) + (' 외' if len(imports) > 5 else ''), 'kind': 'origin', 'country': cko, 'en': c['en'], 'route': c.get('route', ''), 'standing': c.get('standing', ''), 'tier': c.get('tier', 2), 'imports': [[it['name'], s] for it, s in sorted(imports, key=lambda x: -x[1])], 'titles': [], 'parts': []}
     lv = 0; txt = []; aff = {}
@@ -484,6 +505,24 @@ for c in t1 + rot:
                 k = (a['sector'], a['item'])
                 if k not in aff or aff[k]['w'] < a['w']: aff[k] = a
             if not base['titles'] and not part.get('stale'): base['titles'] = (g.get('titles') or news_titles(q))
+    # 재난(세계 재난 경보 조정 체계 — 측정값, 경보까지 가능)
+    for g in GD_BY.get(cko, [])[:3]:
+        l = int(g.get('level') or 0)
+        if not l: continue
+        lv = max(lv, l); txt.append(f'재난 {g["type"]} {("빨강" if l == 2 else "주황")} 경보 ({g["date"]})' + (' (어제 값)' if g.get('stale') else ''))
+        base['parts'].append({'kind': '재난', 'level': l, 'src': '세계 재난 경보 조정 체계', 'title': g.get('title', '')})
+        for a in country_affects(cko, 0.35 * l, '오름 쪽', f'{g["type"]} 재난'):
+            k = (a['sector'], a['item'])
+            if k not in aff or aff[k]['w'] < a['w']: aff[k] = a
+    # 주산지 날씨(미국 항공우주국 농업 기상 — 30일 평년 대비, 측정값)
+    for w in WX_BY.get(cko, [])[:3]:
+        l = int(w.get('level') or 0)
+        lv = max(lv, l); txt.append(f'{w["name"]} {w["why"]}' + (' (어제 값)' if w.get('stale') else ''))
+        base['parts'].append({'kind': '주산지 날씨', 'level': l, 'src': '미국 항공우주국 농업 기상', 'title': f'{w["name"]}: {w["why"]}'})
+        for a in country_affects(cko, 0.3 * l, '오름 쪽', f'주산지 {w["why"][:14]}'):
+            if not re.search(w.get('items') or '.', a.get('why', '')): continue   # 그 주산지 품목에 닿는 것만
+            k = (a['sector'], a['item'])
+            if k not in aff or aff[k]['w'] < a['w']: aff[k] = a
     # 통화
     fx = fx_of(c)
     if fx:
@@ -496,7 +535,7 @@ for c in t1 + rot:
         e = c['enso'][ONI['phase']]; l = 2 if (ONI['strong'] and c.get('enso_core')) else 1
         lv = max(lv, l); txt.append(f'{ONI["phase"]} 영향권: {e["text"]}')
         for a in country_affects(cko, OR.get('enso_w', 0.3) * l, e['dir'], ONI['phase'] + ' 영향'): aff.setdefault((a['sector'], a['item']), a)
-    base.update({'level': lv, 'text': ' · '.join(txt) if txt else '조용함', 'affects': list(aff.values()) if lv else [], 'affects_all': country_affects(cko, 0.45, '오름 쪽', '공급 충격'), 'why': c.get('standing', ''), 'react': '수입 단가 변동 전 계약 조건 점검', 'lag': '2~8주(투입재는 2~7개월)', 'src': '뉴스 흐름 · 미 연준 경제자료 환율 · 엘니뇨 지수'})
+    base.update({'level': lv, 'text': ' · '.join(txt) if txt else '조용함', 'affects': list(aff.values()) if lv else [], 'affects_all': country_affects(cko, 0.45, '오름 쪽', '공급 충격'), 'why': c.get('standing', ''), 'react': '수입 단가 변동 전 계약 조건 점검', 'lag': '2~8주(투입재는 2~7개월)', 'src': '뉴스 흐름 · 미 연준 경제자료 환율 · 엘니뇨 지수 · 세계 재난 경보 · 미국 항공우주국 농업 기상'})
     origin_events.append(base)
 CUR['tier2_pos'] = (pos + len(rot)) % max(1, len(t2)); jsave(CURSOR_P, CUR)
 events += origin_events

@@ -280,5 +280,7 @@ for s in REG.get('sources', []):
 out = {'at': stamp(), 'date': TS, 'series': SER, 'gdacs': GD[:40], 'weather': WX, 'status': ST, 'reg_status': reg_status, 'n_series': len(SER), 'n_fresh': sum(1 for v in SER.values() if not v.get('stale')), 'msgs': MSG[:20], 'elapsed_sec': round(time.time() - T0)}
 jsave(os.path.join(DATA, 'global.json'), out)
 ok = sum(1 for v in ST.values() if v == '정상'); bad = [k for k, v in ST.items() if v != '정상']
+os.makedirs(os.path.join(HERE, '_debug'), exist_ok=True)
+jsave(os.path.join(HERE, '_debug', 'global_debug.json'), {'at': out['at'], 'elapsed': out['elapsed_sec'], 'status': ST, 'msgs': MSG, 'series': {k: {'last': v['last'], 'date': v['date'], 'chg': v['chg'], 'n': len(v['points']), 'stale': v.get('stale', False)} for k, v in SER.items()}, 'gdacs': GD[:15], 'weather': WX})
 status('global', ok >= max(3, len(ST) // 2), f'창구 {ok}/{len(ST)} 정상 · 계열 {len(SER)}(새 값 {out["n_fresh"]}) · 재난 {len(GD)} · 주산지 날씨 {len(WX)}' + (f' · 막힘 {", ".join(bad)}' if bad else '') + f' · {out["elapsed_sec"]}초')
 print('세계 창구', ST, '계열', list(SER)[:20], '재난', len(GD), '날씨', [(w['ko'], w['level']) for w in WX], out['elapsed_sec'], '초')
