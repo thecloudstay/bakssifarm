@@ -433,9 +433,14 @@ for r in R.get('rules', []):
             if not g: ev['text'] = '자료 못 받음(세계 창구 ' + str(dt.get('series')) + ')'; aff = []
             else:
                 win = dt.get('window', 'w4'); v = (g.get('chg') or {}).get(win)
+                try: age = (TODAY - datetime.date.fromisoformat(g['date'][:10])).days
+                except Exception: age = 0
+                if age > {'일': 10, '주': 21, '월': 75}.get(g.get('freq'), 30): ev['text'] = f'{g["name"]} 자료가 오래됨({g["date"]}까지) — 점수 반영 안 함'; v = None; aff = []
                 WN = {'w1': '1주', 'w4': '4주', 'm3': '3개월', 'y1': '1년'} if g.get('freq') in ('주', '월') else {'w1': '1주', 'w4': '1개월', 'm3': '3개월', 'y1': '1년'}
                 if g.get('freq') == '월': WN = {'w1': '1개월', 'w4': '3개월', 'm3': '6개월', 'y1': '1년'}
-                if v is None: ev['text'] = f'{g["name"]} {g["last"]:,.2f} {g["unit"]} ({g["date"]}) — 비교할 지난 값이 아직 없음'; aff = []
+                if v is None:
+                    if not ev['text']: ev['text'] = f'{g["name"]} {g["last"]:,.2f} {g["unit"]} ({g["date"]}) — 비교할 지난 값이 아직 없음'
+                    aff = []
                 else:
                     ev.update({'level': lv_from_pct(abs(v), dt.get('warn', 8), dt.get('alarm', 15)), 'value': f'{v:+.1f}%({WN.get(win, win)})',
                                'text': f'{g["name"]} {g["last"]:,.2f} {g["unit"]} ({g["date"]}) · {WN.get(win, win)} {v:+.1f}%' + (' · 1년 ' + f'{g["chg"]["y1"]:+.1f}%' if (g.get('chg') or {}).get('y1') is not None else '') + (' (어제 값)' if g.get('stale') else ''), 'series': g['points'][-30:], 'unit': g.get('unit')})

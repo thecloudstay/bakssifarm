@@ -133,7 +133,7 @@ def usda_cattle():
     pts = [(w, statistics.median(v)) for w, v in by.items() if len(v) >= 3]   # 하루 몇십 두만 보고되는 날이 많아 주간 중앙값(3일 이상인 주만)
     if not pts: raise ValueError('생체 거세우 주간 값 없음(열 ' + k + ')')
     series('us_steer_live', '미국 5개 지역 거세우 생체 값(주간 중앙값)', '달러/100파운드', '미국 농무부 의무보고 LM_CT100 ' + k, '미국', '주', pts, {'w1': 1, 'w4': 4, 'm3': 13, 'y1': 52})
-run('usda_cattle', usda_cattle)
+# run('usda_cattle', usda_cattle)   # 2026-10-29 보류: 5개 지역 생우 보고가 비밀 유지로 며칠째 몇십 두만 잡혀 주간 중앙값도 ±30% 널뜀 — 박스육(초이스)으로 대신
 
 # ── 브라질 세페아: 비육우·육계·돼지·옥수수·대두 지표(일별, 누적 저장) ──
 CEP_P = os.path.join(PRIVATE, 'global', 'cepea.json'); os.makedirs(os.path.dirname(CEP_P), exist_ok=True)
@@ -168,14 +168,29 @@ run('cepea', cepea)
 def fao():
     h = fetch('https://www.fao.org/worldfoodsituation/foodpricesindex/en/', timeout=60).decode('utf-8', 'replace')
     links = []
-    for m in re.finditer(r'(?:https://www\.fao\.org)?(/fileadmin/[^"\'\s]*?\.csv)', h):
-        u = 'https://www.fao.org' + m.group(1)
-        if u not in links: links.append(u)
-    MSG.append('식량농업기구 csv 주소 ' + ' | '.join(l.rsplit('/', 1)[-1] for l in links)[:200])
+    for m in re.finditer(r'href="([^"]+)"', h):
+        u = m.group(1)
+        if re.search(r'(?i)(food.?price|fpi|indices).*\.(csv|xlsx?)$', u) or re.search(r'(?i)\.(csv)$', u):
+            u = u if u.startswith('http') else 'https://www.fao.org' + u
+            if u not in links: links.append(u)
+    MSG.append('식량농업기구 연결 ' + ' | '.join(l.rsplit('/', 1)[-1] for l in links)[:300])
     best = None
-    for u in links[:6] + ['https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_oct.csv']:
-        try: t = fetch(u, timeout=60).decode('utf-8', 'replace')
+    for u in links[:8] + ['https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_oct.csv']:
+        try: raw = fetch(u, timeout=60)
         except Exception: continue
+        if u.lower().endswith('.xlsx'):
+            try:
+                import openpyxl
+                wbk = openpyxl.load_workbook(io.BytesIO(raw), read_only=True, data_only=True); ws = wbk[wbk.sheetnames[0]]
+                lines = []
+                for r in ws.iter_rows(values_only=True):
+                    if not r or r[0] is None: continue
+                    a = r[0].strftime('%Y-%m') if hasattr(r[0], 'strftime') else str(r[0])
+                    lines.append(','.join([a] + ['' if c is None else str(c) for c in r[1:8]]))
+                t = '\n'.join(lines)
+            except Exception as e: MSG.append('식량농업기구 xlsx ' + str(e)[:40]); continue
+        elif u.lower().endswith('.xls'): continue   # 옛 형식은 읽을 수 없음
+        else: t = raw.decode('utf-8', 'replace')
         last = max((x.group(0) for x in re.finditer(r'(?m)^(\d{4}-\d{2})', t)), default='')
         if not best or last > best[0]: best = (last, t, u)
     if not best: raise ValueError('지수 파일을 하나도 못 받음')
@@ -298,7 +313,7 @@ if not WX and OLD.get('weather') and ST.get('nasa_power', '').startswith('실패
 reg_status = {}
 for s in REG.get('sources', []):
     k = s['id']; st = ST.get({'ssb_salmon': 'ssb_salmon', 'eu_agrifood': 'eu_pig', 'usda_mpr': 'usda_beef', 'cepea': 'cepea', 'fao_fpi': 'fao_fpi', 'wb_pink': 'wb_pink', 'gdacs': 'gdacs', 'nasa_power': 'nasa_power'}.get(k, ''), None)
-    if k == 'usda_mpr': st = ' · '.join(f'{n} {ST.get(n, "")}' for n in ('usda_beef', 'usda_hog', 'usda_cattle'))
+    if k == 'usda_mpr': st = ' · '.join(f'{n} {ST.get(n, "")}' for n in ('usda_beef', 'usda_hog'))
     reg_status[k] = st
 out = {'at': stamp(), 'date': TS, 'series': SER, 'gdacs': GD[:40], 'weather': WX, 'status': ST, 'reg_status': reg_status, 'n_series': len(SER), 'n_fresh': sum(1 for v in SER.values() if not v.get('stale')), 'msgs': MSG[:20], 'elapsed_sec': round(time.time() - T0)}
 jsave(os.path.join(DATA, 'global.json'), out)
