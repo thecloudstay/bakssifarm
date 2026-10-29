@@ -119,17 +119,20 @@ def usda_hog():
     series('us_hog_net', '미국 생돈 도축 전일 평균 순가격(암퇘지 제외)', '달러/100파운드', '미국 농무부 의무보고 LM_HG201 ' + k, '미국', '일', [(d, statistics.mean(v)) for d, v in by.items()], {'w1': 5, 'w4': 20, 'm3': 60, 'y1': 250})
 run('usda_hog', usda_hog)
 def usda_cattle():
-    rows = usda_section(2466, 'Detail')
+    rows = usda_section(2466, 'Detail', days=400)
     k = pick_key(rows, [r'wtd.*avg.*price|weighted_avg_price|avg_price'])
     if not k: raise ValueError('생우 값 열 못 찾음: ' + ','.join(list((rows or [{}])[0].keys())[:14]))
-    by = {}
+    by = collections.defaultdict(list)
     for r in rows:
         txt = json.dumps(r).lower()
         if 'live' not in txt or 'steer' not in txt: continue   # 생체 거세우만
         d = r.get('report_date'); v = num(r.get(k))
-        if d and v: by.setdefault(datetime.datetime.strptime(d, '%m/%d/%Y').date().isoformat(), []).append(v)
-    if not by: raise ValueError('생체 거세우 행 없음(열 ' + k + ')')
-    series('us_steer_live', '미국 5개 지역 거세우 생체 가중평균 값', '달러/100파운드', '미국 농무부 의무보고 LM_CT100 ' + k, '미국', '일', [(d, statistics.mean(v)) for d, v in by.items()], {'w1': 5, 'w4': 20, 'm3': 60, 'y1': 250})
+        if d and v:
+            dd = datetime.datetime.strptime(d, '%m/%d/%Y').date(); wk = datetime.date.fromisocalendar(dd.isocalendar()[0], dd.isocalendar()[1], 5).isoformat()   # 그 주 금요일
+            by[wk].append(v)
+    pts = [(w, statistics.median(v)) for w, v in by.items() if len(v) >= 3]   # 하루 몇십 두만 보고되는 날이 많아 주간 중앙값(3일 이상인 주만)
+    if not pts: raise ValueError('생체 거세우 주간 값 없음(열 ' + k + ')')
+    series('us_steer_live', '미국 5개 지역 거세우 생체 값(주간 중앙값)', '달러/100파운드', '미국 농무부 의무보고 LM_CT100 ' + k, '미국', '주', pts, {'w1': 1, 'w4': 4, 'm3': 13, 'y1': 52})
 run('usda_cattle', usda_cattle)
 
 # ── 브라질 세페아: 비육우·육계·돼지·옥수수·대두 지표(일별, 누적 저장) ──
@@ -163,17 +166,20 @@ run('cepea', cepea)
 
 # ── 유엔 식량농업기구 식량가격지수(월별) ─────────────────────────
 def fao():
-    mons = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-    cands = [mons[(TODAY.month - 1 - k) % 12] for k in range(3)]
-    txt = None
-    for m in cands:
-        try: txt = fetch(f'https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_{m}.csv', timeout=60).decode('utf-8', 'replace'); break
+    h = fetch('https://www.fao.org/worldfoodsituation/foodpricesindex/en/', timeout=60).decode('utf-8', 'replace')
+    links = []
+    for m in re.finditer(r'(?:https://www\.fao\.org)?(/fileadmin/[^"\'\s]*?\.csv)', h):
+        u = 'https://www.fao.org' + m.group(1)
+        if u not in links: links.append(u)
+    MSG.append('식량농업기구 csv 주소 ' + ' | '.join(l.rsplit('/', 1)[-1] for l in links)[:200])
+    best = None
+    for u in links[:6] + ['https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_oct.csv']:
+        try: t = fetch(u, timeout=60).decode('utf-8', 'replace')
         except Exception: continue
-    if txt is None:
-        h = fetch('https://www.fao.org/worldfoodsituation/foodpricesindex/en/', timeout=60).decode('utf-8', 'replace')
-        m = re.search(r'(/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data[^"\']*\.csv)', h)
-        if not m: raise ValueError('지수 파일 주소를 못 찾음')
-        txt = fetch('https://www.fao.org' + m.group(1), timeout=60).decode('utf-8', 'replace')
+        last = max((x.group(0) for x in re.finditer(r'(?m)^(\d{4}-\d{2})', t)), default='')
+        if not best or last > best[0]: best = (last, t, u)
+    if not best: raise ValueError('지수 파일을 하나도 못 받음')
+    txt = best[1]; MSG.append('식량농업기구 선택 ' + best[2].rsplit('/', 1)[-1] + ' 끝 ' + best[0])
     allrows = list(csv.reader(io.StringIO(txt)))
     rows = []
     for r in allrows:
@@ -184,7 +190,6 @@ def fao():
         except ValueError: pass
         try: d = datetime.datetime.strptime(a, '%Y-%m-%d'); rows.append([d.strftime('%Y-%m')] + r[1:])
         except ValueError: pass
-    MSG.append('식량농업기구 꼬리 행 ' + json.dumps(allrows[-4:], ensure_ascii=False)[:300])
     cols = {'food': 1, 'meat': 2, 'dairy': 3, 'cereals': 4, 'oils': 5, 'sugar': 6}
     names = {'food': '세계 식량가격지수', 'meat': '세계 육류가격지수', 'dairy': '세계 유제품가격지수', 'cereals': '세계 곡물가격지수', 'oils': '세계 식물성유지가격지수', 'sugar': '세계 설탕가격지수'}
     for k, i in cols.items():
