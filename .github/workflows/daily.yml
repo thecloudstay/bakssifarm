@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
-      - run: pip install pillow pyproj
+      - run: pip install pillow pyproj openpyxl
       - name: 경락가 수집(축산물품질평가원)
         run: python tools/collect_ekape.py
       - name: 양식 접수 반영(공동구매 모집판·구입가 시세판)
@@ -56,6 +56,9 @@ jobs:
         run: python tools/collect_signals.py
       - name: 수급 위험 예보(7일 수온·기온·습도 → 양식 폐사·가축 더위 위험, 열쇠 불필요)
         run: python tools/collect_risk.py
+      - name: 세계 공개 연동창구(노르웨이 연어·유럽연합 돼지·미국 농무부·브라질 세페아·식량농업기구·세계은행·재난·주산지 날씨)
+        run: python tools/collect_global.py
+        continue-on-error: true
       - name: 세계 요인 감시(기후·질병·지정학·정책·세계 상품·달력 → 예보 점수)
         run: python tools/collect_world.py
         continue-on-error: true
