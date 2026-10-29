@@ -1,0 +1,114 @@
+{
+ "at": "2026-10-29 04:43",
+ "usda_mpr_list": {
+  "ok": false,
+  "err": "The read operation timed out"
+ },
+ "usda_mpr_2461": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json",
+  "bytes": 3191,
+  "head": "{\r\n  \"reportSection\" : \"Summary\",\r\n  \"reportSections\" : [ \"Summary\", \"Weekly Composite Primal Values\", \"Weekly Summary Cutout Values\", \"Weekly Average Cutout Values\", \"Change From Prior Week\", \"Current Volume\", \"Choice Cuts\", \"Select Cuts\", \"Choice and Select Cuts\", \"Ground Beef\", \"Blended Ground Beef\", \"Beef Trimmings\" ],\r\n  \"stats\" : {\r\n    \"totalRows:\" : 4,\r\n    \"returnedRows:\" : 4,\r\n    \"userAllowedRows:\" : 99999\r\n  },\r\n  \"results\" : [ {\r\n    \"report_date\" : \"10/23/2026\",\r\n    \"is_correction\" : null,\r\n    \"narrative\" : null,\r\n    \"report_title\" : \"National Weekly Boxed Beef Cutout & Boxed Beef Cuts - Negotiated Sales (PDF) (LM_XB459)\",\r\n    \"slug_name\" : \"AMS_2461\",\r\n    \"slug_id\" : \"2461\",\r\n    \"office_name\" : \"Des Moines, IA\",\r\n    \"office_code\" : \"LS-NW\",\r\n    \"office_city\" : \"Des M"
+ },
+ "ssb_meta": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json; charset=utf-8",
+  "bytes": 28433,
+  "head": "{\"title\":\"03024: Export of salmon, fish-farm bred, by commodity group, contents and week\",\"variables\":[{\"code\":\"VareGrupper2\",\"text\":\"commodity group\",\"values\":[\"01\",\"02\"],\"valueTexts\":[\"Fresh or chilled fish-farm bred salmon\",\"Frozen fish-farm bred salmon\"]},{\"code\":\"ContentsCode\",\"text\":\"contents\",\"values\":[\"Vekt\",\"Kilopris\"],\"valueTexts\":[\"Weight (tonnes)\",\"Price per kg (NOK)\"]},{\"code\":\"Tid\",\"text\":\"week\",\"values\":[\"2000U01\",\"2000U02\",\"2000U03\",\"2000U04\",\"2000U05\",\"2000U06\",\"2000U07\",\"2000U08\",\"2000U09\",\"2000U10\",\"2000U11\",\"2000U12\",\"2000U13\",\"2000U14\",\"2000U15\",\"2000U16\",\"2000U17\",\"2000U18\",\"2000U19\",\"2000U20\",\"2000U21\",\"2000U22\",\"2000U23\",\"2000U24\",\"2000U25\",\"2000U26\",\"2000U27\",\"2000U28\",\"2000U29\",\"2000U30\",\"2000U31\",\"2000U32\",\"2000U33\",\"2000U34\",\"2000U35\",\"2000U36\",\"2000U37\",\"2000U38\",\"2000U39\",\"2000U40\",\"2000U41\",\"2000U42\",\"2000U43\",\"2000U44\",\"2000U45\",\"2000U46\",\"2000U47\",\"2000U48\",\"2000U49\",\"2000U50\",\"2000U51\",\"2000U52\",\"2001U01\",\"2001U02\",\"2001U03\",\"2001U04\",\"2001U05\",\"2001U06\",\"2001U07\",\"2001U08\",\"2001U09\",\"2001U10\",\"2001U11\",\"2001U12\",\"2001U13\",\"2001U14\",\"2001U15\",\"2001U16\",\"2001U17\",\"2001U18\",\"2001U19\",\"2001U20\",\"2001U21\",\"2001U22\",\"2001U23\",\"2001U24\",\"2001U25\",\"2001U26\",\"2001U27\",\"2001U28\",\"2001U29\",\"2001U30\",\"2001U31\",\"2001U32\",\"2001U33\",\"2001U34\",\"2001U35\",\"2001U36\",\"2001U37\",\"2001U38\",\"2001U39\",\"2001U40\",\"2001U41\",\"2001U42\",\"2001U43\",\"2001U44\",\"2001U45\",\"2001U46\",\"2001U47\",\"2001U48\",\"2001U49\",\"2001U50\",\"2001U51\",\"2001U52\",\"2002U01\",\"2002U02\",\"2002U03\",\"2002U0"
+ },
+ "ssb_data": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json; charset=utf-8",
+  "bytes": 2145,
+  "head": "{\"version\":\"2.0\",\"class\":\"dataset\",\"label\":\"03024: Export of salmon, fish-farm bred, by commodity group, contents and week\",\"source\":\"Statistics Norway\",\"updated\":\"2026-10-28T07:00:00Z\",\"role\":{\"time\":[\"Tid\"],\"metric\":[\"ContentsCode\"]},\"id\":[\"VareGrupper2\",\"ContentsCode\",\"Tid\"],\"size\":[2,2,6],\"dimension\":{\"VareGrupper2\":{\"label\":\"commodity group\",\"category\":{\"index\":{\"01\":0,\"02\":1},\"label\":{\"01\":\"Fresh or chilled fish-farm bred salmon\",\"02\":\"Frozen fish-farm bred salmon\"}},\"extension\":{\"elimination\":false,\"show\":\"value\"}},\"ContentsCode\":{\"label\":\"contents\",\"category\":{\"index\":{\"Vekt\":0,\"Kilopris\":1},\"label\":{\"Vekt\":\"Weight (tonnes)\",\"Kilopris\":\"Price per kg (NOK)\"},\"unit\":{\"Vekt\":{\"base\":\"tonnes\",\"decimals\":0},\"Kilopris\":{\"base\":\"NOK\",\"decimals\":2}}},\"extension\":{\"elimination\":false,\"refperiod\":{\"Vekt\":\"End of week\",\"Kilopris\":\"End of week\"},\"show\":\"value\",\"measuringType\":{\"Vekt\":\"Flow\",\"Kilopris\":\"Flow\"},\"priceType\":{\"Vekt\":\"NotApplicable\",\"Kilopris\":\"NotApplicable\"},\"adjustment\":{\"Vekt\":\"None\",\"Kilopris\":\"None\"}},\"link\":{\"describedby\":[{\"extension\":{\"Vekt\":\"urn:ssb:conceptvariable:vardok:2982\"}}]}},\"Tid\":{\"label\":\"week\",\"category\":{\"index\":{\"2026U38\":0,\"2026U39\":1,\"2026U40\":2,\"2026U41\":3,\"2026U42\":4,\"2026U43\":5},\"label\":{\"2026U38\":\"2026U38\",\"2026U39\":\"2026U39\",\"2026U40\":\"2026U40\",\"2026U41\":\"2026U41\",\"2026U42\":\"2026U42\",\"2026U43\":\"2026U43\"}},\"extension\":{\"elimination\":false,\"show\":\"code\"}}},\"extension\":{\"px\":{\"infofile\":\"None\",\"tableid\":\"03024\",\"decimals\":0,\"official-statist"
+ },
+ "bcb_usdbrl": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json; charset=utf-8",
+  "bytes": 196,
+  "head": "[{\"data\":\"22/10/2026\",\"valor\":\"5.0383\"},{\"data\":\"23/10/2026\",\"valor\":\"5.0377\"},{\"data\":\"26/10/2026\",\"valor\":\"5.5007\"},{\"data\":\"27/10/2026\",\"valor\":\"5.3346\"},{\"data\":\"28/10/2026\",\"valor\":\"5.3420\"}]"
+ },
+ "ibge_ipca": {
+  "ok": false,
+  "err": "<urlopen error timed out>"
+ },
+ "cepea_widget": {
+  "ok": true,
+  "status": 200,
+  "type": "application/javascript",
+  "bytes": 1699,
+  "head": "document.write(`<style type=\"text/css\">.imagenet-widget-tabela td, .imagenet-widget-tabela th {font-size:1em;}.imagenet-widget-tabela tfoot td {font-size:.8em;}.imagenet-widget-tabela{border-collapse:collapse;width:400px;font-family:Arial, Helvetica, sans-serif; ?>pt;font-size:10pt;color:#333333;}.imagenet-widget-tabela thead tr:first-child td:first-child {text-align: center;}.imagenet-widget-tabela thead th,.imagenet-widget-tabela tfoot td{padding:2px 3px;font-weight:normal;background:#dbd6b2;color:#333333;}.imagenet-widget-tabela thead td{padding-top:4px;font-size:12pt;background:#ede7bf;}.imagenet-widget-tabela td{padding:2px 3px;text-align:center;color:#333333;}.imagenet-widget-tabela tfoot td:first-child{text-align:left;}.imagenet-widget-tabela tbody tr:nth-child(2n){background:#ede7bf;}.imagenet-widget-tabela span.unidade{font-style:italic;font-size:.8em;font-weight:bold;}.imagenet-table.imagenet-th2 thead > tr > th, .imagenet-widget-tabela thead th{text-align: center;}</style>\r\n<table class=\"imagenet-widget-tabela\">\r\n    <thead>\r\n        <tr>\r\n            <td colspan=\"3\"><img src=\"https://www.cepea.org.br/view/imagens/cepea-widget-titulo.png\" alt=\"Cepea\" title=\"Cepea\" /></td>\r\n        </tr>\r\n    </thead>\r\n    <thead>\r\n        <tr>\r\n            <th>Data</th>\r\n            <th>Produto</th>\r\n            <th>Valor</th>\r\n        </tr>\r\n    </thead>\r\n    <tfoot>\r\n        <tr>\r\n            <td colspan=\"2\">Fonte: Cepea</td>\r\n            <td><a href=\"http://www.cepea.esalq.usp.b"
+ },
+ "wahis": {
+  "ok": false,
+  "err": "The read operation timed out"
+ },
+ "fao_fpi": {
+  "ok": true,
+  "status": 200,
+  "type": "text/html; charset=utf-8",
+  "bytes": 64104,
+  "head": " <!DOCTYPE html> <html lang=\"en\" > <head> <meta charset=\"utf-8\" /> <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\"> <meta name=\"last-modified\" content=\"2026-10-02T13:29:46Z\" /> <script type=\"application/ld+json\">\r\n        {\r\n          \"@context\": \"https://schema"
+ },
+ "fao_fpi_csv": {
+  "ok": true,
+  "status": 200,
+  "type": "text/csv",
+  "bytes": 18008,
+  "head": "FAO Monthly Food Price Index,,,,,,,,,,,,,,\r\n2014-2016=100,,,,,,,,,,,,,,\r\nDate,Food Price Index,Meat,Dairy,Cereals,Oils,Sugar,,,,,,,,\r\n,,,,,,,,,,,,,,\r\n1990-01,64.1,73.4,53.5,64.1,44.6,87.9,,,,,,,,\r\n1990-02,64.4,76.0,52.2,62.2,44.5,90.7,,,,,,,,\r\n1990-03,63.8,77.8,41.4,61.3,45.7,95.1,,,,,,,,\r\n1990-04,65.8,80.4,48.4,62.8,44.0,94.3,,,,,,,,\r\n1990-05,64.4,81.0,39.2,62.0,45.5,90.4,,,,,,,,\r\n1990-06,63.7,83"
+ },
+ "wb_pink": {
+  "ok": true,
+  "status": 200,
+  "type": "application/vnd.openxmlformats-officedoc",
+  "bytes": 778415,
+  "head": "PK\u0003\u0004\u0014\u0000\u0006\u0000\b\u0000\u0000\u0000!\u0000�[5;�\u0001\u0000\u0000!\t\u0000\u0000\u0013\u0000\b\u0002[Content_Types].xml �\u0004\u0002(�\u0000\u0002\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000"
+ },
+ "gdacs": {
+  "ok": true,
+  "status": 200,
+  "type": "application/xml",
+  "bytes": 864692,
+  "head": "﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<rss version=\"2.0\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:geo=\"http://www.w3.org/2003/01/geo/wgs84_pos#\" xmlns:gdacs=\"http://www.gdacs.org\" xmlns:glide=\"http://glidenumber.net\" xmlns:georss=\"http://www.georss.org/georss\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\r\n  <channel>\r\n    <title>GDACS RSS information</title>\r\n    <link>http://www.gdacs.org/</link>\r\n    <copyright>public domain</copyright>\r\n    <description>Near real-time notification about natural disaster with a potential humanitarian impact</description>\r\n    <managingEditor>stefano"
+ },
+ "eu_pig": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json",
+  "bytes": 6523,
+  "head": "[ {\n  \"memberStateCode\" : \"NL\",\n  \"memberStateName\" : \"Netherlands\",\n  \"beginDate\" : \"19/10/2026\",\n  \"endDate\" : \"25/10/2026\",\n  \"price\" : \"€14.75\",\n  \"unit\" : \"P\",\n  \"weekNumber\" : 43,\n  \"pigClass\" : \"Piglet\"\n}, {\n  \"memberStateCode\" : \"NL\",\n  \"memberStateName\" : \"Netherlands\",\n  \"beginDate\" : \"19/10/2026\",\n  \"endDate\" : \"25/10/2026\",\n  \"price\" : \"€105.17\",\n  \"unit\" : \"100 KG\",\n  \"weekNumber\" : 43,\n  \"pigClass\" : \"S\"\n}, {\n  \"memberStateCode\" : \"NL\",\n  \"memberStateName\" : \"Netherlands\",\n  \"beginDate\" : \"19/10/2026\",\n  \"endDate\" : \"25/10/2026\",\n  \"price\" : \"€104.03\",\n  \"unit\" : \"100 KG\",\n  \"weekNumber\" : 43,\n  \"pigClass\" : \"E\"\n}, {\n  \"memberStateCode\" : \"DK\",\n  \"memberStateName\" : \"Denmark\",\n  \"beginDate\" : \"12/10/2026\",\n  \"endDate\" : \"18/10/2026\",\n  \"price\" : \"€116.65\",\n  \"unit\" : \"100 KG\""
+ },
+ "eu_poultry": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json",
+  "bytes": 5744,
+  "head": "[ {\n  \"memberStateCode\" : \"DE\",\n  \"memberStateName\" : \"Germany\",\n  \"beginDate\" : \"19/10/2026\",\n  \"endDate\" : \"25/10/2026\",\n  \"price\" : \"€337.00\",\n  \"unit\" : \"national currency/100kg\",\n  \"weekNumber\" : 43,\n  \"productName\" : \"Legs\",\n  \"priceType\" : \"Selling price\"\n}, {\n  \"memberStateCode\" : \"DE\",\n  \"memberStateName\" : \"Germany\",\n  \"beginDate\" : \"19/10/2026\",\n  \"endDate\" : \"25/10/2026\",\n  \"price\" : \"€460.00\",\n  \"unit\" : \"national currency/100kg\",\n  \"weekNumber\" : 43,\n  \"productName\" : \"Whole broiler (65%)\",\n  \"priceType\" : \"Selling price\"\n}, {\n  \"memberStateCode\" : \"DE\",\n  \"memberStateName\" : \"Ge"
+ },
+ "jma_quake": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json",
+  "bytes": 221291,
+  "head": "[{\"ctt\": \"20261029081812\", \"eid\": \"20261029081407\", \"rdt\": \"2026-10-29T08:18:00+09:00\", \"ttl\": \"\\u9707\\u6e90\\u30fb\\u9707\\u5ea6\\u60c5\\u5831\", \"ift\": \"\\u767a\\u8868\", \"ser\": \"1\", \"at\": \"2026-10-29T08:14:00+09:00\", \"anm\": \"\\u91e7\\u8def\\u5730\\u65b9\\u4e2d\\u5357\\u90e8\", \"acd\": \"161\", \"cod\": \"+43.1+144.5-120000/\", \"mag\": \"4.4\", \"maxi\": \"2\", \"int\": [{\"code\": \"01\", \"maxi\": \"2\", \"city\": [{\"code\": \"0166500\", \"maxi\": \"2\"}, {\"code\": \"0120600\", \"maxi\": \"2\"}, {\"code\": \"0166200\", \"maxi\": \"2\"}, {\"code\": \"0166300\""
+ },
+ "nasa_power": {
+  "ok": true,
+  "status": 200,
+  "type": "application/json",
+  "bytes": 1601,
+  "head": "{\"type\":\"Feature\",\"geometry\":{\"type\":\"Point\",\"coordinates\":[-56.1,-15.6,245.83]},\"properties\":{\"parameter\":{\"T2M\":{\"20260929\":32.09,\"20260930\":31.48,\"20261001\":29.69,\"20261002\":24.91,\"20261003\":28.72,\"20261004\":30.28,\"20261005\":28.6,\"20261006\":28.15,\"20261007\":30.88,\"20261008\":32.75,\"20261009\":33.31,\"20261010\":30.41,\"20261011\":29.85,\"20261012\":32.1,\"20261013\":33.18,\"20261014\":33.81,\"20261015\":30.73,\"20261016\":28.01,\"20261017\":28.23,\"20261018\":29.19,\"20261019\":30.32,\"20261020\":32.75,\"20261021\":33"
+ },
+ "usda_wasde": {
+  "ok": false,
+  "err": "HTTP Error 404: Not Found"
+ },
+ "faostat": {
+  "ok": false,
+  "err": "HTTP Error 401: Unauthorized"
+ }
+}
