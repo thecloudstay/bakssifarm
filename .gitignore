@@ -4,3 +4,5 @@ shots/
 tools/config.json
 tools/_debug/
 .cache/
+site/og/
+site/data/cards.json

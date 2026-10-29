@@ -83,8 +83,6 @@ jobs:
         continue-on-error: true
       - name: 글 화면·사이트 지도·새 소식
         run: python tools/build_pages.py
-      - name: 미리보기 그림
-        run: python tools/og.py
       - name: 저장소에 기록
         run: |
           git config user.name "박씨팜 아침 작업"

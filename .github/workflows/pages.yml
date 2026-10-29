@@ -39,6 +39,9 @@ jobs:
         continue-on-error: true
       - name: 글 화면·사이트 지도 생성(열쇠 주입 포함)
         run: python tools/build_pages.py
+      - name: 미리보기 그림(시그니처 판 — 처음·지수·품목 100장·시군 161장)
+        run: python tools/og.py
+        continue-on-error: true
       - name: 페이지 설정(처음이면 자동으로 켬)
         uses: actions/configure-pages@v5
         with: { enablement: true }

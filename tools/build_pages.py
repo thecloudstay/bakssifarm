@@ -11,6 +11,7 @@ FORM_BASE = (os.environ.get('FORM_BASE_URL') or 'https://bakssine.netlify.app').
 # 접수함 주소(구글 앱스 스크립트 웹앱 /exec)가 있으면 모든 양식을 그리로 보냄(넷리파이 없이도 동작)
 FORM_ENDPOINT = (os.environ.get('FORM_ENDPOINT') or '').strip()
 TODAY = datetime.date.today().isoformat()
+import brand as BR   # 시그니처 문구(tools/brand.py) — 화면·미리보기·꼬리말 공통
 NOW = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9)))
 
 def J(p, default=None):
@@ -74,7 +75,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 <meta name="theme-color" content="#ffffff">
 <link rel="canonical" href="{url}">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="박씨팜">
+<meta property="og:site_name" content="{E(BR.TAGLINE)}">
 <meta property="og:title" content="{E(title)}">
 <meta property="og:description" content="{E(desc)}">
 <meta property="og:url" content="{url}">
@@ -88,7 +89,7 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 </head>
 <body class="page">
 <header class="bar">
-  <a class="brand" href="/" aria-label="박씨팜 처음 화면">{SEAL}<span class="word">박씨팜</span></a>
+  <a class="brand" href="/" aria-label="박씨팜 처음 화면">{SEAL}<span class="word">박씨팜</span><span class="strap">{E(BR.SYSTEM)}</span></a>
   <nav class="modes pagenav" aria-label="화면">{nav}</nav>
 </header>
 <main class="wrap">
@@ -96,7 +97,8 @@ def shell(path, title, desc, body, og=None, extra_head='', jsonld=None, noindex=
 {body}
 {FORM_JS % (json.dumps(FORM_ENDPOINT), PREFIX)}
 <footer class="foot">
-  <p>박씨팜 — 농축수산물 가격 예보. 축산·수산·농산 품목의 값 방향을 근거와 적중률과 함께 매일 아침 알려 드립니다. 물건을 사고팔지 않으며, 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
+  <p class="foot-sig"><b>{E(BR.TAGLINE)}</b> — {E(BR.SLOGAN)} {E(" · ".join(BR.PROMISE))}.</p>
+  <p>축산·수산·농산 품목의 값 방향을 근거와 적중률과 함께 매일 아침 알려 드립니다. 물건을 사고팔지 않으며, 개별 농가·어가의 위치와 이름은 싣지 않습니다. 자료 출처와 갱신 주기는 <a href="/about/">소개</a>에 있습니다.</p>
   <p><a href="/">오늘 예보</a><a href="/f/">품목별</a><a href="/alerts/">경보</a><a href="/world/">세계 요인</a><a href="/track/">적중 기록</a><a href="/signal/">근거·방법</a><a href="/map/">지도</a><a href="/price/">시세</a><a href="/buy/">구입가</a><a href="/gongu/">공동구매</a><a href="/pro/">데이터·업체</a><a href="/p/">시군별</a><a href="/rss.xml">새 소식</a><a href="/sitemap.xml">사이트 지도</a></p>
 </footer>
 </main>
@@ -382,7 +384,7 @@ var si=(sg2&&sg2.items||[]).filter(function(x){return x.area===u||x.area==='전�
 
 # ── 소개
 def about_page():
-    b = '<p class="crumb"><a href="/">박씨팜</a> › 소개</p><h1 class="title">박씨팜은 무엇을 하나</h1><p class="lead">박씨팜은 <b>농축수산물 가격 예보처</b>입니다. 날씨 예보처럼, 한우·돼지·수산물·농산물 값이 앞으로 오를지 내릴지를 매일 아침 근거와 함께 알려 드립니다.</p><h2>예보의 원칙</h2><ul><li><b>근거를 적습니다</b> — 창고 재고, 반입 물량, 값의 흐름, 해외 선물·환율, 수온·더위 위험처럼 무엇 때문에 그렇게 보는지 품목마다 적습니다.</li><li><b>채점해서 공개합니다</b> — 지난 예보는 실제 값이 나오면 자동으로 맞혔는지 채점하고, 틀린 것까지 그대로 보여 드립니다. 적중 기록이 곧 예보의 신용입니다.</li><li><b>사고팔지 않습니다</b> — 박씨팜은 거래·중개·재고를 하지 않습니다. 그래서 「이 숫자에 우리 이해관계가 없다」고 말할 수 있습니다.</li><li><b>공개 자료만 씁니다</b> — 축산물품질평가원, 수협 위판, 공영도매시장 정산, 관측 기관 전망, 해외 선물 시세 같은 공개 자료를 매일 자동으로 모읍니다.</li></ul><h2>누구를 위한 예보인가</h2><ul><li>유통·가공·급식 업체: 미리 사 둘 품목과 구매를 미룰 품목</li><li>농가·어가: 출하를 서두를지 늦출지, 사료를 미리 살지</li><li>지자체·기관: 수급 위험과 가격 파동 조기 경보</li></ul><p>예보의 바탕이 되는 시군별 사육·양식·대표 품목은 <a href="/map/">지도</a>에서 볼 수 있습니다.</p>'
+    b = '<p class="crumb"><a href="/">박씨팜</a> › 소개</p><h1 class="title">박씨팜은 무엇을 하나</h1><p class="sig-line">' + E(BR.TAGLINE) + ' — <b>' + E(BR.SLOGAN) + '</b></p><p class="lead">박씨팜은 <b>농축수산물 가격 예측 시스템</b>입니다. 날씨 예보처럼, 한우·돼지·수산물·농산물 값이 앞으로 오를지 내릴지를 매일 아침 근거와 함께 알려 드립니다.</p><h2>예보의 원칙</h2><ul><li><b>근거를 적습니다</b> — 창고 재고, 반입 물량, 값의 흐름, 해외 선물·환율, 수온·더위 위험처럼 무엇 때문에 그렇게 보는지 품목마다 적습니다.</li><li><b>채점해서 공개합니다</b> — 지난 예보는 실제 값이 나오면 자동으로 맞혔는지 채점하고, 틀린 것까지 그대로 보여 드립니다. 적중 기록이 곧 예보의 신용입니다.</li><li><b>사고팔지 않습니다</b> — 박씨팜은 거래·중개·재고를 하지 않습니다. 그래서 「이 숫자에 우리 이해관계가 없다」고 말할 수 있습니다.</li><li><b>공개 자료만 씁니다</b> — 축산물품질평가원, 수협 위판, 공영도매시장 정산, 관측 기관 전망, 해외 선물 시세 같은 공개 자료를 매일 자동으로 모읍니다.</li></ul><h2>누구를 위한 예보인가</h2><ul><li>유통·가공·급식 업체: 미리 사 둘 품목과 구매를 미룰 품목</li><li>농가·어가: 출하를 서두를지 늦출지, 사료를 미리 살지</li><li>지자체·기관: 수급 위험과 가격 파동 조기 경보</li></ul><p>예보의 바탕이 되는 시군별 사육·양식·대표 품목은 <a href="/map/">지도</a>에서 볼 수 있습니다.</p>'
     b += '<h2>자료 출처와 갱신</h2><table class="t"><tr><th>보기</th><th>자료</th><th>단위</th><th>갱신</th></tr>'
     b += '<tr><td>동물농장</td><td>가축위생방역지원본부 「전국 시군별 사육규모 현황」 35개 축종 (공공데이터포털, 공공누리 제1유형)</td><td>시군 · 2018~2026년 1월</td><td>해마다</td></tr>'
     b += '<tr><td>어장</td><td>국립해양조사원 어장정보도 2025 (개방해) — 양식·마을어업·정치망 면허 구역 11,486곳</td><td>구역 · 시군 집계</td><td>해마다</td></tr>'
@@ -772,7 +774,7 @@ def sigun_pages():
 
 
 def misc():
-    write('/404.html', shell('/404.html', '그런 화면이 없습니다 | 박씨팜', '없는 화면', '<h1 class="title">그런 화면이 없습니다</h1><p class="lead">주소가 바뀌었거나 잘못 적힌 것 같습니다. <a href="/">지도로 돌아가기</a> · <a href="/p/">시군별 보기</a></p>', noindex=True))
+    write('/404.html', shell('/404.html', '그런 화면이 없습니다 | ' + BR.TAGLINE, '없는 화면', '<p class="crumb">' + E(BR.TAGLINE) + '</p><h1 class="title">그런 화면이 없습니다</h1><p class="lead">주소가 바뀌었거나 잘못 적힌 것 같습니다. <a href="/">오늘 예보로 돌아가기</a> · <a href="/f/">품목별 예보</a> · <a href="/index/">물가 지수</a> · <a href="/map/">지도</a></p>', noindex=True))
     # 사이트 지도
     pages = [('/map/', TODAY, '0.9')] + PAGES   # 첫 화면('/')은 home_page 가 PAGES 에 넣음
     sm = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>{BASE}{urllib.parse.quote(p)}</loc><lastmod>{d}</lastmod><priority>{pr}</priority></url>\n' for p, d, pr in pages) + '</urlset>\n'
@@ -782,7 +784,7 @@ def misc():
     news = J('news.json', [])
     if not news:
         news = [{'date': TODAY, 'title': '박씨팜 문을 엽니다 — 동물농장·어장·농장 한 지도', 'url': '/', 'body': '전국 시군별 가축 사육(35개 축종, 2018~2026), 양식 면허 구역 11,486곳, 지리적표시 대표 품목 204건을 한 지도에 올렸습니다. 공판장·가축시장·수협 위판장·공영도매시장 위치와 경락가 조회, 공동구매 모집판을 함께 엽니다.'}]
-    rss = '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>박씨팜 새 소식</title><link>' + BASE + '/</link><description>박씨팜 지도·자료 갱신 소식</description><language>ko</language>\n'
+    rss = '<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>' + E(BR.TAGLINE) + ' 새 소식</title><link>' + BASE + '/</link><description>' + E(BR.SLOGAN + ' 예보·지수·자료 갱신 소식') + '</description><language>ko</language>\n'
     for n in news[:50]:
         rss += f'<item><title>{E(n["title"])}</title><link>{BASE}{n["url"]}</link><guid>{BASE}{n["url"]}#{n["date"]}</guid><pubDate>{datetime.datetime.strptime(n["date"], "%Y-%m-%d").strftime("%a, %d %b %Y 09:00:00 +0900")}</pubDate><description>{E(n["body"])}</description></item>\n'
     rss += '</channel></rss>\n'

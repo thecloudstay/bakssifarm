@@ -199,3 +199,32 @@ svg.chart.stock{max-width:none;background:var(--paper);border:1px solid var(--li
 @media (max-width:560px){.grid4{grid-template-columns:1fr} dl.kv.tm{grid-template-columns:auto 1fr} .pxhead .big{font-size:28px}}
 .tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:8px 0}
 .tscroll table.t{min-width:640px} .tscroll table.t td,.tscroll table.t th{white-space:nowrap}
+/* 시그니처(2026-10-29): 머리 띠·첫 화면 블록·약속 줄·꼬리말 */
+.brand .strap{font-size:11.5px;font-weight:600;letter-spacing:.12em;color:var(--mute);margin-left:10px;padding-left:10px;border-left:1px solid var(--line);white-space:nowrap}
+@media (max-width:900px){.brand .strap{display:none}}
+.sig{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(118deg,#172019 0%,#1e2f22 42%,#2c5530 100%);color:#fff;padding:46px 48px 40px;margin:4px 0 14px;display:grid;grid-template-columns:1.6fr 1fr;gap:28px;align-items:end;isolation:isolate}
+.sig-bg{position:absolute;left:0;right:0;bottom:0;width:100%;height:68%;z-index:0;pointer-events:none}
+.sig-in,.sig-stats{position:relative;z-index:1}
+.sig-strap{margin:0 0 10px;font-size:13px;font-weight:650;letter-spacing:.2em;color:rgba(255,255,255,.78)}
+.sig-h{margin:0 0 16px;font-size:58px;line-height:1.06;font-weight:830;letter-spacing:-.04em;color:#fff}
+.sig-sub{margin:0 0 22px;max-width:640px;font-size:16.5px;line-height:1.65;color:rgba(255,255,255,.84)}
+.sig-sub b{color:#fff}
+.sig-cta{display:flex;flex-wrap:wrap;gap:10px}
+.sig .btn{display:inline-flex;align-items:center;height:42px;padding:0 18px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid transparent}
+.sig .btn.light{background:#fff;color:#1e2621}
+.sig .btn.light:hover{background:#f0f4ee}
+.sig .btn.ghost{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.35)}
+.sig .btn.ghost:hover{background:rgba(255,255,255,.16)}
+.sig-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sig-stats a{display:block;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;text-decoration:none;backdrop-filter:blur(2px)}
+.sig-stats a:hover{background:rgba(255,255,255,.14)}
+.sig-stats b{display:block;font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.sig-stats span{display:block;font-size:12.5px;color:rgba(255,255,255,.72);margin-top:4px}
+.sig-promise{display:flex;flex-wrap:wrap;gap:8px 22px;margin:0 0 30px;padding:0 6px;font-size:14px;color:var(--mute);font-weight:600}
+.sig-promise span{position:relative;padding-left:14px}
+.sig-promise span::before{content:"";position:absolute;left:0;top:50%;width:7px;height:7px;border-radius:50%;background:var(--moss);transform:translateY(-50%)}
+.sig-line{margin:0 0 10px;font-size:14px;color:var(--mute);letter-spacing:.02em}
+.foot-sig{color:var(--mute)!important} .foot-sig b{color:var(--ink)}
+@media (max-width:960px){.sig{grid-template-columns:1fr;padding:34px 28px 28px}.sig-h{font-size:44px}.sig-stats{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:640px){.sig{padding:28px 20px 22px;border-radius:18px}.sig-h{font-size:36px}.sig-sub{font-size:15px}.sig-stats{grid-template-columns:1fr 1fr}.sig-stats b{font-size:24px}.sig .btn{height:40px;padding:0 14px;font-size:14px}}
+.sig-today{margin:-10px 0 22px;font-size:15px;color:rgba(255,255,255,.8)} .sig-today b{color:#fff;font-weight:700}

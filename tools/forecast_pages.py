@@ -6,6 +6,7 @@
 #   why[](근거 문장) · act(행동 제안) · series[(날짜, 값)](값 흐름) · where(싸게 거래된 곳) · subs(대체 품목) · note(관측 기관 메모) · hist(지난 예보와 결과)
 import os, re, json, glob, datetime, collections, urllib.parse
 from trend_lib import metrics as tmetrics, stock_svg, metrics_html, regime_badge, regime_text
+import brand as BR
 
 DIRW = {'오름 쪽': ('오름', 'up'), '내림 쪽': ('내림', 'dn'), '보합': ('보합', 'flat')}
 SECT_H = {'축산': '앞으로 2주 · 경락가', '수산': '다음 달 · 산지 위판가', '농산': '앞으로 2주 · 도매시장가'}
@@ -310,7 +311,7 @@ def build(G):
         return '<h2 id="px">물가 지수 — 천천히 오르나, 내리나</h2><p class="mini">흩어진 경락가·위판가·도매가를 거래금액 가중으로 한 줄의 지수로 묶고, 주식 차트처럼 5일선·20일선·기울기로 경향을 잽니다. 하루 값이 아니라 흐름을 봅니다.</p><div class="grid4">' + ''.join(cards) + '</div><p class="mini"><a href="/index/">지수 차트·계량 요약·원가 압력 지수 전체 →</a></p>' + rk
     def index_page():
         if not PX or not PX.get('sectors'):
-            write('/index/', shell('/index/', '물가 지수 — 준비 중 | 박씨팜', '박씨팜 물가 지수는 자료가 쌓이는 대로 열립니다.', '<p class="crumb"><a href="/">박씨팜</a> › 물가 지수</p><h1 class="title">물가 지수</h1><p class="note">지수를 만들 자료가 아직 쌓이지 않았습니다. 매일 아침 자동으로 다시 계산합니다.</p>'), '0.5'); return
+            write('/index/', shell('/index/', '물가 지수 — 준비 중 | 박씨팜', '박씨팜 물가 지수는 자료가 쌓이는 대로 열립니다.', '<p class="crumb"><a href="/">박씨팜</a> › 물가 지수</p><h1 class="title">물가 지수</h1><p class="note">지수를 만들 자료가 아직 쌓이지 않았습니다. 매일 아침 자동으로 다시 계산합니다.</p>', og='/og/index.png'), '0.5'); return
         T = PX.get('total') or {}; C = PX.get('cost') or {}; WS = PX.get('world') or {}
         def block(k, v, monthly=False, color='var(--moss)', unit='', note=''):
             ser = v.get('monthly' if monthly else 'daily') or []
@@ -392,7 +393,7 @@ def build(G):
         b += '<p class="mini">같이 보기: <a href="/">오늘 예보</a> · <a href="/method/">예측 기법</a> · <a href="/track/">적중 기록</a> · <a href="/data/">자료 대장</a></p>'
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': '박씨팜 물가 지수', 'url': BASE + '/index/', 'description': '한우·돼지 경락가, 수협 위판가, 공영도매시장 정산가를 거래금액 가중으로 묶은 농축수산물 물가 지수와 원가 압력 지수. 5일선·20일선·기울기로 경향 판정.', 'dateModified': TODAY, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'creator': {'@type': 'Organization', 'name': '박씨팜'}}
         tm = T.get('metrics') or {}
-        write('/index/', shell('/index/', f'농축수산물 물가 지수 {TODAY} — 종합 {tm.get("last", "")} {tm.get("regime", "")} | 박씨팜', '경락가·위판가·도매가를 한 줄 지수로 묶어 주식 차트처럼 5일선·20일선·기울기·변동성으로 경향을 잽니다. 축산·수산·농산·종합·원가 압력 지수.', b, jsonld=ld), '0.9')
+        write('/index/', shell('/index/', f'농축수산물 물가 지수 {TODAY} — 종합 {tm.get("last", "")} {tm.get("regime", "")} | 박씨팜', '경락가·위판가·도매가를 한 줄 지수로 묶어 주식 차트처럼 5일선·20일선·기울기·변동성으로 경향을 잽니다. 축산·수산·농산·종합·원가 압력 지수.', b, jsonld=ld, og='/og/index.png'), '0.9')
     def world_home():
         if not WEV: return ''
         b = f'<h2>세계 요인 — 지금 값에 작용하는 것 <span class="mini">{WORLD.get("n_rules", len(WEV))}개 요인 감시 · 활성 {len(WACT)}</span></h2>'
@@ -441,14 +442,37 @@ def build(G):
         b += '<li>달력 요인(설·추석 45일 전부터, 김장철, 휴가철, 개학)은 해마다 되풀이되는 수요라 자료 없이도 켜집니다. 명절·김장 뒤에는 반대 방향(되돌림)으로 켜집니다.</li>'
         b += '<li>세계 요인을 더한 뒤의 예보도 똑같이 채점합니다. 요인별로 맞힌 비율이 쌓이면 무게를 월요일마다 조정하고 <a href="/track/">적중 기록</a>에 남깁니다.</li></ul>'
         b += f'<p class="mini">자료: {E(WORLD.get("basis", ""))}. 모두 열쇠 없는 공개 자료이며, 품목에 없는 영향(고추냉이·천일염 등)은 수집 품목이 늘면 자동으로 이어집니다.</p>'
-        write('/world/', shell('/world/', f'세계 요인 감시 — 기후·질병·지정학·정책이 농축수산물 값에 미치는 영향 ({TODAY}) | 박씨팜', '엘니뇨·수온 이상·조류인플루엔자·후쿠시마·호르무즈·할당관세·명절 수요 등 36개 바깥 요인의 오늘 상태와 영향 품목, 예보 점수 반영 방법.', b), '0.8')
+        write('/world/', shell('/world/', f'세계 요인 감시 — 기후·질병·지정학·정책이 농축수산물 값에 미치는 영향 ({TODAY}) | 박씨팜', '엘니뇨·수온 이상·조류인플루엔자·후쿠시마·호르무즈·할당관세·명절 수요 등 36개 바깥 요인의 오늘 상태와 영향 품목, 예보 점수 반영 방법.', b, og='/og/world.png'), '0.8')
 
     # ── 1. 첫 화면 ───────────────────────────────────────────────
+    def sig_bg(vals, w=1200, h=320):
+        """시그니처 블록 배경: 종합 지수(없으면 한우 경락가) 흐름을 흐린 면·선으로"""
+        vs = [v for v in vals if isinstance(v, (int, float))]
+        if len(vs) < 4: return ''
+        lo, hi = min(vs), max(vs); rng = (hi - lo) or 1
+        pts = [(w * i / (len(vs) - 1), h * 0.86 - (h * 0.62) * (v - lo) / rng) for i, v in enumerate(vs)]
+        d = 'M' + ' L'.join(f'{x:.1f},{y:.1f}' for x, y in pts)
+        return (f'<svg class="sig-bg" viewBox="0 0 {w} {h}" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="sigg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>'
+                f'<path d="{d} L{w},{h} L0,{h} Z" fill="url(#sigg)"/><path d="{d}" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2.5" vector-effect="non-scaling-stroke"/></svg>')
     def home():
         nf = [it for it in items if it['dir'] != '보합' and not it.get('obs_only')]
-        b = f'<div class="hero"><p class="crumb">{E(TODAY)} 아침 예보 · 매일 아침 자동 갱신</p><h1 class="title">오늘의 농축수산물 가격 예보</h1>'
+        tot = PX.get('total') or {}; tm0 = tot.get('metrics') or {}
+        bgv = [x[1] for x in (tot.get('daily') or [])[-60:]] or [v for _, v in (next((it['series'] for it in items if it['item'] == '한우 거세'), []))[-60:]]
+        n_alarm = sum(1 for a in AL if a['level'] == '경보'); n_warn = sum(1 for a in AL if a['level'] == '주의')
+        b = '<section class="sig" aria-label="박씨팜 소개">' + sig_bg(bgv)
+        b += f'<div class="sig-in"><p class="sig-strap">{E(BR.SYSTEM)}</p><h1 class="sig-h">{E(BR.SLOGAN_LINES[0])}<br>{E(BR.SLOGAN_LINES[1])}</h1>'
+        b += f'<p class="sig-sub">{E(BR.DESC)}</p><p class="sig-today"><b>{E(TODAY)} 아침 예보</b> — {len(items)}개 품목 가운데 오름 {counts["오름"]} · 내림 {counts["내림"]} · 보합 {counts["보합"]}</p>'
+        b += '<div class="sig-cta"><a class="btn light" href="#today">오늘 예보 보기</a><a class="btn ghost" href="/index/">물가 지수</a><a class="btn ghost" href="/track/">적중 기록</a></div></div>'
+        b += '<div class="sig-stats">'
+        b += f'<a href="/f/"><b>{len(items)}</b><span>품목 예보 · 날마다</span></a>'
+        b += f'<a href="/alerts/"><b>{n_alarm + n_warn}</b><span>오늘 경보 {n_alarm} · 주의 {n_warn}</span></a>'
+        b += (f'<a href="/index/"><b>{tm0["last"]:.1f}</b><span>종합 물가 지수 · {E(tm0["regime"])}</span></a>' if tm0.get('n') else '<a href="/index/"><b>–</b><span>종합 물가 지수</span></a>')
+        b += f'<a href="/world/"><b>{WORLD.get("n_rules") or len(WEV)}</b><span>세계·원산지 요인 감시</span></a>'
+        b += '</div></section>'
+        b += '<div class="sig-promise">' + ''.join(f'<span>{E(x)}</span>' for x in BR.PROMISE) + '</div>'
+        b += f'<div class="hero" id="today"><p class="crumb">{E(TODAY)} 아침 예보 · 매일 아침 자동 갱신</p><h2 class="title" style="margin-top:0">오늘의 농축수산물 가격 예보</h2>'
         b += f'<p class="lead">{len(items)}개 품목 가운데 <b class="up">오름 {counts["오름"]}</b> · <b class="dn">내림 {counts["내림"]}</b> · 보합 {counts["보합"]}. 품목을 누르면 근거와 값 흐름, 지난 예보의 결과까지 보입니다.</p>'
-        b += '<div class="chips">' + ''.join(f'<a class="chip" href="/f/#{E(s)}">{E(s)} <b>{sum(1 for it in nf if it["sector"] == s)}</b></a>' for s in ('축산', '수산', '농산')) + f'<a class="chip" href="/alerts/">경보 <b>{sum(1 for a in AL if a["level"] == "경보")}</b> · 주의 <b>{sum(1 for a in AL if a["level"] == "주의")}</b></a></div></div>'
+        b += '<div class="chips">' + ''.join(f'<a class="chip" href="/f/#{E(s)}">{E(s)} <b>{sum(1 for it in nf if it["sector"] == s)}</b></a>' for s in ('축산', '수산', '농산')) + f'<a class="chip" href="/alerts/">경보 <b>{n_alarm}</b> · 주의 <b>{n_warn}</b></a></div></div>'
         if AL:
             b += '<ul class="alerts compact">' + ''.join(alert_li(a) for a in AL[:3]) + '</ul>' + (f'<p class="mini"><a href="/alerts/">경보 {len(AL)}건 모두 보기 →</a></p>' if len(AL) > 3 else '')
         # 주목 예보: 갈래마다 2개씩 먼저, 남는 자리는 세기 순
@@ -489,8 +513,8 @@ def build(G):
             b += '<h2>세계 시세 흐름</h2><div class="tiles">' + ''.join(f'<a class="tile" href="/signal/#macro"><span class="mini">{E(t["name"].replace(" 선물", "").replace("(시카고)", ""))}</span><b>{t["last"]:,}</b><span class="{"up" if (t.get("c20") or 0) > 0 else "dn" if (t.get("c20") or 0) < 0 else ""}">{(t.get("c20") or 0):+}%<small> 1개월</small></span></a>' for t in tl[:8]) + '</div><p class="mini"><a href="/signal/#macro">선물·환율 13개 지표와 사료 원가 지수 →</a></p>'
         b += '<h2>예보 받아 보기</h2><div class="grid2"><div class="card"><h3>유통·가공·급식 업체</h3><p>우리 회사가 사는 품목만 골라 매주 예보와 경보를 받는 구독을 준비하고 있습니다.</p><p style="margin-top:10px;"><a class="btn prime" href="/pro/">업체 등록·구독 신청</a></p></div><div class="card"><h3>농가·어가</h3><p>오늘 시세와 예보를 한 장에 담은 「시세 한 장」을 무료로 받아 보세요.</p><p style="margin-top:10px;"><a class="btn" href="/sheet/">시세 한 장 보기</a></p></div></div>'
         b += f'<p class="mini" style="margin-top:22px;">자료: {E(FC.get("basis", ""))}. 예보는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않습니다. 시군별 사육·양식·대표 품목은 <a href="/map/">지도</a>에서.</p>'
-        ld = {'@context': 'https://schema.org', '@type': 'WebSite', 'name': '박씨팜', 'url': BASE + '/', 'description': '농축수산물 가격 예보 — 품목별 값 방향·근거·적중 기록, 경보'}
-        write('/', shell('/', f'박씨팜 — 오늘의 농축수산물 가격 예보 {TODAY} | 오름 {counts["오름"]}·내림 {counts["내림"]}', '한우·돼지 경락가, 수협 위판가, 공영도매시장 값이 앞으로 오를지 내릴지를 품목별로 근거·적중률과 함께 매일 아침 예보합니다. 경보, 원가 압력, 세계 시세까지.', b, jsonld=ld), '1.0')
+        ld = {'@context': 'https://schema.org', '@type': 'WebSite', 'name': BR.NAME, 'alternateName': [BR.TAGLINE, BR.SYSTEM + ' ' + BR.NAME], 'slogan': BR.SLOGAN, 'url': BASE + '/', 'description': BR.DESC}
+        write('/', shell('/', f'{BR.TAGLINE} | 오늘의 가격 예보 {TODAY} — 오름 {counts["오름"]}·내림 {counts["내림"]}', BR.SLOGAN + ' ' + BR.DESC, b, jsonld=ld), '1.0')
 
     # ── 2. 품목별 ────────────────────────────────────────────────
     def list_page():
@@ -510,7 +534,7 @@ document.querySelectorAll('#ff .chip').forEach(function(c){c.classList.toggle('o
 document.querySelectorAll('#ff .chip').forEach(function(c){c.addEventListener('click',function(){if(c.dataset.s)S=c.dataset.s;else D=c.dataset.d;ap();});});
 document.getElementById('fq').addEventListener('input',function(e){Q=e.target.value.trim();ap();});
 var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산'].indexOf(h)>=0)S=h;ap();})();</script>'''
-        write('/f/', shell('/f/', f'품목별 가격 예보 — {len(items)}개 품목 값 방향 | 박씨팜', '축산·수산·농산 품목마다 앞으로 값이 오를지 내릴지, 신호 세기와 근거, 지난 예보의 적중을 한 표에.', b), '0.9')
+        write('/f/', shell('/f/', f'품목별 가격 예보 — {len(items)}개 품목 값 방향 | 박씨팜', '축산·수산·농산 품목마다 앞으로 값이 오를지 내릴지, 신호 세기와 근거, 지난 예보의 적중을 한 표에.', b, og='/og/f.png'), '0.9')
 
     # ── 3. 품목 예보 화면 ────────────────────────────────────────
     def item_page(it):
@@ -569,10 +593,10 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         wl = [w for w in it['why'] if w.startswith('세계 요인')]
         if wl: b += '<p class="mini">세계 요인이 이 품목 점수에 들어가 있습니다(갈래 상한 안에서). <a href="/world/">세계 요인 감시 →</a></p>'
         b += '<h2>같이 보기</h2><p class="links">' + ' · '.join(f'<a href="{u}">{t}</a>' for u, t in (('/f/#' + s, f'{s} 품목 전체'), ('/world/', '세계 요인'), ('/track/', '적중 기록'), ('/alerts/', '오늘의 경보'), ('/price/', '오늘 시세'), ('/opps/', '수급 기회'), ('/map/', '지도'))) + '</p>'
-        b += '<p class="mini">예보는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않으며, 이 숫자에 이해관계가 없습니다.</p>'
+        b += f'<p class="mini"><b>{E(BR.TAGLINE)}</b> — {E(BR.SLOGAN)} 예보는 공개 자료로 만든 참고 정보이며 거래를 권하는 것이 아닙니다. 박씨팜은 물건을 사고팔지 않으며, 이 숫자에 이해관계가 없습니다.</p>'
         desc = f'{it["item"]} {it["horizon"]} {w} 예보. ' + ' · '.join(it['why'][:2])[:120]
         ld = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': f'{it["item"]} 가격 예보', 'url': BASE + it['url'], 'dateModified': TODAY, 'description': desc, 'isPartOf': {'@type': 'WebSite', 'name': '박씨팜', 'url': BASE + '/'}}
-        write(it['url'], shell(it['url'], f'{it["item"]} 가격 예보 — {w} ({s}, {TODAY}) | 박씨팜', desc, b, jsonld=ld), '0.7')
+        write(it['url'], shell(it['url'], f'{it["item"]} 가격 예보 — {w} ({s}, {TODAY}) | 박씨팜', desc, b, jsonld=ld, og='/og' + it['url'].rstrip('/') + '.png'), '0.7')
 
     # ── 4. 경보 ──────────────────────────────────────────────────
     def alerts_page():
@@ -589,7 +613,7 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         b += f'<li>경락가: 직전 5거래일 중위값 대비 ±{pa.get("price_dev_warn", 7)}% 주의, ±{pa.get("price_dev_alarm", 12)}% 경보(두수 {pa.get("price_min_heads", 20)}두 넘는 날만).</li>'
         b += '<li>양식 폐사: 7일 바다 수온 예보가 품종별 한계 수온에 2일 넘게 닿으면 위험, 1일이면 주의. 가축 더위: 온습도지수 2일 넘게 72 이상 주의, 79 이상 경고, 한낮 89 이상 위험.</li></ul>'
         b += '<p class="mini">기준은 채점 결과에 따라 월요일마다 정해진 범위 안에서 스스로 조정하며, 바뀐 내용은 <a href="/track/">적중 기록</a>에 남깁니다. 해역·시군별 위험 지도는 <a href="/risk/">위험 예보</a>에.</p>'
-        write('/alerts/', shell('/alerts/', f'오늘의 경보 {TODAY} — 급변·폐사·더위 위험과 미리 할 일 | 박씨팜', '해외 선물·환율 급변, 경락가 급등락, 양식 고수온·가축 더위 위험을 경보·주의로 나눠 미리 할 일과 함께 알립니다.', b), '0.8')
+        write('/alerts/', shell('/alerts/', f'오늘의 경보 {TODAY} — 급변·폐사·더위 위험과 미리 할 일 | 박씨팜', '해외 선물·환율 급변, 경락가 급등락, 양식 고수온·가축 더위 위험을 경보·주의로 나눠 미리 할 일과 함께 알립니다.', b, og='/og/alerts.png'), '0.8')
 
     # ── 5. 적중 기록 ─────────────────────────────────────────────
     def track_page():
@@ -633,7 +657,7 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         cal = (FC.get('params') or {}).get('calib') or []
         b += '<h2>자가 조정 기록</h2>' + ('<ul class="mini">' + ''.join(f'<li>{E(c["date"])} — {E(", ".join(c["changes"]))}</li>' for c in cal[-10:]) + '</ul>' if cal else '<p class="mini">채점이 20건 넘게 쌓인 갈래부터 월요일마다 가중치·기준을 정해진 범위 안에서 조정하고 여기에 남깁니다. 아직 자동 조정은 없고, 10월 26일 수산 근거 무게 조정(사람 검토) 1건이 있습니다.</p>')
         b += '<h2>채점 방법</h2><ul><li>방향은 「오름·내림·보합」 셋 중 하나로 적고, 실제 값이 ±3% 넘게 움직인 방향과 같으면 맞음으로 셉니다(보합 예보는 ±5% 안이면 맞음).</li><li>기준선은 「값이 그대로」라고만 찍었을 때의 적중률입니다. 20건 넘게 채점됐는데 기준선보다 못한 갈래는 「참고용」으로 내립니다.</li><li>예보를 낸 뒤에는 고치지 않습니다. 기준을 바꾸면 그 뒤 예보부터 적용하고 따로 채점합니다.</li></ul>'
-        write('/track/', shell('/track/', '적중 기록 — 예보가 실제로 맞았나 | 박씨팜', '수산·농산·축산 가격 예보의 채점 결과를 품목별로 공개합니다. 틀린 예보도 그대로. 채점 방법과 자가 조정 기록.', b), '0.8')
+        write('/track/', shell('/track/', '적중 기록 — 예보가 실제로 맞았나 | 박씨팜', '수산·농산·축산 가격 예보의 채점 결과를 품목별로 공개합니다. 틀린 예보도 그대로. 채점 방법과 자가 조정 기록.', b, og='/og/track.png'), '0.8')
 
     def method_page():
         mdp = os.path.join(ROOT, 'docs', '예측기법_박씨팜.md')
@@ -664,7 +688,12 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
             i += 1
         b = '<p class="crumb"><a href="/">박씨팜</a> › 예측 기법</p><h1 class="title">박씨팜 수급·가격 예측 기법</h1><p class="lead">학계·기관이 검증한 이론과 실증을 우리가 가진 공개 자료에 맞게 조립한 틀. 모든 판단은 기록·채점되어 기준이 스스로 고쳐집니다.</p>' + '\n'.join(out)
         b += '<p class="mini">관련 화면: <a href="/world/">세계·원산지 요인</a> · <a href="/track/">적중 기록</a> · <a href="/signal/">거시 근거</a></p>'
-        write('/method/', shell('/method/', '박씨팜 예측 기법 — 거미집·전가·아밍턴·엘니뇨·브라이어 점수를 우리 자료에 맞게 | 박씨팜', '국내 미시 신호, 원산지 노출, 세계 요인, 수요 달력을 갈래 상한 안에서 더하고 실제 값으로 채점하는 박씨팜의 예측 틀과 근거 문헌.', b), '0.7')
+        write('/method/', shell('/method/', '박씨팜 예측 기법 — 거미집·전가·아밍턴·엘니뇨·브라이어 점수를 우리 자료에 맞게 | 박씨팜', '국내 미시 신호, 원산지 노출, 세계 요인, 수요 달력을 갈래 상한 안에서 더하고 실제 값으로 채점하는 박씨팜의 예측 틀과 근거 문헌.', b, og='/og/method.png'), '0.7')
+    try:
+        json.dump({'at': TODAY, 'counts': counts, 'alerts': len(AL), 'items': [{'url': it['url'], 'sector': it['sector'], 'item': it['item'], 'dir': it['dir'], 'w': it['w'], 'price': it['price'], 'unit': it['unit'], 'horizon': it['horizon'], 'why': (it['why'] or [''])[0], 'strength': it['strength'], 'hist': [len(it['hist']), sum(1 for h in it['hist'] if h[3])]} for it in items],
+                   'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('chg_l')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}, 'rate': {s: rate_of(s) for s in ('수산', '농산')}, 'world': {'n': WORLD.get('n_rules') or len(WEV), 'active': len(WACT), 'alarm': sum(1 for e in WACT if e.get('level') == 2)}},
+                  open(os.path.join(ROOT, 'site', 'data', 'cards.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+    except Exception as e: print('cards.json 실패', e)
     home(); list_page()
     for it in items: item_page(it)
     alerts_page(); track_page(); world_page(); method_page(); index_page()
