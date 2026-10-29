@@ -169,16 +169,17 @@ def fao():
     h = fetch('https://www.fao.org/worldfoodsituation/foodpricesindex/en/', timeout=60).decode('utf-8', 'replace')
     links = []
     for m in re.finditer(r'href="([^"]+)"', h):
-        u = m.group(1)
-        if re.search(r'(?i)(food.?price|fpi|indices).*\.(csv|xlsx?)$', u) or re.search(r'(?i)\.(csv)$', u):
+        u = m.group(1).replace('&amp;', '&')
+        if re.search(r'(?i)(food.?price|ffpi|indices).*\.(csv|xlsx?)(\?|$)', u):
             u = u if u.startswith('http') else 'https://www.fao.org' + u
             if u not in links: links.append(u)
+    links.sort(key=lambda u: (0 if u.lower().split('?')[0].endswith('.csv') else 1))   # csv 먼저
     MSG.append('식량농업기구 연결 ' + ' | '.join(l.rsplit('/', 1)[-1] for l in links)[:300])
     best = None
     for u in links[:8] + ['https://www.fao.org/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data_oct.csv']:
         try: raw = fetch(u, timeout=60)
         except Exception: continue
-        if u.lower().endswith('.xlsx'):
+        if u.lower().split('?')[0].endswith('.xlsx'):
             try:
                 import openpyxl
                 wbk = openpyxl.load_workbook(io.BytesIO(raw), read_only=True, data_only=True); ws = wbk[wbk.sheetnames[0]]
@@ -189,7 +190,7 @@ def fao():
                     lines.append(','.join([a] + ['' if c is None else str(c) for c in r[1:8]]))
                 t = '\n'.join(lines)
             except Exception as e: MSG.append('식량농업기구 xlsx ' + str(e)[:40]); continue
-        elif u.lower().endswith('.xls'): continue   # 옛 형식은 읽을 수 없음
+        elif u.lower().split('?')[0].endswith('.xls'): continue   # 옛 형식은 읽을 수 없음
         else: t = raw.decode('utf-8', 'replace')
         last = max((x.group(0) for x in re.finditer(r'(?m)^(\d{4}-\d{2})', t)), default='')
         if not best or last > best[0]: best = (last, t, u)
