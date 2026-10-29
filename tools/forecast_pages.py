@@ -21,6 +21,9 @@ def build(G):
     except Exception: IM = {'items': []}
     EXPO = WORLD.get('exposure') or {}; OLV = WORLD.get('origin_level') or {}
     PX = J('pindex.json', {}) or {}   # 물가 지수(build_index.py 생성물)
+    GL = J('global.json', {}) or {}   # 세계 공개 연동창구(collect_global.py)
+    try: GAPI = json.load(open(os.path.join(ROOT, 'tools', 'global_apis.json'), encoding='utf-8'))
+    except Exception: GAPI = {'sources': []}
     AK = {'한우 거세': '한우', '돼지 탕박': '돼지', '배합사료 원가': '사료'}   # 축산 품목 이름 → 규칙에서 쓰는 짧은 이름
     def akey(sector, item): return AK.get(item, item) if sector == '축산' else item
     def exposure_of(sector, item):
@@ -404,7 +407,7 @@ def build(G):
     def world_page():
         b = '<p class="crumb"><a href="/">박씨팜</a> › 세계 요인</p><h1 class="title">세계 요인 감시 — 값을 흔드는 바깥일</h1>'
         b += f'<p class="lead">브라질 조류인플루엔자, 후쿠시마 처리수, 엘니뇨, 호르무즈, 할당관세, 명절처럼 품목 밖에서 값을 흔드는 요인 {WORLD.get("n_rules", 0)}개를 매일 아침 재서 예보 점수에 더합니다. {E((WORLD.get("at") or "")[:16])} 기준 · 활성 {len(WACT)}(경보 {sum(1 for e in WACT if e["level"] == 2)}).</p>'
-        CATS = ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '원가·경기', '수요·달력', '원산지', '국내 날씨', '국내 수급')
+        CATS = ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '원산지 시세', '사고·재해', '원가·경기', '수요·달력', '원산지', '국내 날씨', '국내 수급')
         b += '<div class="statusbar">' + ''.join(f'<span class="{"off" if any(e["level"] == 2 and e["cat"] == c for e in WACT) else "soon" if any(e["cat"] == c for e in WACT) else "on"}"><i></i>{E(c)} {sum(1 for e in WACT if e["cat"] == c)}/{sum(1 for e in WEV if e["cat"] == c)}</span>' for c in CATS if any(e['cat'] == c for e in WEV)) + '</div>'
         b += f'<p class="mini">감시 범위: 주제 요인 {WORLD.get("n_topic", 0)} · 원산지 나라 {WORLD.get("n_origin_all", 0)}(오늘 측정 {WORLD.get("n_origin", 0)}) · 수입 품목 {WORLD.get("n_import_items", 0)} · 국내 주산지 {WORLD.get("n_crop_points", 0)}곳 · 뉴스 자료 {E(WORLD.get("news_src", ""))} · 측정 {WORLD.get("elapsed_sec", 0)}초. 방법은 <a href="/method/">예측 기법</a>에.</p>'
         if WACT: b += '<h2>지금 활성</h2><ul class="alerts world">' + ''.join(world_card(e) for e in WACT) + '</ul>'
@@ -427,6 +430,30 @@ def build(G):
         oe = [e for e in WEV if e.get('kind') == 'origin']
         if oe:
             b += '<h2 id="origins">원산지별 판 — 오늘 측정한 나라</h2><p class="mini">나라마다 공급 충격 뉴스·정치/무역 뉴스·통화 3개월 변동·엘니뇨 영향권을 잽니다. 1군(' + str(sum(1 for e in oe if e.get("tier") == 1)) + '개 나라)은 매일, 2군은 돌아가며 측정합니다.</p><ul class="alerts world">' + ''.join(world_card(e) for e in sorted(oe, key=lambda e: (-e['level'], -(e.get('tier') == 1), e['name']))) + '</ul>'
+        # 세계 공개 연동창구 — 원산지 시세 계열·재난·주산지 날씨·대장
+        GS = GL.get('series') or {}
+        if GS:
+            b += '<h2 id="global">세계 공개 연동창구 — 원산지에서 직접 받는 값</h2><p class="mini">한국 밖 정부·통계청·국제기구·대학이 여는 열쇠 없는 창구에서 날마다 받습니다(뉴스가 아니라 측정값이라 경보까지 올라갈 수 있음). 갱신 ' + E(GL.get('at', '')) + ' · 창구 ' + E(str(GL.get('n_series', len(GS)))) + '계열.</p>'
+            b += '<div class="tscroll"><table class="t"><tr><th>계열</th><th>나라</th><th class="num">지금</th><th>단위 · 기준일</th><th class="num">1주</th><th class="num">4주</th><th class="num">3개월</th><th class="num">1년</th><th>흐름</th></tr>'
+            ORDER = ['eu_pig_s', 'us_hog_net', 'us_beef_choice', 'us_steer_live', 'br_chicken', 'br_hog', 'br_cattle', 'br_soy', 'br_corn', 'no_salmon_fresh', 'eu_broiler', 'fao_fpi_food', 'fao_fpi_meat', 'fao_fpi_cereals', 'fao_fpi_dairy', 'fao_fpi_oils', 'wb_urea', 'wb_dap', 'wb_soymeal', 'wb_fishmeal', 'wb_maize', 'wb_wheat', 'wb_palm', 'wb_crude', 'wb_beef', 'wb_chicken', 'wb_shrimp']
+            def pcx(x): return f'<span class="{"up" if x > 0 else "dn" if x < 0 else ""}">{x:+.1f}%</span>' if x is not None else '–'
+            for sid in [k for k in ORDER if k in GS] + [k for k in GS if k not in ORDER]:
+                g = GS[sid]; c = g.get('chg') or {}; cls = 'up' if (c.get('w4') or 0) > 0 else 'dn' if (c.get('w4') or 0) < 0 else 'flat'
+                b += f'<tr><td><b>{E(g["name"])}</b>' + (' <span class="mini">(어제 값)</span>' if g.get('stale') else '') + f'<div class="mini">{E(g.get("src", ""))}</div></td><td class="mini">{E(g.get("country", ""))}</td><td class="num">{g["last"]:,.2f}</td><td class="mini">{E(g.get("unit", ""))} · {E(g.get("date", ""))}</td><td class="num">{pcx(c.get("w1"))}</td><td class="num">{pcx(c.get("w4"))}</td><td class="num">{pcx(c.get("m3"))}</td><td class="num">{pcx(c.get("y1"))}</td><td>{spark([x[1] for x in (g.get("points") or [])[-40:]], w=90, h=26, cls=cls)}</td></tr>'
+            b += '</table></div><p class="mini">주간·월별 계열의 「1주·4주·3개월」은 각각 1점·4점·13점(월별은 1·3·6점) 전 대비. 변화가 규칙의 기준(예: 유럽 돼지 4주 ±6%)을 넘으면 「원산지 시세」 요인이 켜져 해당 국내 품목 점수에 들어갑니다.</p>'
+            gd = GL.get('gdacs') or []
+            if gd: b += '<h3>세계 재난 경보(주황·빨강, 14일 안)</h3><ul class="mini">' + ''.join(f'<li><b>{E(x["type"])}</b> {E(x["country"])} — {E(x["title"])} <span class="mini">({E(x["date"])}' + (', 원산지 ' + E('·'.join(x['ko'])) if x.get('ko') else '') + ')</span></li>' for x in gd[:12]) + '</ul>'
+            wx = GL.get('weather') or []
+            if wx: b += '<h3>원산지 주산지 날씨(30일 평년 대비)</h3><div class="tscroll"><table class="t"><tr><th>나라</th><th>주산지(품목)</th><th class="num">기온 차</th><th class="num">강수 비율</th><th>판정</th></tr>' + ''.join(f'<tr><td>{E(w["ko"])}</td><td class="mini">{E(w["name"])}</td><td class="num">{(w["t_anom"] if w.get("t_anom") is not None else 0):+.1f}℃</td><td class="num">{(f"{int(w["p_ratio"] * 100)}%" if w.get("p_ratio") is not None else "–")}</td><td>{wlv(w.get("level") or 0)} <span class="mini">{E(w.get("why", ""))}</span></td></tr>' for w in sorted(wx, key=lambda w: -(w.get('level') or 0))) + '</table></div>'
+        srcs = GAPI.get('sources') or []
+        if srcs:
+            RS = GL.get('reg_status') or {}
+            b += '<h3 id="apis">세계 연동창구 대장</h3><p class="mini">어디에 무엇이 열려 있고 우리가 무엇을 받는지. 「열쇠 대기」는 무료 등록 열쇠만 있으면 바로 붙는 창구(깃허브 비밀 저장소에만 둠), 「계획」은 공개 창구가 없어 날씨·뉴스·국제기구 값으로 대신하는 곳.</p><div class="tscroll"><table class="t"><tr><th>나라·기관</th><th>내용</th><th>열쇠</th><th>주기</th><th>닿는 곳</th><th>상태</th></tr>'
+            for x in srcs:
+                st = x.get('상태', ''); live = RS.get(x['id'])
+                cls = 'ok' if st.startswith('연동') and (live is None or '정상' in str(live)) else 'bad' if ('불통' in st or (live and '실패' in str(live))) else 'wait'
+                b += f'<tr><td><b>{E(x["나라"])}</b><div class="mini">{E(x["기관"])}</div></td><td class="mini">{E(x["내용"])}</td><td class="mini">{E(x["열쇠"])}</td><td class="mini">{E(x["주기"])}</td><td class="mini">{E(x["닿는 곳"])}</td><td class="{cls}">{E(st)}' + (f'<div class="mini">오늘 {E(str(live))}</div>' if live else '') + '</td></tr>'
+            b += '</table></div>'
         b += '<h2>감시하는 요인 전부</h2><p class="mini">조용한 요인도 매일 잽니다. 단계가 오르면 그날 예보 점수에 들어가고, 이 화면과 첫 화면에 올라옵니다.</p>'
         for c in ('기후·해양', '질병·방역', '지정학·에너지', '정책', '세계 상품', '사고·재해', '원가·경기', '국내 날씨', '국내 수급', '수요·달력', '확인 메모'):
             es = [e for e in WEV if e['cat'] == c]

@@ -61,31 +61,29 @@ def eu_prices(kind, params):
     j = json.loads(fetch(f'https://www.ec.europa.eu/agrifood/api/{kind}/prices', dict(params, beginDate=d0, endDate=d1), timeout=90))
     return j
 def num(s):
-    m = re.search(r'[\d.,]+', str(s).replace(',', '')); return float(m.group(0)) if m else None
+    m = re.search(r'-?\d[\d,]*\.?\d*', str(s).replace(',', ''))
+    try: return float(m.group(0).replace(',', '')) if m else None
+    except ValueError: return None
 def eu_pig():
-    j = eu_prices('pigmeat', {'memberStateCodes': 'DE,ES,NL,DK,FR,PL,BE'})
-    by = collections.defaultdict(list)
+    j = eu_prices('pigmeat', {'memberStateCodes': 'DE,ES,NL,FR,BE,IT,AT'})   # 유로 쓰는 나라만(폴란드·덴마크는 자국 통화라 섞으면 안 됨)
+    by = collections.defaultdict(dict)
     for r in j:
-        if r.get('pigClass') in ('S', 'E') and '100' in str(r.get('unit', '')):
+        if r.get('pigClass') == 'S' and '100' in str(r.get('unit', '')) and str(r.get('price', '')).strip().startswith('€'):
             d = datetime.datetime.strptime(r['endDate'], '%d/%m/%Y').date().isoformat(); v = num(r.get('price'))
-            if v: by[d].append(v)
-    pts = [(d, statistics.mean(v)) for d, v in by.items()]
-    series('eu_pig_s', '유럽연합 돼지고기 S·E등급 도축장 값(7개국 평균)', '유로/100㎏', '유럽연합 집행위 농식품 창구', '유럽연합', '주', pts, {'w1': 1, 'w4': 4, 'm3': 13, 'y1': 52})
+            if v: by[d][r.get('memberStateCode')] = v
+    pts = [(d, statistics.median(v.values())) for d, v in by.items() if len(v) >= 3]   # 그 주 3개국 넘게 있을 때만, 중앙값(구성 변화에 덜 흔들림)
+    series('eu_pig_s', '유럽연합 돼지고기 S등급 도축장 값(유로권 중앙값)', '유로/100㎏', '유럽연합 집행위 농식품 창구', '유럽연합', '주', pts, {'w1': 1, 'w4': 4, 'm3': 13, 'y1': 52})
 run('eu_pig', eu_pig)
 def eu_poultry():
-    j = eu_prices('poultry', {'memberStateCodes': 'PL,DE,FR,ES,NL,IT,DK'})
-    by = collections.defaultdict(list)
+    j = eu_prices('poultry', {'memberStateCodes': 'DE,FR,ES,NL,IT,BE'})   # 유로권만
+    by = collections.defaultdict(dict)
     for r in j:
         pn = str(r.get('productName', '')).lower()
-        if ('broiler' in pn or 'chicken' in pn or 'whole' in pn) and 'selling' in str(r.get('priceType', '')).lower():
+        if ('broiler' in pn or 'whole' in pn) and 'selling' in str(r.get('priceType', '')).lower() and str(r.get('price', '')).strip().startswith('€'):
             d = datetime.datetime.strptime(r['endDate'], '%d/%m/%Y').date().isoformat(); v = num(r.get('price'))
-            if v: by[d].append(v)
-    if not by:   # 품목 이름이 다르면 전체 평균으로라도
-        for r in j:
-            d = datetime.datetime.strptime(r['endDate'], '%d/%m/%Y').date().isoformat(); v = num(r.get('price'))
-            if v: by[d].append(v)
-    pts = [(d, statistics.mean(v)) for d, v in by.items()]
-    series('eu_broiler', '유럽연합 닭고기(육계) 판매가(7개국 평균)', '유로/100㎏', '유럽연합 집행위 농식품 창구', '유럽연합', '주', pts, {'w1': 1, 'w4': 4, 'm3': 13, 'y1': 52})
+            if v: by[d][r.get('memberStateCode')] = v
+    pts = [(d, statistics.median(v.values())) for d, v in by.items() if len(v) >= 3]
+    series('eu_broiler', '유럽연합 통닭(육계 65%) 판매가(유로권 중앙값)', '유로/100㎏', '유럽연합 집행위 농식품 창구', '유럽연합', '주', pts, {'w1': 1, 'w4': 4, 'm3': 13, 'y1': 52})
 run('eu_poultry', eu_poultry)
 
 # ── 미국 농무부 의무보고: 쇠고기 박스육 초이스 도매값(주간) ───────
@@ -176,7 +174,17 @@ def fao():
         m = re.search(r'(/fileadmin/templates/worldfood/Reports_and_docs/Food_price_indices_data[^"\']*\.csv)', h)
         if not m: raise ValueError('지수 파일 주소를 못 찾음')
         txt = fetch('https://www.fao.org' + m.group(1), timeout=60).decode('utf-8', 'replace')
-    rows = [r for r in csv.reader(io.StringIO(txt)) if r and re.match(r'\d{4}-\d{2}', r[0])]
+    allrows = list(csv.reader(io.StringIO(txt)))
+    rows = []
+    for r in allrows:
+        if not r or not r[0].strip(): continue
+        a = r[0].strip(); m = re.match(r'(\d{4})-(\d{2})', a) or re.match(r'(\d{4})(\d{2})$', a)
+        if m: rows.append([f'{m.group(1)}-{m.group(2)}'] + r[1:]); continue
+        try: d = datetime.datetime.strptime(a, '%b-%Y'); rows.append([d.strftime('%Y-%m')] + r[1:]); continue
+        except ValueError: pass
+        try: d = datetime.datetime.strptime(a, '%Y-%m-%d'); rows.append([d.strftime('%Y-%m')] + r[1:])
+        except ValueError: pass
+    MSG.append('식량농업기구 꼬리 행 ' + json.dumps(allrows[-4:], ensure_ascii=False)[:300])
     cols = {'food': 1, 'meat': 2, 'dairy': 3, 'cereals': 4, 'oils': 5, 'sugar': 6}
     names = {'food': '세계 식량가격지수', 'meat': '세계 육류가격지수', 'dairy': '세계 유제품가격지수', 'cereals': '세계 곡물가격지수', 'oils': '세계 식물성유지가격지수', 'sugar': '세계 설탕가격지수'}
     for k, i in cols.items():
@@ -190,7 +198,14 @@ run('fao_fpi', fao)
 # ── 세계은행 상품값 월별(요소·인산이암모늄·대두박·어분·옥수수·밀·팜유·원유) ──
 def wb():
     import openpyxl
-    b = fetch('https://thedocs.worldbank.org/en/doc/18675f1d1639c7a34d463f59263ba0a2-0050012025/related/CMO-Historical-Data-Monthly.xlsx', timeout=120)
+    url = 'https://thedocs.worldbank.org/en/doc/18675f1d1639c7a34d463f59263ba0a2-0050012025/related/CMO-Historical-Data-Monthly.xlsx'
+    try:
+        h = fetch('https://www.worldbank.org/en/research/commodity-markets', timeout=60).decode('utf-8', 'replace')
+        m = re.search(r'https://thedocs\.worldbank\.org/[^"\s]+?CMO-Historical-Data-Monthly\.xlsx', h)
+        if m: url = m.group(0)
+        else: MSG.append('세계은행 안내 화면에서 월별 파일 주소 못 찾음 — 예전 주소 사용')
+    except Exception as e: MSG.append('세계은행 안내 화면 ' + str(e)[:40])
+    b = fetch(url, timeout=120)
     wbk = openpyxl.load_workbook(io.BytesIO(b), read_only=True, data_only=True)
     ws = wbk['Monthly Prices'] if 'Monthly Prices' in wbk.sheetnames else wbk[wbk.sheetnames[0]]
     rows = list(ws.iter_rows(values_only=True))
@@ -253,15 +268,18 @@ def nasa():
             MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
             mk = MON[d1.month - 1]; ct = C['T2M'].get(mk); cp = C['PRECTOTCORR'].get(mk)
             ta = round(statistics.mean(t) - ct, 1) if ct is not None else None
-            pr = round(statistics.mean(p) / cp, 2) if cp else None   # 평년 일평균 강수 대비 비율
+            pm = statistics.mean(p)   # 30일 일평균 강수(㎜/일)
+            pr = round(pm / cp, 2) if (cp and cp >= 1.0) else None   # 평년 일평균이 1㎜/일 아래인 건기엔 비율을 쓰지 않음(0으로 나눠 폭주)
             lv = 0; why = []
-            if ta is not None and ta >= 2.5: lv = 2; why.append(f'30일 기온 평년보다 {ta:+.1f}℃(폭염)')
-            elif ta is not None and ta >= 1.5: lv = 1; why.append(f'30일 기온 평년보다 {ta:+.1f}℃')
+            if ta is not None and ta >= 4.0: lv = 2; why.append(f'30일 기온 평년보다 {ta:+.1f}℃(폭염)')
+            elif ta is not None and ta >= 2.5: lv = 1; why.append(f'30일 기온 평년보다 {ta:+.1f}℃')
             if pr is not None and pr <= 0.25: lv = max(lv, 2); why.append(f'30일 강수 평년의 {int(pr * 100)}%(가뭄)')
             elif pr is not None and pr <= 0.45: lv = max(lv, 1); why.append(f'30일 강수 평년의 {int(pr * 100)}%(건조)')
             elif pr is not None and pr >= 3.0: lv = max(lv, 2); why.append(f'30일 강수 평년의 {pr:.1f}배(홍수)')
             elif pr is not None and pr >= 2.0: lv = max(lv, 1); why.append(f'30일 강수 평년의 {pr:.1f}배(다우)')
-            WX.append({'ko': ko, 'name': name, 'lat': lat, 'lon': lon, 'items': items, 't_anom': ta, 'p_ratio': pr, 'level': lv, 'why': ' · '.join(why) or '평년 안', 'to': d1.isoformat()})
+            elif pr is None and pm >= 6.0: lv = max(lv, 1); why.append(f'건기인데 30일 일평균 {pm:.1f}㎜(이례적 비)')
+            lv = min(lv, 1)   # 2026-10-29 검증 전: 위성 기상 판정은 「주의」까지만(경보는 몇 주 기록 뒤 문턱을 맞춘 다음)
+            WX.append({'ko': ko, 'name': name, 'lat': lat, 'lon': lon, 'items': items, 't_anom': ta, 'p_ratio': pr, 'p_mm': round(pm, 1), 'level': lv, 'why': ' · '.join(why) or '평년 안', 'to': d1.isoformat()})
         except Exception as e:
             MSG.append(f'날씨 {name} {str(e)[:50]}')
     if not WX: raise ValueError('한 곳도 못 받음')
