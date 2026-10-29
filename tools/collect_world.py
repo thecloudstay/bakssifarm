@@ -323,7 +323,7 @@ def mk(r, typ): return {'id': r['id'], 'cat': r['cat'], 'name': r['name'], 'leve
 def finish(ev, aff, q=None):
     old = OLD_EV.get(ev['id']) or {}
     if ev.get('_news_failed') and old.get('level') is not None and old.get('kind') == ev['kind'] and 'news' in old:
-        ev['level'] = old['level']; ev['text'] = (old.get('text') or '') + ' (어제 값 — 오늘 뉴스 자료 못 받음)'; ev['stale'] = True; ev['titles'] = old.get('titles') or []
+        ev['level'] = old['level']; ev['text'] = (old.get('text') or '').replace(' (어제 값 — 오늘 뉴스 자료 못 받음)', '').strip() + ' (어제 값 — 오늘 뉴스 자료 못 받음)'; ev['stale'] = True; ev['titles'] = old.get('titles') or []
     if ev['level'] and q and not ev.get('titles') and not ev.get('stale'): ev['titles'] = news_titles(q)
     if ev['level']: ev['affects'] = [dict(a, w=round(a['w'] * ev['level'], 2)) for a in (aff or [])]
     ev.pop('_news_failed', None)

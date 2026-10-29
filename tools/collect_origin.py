@@ -35,24 +35,41 @@ def fetch_day(ymd):
     iso = f'{ymd[:4]}-{ymd[4:6]}-{ymd[6:]}'   # 명세: 정산일자 YYYY-MM-DD + 도매시장코드 필수(공공데이터포털 15141810)
     codes = markets(KEY, URL, iso)
     return _fd(KEY, URL, iso, codes) if codes else []
+def add_day(day, rows):
+    """하루치 낙찰을 그 달 파일에 쌓음. 이미 쌓인 날·0건인 날은 건너뜀(0건인 날은 다음 실행에서 다시 시도)."""
+    ymd = day.strftime('%Y%m%d')
+    mpath = os.path.join(PRIVATE, 'origin', day.strftime('%Y-%m') + '.json')
+    month = jload(mpath, {'days': [], 'agg': {}})
+    if not rows or ymd in month['days']: return 0
+    agg = month['agg']; used = 0
+    for r in rows:
+        item = (r.get('gds_mclsf_nm') or r.get('corp_gds_item_nm') or '').strip()
+        if not item or EXCLUDE.search(item) or EXCLUDE.search(r.get('gds_lclsf_nm') or ''): continue
+        u = to_unit(r.get('plor_nm'))
+        if not u: continue
+        try: amt = float(r.get('totprc') or 0); qty = float(r.get('unit_tot_qty') or r.get('qty') or 0)
+        except ValueError: continue
+        k = u + '|' + item + '|' + (r.get('gds_lclsf_nm') or '')
+        a = agg.setdefault(k, [0, 0, 0]); a[0] += amt; a[1] += qty; a[2] += 1; used += 1
+    month['days'].append(ymd); jsave(mpath, month)
+    return 1
+def have_day(day):
+    return day.strftime('%Y%m%d') in jload(os.path.join(PRIVATE, 'origin', day.strftime('%Y-%m') + '.json'), {'days': []}).get('days', [])
 day = now().date() - datetime.timedelta(days=1)
 ymd = day.strftime('%Y%m%d')
 try:
     rows = fetch_day(ymd)
-    mpath = os.path.join(PRIVATE, 'origin', day.strftime('%Y-%m') + '.json')
-    month = jload(mpath, {'days': [], 'agg': {}})
-    if rows and ymd not in month['days']:   # 0건인 날은 누적 일수에 넣지 않음
-        agg = month['agg']; used = 0
-        for r in rows:
-            item = (r.get('gds_mclsf_nm') or r.get('corp_gds_item_nm') or '').strip()
-            if not item or EXCLUDE.search(item) or EXCLUDE.search(r.get('gds_lclsf_nm') or ''): continue
-            u = to_unit(r.get('plor_nm'))
-            if not u: continue
-            try: amt = float(r.get('totprc') or 0); qty = float(r.get('unit_tot_qty') or r.get('qty') or 0)
-            except ValueError: continue
-            k = u + '|' + item + '|' + (r.get('gds_lclsf_nm') or '')
-            a = agg.setdefault(k, [0, 0, 0]); a[0] += amt; a[1] += qty; a[2] += 1; used += 1
-        month['days'].append(ymd); jsave(mpath, month)
+    add_day(day, rows)
+    # 빠진 날 채우기 — 밤 실행 때 아직 정산이 안 올라왔거나 국내 실행기가 꺼져 있던 날(최근 7일, 일요일 제외, 한 번에 3일만 시도)
+    filled = []; tried = 0
+    for back in range(2, 9):
+        if tried >= int(env('ORIGIN_BACKFILL') or 3): break
+        d2 = now().date() - datetime.timedelta(days=back)
+        if d2.weekday() == 6 or have_day(d2): continue
+        tried += 1
+        try:
+            if add_day(d2, fetch_day(d2.strftime('%Y%m%d'))): filled.append(d2.strftime('%m-%d'))
+        except Exception as e: print('빠진 날 실패', d2, str(e)[:60])
     # 최근 12개월 합 → 공개 집계(시군별 품목 순위, 시군 합)
     tot = collections.defaultdict(lambda: [0, 0, 0]); od = os.path.join(PRIVATE, 'origin')
     files = sorted(f for f in os.listdir(od) if f.endswith('.json'))[-12:]
@@ -68,7 +85,7 @@ try:
     jsave(os.path.join(DATA, 'origin.json'), {'at': stamp(), 'months': [f[:7] for f in files], 'days': sum(len(jload(os.path.join(od, f), {}).get('days', [])) for f in files),
           'units': pub, 'items': [[i, round(v)] for i, v in items.most_common(60)],
           'source': '한국농수산식품유통공사 전국 공영도매시장 경매원천정보(낙찰 건별 원산지·총가격). 원산지가 시군까지 적힌 낙찰만, 농협 수매 품목 제외'})
-    status('origin', True, f'{ymd} 낙찰 {len(rows):,}건 · 누적 {len(files)}개월')
+    status('origin', True, f'{ymd} 낙찰 {len(rows):,}건' + (f' · 빠진 날 채움 {", ".join(filled)}' if filled else '') + f' · 누적 {len(files)}개월')
     print('출하 금액', ymd, len(rows))
 except Exception as e:
     status('origin', False, str(e)[:200]); print('실패', e)
