@@ -286,3 +286,4 @@ https://thecloudstay.github.io/bakssifarm/track/
 https://thecloudstay.github.io/bakssifarm/world/
 https://thecloudstay.github.io/bakssifarm/method/
 https://thecloudstay.github.io/bakssifarm/index/
+https://thecloudstay.github.io/bakssifarm/gap/
