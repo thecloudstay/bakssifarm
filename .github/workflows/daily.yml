@@ -42,6 +42,9 @@ jobs:
       - run: pip install pillow pyproj openpyxl
       - name: 경락가 수집(축산물품질평가원)
         run: python tools/collect_ekape.py
+      - name: 경락가 되채우기(1년치, 하루 110일씩 — 다 채우면 건너뜀)
+        run: python tools/backfill_ekape.py
+        continue-on-error: true
       - name: 양식 접수 반영(공동구매 모집판·구입가 시세판)
         run: python tools/sync_forms.py
       - name: 수협 산지 위판 시세(해양수산부 위탁판매 현황 파일, 열쇠 불필요)
@@ -80,6 +83,9 @@ jobs:
         continue-on-error: true
       - name: 물가 지수(갈래·종합·원가 압력, 경향 계량)
         run: python tools/build_index.py
+        continue-on-error: true
+      - name: 갭 기회(해외 원산지 시세 × 환율 ↔ 국산, 되돌림 채점)
+        run: python tools/build_gap.py
         continue-on-error: true
       - name: 자가 점검(재기·찾기)
         run: python tools/self_check.py

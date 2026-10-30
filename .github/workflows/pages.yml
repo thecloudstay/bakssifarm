@@ -37,6 +37,9 @@ jobs:
       - name: 물가 지수(갈래·종합·원가 압력, 경향 계량)
         run: python tools/build_index.py
         continue-on-error: true
+      - name: 갭 기회(해외 원산지 시세 × 환율 ↔ 국산, 되돌림 채점)
+        run: python tools/build_gap.py
+        continue-on-error: true
       - name: 글 화면·사이트 지도 생성(열쇠 주입 포함)
         run: python tools/build_pages.py
       - name: 미리보기 그림(시그니처 판 — 처음·지수·품목 100장·시군 161장)

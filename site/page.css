@@ -228,3 +228,9 @@ svg.chart.stock{max-width:none;background:var(--paper);border:1px solid var(--li
 @media (max-width:960px){.sig{grid-template-columns:1fr;padding:34px 28px 28px}.sig-h{font-size:44px}.sig-stats{grid-template-columns:repeat(4,1fr)}}
 @media (max-width:640px){.sig{padding:28px 20px 22px;border-radius:18px}.sig-h{font-size:36px}.sig-sub{font-size:15px}.sig-stats{grid-template-columns:1fr 1fr}.sig-stats b{font-size:24px}.sig .btn{height:40px;padding:0 14px;font-size:14px}}
 .sig-today{margin:-10px 0 22px;font-size:15px;color:rgba(255,255,255,.8)} .sig-today b{color:#fff;font-weight:700}
+/* 갭 기회(2026-10-30): 백분위 게이지 */
+.gauge{position:relative;display:block;width:100%;max-width:220px;height:10px;border-radius:999px;background:linear-gradient(90deg,#2f5f8a 0 15%,var(--line) 15% 85%,var(--brick) 85% 100%);margin:6px 0 2px}
+.gauge i{position:absolute;top:-4px;width:4px;height:18px;margin-left:-2px;border-radius:2px;background:var(--ink);box-shadow:0 0 0 2px var(--paper)}
+.gauge.hi i{background:var(--brick)} .gauge.lo i{background:#2f5f8a}
+.card.px .gauge{position:relative;margin-top:12px}
+dl.kv.tm dd.up{color:var(--brick)} dl.kv.tm dd.dn{color:#2f5f8a}

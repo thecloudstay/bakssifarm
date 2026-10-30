@@ -22,6 +22,8 @@ def build(G):
     EXPO = WORLD.get('exposure') or {}; OLV = WORLD.get('origin_level') or {}
     PX = J('pindex.json', {}) or {}   # 물가 지수(build_index.py 생성물)
     GL = J('global.json', {}) or {}   # 세계 공개 연동창구(collect_global.py)
+    GAP = J('gap.json', {}) or {}   # 갭 기회(build_gap.py)
+    GOK = [x for x in (GAP.get('pairs') or []) if x.get('ok')]; GHOT = [x for x in GOK if x['state'] != '평소 범위' and not x.get('stale')]
     try: GAPI = json.load(open(os.path.join(ROOT, 'tools', 'global_apis.json'), encoding='utf-8'))
     except Exception: GAPI = {'sources': []}
     AK = {'한우 거세': '한우', '돼지 탕박': '돼지', '배합사료 원가': '사료'}   # 축산 품목 이름 → 규칙에서 쓰는 짧은 이름
@@ -397,6 +399,52 @@ def build(G):
         ld = {'@context': 'https://schema.org', '@type': 'Dataset', 'name': '박씨팜 물가 지수', 'url': BASE + '/index/', 'description': '한우·돼지 경락가, 수협 위판가, 공영도매시장 정산가를 거래금액 가중으로 묶은 농축수산물 물가 지수와 원가 압력 지수. 5일선·20일선·기울기로 경향 판정.', 'dateModified': TODAY, 'license': 'https://creativecommons.org/licenses/by/4.0/', 'creator': {'@type': 'Organization', 'name': '박씨팜'}}
         tm = T.get('metrics') or {}
         write('/index/', shell('/index/', f'농축수산물 물가 지수 {TODAY} — 종합 {tm.get("last", "")} {tm.get("regime", "")} | 박씨팜', '경락가·위판가·도매가를 한 줄 지수로 묶어 주식 차트처럼 5일선·20일선·기울기·변동성으로 경향을 잽니다. 축산·수산·농산·종합·원가 압력 지수.', b, jsonld=ld, og='/og/index.png'), '0.9')
+    def gauge(pct, state):
+        cls = 'hi' if ('고평가' in state or '높음' in state) else 'lo' if ('저평가' in state or '낮음' in state) else ''
+        return f'<span class="gauge {cls}" title="최근 1년 비율 백분위 {pct}"><i style="left:{max(2, min(98, pct))}%"></i></span>'
+    def gstate(st):
+        cls = 'up' if ('고평가' in st or '높음' in st) else 'dn' if ('저평가' in st or '낮음' in st) else 'flat'
+        return f'<span class="fx {cls}">{E(st)}</span>'
+    def gap_row(x):
+        dc = x.get('decomp') or {}
+        dec = (f'국산 {dc["dom"]:+}% · 현지 {dc["org_local"]:+}% · 환율 {dc["fx"]:+}%' if dc and dc.get('org_local') is not None and dc.get('fx') is not None else f'도매 {dc["dom"]:+}% · 환율 {dc["fx"]:+}%' if dc and dc.get('fx') is not None else '–')
+        return (f'<tr><td><a href="#{E(x["id"])}"><b>{E(x["name"])}</b></a><div class="mini">{E(x["sector"])} · 기준 {x["n_base"]}일' + (f' · <b>{E(x["date"][5:])} 자료(새 위판 자료 대기)</b>' if x.get('stale') else '') + '</div></td><td class="num">{x["dom"]:,}</td><td class="num">{x["org_krw"]:,}</td><td class="num">{x["ratio"]:.2f}<div class="mini">평소 {x["median"]:.2f}</div></td>'
+                f'<td class="num">{x["dev"]:+}%</td><td>{gauge(x["pct"], x["state"])}<div class="mini">백분위 {x["pct"]} · z {x["z"]:+}</div></td><td>{gstate(x["state"])}{" <b class=\"mini\">강함</b>" if x.get("strong") else ""}</td><td class="mini">{E(dec)}</td></tr>')
+    def gap_strip():
+        if not GOK: return ''
+        pick = (GHOT + [x for x in sorted(GOK, key=lambda x: -abs(x['z'])) if x not in GHOT and not x.get('stale')])[:3]
+        cards = ''.join(f'<a class="card px {"up" if ("고평가" in x["state"] or "높음" in x["state"]) else "dn" if ("저평가" in x["state"] or "낮음" in x["state"]) else "flat"}" href="/gap/#{E(x["id"])}"><h3>{E(x["name"].split(" ↔ ")[0])} <small>↔ {E(x["name"].split(" ↔ ")[1])}</small></h3><div class="big">{x["dev"]:+}%</div><p class="mini">평소 비율 대비 · 백분위 {x["pct"]} · {E(x["state"])}</p>{gauge(x["pct"], x["state"])}</a>' for x in pick)
+        return f'<h2 id="gap">오늘의 갭 기회 — 해외와 국내 값 차이가 벌어진 곳 <small class="mini">{len(GHOT)}/{len(GOK)}짝</small></h2><p class="mini">국산 값 ÷ 현지 값(환율 환산)의 비율이 평소 범위(최근 1년 백분위 15~85)를 벗어나면 갭입니다. 갭은 평균으로 되돌아오는 경향이 있어 수입·유통·급식 업체의 매입 시점 참고가 됩니다.</p><div class="grid3">' + cards + '</div><p class="mini"><a href="/gap/">갭 기회 전체(9짝)·되돌림 채점·구독 →</a></p>'
+    def gap_page():
+        b = '<p class="crumb"><a href="/">박씨팜</a> › 갭 기회</p><h1 class="title">갭 기회 — 해외와 국내 값 차이가 벌어질 때</h1>'
+        b += f'<p class="lead">같은 쓰임의 물건은 나라가 달라도 값이 운임·관세·품질 차이만큼만 떨어져 있고, 그 차이는 보통 좁은 띠 안에 머뭅니다. 띠를 벗어나면 — 국산이 현지보다 유난히 비싸거나 싸지면 — 누군가는 수입을 늘리고 누군가는 출하를 당기며 띠로 되돌아옵니다. 박씨팜은 원산지 현지 시세(세계 공개 연동창구)와 환율, 국산 경락가·위판가·도매가를 날마다 맞대어 <b>그 띠를 벗어난 순간</b>을 잡고, 되돌아왔는지까지 채점합니다. {E(GAP.get("date", TODAY))} 기준 짝 {len(GOK)}개 가운데 갭 {len(GHOT)}개.</p>'
+        if not GOK:
+            b += '<p class="note">아직 계산할 자료가 모이지 않았습니다. 매일 아침 자동으로 다시 계산합니다.</p>'
+        else:
+            b += '<h2>한눈에</h2><div class="tscroll"><table class="t"><tr><th>짝(국산 ↔ 현지)</th><th class="num">국산 원/㎏</th><th class="num">현지 환산 원/㎏</th><th class="num">비율</th><th class="num">평소 대비</th><th>1년 백분위</th><th>판정</th><th>4주 변화 분해</th></tr>' + ''.join(gap_row(x) for x in sorted(GOK, key=lambda x: -abs(x['z']))) + '</table></div>'
+            b += '<p class="mini">비율의 절댓값은 품질·등급·관세가 다른 두 물건의 거리라 뜻이 없고, 「평소보다 벌어졌나」만 봅니다. 환율 갭(바나나·오렌지)은 현지 창구가 없어 도매가와 환율만 맞댑니다.</p>'
+            for x in sorted(GOK, key=lambda x: -abs(x['z'])):
+                col = 'var(--brick)' if ('고평가' in x['state'] or '높음' in x['state']) else '#2f5f8a' if ('저평가' in x['state'] or '낮음' in x['state']) else 'var(--moss)'
+                b += f'<h2 id="{E(x["id"])}">{E(x["name"])} {gstate(x["state"])}{" <b class=\"mini\">강한 갭</b>" if x.get("strong") else ""}</h2>' + (f'<p class="note">국산 쪽 자료가 {E(x["date"])}까지라(수협 위판 자료는 달 단위로 올라옴) 오늘의 갭으로는 세지 않고 참고로만 둡니다.</p>' if x.get('stale') else '')
+                b += f'<div class="grid3"><div class="card"><h3>국산</h3><div class="big">{x["dom"]:,}<i>원/㎏</i></div><p>{E(x["dom_desc"])} · {E(x["date"])}</p></div><div class="card"><h3>현지 환산</h3><div class="big">{x["org_krw"]:,}<i>원/㎏</i></div><p>{E(x["org_desc"])}' + (f' · 현지 {x["org_local"]:,} {E(x["org_unit"])}({E(x["org_date"])})' if x.get('org_local') is not None else '') + f' · 환율 {x["fx"]:,.2f}원/{E(x["ccy"])}</p></div><div class="card"><h3>비율 {x["ratio"]:.2f} <small>평소 {x["median"]:.2f}</small></h3><div class="big">{x["dev"]:+}<i>%</i></div><p>최근 1년 백분위 {x["pct"]} · z {x["z"]:+} · 기준 {x["n_base"]}일({E(x["base_from"])}~)</p>{gauge(x["pct"], x["state"])}</div></div>'
+                b += stock_svg(x['series'], color=col, label=x['name'] + ' 비율')
+                b += f'<p class="mini">비율(국산 ÷ 현지 환산)의 흐름 · 띠는 20일 ±2σ · {len(x["series"])}일</p>'
+                dc = x.get('decomp')
+                if dc:
+                    parts = [('비율', dc['ratio']), ('국산', dc['dom'])] + ([('현지 값(현지 통화)', dc['org_local'])] if dc.get('org_local') is not None else []) + ([('환율(원/' + x['ccy'] + ')', dc['fx'])] if dc.get('fx') is not None else [])
+                    b += '<h3>4주 동안 무엇이 움직였나</h3><dl class="kv tm">' + ''.join(f'<dt>{E(k)}</dt><dd class="{"up" if v > 0 else "dn" if v < 0 else ""}">{v:+}%</dd>' for k, v in parts) + f'</dl><p class="mini">{E(dc["from"])} → {E(x["date"])}. 비율 변화 ≈ 국산 변화 − 현지 변화 − 환율 변화.</p>'
+                b += '<h3>참고 행동</h3><div class="grid3">' + ''.join(f'<div class="card"><h3>{E(k)}</h3><p>{E(v)}</p></div>' for k, v in x['acts'].items()) + '</div>'
+                if x.get('note'): b += f'<p class="note">{E(x["note"])}</p>'
+                if x.get('metrics') and x['metrics'].get('n', 0) >= 3: b += f'<p class="mini">비율의 경향: {regime_badge(x["metrics"])} {E(regime_text(x["metrics"]))}</p>'
+        sc = GAP.get('score') or {}
+        b += '<h2 id="score">갭은 정말 되돌아오나 — 채점</h2>'
+        if sc.get('n'):
+            b += f'<p>갭으로 판정한 날의 4주 뒤 |z|가 절반 아래로 줄어든 비율: <b>{sc["closed"]}/{sc["n"]}건({sc["rate"]}%)</b>. 되돌아오지 않은 갭도 그대로 둡니다.</p><div class="tscroll"><table class="t"><tr><th>판정일</th><th>짝</th><th>판정</th><th class="num">z 그때</th><th class="num">z 4주 뒤</th><th>되돌림</th></tr>' + ''.join(f'<tr><td>{E(r["d"])}</td><td>{E(r["pair"])}</td><td>{E(r["state"])}</td><td class="num">{r["z0"]:+}</td><td class="num">{r["z1"]:+}</td><td class="{"ok" if r["closed"] else "bad"}">{"됨" if r["closed"] else "아직"}</td></tr>' for r in reversed(sc.get('rows') or [])) + '</table></div>'
+        else: b += f'<p class="mini">갭 판정을 날마다 기록해 두고(기록 {sc.get("n_days", 0)}일째) 4주 뒤 |z|가 절반 아래로 줄었는지 채점합니다. 첫 채점은 11월 말.</p>'
+        b += '<h2 id="subscribe">갭 경보 구독</h2><div class="grid2"><div class="card on"><h3>업체 구독 — 우리 품목 갭 경보</h3><p>사는 품목을 등록하면 그 짝의 갭이 벌어지는 날 아침에 알려 드리고, 원산지 현지 시세 표·환율·되돌림 채점을 함께 드립니다. 시험 기간 무료, 유료 전환 전 미리 안내.</p><p style="margin-top:10px;"><a class="btn prime" href="/pro/#gap">업체 등록·구독 신청</a></p></div><div class="card"><h3>무료로 보는 것</h3><p>이 화면의 오늘 갭 표와 비율 그래프는 누구나 봅니다. 날마다 갱신되고 기록은 지우지 않습니다.</p><p class="mini" style="margin-top:8px;">관련: <a href="/world/#global">원산지 현지 시세 표</a> · <a href="/index/">물가 지수</a> · <a href="/f/">품목별 예보</a></p></div></div>'
+        b += f'<h2 id="how">방법과 한계</h2><p class="mini">{E(GAP.get("method", ""))}</p><ul class="mini"><li>국산과 현지는 등급·품질·규격이 다른 물건이라 비율의 수준이 아니라 변화만 읽습니다. 관세·운임 계수를 억지로 정하지 않습니다.</li><li>한우·돼지 경락가는 2026년 9월 말부터 기록해 1년치 되채움이 끝나기 전까지 백분위의 바탕이 짧습니다(기준 일수를 함께 표시).</li><li>수산 위판 짝은 위판 자료가 올라오는 달까지만 이어집니다. 닭고기는 국산 일별 창구가 없어 아직 짝이 없습니다.</li><li>갭 기회는 참고 정보이며 거래·투자 권유가 아닙니다. 박씨팜은 사고팔지 않고 이 숫자에 이해관계가 없습니다.</li></ul>'
+        ld = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': '박씨팜 갭 기회', 'url': BASE + '/gap/', 'dateModified': TODAY, 'description': '해외 원산지 시세(환율 환산)와 국산 경락가·위판가·도매가의 비율이 평소 범위를 벗어난 갭을 날마다 찾아 수입·유통·급식 업체의 매입 시점 참고로 제공.'}
+        write('/gap/', shell('/gap/', f'갭 기회 {E(GAP.get("date", TODAY))} — 해외·국내 값 차이가 벌어진 짝 {len(GHOT)}/{len(GOK)} | 박씨팜', '원산지 현지 시세와 환율, 국산 경락가·위판가·도매가를 날마다 맞대어 값 차이가 평소 띠를 벗어난 순간을 잡고 되돌림까지 채점합니다. 한우↔미국 쇠고기, 돼지↔미국·유럽연합, 넙치·방어·참돔↔노르웨이 연어, 바나나·오렌지↔환율.', b, jsonld=ld, og='/og/gap.png'), '0.9')
     def world_home():
         if not WEV: return ''
         b = f'<h2>세계 요인 — 지금 값에 작용하는 것 <span class="mini">{WORLD.get("n_rules", len(WEV))}개 요인 감시 · 활성 {len(WACT)}</span></h2>'
@@ -494,9 +542,10 @@ def build(G):
         b += f'<a href="/f/"><b>{len(items)}</b><span>품목 예보 · 날마다</span></a>'
         b += f'<a href="/alerts/"><b>{n_alarm + n_warn}</b><span>오늘 경보 {n_alarm} · 주의 {n_warn}</span></a>'
         b += (f'<a href="/index/"><b>{tm0["last"]:.1f}</b><span>종합 물가 지수 · {E(tm0["regime"])}</span></a>' if tm0.get('n') else '<a href="/index/"><b>–</b><span>종합 물가 지수</span></a>')
-        b += f'<a href="/world/"><b>{WORLD.get("n_rules") or len(WEV)}</b><span>세계·원산지 요인 감시</span></a>'
+        b += (f'<a href="/gap/"><b>{len(GHOT)}</b><span>오늘 갭 기회 · {len(GOK)}짝 감시</span></a>' if GOK else f'<a href="/world/"><b>{WORLD.get("n_rules") or len(WEV)}</b><span>세계·원산지 요인 감시</span></a>')
         b += '</div></section>'
         b += '<div class="sig-promise">' + ''.join(f'<span>{E(x)}</span>' for x in BR.PROMISE) + '</div>'
+        b += gap_strip()
         b += f'<div class="hero" id="today"><p class="crumb">{E(TODAY)} 아침 예보 · 매일 아침 자동 갱신</p><h2 class="title" style="margin-top:0">오늘의 농축수산물 가격 예보</h2>'
         b += f'<p class="lead">{len(items)}개 품목 가운데 <b class="up">오름 {counts["오름"]}</b> · <b class="dn">내림 {counts["내림"]}</b> · 보합 {counts["보합"]}. 품목을 누르면 근거와 값 흐름, 지난 예보의 결과까지 보입니다.</p>'
         b += '<div class="chips">' + ''.join(f'<a class="chip" href="/f/#{E(s)}">{E(s)} <b>{sum(1 for it in nf if it["sector"] == s)}</b></a>' for s in ('축산', '수산', '농산')) + f'<a class="chip" href="/alerts/">경보 <b>{n_alarm}</b> · 주의 <b>{n_warn}</b></a></div></div>'
@@ -718,10 +767,10 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         write('/method/', shell('/method/', '박씨팜 예측 기법 — 거미집·전가·아밍턴·엘니뇨·브라이어 점수를 우리 자료에 맞게 | 박씨팜', '국내 미시 신호, 원산지 노출, 세계 요인, 수요 달력을 갈래 상한 안에서 더하고 실제 값으로 채점하는 박씨팜의 예측 틀과 근거 문헌.', b, og='/og/method.png'), '0.7')
     try:
         json.dump({'at': TODAY, 'counts': counts, 'alerts': len(AL), 'items': [{'url': it['url'], 'sector': it['sector'], 'item': it['item'], 'dir': it['dir'], 'w': it['w'], 'price': it['price'], 'unit': it['unit'], 'horizon': it['horizon'], 'why': (it['why'] or [''])[0], 'strength': it['strength'], 'hist': [len(it['hist']), sum(1 for h in it['hist'] if h[3])]} for it in items],
-                   'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('chg_l')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}, 'rate': {s: rate_of(s) for s in ('수산', '농산')}, 'world': {'n': WORLD.get('n_rules') or len(WEV), 'active': len(WACT), 'alarm': sum(1 for e in WACT if e.get('level') == 2)}},
+                   'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('chg_l')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}, 'rate': {s: rate_of(s) for s in ('수산', '농산')}, 'world': {'n': WORLD.get('n_rules') or len(WEV), 'active': len(WACT), 'alarm': sum(1 for e in WACT if e.get('level') == 2)}, 'gap': {'n': len(GOK), 'hot': [[x['name'], x['state'], x['dev']] for x in GHOT[:3]]}},
                   open(os.path.join(ROOT, 'site', 'data', 'cards.json'), 'w', encoding='utf-8'), ensure_ascii=False)
     except Exception as e: print('cards.json 실패', e)
     home(); list_page()
     for it in items: item_page(it)
-    alerts_page(); track_page(); world_page(); method_page(); index_page()
+    alerts_page(); track_page(); world_page(); method_page(); index_page(); gap_page()
     return {'items': len(items), 'up': counts['오름'], 'dn': counts['내림'], 'alerts': len(AL), 'pindex': bool(PX.get('sectors'))}
