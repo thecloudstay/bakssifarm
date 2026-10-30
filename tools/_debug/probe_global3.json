@@ -1,0 +1,45 @@
+{
+ "eu_eggs_a": {
+  "ok": false,
+  "err": "HTTP Error 404: Not Found"
+ },
+ "eu_eggs_b": {
+  "ok": false,
+  "err": "HTTP Error 404: Not Found"
+ },
+ "eu_eggs_c": {
+  "ok": false,
+  "err": "HTTP Error 500: Internal Server Error"
+ },
+ "eu_dairy": {
+  "ok": false,
+  "err": "HTTP Error 500: Internal Server Error"
+ },
+ "eu_dairy_b": {
+  "ok": false,
+  "err": "HTTP Error 404: Not Found"
+ },
+ "eu_fruit": {
+  "ok": false,
+  "err": "HTTP Error 404: Not Found"
+ },
+ "eu_sheep": {
+  "ok": false,
+  "err": "HTTP Error 500: Internal Server Error"
+ },
+ "ssb_mackerel": {
+  "ok": true,
+  "n": 4102,
+  "head": "[{\"id\":\"SameFiskemengd2\",\"path\":\"/be/be05/samisk/SBMENU1506\",\"title\":\"07612: Sami statistics. Catch volume by month of landing and fish species. STN area (tonnes live weight) 2007M01 - 2019M12\",\"score\":0.362569422,\"published\":\"2022-02-04T08:00:00\"},{\"id\":\"SameFiskemengd\",\"path\":\"/be/be05/samisk/SBMENU11937/SBMENU11944\",\"title\":\"06852: Sami statistics. Catch volume by month of landing and fish species. STN area (tonnes live weight) (closed series) 2004M01 - 2005M12\",\"score\":0.362569422,\"published\":\"2008-04-11T10:00:00\"},{\"id\":\"ViktigFiskesl\",\"path\":\"/js/js02/fiskeri\",\"title\":\"05463: Catch, by important fish species II (closed series) 1908 - 1976\",\"score\":0.29300034,\"published\":\"2006-02-14T10:00:00\"},{\"id\":\"ViktigFisk2\",\"path\":\"/js/js02/fiskeri\",\"title\":\"05998: Catch, by important fish species I (closed series) 1866 - 1907\",\"score\":0.258978158,\"published\":\"2014-04-09T10:00:00\"},{\"id\":\"Fiskeslag2\",\"path\":\"/js/js02/fiskeri\",\"title\":\"05278: Catch, by fish species (closed series) 1977 - 2018\",\"score\":0.2563753,\"published\":\"2019-11-08T08:00:00\"},{\"id\":\"Fiskemengde\",\"path\":\"/js/js02/fiskeri\",\"title\":\"06367: Catch, by species and new categories of disposition (closed series) 2000 - 2018\",\"s"
+ },
+ "ssb_fish_export": {
+  "ok": true,
+  "n": 8261,
+  "head": "[{\"id\":\"HistHandelN6\",\"path\":\"/ut/ut02/muh/SBMENU11557/SBMENU11737\",\"title\":\"14537: Export of fish and fish products, by country (closed series) 1960 - 1987\",\"score\":0.862660468,\"published\":\"2026-02-25T08:00:00\"},{\"id\":\"HistHandelN9\",\"path\":\"/ut/ut02/muh/SBMENU11557/SBMENU11738\",\"title\":\"14602: Export of fish and fish products, by country (closed series) 1980M01 - 1987M12\",\"score\":0.8478161,\"published\":\"2026-02-24T08:00:00\"},{\"id\":\"UhMdSesJustTotal\",\"path\":\"/ut/ut02/muh/SBMENU4160\",\"title\":\"08864: External trade in goods, main figures, seasonally adjusted and unadjusted (NOK million) 2005M01 - 2026M09\",\"score\":0.814360738,\"published\":\"2026-10-15T08:00:00\"},{\"id\":\"EksLaksUke\",\"path\":\"/js/js02/laks\",\"title\":\"03024: Export of salmon, fresh and frozen, fish-farm bred 2000U01 - 2026U43\",\"score\":0.783040643,\"published\":\"2026-10-28T08:00:00\"},{\"id\":\"EksLaksUke\",\"path\":\"/ut/ut02/laks\",\"title\":\"03024: Export of salmon, fresh and frozen, fish-farm bred 2000U01 - 2026U43\",\"score\":0.783040643,\"published\":\"2026-10-28T08:00:00\"},{\"id\":\"UhArFiskLand\",\"path\":\"/ut/ut02/muh/SBMENU4154\",\"title\":\"09283: Export of fish, crustaceans, molluscs and preparations thereof (SITC 03), by species and country/tr"
+ },
+ "gdt": {
+  "ok": true,
+  "n": 56325,
+  "head": "<!DOCTYPE html>\n<!--[if !IE]><!-->\n<html lang=\"en-US\">\n    <!--<![endif]-->\n    <!--[if IE 6]><html lang=\"en-US\" class=\"ie ie6\"><![endif]-->\n    <!--[if IE 7]><html lang=\"en-US\" class=\"ie ie7\"><![endif]-->\n    <!--[if IE 8]><html lang=\"en-US\" class=\"ie ie8\"><![endif]-->\n    <!--[if IE 9]><html lang=\"en-US\" class=\"ie ie9\"><![endif]-->\n    <head>\n        <base href=\"https://www.globaldairytrade.info/\">\n\n        <!-- Google Tag Manager -->\n        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':\n        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],\n        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=\n        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);\n        })(window,document,'script','dataLayer','GTM-P9WTKT');</script>\n        <!-- End Google Tag Manager -->\n\n        <!-- Google tag (gtag.js) -->\n        <script async src=\"https://www.googletagmanager.com/gtag/js?id=\"></script>\n        <script>\n            window.dataLayer = window.dataLayer || [];\n            function gtag(){dataLayer.push(arguments);}\n            gtag('js', new Date());\n            gtag('config', '');\n   "
+ }
+}
