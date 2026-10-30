@@ -33,7 +33,34 @@ def fred_daily(sid):
             return {'2020-01-01': seed[sid]} if sid in seed else {}
         return FXC.get(sid) or {}
 USDKRW = {d: v for d, v in (M.get('series', {}).get('usdkrw', {}).get('d') or [])}
-EUR = fred_daily('DEXUSEU'); NOK = fred_daily('DEXNOUS'); BRL = fred_daily('DEXBZUS'); AUD = fred_daily('DEXUSAL')
+def ecb_hist():
+    """유럽중앙은행 기준환율(유로 대비 각 통화, 1999년~) — 한 파일로 원·달러·크로네·헤알·호주달러를 다 받는다(미 연준은 자주 시간 초과)"""
+    import zipfile
+    try:
+        b = get('https://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist.zip', timeout=60, retry=2, headers={'User-Agent': 'Mozilla/5.0 (compatible; bakssifarm-gap/1.0)'})
+        z = zipfile.ZipFile(io.BytesIO(b)); name = next(n for n in z.namelist() if n.endswith('.csv'))
+        rows = list(csv.reader(io.TextIOWrapper(z.open(name), encoding='utf-8')))
+        hd = [h.strip() for h in rows[0]]; idx = {c: hd.index(c) for c in ('USD', 'KRW', 'NOK', 'BRL', 'AUD') if c in hd}
+        out = {c: {} for c in idx}
+        for r in rows[1:]:
+            if not r or not r[0][:4].isdigit(): continue
+            for c, i in idx.items():
+                try: out[c][r[0]] = float(r[i])
+                except (ValueError, IndexError): pass
+        if out.get('USD'): FXC['ecb'] = out
+        return out
+    except Exception as e:
+        FX_ERR.append('ecb ' + str(e)[:80]); return FXC.get('ecb') or {}
+ECB = ecb_hist()
+def cross(ccy):
+    """유럽중앙은행 표에서 「달러 1단위당 통화」 또는 「통화 1단위당 달러」 꼴로 미 연준 계열과 같은 방향의 사전을 만든다"""
+    u = ECB.get('USD') or {}; c = ECB.get(ccy) or {}
+    if not u or not c: return {}
+    if ccy in ('NOK', 'BRL'): return {d: c[d] / u[d] for d in c if d in u and u[d]}        # 달러당 통화(미 연준 DEXNOUS·DEXBZUS 와 같은 방향)
+    return {d: u[d] / c[d] for d in c if d in u and c[d]}                                   # 통화당 달러(DEXUSEU·DEXUSAL 과 같은 방향) — EUR 은 c=1
+EUR = {d: u for d, u in (ECB.get('USD') or {}).items()} or fred_daily('DEXUSEU')   # 유로 1단위당 달러 = 유럽중앙은행 USD 열 그대로
+NOK = cross('NOK') or fred_daily('DEXNOUS'); BRL = cross('BRL') or fred_daily('DEXBZUS'); AUD = cross('AUD') or fred_daily('DEXUSAL')
+if not USDKRW and ECB.get('KRW'): USDKRW = {d: ECB['KRW'][d] / ECB['USD'][d] for d in ECB['KRW'] if d in ECB['USD']}
 jsave(FXC_P, FXC)
 def ffill(series, dates):
     """series {날짜: 값} 을 dates 각 날짜의 「그날 또는 직전」 값으로"""
@@ -198,7 +225,7 @@ for f in sorted(glob.glob(os.path.join(GAP_DIR, '2*.json'))):
 score = {'n': len(SC), 'closed': sum(1 for x in SC if x['closed']), 'rate': round(sum(1 for x in SC if x['closed']) / len(SC) * 100) if SC else None, 'rows': SC[-40:], 'n_days': len(glob.glob(os.path.join(GAP_DIR, '2*.json')))}
 jsave(os.path.join(GAP_DIR, 'score.json'), score)
 out = {'at': stamp(), 'date': TS, 'pairs': pairs, 'n_ok': len(ok), 'n_gap': sum(1 for p in ok if p['state'] != '평소 범위'), 'score': score,
-       'fx_err': FX_ERR, 'fx': {'usdkrw': USDKRW.get(max(USDKRW)) if USDKRW else None, 'eur_usd': EUR.get(max(EUR)) if EUR else None, 'nok_usd': NOK.get(max(NOK)) if NOK else None, 'brl_usd': BRL.get(max(BRL)) if BRL else None},
+       'fx_err': FX_ERR, 'fx_src': '유럽중앙은행 기준환율' if ECB.get('USD') else '미 연준', 'fx': {'usdkrw': USDKRW.get(max(USDKRW)) if USDKRW else None, 'eur_usd': EUR.get(max(EUR)) if EUR else None, 'nok_usd': NOK.get(max(NOK)) if NOK else None, 'brl_usd': BRL.get(max(BRL)) if BRL else None},
        'method': '비율 = 국산 원/㎏ ÷ (현지 값 × 환율). 최근 1년 비율의 백분위 ≥85 이고 중앙값보다 5% 넘게 높으면 「국산 상대 고평가」, ≤15 이고 5% 넘게 낮으면 「국산 상대 저평가」. 기록 60일 넘고 |z|≥1.5 면 강한 갭. 4주 뒤 |z| 가 절반 아래로 줄면 「되돌림」으로 채점.'}
 jsave(os.path.join(DATA, 'gap.json'), out)
 os.makedirs(os.path.join(HERE, '_debug'), exist_ok=True); jsave(os.path.join(HERE, '_debug', 'gap_debug.json'), {'at': out['at'], 'fx_err': FX_ERR, 'fx': out['fx'], 'pairs': [(p['id'], p.get('state') or p.get('why'), p.get('n_base')) for p in pairs]})
