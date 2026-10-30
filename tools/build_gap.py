@@ -18,7 +18,7 @@ LB = 0.45359237   # 1파운드 = 0.4536㎏ → 달러/100파운드 ÷ 45.359 = �
 FXC_P = os.path.join(GAP_DIR, 'fx.json'); FXC = jload(FXC_P, {}); FX_ERR = []
 def fred_daily(sid):
     try:
-        b = get('https://fred.stlouisfed.org/graph/fredgraph.csv', {'id': sid}, timeout=30, retry=1, headers={'User-Agent': 'bakssifarm-gap/1.0'}).decode('utf-8', 'replace')
+        b = get('https://fred.stlouisfed.org/graph/fredgraph.csv', {'id': sid, 'cosd': (TODAY - datetime.timedelta(days=420)).isoformat()}, timeout=75, retry=2, headers={'User-Agent': 'Mozilla/5.0 (compatible; bakssifarm-gap/1.0)'}).decode('utf-8', 'replace')   # 1999년부터 다 받으면 시간 초과 — 최근 14개월만
         out = {}
         for row in csv.reader(io.StringIO(b)):
             if len(row) < 2 or not row[0][:2].isdigit(): continue
