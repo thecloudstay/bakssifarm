@@ -613,7 +613,7 @@
    "name": "중국·일본 수입 규제(우리 수출 수산물)",
    "detect": {
     "type": "gdelt",
-    "q": "중국 (수입금지 OR 통관 OR 검역) (한국산 OR 국산) (수산물 OR 마른김 OR 전복) sourcelang:korean"
+    "q": "(중국 OR 일본) (수입금지 OR 수입규제 OR 통관 OR 검역) (한국산 OR 국산) (수산물 OR 마른김 OR 전복 OR 굴) sourcelang:korean"
    },
    "lag": "0~6주",
    "why": "수출 길이 막히면 김·전복·굴이 국내에 남아 값 내림",

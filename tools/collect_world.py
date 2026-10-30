@@ -78,7 +78,8 @@ def gnews(q):
                 lk = re.search(r'<link>(.*?)</link>', it)
                 if tt: titles.append({'t': re.sub(r'\s+', ' ', re.sub(r'<!\[CDATA\[|\]\]>', '', tt.group(1))).strip()[:90], 'u': (lk.group(1).strip() if lk else ''), 'd': d.strftime('%Y%m%d'), 's': (src.group(1) if src else '')[:20]})
         ratio = round(n7 / max(n14, 1), 2) if (n7 or n14) else None
-        return {'ratio': ratio, 'last7': n7, 'prev7': n14, 'titles': titles, 'src': '구글 뉴스'}
+        # 받기는 했는데 2주 동안 기사가 0건이면 「못 받음」이 아니라 「기사 없음」(평소보다 늘지 않음 = 신호 없음)
+        return {'ratio': ratio, 'last7': n7, 'prev7': n14, 'titles': titles, 'src': '구글 뉴스', 'empty': not (n7 or n14)}
     except Exception as e:
         return {'ratio': None, 'err': str(e)[:60]}
 def news(q, want_titles=False):
@@ -95,6 +96,7 @@ def news(q, want_titles=False):
         g = gnews(q)
         if g.get('ratio') is not None:
             r = g['ratio']; res.update({'ratio': r, 'z': round((r - 1) * 2, 2), 'last7': g['last7'], 'prev7': g['prev7'], 'src': f'구글 뉴스 2주({g["last7"]}/{g["prev7"]}건)', 'titles': g.get('titles') or []})
+        elif g.get('empty'): res.update({'empty': True, 'src': '구글 뉴스 2주(0/0건)'})
         else: res['err'] = g.get('err', '')
     _gd_cache[q] = res; return res
 def news_titles(q, n=3):
@@ -386,7 +388,8 @@ for r in R.get('rules', []):
             ev.update({'level': lv, 'value': ' · '.join(f'{c20:+.1f}%' for _, c20, _ in vals), 'text': ' · '.join(txt) or '자료 없음'})
         elif typ == 'gdelt':
             g = news(dt['q']); ev['news'] = g
-            if g.get('ratio') is None: ev['_news_failed'] = True; ev['text'] = '뉴스 흐름 자료 못 받음 ' + g.get('err', '')
+            if g.get('ratio') is None and g.get('empty'): ev.update({'level': 0, 'value': '뉴스 0건', 'text': '최근 2주 관련 기사 없음 (구글 뉴스)'})
+            elif g.get('ratio') is None: ev['_news_failed'] = True; ev['text'] = '뉴스 흐름 자료 못 받음 ' + g.get('err', '')
             else: ev.update({'level': lv_from_news(g), 'value': f'뉴스 {g["ratio"]}배', 'text': f'최근 7일 관련 기사가 평소의 {g["ratio"]}배 ({g["src"]})', 'titles': g.get('titles') or []})
         elif typ == 'fred_yoy':   # 전년 동월 대비 % — 경제협력개발기구 직접(열쇠 없음) 먼저, 미 연준 경유는 보조
             got = None
@@ -457,7 +460,8 @@ for r in EXTRA_CAL:
     finish(ev, r['affects_before'] if ph == 'before' else [])
 for r in EXTRA_NEWS:
     ev = mk(r, 'gdelt'); g = news(r['q']); ev['news'] = g
-    if g.get('ratio') is None: ev['_news_failed'] = True; ev['text'] = '뉴스 흐름 자료 못 받음'
+    if g.get('ratio') is None and g.get('empty'): ev.update({'level': 0, 'value': '뉴스 0건', 'text': '최근 2주 관련 기사 없음 (구글 뉴스)'})
+    elif g.get('ratio') is None: ev['_news_failed'] = True; ev['text'] = '뉴스 흐름 자료 못 받음'
     else: ev.update({'level': lv_from_news(g), 'value': f'뉴스 {g["ratio"]}배', 'text': f'최근 7일 관련 기사가 평소의 {g["ratio"]}배 ({g["src"]})', 'titles': g.get('titles') or []})
     ev['affects_all'] = r['affects']; finish(ev, r['affects'], r['q'])
 
