@@ -224,7 +224,7 @@ for f in sorted(glob.glob(os.path.join(GAP_DIR, '2*.json'))):
         SC.append({'d': d0, 'pair': pid, 'state': v['state'], 'z0': v['z'], 'z1': round(z_after, 2), 'closed': abs(z_after) < abs(v['z']) * 0.5, 'to': after[0]})
 score = {'n': len(SC), 'closed': sum(1 for x in SC if x['closed']), 'rate': round(sum(1 for x in SC if x['closed']) / len(SC) * 100) if SC else None, 'rows': SC[-40:], 'n_days': len(glob.glob(os.path.join(GAP_DIR, '2*.json')))}
 jsave(os.path.join(GAP_DIR, 'score.json'), score)
-out = {'at': stamp(), 'date': TS, 'pairs': pairs, 'n_ok': len(ok), 'n_gap': sum(1 for p in ok if p['state'] != '평소 범위'), 'score': score,
+out = {'at': stamp(), 'date': TS, 'pairs': pairs, 'n_ok': len(ok), 'n_gap': sum(1 for p in ok if p['state'] != '평소 범위' and not p.get('stale') and p.get('kind') != 'fx'), 'score': score,
        'fx_err': FX_ERR, 'fx_src': '유럽중앙은행 기준환율' if ECB.get('USD') else '미 연준', 'fx': {'usdkrw': USDKRW.get(max(USDKRW)) if USDKRW else None, 'eur_usd': EUR.get(max(EUR)) if EUR else None, 'nok_usd': NOK.get(max(NOK)) if NOK else None, 'brl_usd': BRL.get(max(BRL)) if BRL else None},
        'method': '비율 = 국산 원/㎏ ÷ (현지 값 × 환율). 최근 1년 비율의 백분위 ≥85 이고 중앙값보다 5% 넘게 높으면 「국산 상대 고평가」, ≤15 이고 5% 넘게 낮으면 「국산 상대 저평가」. 기록 60일 넘고 |z|≥1.5 면 강한 갭. 4주 뒤 |z| 가 절반 아래로 줄면 「되돌림」으로 채점.'}
 jsave(os.path.join(DATA, 'gap.json'), out)
