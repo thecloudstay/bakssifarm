@@ -87,6 +87,9 @@ jobs:
       - name: 갭 기회(해외 원산지 시세 × 환율 ↔ 국산, 되돌림 채점)
         run: python tools/build_gap.py
         continue-on-error: true
+      - name: 원산지 거래 정보(부족 신호 × 원산지 후보 × 현지 시세 × 요건)
+        run: python tools/build_source.py
+        continue-on-error: true
       - name: 자가 점검(재기·찾기)
         run: python tools/self_check.py
         continue-on-error: true

@@ -234,3 +234,4 @@ svg.chart.stock{max-width:none;background:var(--paper);border:1px solid var(--li
 .gauge.hi i{background:var(--brick)} .gauge.lo i{background:#2f5f8a}
 .card.px .gauge{position:relative;margin-top:12px}
 dl.kv.tm dd.up{color:var(--brick)} dl.kv.tm dd.dn{color:#2f5f8a}
+.card.src{margin:10px 0} .card.src p{margin:6px 0 0}

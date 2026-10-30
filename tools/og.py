@@ -109,6 +109,8 @@ card(os.path.join(OUT, 'index.png'), '농축수산물 물가 지수', [(' · '.j
 # 품목별
 gp = CARDS.get('gap') or {}
 card(os.path.join(OUT, 'gap.png'), '갭 기회 — 해외·국내 값 차이', [(' · '.join(f'{h[0].split(" ↔ ")[0]} {h[2]:+}%' for h in (gp.get('hot') or [])[:3]) or f'오늘 갭 없음 — 짝 {gp.get("n", 0)}개 감시', WHITE), ('원산지 현지 시세 × 환율 ↔ 국산 경락가·위판가·도매가', None), ('띠를 벗어난 순간을 잡고, 되돌아왔는지 채점', None)], kicker='수입으로 바꿀까, 국산을 담을까'); n += 1
+sp = CARDS.get('source') or {}
+card(os.path.join(OUT, 'source.png'), '원산지 거래 정보', [(' · '.join(f'{h[0]}({"·".join(h[2])})' for h in (sp.get('hot') or [])[:3]) or '국내가 부족할 때 어디서 들여오나', WHITE), ('부족 신호 → 원산지 후보 · 오늘 상태 · 현지 시세 · 수입 단가 · 요건', None), ('수요가 모이면 등록 수입업체 견적 — 박씨팜은 거래에 끼지 않음', None)], kicker='국내가 부족할 때 어디서 들여오나'); n += 1
 card(os.path.join(OUT, 'f.png'), '품목별 가격 예보', [(f'축산 · 수산 · 농산 {len(CARDS.get("items") or [])}개 품목 — 방향 · 세기 · 근거 · 값 흐름', WHITE), ('싸게 거래된 곳 · 대체 품목 · 지난 예보의 결과까지', None), ('매일 아침 자동 갱신', None)], kicker='오를 품목, 내릴 품목'); n += 1
 card(os.path.join(OUT, 'alerts.png'), '오늘의 경보', [(f'경보·주의 {CARDS.get("alerts", 0)}건 — 해외 시세 급변 · 폐사 위험 · 가축 더위 · 세계 요인 · 물가 지수 교차', WHITE), ('경보마다 「미리 할 일」을 적습니다', None)], kicker='먼저 알아야 할 것'); n += 1
 card(os.path.join(OUT, 'world.png'), '세계·원산지 요인 감시', [(f'요인 {wd.get("n", 0)}개 감시 — 오늘 켜진 요인 {wd.get("active", 0)}건(경보 {wd.get("alarm", 0)})', WHITE), ('기후·해양 · 질병·방역 · 지정학·에너지 · 정책 · 세계 상품 · 원가·경기', None), ('수입 품목 73개 × 원산지 57개 나라 행렬로 국내 품목 점수에 반영', None)], kicker='브라질 닭·페루 어분·엘니뇨·환율까지'); n += 1

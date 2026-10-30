@@ -23,6 +23,10 @@ def build(G):
     PX = J('pindex.json', {}) or {}   # 물가 지수(build_index.py 생성물)
     GL = J('global.json', {}) or {}   # 세계 공개 연동창구(collect_global.py)
     GAP = J('gap.json', {}) or {}   # 갭 기회(build_gap.py)
+    SRC = J('source.json', {}) or {}   # 원산지 거래 정보(build_source.py)
+    SRC_BY = collections.defaultdict(list)
+    for r in SRC.get('items') or []:
+        for sg in r.get('signals') or []: SRC_BY[(r['sector'], sg['item'])].append(r)
     GOK = [x for x in (GAP.get('pairs') or []) if x.get('ok')]; GHOT = [x for x in GOK if x['state'] != '평소 범위' and not x.get('stale')]
     try: GAPI = json.load(open(os.path.join(ROOT, 'tools', 'global_apis.json'), encoding='utf-8'))
     except Exception: GAPI = {'sources': []}
@@ -441,10 +445,48 @@ def build(G):
         if sc.get('n'):
             b += f'<p>갭으로 판정한 날의 4주 뒤 |z|가 절반 아래로 줄어든 비율: <b>{sc["closed"]}/{sc["n"]}건({sc["rate"]}%)</b>. 되돌아오지 않은 갭도 그대로 둡니다.</p><div class="tscroll"><table class="t"><tr><th>판정일</th><th>짝</th><th>판정</th><th class="num">z 그때</th><th class="num">z 4주 뒤</th><th>되돌림</th></tr>' + ''.join(f'<tr><td>{E(r["d"])}</td><td>{E(r["pair"])}</td><td>{E(r["state"])}</td><td class="num">{r["z0"]:+}</td><td class="num">{r["z1"]:+}</td><td class="{"ok" if r["closed"] else "bad"}">{"됨" if r["closed"] else "아직"}</td></tr>' for r in reversed(sc.get('rows') or [])) + '</table></div>'
         else: b += f'<p class="mini">갭 판정을 날마다 기록해 두고(기록 {sc.get("n_days", 0)}일째) 4주 뒤 |z|가 절반 아래로 줄었는지 채점합니다. 첫 채점은 11월 말.</p>'
+        b += '<p class="note"><b>갭이 벌어졌을 때 수입으로 메우려면</b> — <a href="/source/">원산지 거래 정보</a>에서 원산지 후보·오늘 상태·현지 시세·요건을 보고, <a href="/source/#demand">수입 공동 수요 예약</a>에 필요량을 적어 두면 등록 수입·유통업체 견적으로 이어집니다(돈·물건은 업체와 직접).</p>'
         b += '<h2 id="subscribe">갭 경보 구독</h2><div class="grid2"><div class="card on"><h3>업체 구독 — 우리 품목 갭 경보</h3><p>사는 품목을 등록하면 그 짝의 갭이 벌어지는 날 아침에 알려 드리고, 원산지 현지 시세 표·환율·되돌림 채점을 함께 드립니다. 시험 기간 무료, 유료 전환 전 미리 안내.</p><p style="margin-top:10px;"><a class="btn prime" href="/pro/#gap">업체 등록·구독 신청</a></p></div><div class="card"><h3>무료로 보는 것</h3><p>이 화면의 오늘 갭 표와 비율 그래프는 누구나 봅니다. 날마다 갱신되고 기록은 지우지 않습니다.</p><p class="mini" style="margin-top:8px;">관련: <a href="/world/#global">원산지 현지 시세 표</a> · <a href="/index/">물가 지수</a> · <a href="/f/">품목별 예보</a></p></div></div>'
         b += f'<h2 id="how">방법과 한계</h2><p class="mini">{E(GAP.get("method", ""))}</p><ul class="mini"><li>국산과 현지는 등급·품질·규격이 다른 물건이라 비율의 수준이 아니라 변화만 읽습니다. 관세·운임 계수를 억지로 정하지 않습니다.</li><li>한우·돼지 경락가는 2026년 9월 말부터 기록해 1년치 되채움이 끝나기 전까지 백분위의 바탕이 짧습니다(기준 일수를 함께 표시).</li><li>수산 위판 짝은 위판 자료가 올라오는 달까지만 이어집니다. 닭고기는 국산 일별 창구가 없어 아직 짝이 없습니다.</li><li>갭 기회는 참고 정보이며 거래·투자 권유가 아닙니다. 박씨팜은 사고팔지 않고 이 숫자에 이해관계가 없습니다.</li></ul>'
         ld = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': '박씨팜 갭 기회', 'url': BASE + '/gap/', 'dateModified': TODAY, 'description': '해외 원산지 시세(환율 환산)와 국산 경락가·위판가·도매가의 비율이 평소 범위를 벗어난 갭을 날마다 찾아 수입·유통·급식 업체의 매입 시점 참고로 제공.'}
         write('/gap/', shell('/gap/', f'갭 기회 {E(GAP.get("date", TODAY))} — 해외·국내 값 차이가 벌어진 짝 {len(GHOT)}/{len(GOK)} | 박씨팜', '원산지 현지 시세와 환율, 국산 경락가·위판가·도매가를 날마다 맞대어 값 차이가 평소 띠를 벗어난 순간을 잡고 되돌림까지 채점합니다. 한우↔미국 쇠고기, 돼지↔미국·유럽연합, 넙치·방어·참돔↔노르웨이 연어, 바나나·오렌지↔환율.', b, jsonld=ld, og='/og/gap.png'), '0.9')
+    def olv_chip(o):
+        c = 'hi' if o.get('level') == 2 else 'mid' if o.get('level') == 1 else ''
+        return f'<span class="org {c}" title="{E(o.get("standing", ""))}">{E(o["ko"])} {int(o["share"] * 100)}%</span>'
+    def src_block(r, compact=False):
+        """수입 품목 한 줄: 원산지 후보·오늘 상태·현지 시세·관세청 단가·요건·수요 모집"""
+        b = f'<div class="card src"><h3>{E(r["import"])} <small class="mini">전가 {r.get("pt")} · 시차 {E(r.get("lag", ""))}</small></h3>'
+        b += '<p><b>원산지 후보</b>(수입 비중 근사 · 오늘 원산지 상태): ' + ' '.join(olv_chip(o) for o in r['origins']) + '</p>'
+        if r.get('prices'): b += '<p class="mini">현지 시세: ' + ' · '.join(f'{E(x["name"])} {x["last"]:,.2f} {E(x["unit"])}({E(x["date"][:7])}' + (f', 4주 {x["w4"]:+}%' if x.get('w4') is not None else '') + ')' for x in r['prices']) + '</p>'
+        if r.get('unit_price') and r['unit_price'].get('usd_kg'): b += f'<p class="mini">관세청 수입 단가: {E(r["unit_price"]["name"])} {r["unit_price"]["usd_kg"]:,.2f} 달러/㎏' + (f'(≈ {r["unit_price"]["krw_kg"]:,}원/㎏)' if r['unit_price'].get('krw_kg') else '') + f' · {E(str(r["unit_price"].get("ym", "")))}</p>'
+        if r.get('note'): b += f'<p class="mini">{E(r["note"])}</p>'
+        if not compact: b += f'<p class="mini"><b>요건</b> — {E(r.get("req", ""))}</p>'
+        if r.get('open'): b += f'<p style="margin-top:8px;"><a class="btn prime" href="/source/#demand" data-item="{E(r["import"])}">이 품목 수입 공동 수요 예약</a></p>'
+        return b + '</div>'
+    def source_page():
+        items = SRC.get('items') or []; hot = [r for r in items if r['signals']]
+        b = '<p class="crumb"><a href="/">박씨팜</a> › 원산지 거래 정보</p><h1 class="title">원산지 거래 정보 — 국내가 부족할 때 어디서 들여오나</h1>'
+        b += f'<p class="lead">동해안 오징어 어획이 줄면 페루·칠레·아르헨티나에서, 꽃게가 빠듯하면 중국·베트남에서 — 국내 공급이 부족해지는 품목마다 <b>어느 원산지에서, 지금 거기 상황은 어떤지, 현지 값과 수입 단가는 얼마인지, 무슨 요건이 붙는지</b>를 한 자리에 모읍니다. 수요가 모이면 영업등록을 가진 수입·유통업체가 견적을 냅니다. {E(SRC.get("date", TODAY))} 기준 부족 신호 품목 {len(hot)}개, 수요 예약 열린 품목 {SRC.get("n_open", 0)}개.</p>'
+        b += f'<p class="note"><b>박씨팜의 자리</b> — {E(SRC.get("principle", ""))}</p>'
+        if hot:
+            b += '<h2>지금 부족 신호가 켜진 품목</h2><div class="tscroll"><table class="t"><tr><th>수입 품목</th><th>국내 신호</th><th>원산지 후보(비중 · 오늘 상태)</th><th class="num">신호 점수</th><th>수요 예약</th></tr>'
+            for r in hot:
+                sg = ' · '.join(f'<b>{E(x["item"])}</b> {E(x["kind"])}' + (f'({E(x["why"][:40])})' if x.get('why') else '') for x in r['signals'][:3])
+                b += f'<tr><td><a href="#{E(r["import"])}"><b>{E(r["import"])}</b></a><div class="mini">{E(r["sector"])} · 전가 {r.get("pt")} · 시차 {E(r.get("lag", ""))}</div></td><td class="mini">{sg}</td><td>{" ".join(olv_chip(o) for o in r["origins"][:5])}</td><td class="num">{r["score"]}</td><td>{"<a href=\"#demand\">열림</a>" if r.get("open") else "<span class=\"mini\">–</span>"}</td></tr>'
+            b += '</table></div><p class="mini">신호: 공급 빠듯(창고 재고·위판 물량·값), 어획 감소(앞달 대비 위판 물량 −25% 아래), 예보 오름(세기 3 이상), 갭 고평가(국산이 현지 환산보다 평소 대비 5% 넘게 비쌈), 축산 출하 판단. 원산지 상태는 세계·원산지 요인 감시의 오늘 단계(빨강 경보·노랑 주의).</p>'
+            for r in hot: b += f'<div id="{E(r["import"])}"></div>' + src_block(r)
+        b += '<h2 id="all">수입 품목 73개 전체 — 원산지와 요건</h2><p class="mini">신호가 없어도 「어디서 오나」는 언제나 봅니다. 비중은 공개 통계 근사치, 해마다 갱신.</p><div class="tscroll"><table class="t"><tr><th>수입 품목</th><th>갈래</th><th>원산지(비중)</th><th class="num">전가</th><th>시차</th><th>국내 경쟁·투입 품목</th></tr>'
+        for r in items: b += f'<tr><td><b>{E(r["import"])}</b></td><td class="mini">{E(r["group"])}</td><td>{" ".join(olv_chip(o) for o in r["origins"][:6])}</td><td class="num">{r.get("pt")}</td><td class="mini">{E(r.get("lag", ""))}</td><td class="mini">{E(r["dom_pat"].replace("|", " · "))}</td></tr>'
+        b += '</table></div>'
+        b += '<h2>갈래별 수입 요건(요약)</h2><ul class="mini">' + ''.join(f'<li><b>{E(k)}</b> — {E(v)}</li>' for k, v in {'수산': '수산물 수입신고(식약처 수입식품정보마루) · 정밀검사 대상 여부 · 원산지 표시 · 일부 어종은 수입 금지·조정관세(냉동 오징어·명태 등은 품목번호별 확인)', '축산': '수입위생평가를 통과한 나라·작업장만 가능(검역본부 지정) · 검역 + 식약처 수입신고 · 자유무역협정 관세율은 나라·연도별 다름', '농산': '식물검역(수입 금지 식물·소독) + 식약처 수입신고 · 잔류농약 검사 · 계절관세·저율관세할당 품목 확인'}.items()) + '</ul><p class="mini">품목번호별 관세율·조정관세·할당은 관세법령정보포털에서, 수입 가능 작업장은 수입식품정보마루에서 확인합니다. 박씨팜은 요건을 안내할 뿐 대행하지 않습니다.</p>'
+        # 수요 예약 양식(결제 없음, 확약 아님)
+        opts = [r['import'] for r in items if r.get('open')] or [r['import'] for r in hot[:10]] or [r['import'] for r in items[:20]]
+        b += '<h2 id="demand">수입 공동 수요 예약 — 돈도 물건도 오가지 않는 「필요량 적기」</h2><p>우리 업체가 다음 달 들여왔으면 하는 품목과 물량을 적습니다. 같은 품목 수요가 모이면 등록 수입·유통업체에 모인 물량을 알려 견적을 받게 하고, 그 결과(실제 수입 단가가 갭 신호 때 예상과 얼마나 맞았나)를 공개합니다. 박씨팜은 돈·물건·계약에 끼지 않습니다.</p>'
+        b += G['form']('demand', [('row', [('sel', '품목', '수입 품목', True, opts + ['기타(직접 적기)']), ('text', '원산지희망', '희망 원산지(선택)', False, '예: 페루·칠레')]), ('row', [('text', '물량', '필요 물량(톤 또는 상자)', True, '예: 10톤'), ('text', '시기', '희망 시기', True, '예: 12월 초')]), ('row', [('sel', '업종', '업종', True, ['급식·식자재 유통', '수산물 가공·냉동·유통', '횟집·수산 외식 체인', '외식 프랜차이즈·대형마트·온라인몰', '육가공·정육 유통', '도매시장 중도매인·산지 유통인', '기타']), ('text', '상호', '상호', True, '')]), ('row', [('tel', '연락처', '연락처', True), ('text', '전자우편', '전자우편(선택)', False, '')]), ('area', '메모', '규격·등급·포장 등 조건(선택)', False, '')], '수요 예약 보내기', '/source/thanks/')
+        b += '<h2>같이 보기</h2><p class="links"><a href="/gap/">갭 기회</a> · <a href="/world/#global">원산지 현지 시세 표</a> · <a href="/world/#imports">수입 품목 원산지 지도</a> · <a href="/opps/">수급 기회</a> · <a href="/pro/">업체 등록</a></p>'
+        ld = {'@context': 'https://schema.org', '@type': 'WebPage', 'name': '박씨팜 원산지 거래 정보', 'url': BASE + '/source/', 'dateModified': TODAY, 'description': '국내 공급이 부족한 농축수산물마다 수입 원산지 후보·오늘 원산지 상태·현지 시세·관세청 수입 단가·수입 요건을 정리하고 수입 공동 수요를 모읍니다.'}
+        write('/source/', shell('/source/', f'원산지 거래 정보 — 국내가 부족할 때 어디서 들여오나 (신호 {len(hot)}품목) | 박씨팜', '동해안 오징어 어획 감소 → 페루·칠레처럼, 부족한 품목마다 수입 원산지 후보·오늘 상태·현지 시세·수입 단가·요건을 모으고 수입 공동 수요를 예약받습니다. 박씨팜은 거래에 끼지 않습니다.', b, jsonld=ld, og='/og/source.png'), '0.8')
+        write('/source/thanks/', shell('/source/thanks/', '수요 예약이 접수되었습니다 | 박씨팜', '수요 예약 접수', '<h1 class="title">수요 예약이 접수되었습니다</h1><p class="lead">같은 품목 수요가 모이면 등록 수입·유통업체의 견적과 함께 연락드립니다. 박씨팜은 거래의 당사자가 아니며 돈·물건은 업체와 직접 주고받습니다. <a href="/source/">원산지 거래 정보로</a></p>', noindex=True))
     def world_home():
         if not WEV: return ''
         b = f'<h2>세계 요인 — 지금 값에 작용하는 것 <span class="mini">{WORLD.get("n_rules", len(WEV))}개 요인 감시 · 활성 {len(WACT)}</span></h2>'
@@ -653,6 +695,9 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
                 org = ' · '.join(f'<span class="org {("hi" if OLV.get(re.sub(r"\(.*?\)", "", c).strip()) == 2 else "mid" if OLV.get(re.sub(r"\(.*?\)", "", c).strip()) == 1 else "")}">{E(c)} {int(sh * 100)}%</span>' for c, sh in x.get('origins', []))
                 b += f'<tr><td><b>{E(x["import"])}</b>' + (f'<div class="mini">{E(x.get("note", ""))}</div>' if x.get('note') else '') + f'</td><td class="mini">{E(x["role"])}' + (' · 수출' if x.get('export') else '') + f'<br>전가 {x.get("pt")} · 시차 {E(x.get("lag", ""))}</td><td>{org}</td><td class="num">{x.get("hhi")}</td></tr>'
             b += '</table><p class="mini">집중도는 원산지 비중 제곱의 합(1에 가까울수록 한 나라 의존). <a href="/world/#imports">수입 품목 원산지 지도 →</a></p>'
+        srcs = SRC_BY.get((s, it['item'])) or []
+        if srcs:
+            b += '<h2>국내가 부족하면 — 수입으로 메우기</h2><p class="mini">이 품목에 부족 신호가 켜져 있어 수입 원산지 후보와 오늘 원산지 상태, 현지 시세, 수입 단가를 함께 둡니다. 수요가 모이면 등록 수입·유통업체가 견적을 냅니다(박씨팜은 거래에 끼지 않음).</p>' + ''.join(src_block(r, compact=True) for r in srcs[:2]) + '<p class="mini"><a href="/source/">원산지 거래 정보 전체 →</a></p>'
         if it['where']:
             b += f'<h2>어디서 싸게 거래되나</h2><table class="t"><tr><th>{"조합" if s == "수산" else "도매시장"}</th><th class="num">㎏당</th><th class="num">평균보다</th></tr>' + ''.join(f'<tr><td>{E(str(c[0]).replace("수산업협동조합", "수협"))}</td><td class="num">{c[1]:,}원</td><td class="num ok">−{c[2]}%</td></tr>' for c in it['where'][:5]) + f'</table><p class="mini">{E(it["where_src"])} · 규격·선도가 섞인 평균이니 매입 전 규격을 맞춰 보세요.</p>'
         subs = [(x, slug('수산', x)) for x in it['subs']]
@@ -767,10 +812,10 @@ var h=decodeURIComponent(location.hash.slice(1));if(['축산','수산','농산']
         write('/method/', shell('/method/', '박씨팜 예측 기법 — 거미집·전가·아밍턴·엘니뇨·브라이어 점수를 우리 자료에 맞게 | 박씨팜', '국내 미시 신호, 원산지 노출, 세계 요인, 수요 달력을 갈래 상한 안에서 더하고 실제 값으로 채점하는 박씨팜의 예측 틀과 근거 문헌.', b, og='/og/method.png'), '0.7')
     try:
         json.dump({'at': TODAY, 'counts': counts, 'alerts': len(AL), 'items': [{'url': it['url'], 'sector': it['sector'], 'item': it['item'], 'dir': it['dir'], 'w': it['w'], 'price': it['price'], 'unit': it['unit'], 'horizon': it['horizon'], 'why': (it['why'] or [''])[0], 'strength': it['strength'], 'hist': [len(it['hist']), sum(1 for h in it['hist'] if h[3])]} for it in items],
-                   'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('chg_l')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}, 'rate': {s: rate_of(s) for s in ('수산', '농산')}, 'world': {'n': WORLD.get('n_rules') or len(WEV), 'active': len(WACT), 'alarm': sum(1 for e in WACT if e.get('level') == 2)}, 'gap': {'n': len(GOK), 'hot': [[x['name'], x['state'], x['dev']] for x in GHOT[:3]]}},
+                   'index': {k: [v['metrics']['last'], v['metrics']['regime'], v['metrics'].get('chg_l')] for k, v in idx_list if v.get('metrics') and v['metrics'].get('n')}, 'rate': {s: rate_of(s) for s in ('수산', '농산')}, 'world': {'n': WORLD.get('n_rules') or len(WEV), 'active': len(WACT), 'alarm': sum(1 for e in WACT if e.get('level') == 2)}, 'gap': {'n': len(GOK), 'hot': [[x['name'], x['state'], x['dev']] for x in GHOT[:3]]}, 'source': {'n': len(SRC.get('items') or []), 'hot': [[r['import'], [sg['kind'] for sg in r['signals']][:2], [o['ko'] for o in r['origins'][:3]]] for r in (SRC.get('items') or []) if r['signals']][:4]}},
                   open(os.path.join(ROOT, 'site', 'data', 'cards.json'), 'w', encoding='utf-8'), ensure_ascii=False)
     except Exception as e: print('cards.json 실패', e)
     home(); list_page()
     for it in items: item_page(it)
-    alerts_page(); track_page(); world_page(); method_page(); index_page(); gap_page()
+    alerts_page(); track_page(); world_page(); method_page(); index_page(); gap_page(); source_page()
     return {'items': len(items), 'up': counts['오름'], 'dn': counts['내림'], 'alerts': len(AL), 'pindex': bool(PX.get('sectors'))}
