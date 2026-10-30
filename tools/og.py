@@ -103,7 +103,8 @@ def itxt(k):
     return f'{k} {v[0]:.1f} {v[1]}' + (f'({v[2]:+}%/20일)' if v and v[2] is not None else '') if v else None
 n = 0
 # 처음
-card(os.path.join(OUT, 'home.png'), BR.SLOGAN, [(f'{today} 아침 예보 — 품목 {len(CARDS.get("items") or [])}개 가운데 오름 {cnt.get("오름", 0)} · 내림 {cnt.get("내림", 0)} · 보합 {cnt.get("보합", 0)}', WHITE), ('한우·돼지 경락가 · 수협 위판가 · 공영도매시장 값 · 세계 요인 · 물가 지수', None), ('근거와 적중 기록까지 매일 아침 공개 — 사고팔지 않는 예보', None)], kicker='오늘의 농축수산물 가격 예보'); n += 1
+gp0 = CARDS.get('gap') or {}
+card(os.path.join(OUT, 'home.png'), BR.PITCH, [(' · '.join(f'{h[0].split(" ↔ ")[0]} {h[2]:+}% {h[1]}' for h in (gp0.get('hot') or [])[:3]) or f'{today} 오늘 켜진 갭 없음 — 짝 {gp0.get("n", 0)}개 감시', WHITE), ('원산지 현지 시세 × 환율 ↔ 국산 경락가·위판가·도매가 — 평소 띠를 벗어난 순간을 매일 아침', None), ('급식·식자재 유통 · 수입육·수산 유통 · 외식 체인 구매의 아침 한 장 — 되돌림 채점 공개', None)], kicker=BR.PRODUCT + ' · ' + BR.SYSTEM); n += 1
 # 물가 지수
 card(os.path.join(OUT, 'index.png'), '농축수산물 물가 지수', [(' · '.join(x for x in (itxt('종합'), itxt('축산')) if x) or '갈래·종합·원가 압력 지수', WHITE), (' · '.join(x for x in (itxt('수산'), itxt('농산')) if x) or '', None), ('5일선·20일선·기울기·±2σ 띠·교차로 경향을 계량', None)], kicker='주식 차트처럼 읽는 경향 분석', big=(f'{idx["종합"][0]:.1f}' if idx.get('종합') else None), big_sub=(('종합 · ' + idx['종합'][1]) if idx.get('종합') else None)); n += 1
 # 품목별

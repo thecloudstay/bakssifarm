@@ -235,3 +235,8 @@ svg.chart.stock{max-width:none;background:var(--paper);border:1px solid var(--li
 .card.px .gauge{position:relative;margin-top:12px}
 dl.kv.tm dd.up{color:var(--brick)} dl.kv.tm dd.dn{color:#2f5f8a}
 .card.src{margin:10px 0} .card.src p{margin:6px 0 0}
+/* 갭 판(2026-10-30 핵심 전환) */
+.card.px.gapc{padding-bottom:14px} .card.px.gapc .gs{margin:8px 0 0} .card.px.gapc .act{margin-top:6px;color:var(--ink)} .card.px.gapc.stale{opacity:.7}
+.card.calc .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:8px 0} .card.calc label{display:block;font-size:13px;color:var(--mute)} .card.calc select,.card.calc input{width:100%;height:36px;font:inherit;padding:0 8px;border:1px solid var(--line);border-radius:8px;margin-top:4px}
+.card.calc .big{font-size:30px;font-weight:780;margin:8px 0 2px}
+@media (max-width:640px){.card.calc .row{grid-template-columns:1fr}}

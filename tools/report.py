@@ -23,6 +23,10 @@ al = [a for a in fc.get('alerts', []) if a.get('level') == '경보']
 if al: lines.append('🚨 시장 경보 ' + str(len(al)) + '건: ' + ' · '.join(a.get('title', '') for a in al[:3]))
 dec = [d for d in fc.get('decisions', []) if '관망' not in d.get('act', '')]
 if dec: lines.append('판단: ' + ' · '.join(f'{d.get("item", "")} {d.get("act", "")}' for d in dec[:3]) + ' — https://thecloudstay.github.io/bakssifarm/signal/')
+gp = jload(os.path.join(DATA, 'gap.json'), {})
+if gp.get('pairs'):
+    hot = [p for p in gp['pairs'] if p.get('ok') and not p.get('stale') and p.get('state') != '평소 범위']
+    lines.append('갭 신호: ' + (' · '.join(f'{p["name"].split(" ↔ ")[0]}↔{p["name"].split(" ↔ ")[1]} {p["dev"]:+}% {p["state"]}' for p in hot[:4]) if hot else f'오늘 켜진 갭 없음(짝 {gp.get("n_ok", 0)}개)') + ' — https://thecloudstay.github.io/bakssifarm/gap/')
 px = jload(os.path.join(DATA, 'pindex.json'), {})
 if px.get('sectors'):
     parts = []
