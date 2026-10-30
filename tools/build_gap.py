@@ -15,7 +15,7 @@ GAP_DIR = os.path.join(PRIVATE, 'gap'); os.makedirs(GAP_DIR, exist_ok=True)
 LB = 0.45359237   # 1파운드 = 0.4536㎏ → 달러/100파운드 ÷ 45.359 = 달러/㎏
 
 # ── 환율(원/달러는 거시 자료, 나머지는 미 연준 일별 → 원 환산) ─────────
-FXC_P = os.path.join(GAP_DIR, 'fx.json'); FXC = jload(FXC_P, {})
+FXC_P = os.path.join(GAP_DIR, 'fx.json'); FXC = jload(FXC_P, {}); FX_ERR = []
 def fred_daily(sid):
     try:
         b = get('https://fred.stlouisfed.org/graph/fredgraph.csv', {'id': sid}, timeout=30, retry=1, headers={'User-Agent': 'bakssifarm-gap/1.0'}).decode('utf-8', 'replace')
@@ -27,6 +27,7 @@ def fred_daily(sid):
         if out: FXC[sid] = out
         return out
     except Exception as e:
+        FX_ERR.append(f'{sid} {type(e).__name__} {str(e)[:80]}')
         if env('GAP_FX_SEED') and sid not in FXC:   # 사무실 컴퓨터 시험용 씨앗(실행기에서는 쓰이지 않음)
             seed = {'DEXUSEU': 1.08, 'DEXNOUS': 10.9, 'DEXBZUS': 5.3, 'DEXUSAL': 0.66}
             return {'2020-01-01': seed[sid]} if sid in seed else {}
@@ -197,8 +198,9 @@ for f in sorted(glob.glob(os.path.join(GAP_DIR, '2*.json'))):
 score = {'n': len(SC), 'closed': sum(1 for x in SC if x['closed']), 'rate': round(sum(1 for x in SC if x['closed']) / len(SC) * 100) if SC else None, 'rows': SC[-40:], 'n_days': len(glob.glob(os.path.join(GAP_DIR, '2*.json')))}
 jsave(os.path.join(GAP_DIR, 'score.json'), score)
 out = {'at': stamp(), 'date': TS, 'pairs': pairs, 'n_ok': len(ok), 'n_gap': sum(1 for p in ok if p['state'] != '평소 범위'), 'score': score,
-       'fx': {'usdkrw': USDKRW.get(max(USDKRW)) if USDKRW else None, 'eur_usd': EUR.get(max(EUR)) if EUR else None, 'nok_usd': NOK.get(max(NOK)) if NOK else None, 'brl_usd': BRL.get(max(BRL)) if BRL else None},
+       'fx_err': FX_ERR, 'fx': {'usdkrw': USDKRW.get(max(USDKRW)) if USDKRW else None, 'eur_usd': EUR.get(max(EUR)) if EUR else None, 'nok_usd': NOK.get(max(NOK)) if NOK else None, 'brl_usd': BRL.get(max(BRL)) if BRL else None},
        'method': '비율 = 국산 원/㎏ ÷ (현지 값 × 환율). 최근 1년 비율의 백분위 ≥85 이고 중앙값보다 5% 넘게 높으면 「국산 상대 고평가」, ≤15 이고 5% 넘게 낮으면 「국산 상대 저평가」. 기록 60일 넘고 |z|≥1.5 면 강한 갭. 4주 뒤 |z| 가 절반 아래로 줄면 「되돌림」으로 채점.'}
 jsave(os.path.join(DATA, 'gap.json'), out)
+os.makedirs(os.path.join(HERE, '_debug'), exist_ok=True); jsave(os.path.join(HERE, '_debug', 'gap_debug.json'), {'at': out['at'], 'fx_err': FX_ERR, 'fx': out['fx'], 'pairs': [(p['id'], p.get('state') or p.get('why'), p.get('n_base')) for p in pairs]})
 status('gap', len(ok) >= 2, f'짝 {len(ok)}/{len(pairs)} 계산 · 갭 {out["n_gap"]} · 되돌림 채점 {score["n"]}건' + (f'({score["rate"]}%)' if score['rate'] is not None else ''))
 print('갭 기회', [(p['id'], p.get('state'), p.get('pct'), p.get('n_base')) if p.get('ok') else (p['id'], p.get('why')) for p in pairs])
