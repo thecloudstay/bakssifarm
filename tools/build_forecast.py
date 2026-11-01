@@ -310,8 +310,18 @@ def actual(did, after_date, n_days):
         seq = [x for x in feed if x[0] > after_date]
         return seq[n_days - 1][1] if len(seq) >= n_days else None
     s = han if did == 'hanwoo' else pig if did == 'pig' else []
-    seq = [x for x in s if x[0] and x[0] > after_date and x[2] >= 1]
+    # 두수가 적은 날(월요일 한우 12~18두 등)은 값이 크게 튀므로 채점에서 뺌(경보와 같은 기준)
+    seq = [x for x in s if x[0] and x[0] > after_date and x[2] >= MINH]
     return seq[n_days - 1][1] if len(seq) >= n_days else None
+def fair_base(did, it):
+    # 기록된 기준값이 두수 적은 날 값이면, 그날까지 두수가 충분했던 마지막 날 값으로 바꿔 채점
+    if did == 'feed': return it['base'], it['base_date']
+    s = han if did == 'hanwoo' else pig if did == 'pig' else []
+    day = next((x for x in s if x[0] == it['base_date']), None)
+    if day is None or day[2] >= MINH: return it['base'], it['base_date']
+    ok = [x for x in s if x[0] and x[0] <= it['base_date'] and x[2] >= MINH]
+    return (ok[-1][1], ok[-1][0]) if ok else (None, None)
+MINH = PR['alert']['price_min_heads']
 SC = os.path.join(FD, 'score.json'); score = jload(SC, {'rows': []}); done = {(r['made'], r['id']) for r in score['rows']}
 for f in sorted(os.listdir(FD)):
     if not f[:4].isdigit() or not f.endswith('.json'): continue
@@ -319,9 +329,11 @@ for f in sorted(os.listdir(FD)):
     for it in lg.get('items', []):
         if (f[:10], it['id']) in done or not it.get('base') or not it.get('base_date'): continue
         H = PR['horizon']['feed' if it['id'] == 'feed' else 'livestock']
-        a = actual(it['id'], it['base_date'], H)
+        b, bd = fair_base(it['id'], it)
+        if not b: continue
+        a = actual(it['id'], it['base_date'], H)   # 기한은 원래 기록한 날부터 셈
         if a is None: continue
-        chg = (a / it['base'] - 1) * 100; th = 3.0 if it['id'] == 'feed' else 2.0
+        chg = (a / b - 1) * 100; th = 3.0 if it['id'] == 'feed' else 2.0
         real = 1 if chg >= th else -1 if chg <= -th else 0
         pred = 1 if it['score'] >= 0.8 else -1 if it['score'] <= -0.8 else 0
         p_up = 1 / (1 + math.exp(-it['score'] * 1.2))
