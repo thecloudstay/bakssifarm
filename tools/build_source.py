@@ -69,8 +69,9 @@ for it in IM.get('items') or []:
             prices.append({'id': sid, 'name': g['name'], 'last': g['last'], 'unit': g['unit'], 'date': g['date'], 'w4': (g.get('chg') or {}).get('w4'), 'y1': (g.get('chg') or {}).get('y1')})
     tr = next((x for x in TR.get('items') or [] if re.sub(r'\(.*?\)', '', x['name']).strip()[:2] == re.sub(r'\(.*?\)', '', it['name']).strip()[:2]), None)
     unit_price = None
-    if tr and tr.get('rows'):
-        r = tr['rows'][-1]; unit_price = {'usd_kg': r.get('usd_kg'), 'krw_kg': round(r['usd_kg'] * USDKRW) if r.get('usd_kg') and USDKRW else None, 'ym': r.get('ym'), 'name': tr['name']}
+    trs = [r for r in (tr or {}).get('rows') or [] if re.match(r'\d{4}-\d{2}$', str(r.get('ym')))]   # 기간 「총계」 줄은 달 값이 아님
+    if trs:
+        r = trs[-1]; unit_price = {'usd_kg': r.get('usd_kg'), 'krw_kg': round(r['usd_kg'] * USDKRW) if r.get('usd_kg') and USDKRW else None, 'ym': r.get('ym'), 'name': tr['name']}
     rows.append({'import': it['name'], 'group': it.get('group', ''), 'sector': t['sector'], 'dom': dom_name(t['sector'], t['item']), 'dom_pat': t['item'], 'pt': it.get('pt'), 'lag': it.get('lag', ''), 'note': it.get('note') or '', 'export': bool(it.get('export')),
                  'signals': [{'item': nm, 'kind': k, 'why': why} for nm, k, why in signals], 'score': round(score, 1), 'origins': origins, 'prices': prices, 'unit_price': unit_price, 'req': REQ.get(t['sector'], ''),
                  'open': score >= 2 and not it.get('export')})   # 신호가 2점 넘으면 수요 모집을 연다(수출 품목은 제외)

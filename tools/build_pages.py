@@ -20,6 +20,9 @@ def J(p, default=None):
     return json.load(open(fp, encoding='utf-8'))
 LS = J('livestock.json'); AQ = J('aqua.json'); CR = J('crops.json'); PL = J('places.json'); MK = J('markets.json')
 PRICE = J('price/latest.json', {}); WH = J('price/wholesale.json', {'items': []}); ORIG = J('origin.json', {'units': {}}); TRADE = J('trade.json', {'items': []}); SIG = J('signals.json', {'items': []}); GONGU = J('gongu.json', {'items': []}); STATUS = J('status.json', {}); WPN = J('wipan.json', {}); SSTK = J('seastock.json', {}); RISK = J('risk.json', {}); BUYS = J('buysignal.json', {}); OPPS = J('opps.json', {}); CROPS = J('cropsignal.json', {}); FC = J('forecast.json', {})
+def trade_last(it):   # 관세청 수입 단가의 가장 최근 달(기간 「총계」 줄은 달 값이 아니므로 뺌)
+    rs = [r for r in it.get('rows') or [] if re.match(r'\d{4}-\d{2}$', str(r.get('ym')))]
+    return rs[-1] if rs else None
 YEARS = LS['years']
 E = html.escape
 def man(n):
@@ -210,8 +213,8 @@ def price_page():
     if tr:
         b += '<p class="mini">관세청 수출입실적(월) · 달러/㎏ · 국내 경락가·구입가와 나란히 보는 용도</p><table class="t"><tr><th>품목(관세 부호)</th><th class="num">최근 달 수입 단가</th><th class="num">수입량(톤)</th><th>비교 대상</th></tr>'
         for it in tr:
-            r = it['rows'][-1] if it['rows'] else None
-            wt = f'{r["wgt_t"]:,}' if r else '–'; up = f'{r["usd_kg"]} 달러' if r else '–'
+            r = trade_last(it)
+            wt = f'{r["wgt_t"]:,}' if r else '–'; up = f'{r["usd_kg"]} 달러 <span class="mini">{E(r["ym"])}</span>' if r else '–'
             b += f'<tr><td>{E(it["name"])} <span class="mini">{E(it["hs"])}</span></td><td class="num">{up}</td><td class="num">{wt}</td><td>{E(it["cmp"])}</td></tr>'
         b += '</table>'
     else:
@@ -308,7 +311,7 @@ def sheet_page():
     if WH.get('items'):
         b += '<h2>공영도매시장 상위 품목</h2><table class="t"><tr><th>품목</th><th class="num">원/㎏</th><th class="num">거래 금액</th></tr>' + ''.join(f'<tr><td>{E(it["item"])}</td><td class="num">{format(it["won_kg"], ",") if it["won_kg"] else "–"}</td><td class="num">{man(it["amt"])}원</td></tr>' for it in WH['items'][:15]) + '</table>'
     b += '<h2>수입 단가(관세청, 달러/㎏)</h2>'
-    if tr: b += '<table class="t"><tr><th>품목</th><th class="num">최근 달 단가</th><th class="num">수입량(톤)</th><th>비교</th></tr>' + ''.join(f'<tr><td>{E(it["name"])}</td><td class="num">{(it["rows"][-1]["usd_kg"] if it["rows"] else "–")}</td><td class="num">{(format(it["rows"][-1]["wgt_t"], ",") if it["rows"] else "–")}</td><td>{E(it["cmp"])}</td></tr>' for it in tr) + '</table>'
+    if tr: b += '<table class="t"><tr><th>품목</th><th class="num">최근 달 단가</th><th class="num">수입량(톤)</th><th>비교</th></tr>' + ''.join(f'<tr><td>{E(it["name"])}</td><td class="num">{(str(trade_last(it)["usd_kg"]) + " <span class=mini>" + E(trade_last(it)["ym"]) + "</span>" if trade_last(it) else "–")}</td><td class="num">{(format(trade_last(it)["wgt_t"], ",") if trade_last(it) else "–")}</td><td>{E(it["cmp"])}</td></tr>' for it in tr) + '</table>'
     else: b += '<p>쇠고기·돼지고기·옥수수·대두박·어분·전복·김·넙치·새우. 열쇠가 붙으면 매달 3일 갱신.</p>'
     km = EXTRA['kamis'].get('rows') or []
     b += '<h2>소매·도매 가격(축산·수산, 농산물유통정보)</h2>'
