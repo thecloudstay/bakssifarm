@@ -9,7 +9,15 @@ def _load():
         try: _W = json.load(open(p, encoding='utf-8'))
         except Exception: _W = {'events': [], 'caps': {}}
     return _W
-def world_adjust(sector, item, cap=None):
+def lag_min_days(e, a):
+    # 영향이 나타나기까지 가장 짧은 시차(일). 영향 문장의 「(시차 3~6개월)」이 있으면 그것, 없으면 요인의 시차(괄호 앞).
+    m = re.search(r'시차\s*([0-9~]+\s*(?:개월|주|일))', a.get('why') or '')
+    t = m.group(1) if m else re.sub(r'\(.*\)', '', e.get('lag') or '')
+    m = re.match(r'\s*(\d+)\s*(?:~\s*\d+)?\s*(개월|주|일)', t)
+    if not m: return None   # 「10월 말~12월 초」처럼 달력으로 적힌 것은 거르지 않음
+    return int(m.group(1)) * {'개월': 30, '주': 7, '일': 1}[m.group(2)]
+def world_adjust(sector, item, cap=None, horizon_days=None):
+    # horizon_days: 신호의 예측 기간. 가장 짧은 시차가 이보다 긴 요인(예: 비료 원가 3~6개월)은 그 신호에 더하지 않음
     W = _load(); caps = W.get('caps') or {}
     cap = cap if cap is not None else caps.get(sector, 0.5)
     rows = []
@@ -23,6 +31,9 @@ def world_adjust(sector, item, cap=None):
             if not ok: continue
             w = a.get('w') or 0; sgn = 1 if a.get('dir') == '오름 쪽' else -1 if a.get('dir') == '내림 쪽' else 0
             if not sgn or not w: continue
+            if horizon_days is not None:
+                lm = lag_min_days(e, a)
+                if lm is not None and lm > horizon_days: continue   # 같은 요인의 다른(시차 짧은) 영향은 계속 봄
             rows.append((sgn * w, e['id'], f'세계 요인: {e["name"]}' + ('(경보)' if e['level'] == 2 else '') + ' — ' + (a.get('why') or e.get('why') or '')[:60] + f' [{"+" if sgn > 0 else "−"}{w}]'))
             break
     rows.sort(key=lambda r: -abs(r[0]))
