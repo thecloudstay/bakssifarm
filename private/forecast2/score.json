@@ -1,1 +1,1 @@
-{"rows":[{"made":"2026-10-20","id":"pig","pred":0,"real":-1,"chg":-11.7,"hit":false,"base_hit":false,"brier":0.354}]}
+{"rows":[{"made":"2026-10-20","id":"pig","pred":0,"real":-1,"chg":-11.7,"hit":false,"base_hit":false,"brier":0.354},{"made":"2026-10-21","id":"pig","pred":0,"real":-1,"chg":-6.4,"hit":false,"base_hit":false,"brier":0.176}]}
