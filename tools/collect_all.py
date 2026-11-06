@@ -54,6 +54,9 @@ for _s in SPECS:
     if _m: ORGCODE.setdefault(_s['title'].split('_')[0], _m.group(1))
 reg = jload(os.path.join(DATA, 'apis.json'), {'items': {}})
 day = (now().date() - datetime.timedelta(days=1)).strftime('%Y%m%d')
+day30 = (now().date() - datetime.timedelta(days=30)).strftime('%Y%m%d')
+RSTART = re.compile(r'^(start|Start|START|st|St|ST|bgn|Bgn|BGN|begin|Begin|from|From|fr|Fr|srch_?[Ss]t|search_?[Ss]tart)')
+REND = re.compile(r'^(end|End|END|ed|Ed|ED|to|To|srch_?[Ee]n?d|search_?[Ee]nd)')
 ok = fail = skip = 0
 import time as _t
 T0 = _t.time(); BUDGET = int(env('API_BUDGET_SEC', '1500'))   # 하루 25분 안에서 돌고, 남은 것은 다음 날 앞에서부터 이어 감
@@ -99,6 +102,7 @@ for s in order:
     if '_rows' not in s and (not spec or not spec.get('ops')):
         ent.update({'state': '명세 없음', 'urls': (s.get('plain') or {}).get('urls', [])[:3]}); skip += 1; continue
     if '_rows' not in s and not KEY: ent.update({'state': '열쇠 대기'}); skip += 1; continue
+    rng = {}
     try:
       if '_rows' in s: rows = s['_rows']; meta = None
       else:
@@ -119,12 +123,21 @@ for s in order:
             n = p.get('name') or ''
             if p.get('req') and n not in params and DATEP.search(n): params[n] = day
             elif p.get('req') and n not in params and p.get('sample') and p['sample'] not in ('옵션', '필수'): params[n] = p['sample']
+        # 선택 항목인 기간 짝(시작·끝 날짜, 견본이 8자리 날짜)을 비워 두어 지난번 빈 응답이었던 창구만 최근 30일로 채움(예: 축평원 가금산물 — 30일로 물으면 정상). 30일로 받아진 창구는 range30 표시로 다음에도 같은 범위(정상↔빈 응답 오락가락 막음), 원래 정상인 창구는 그대로(받는 양·시간이 늘지 않게)
+        rng = {}
+        for p in (op.get('params', []) if ent.get('state') == '빈 응답' or ent.get('range30') else []):
+            n = p.get('name') or ''
+            if n in params or p.get('req') or not DATEP.search(n) or not re.fullmatch(r'\d{8}', str(p.get('sample') or '')): continue
+            if RSTART.search(n): rng.setdefault('s', n)
+            elif REND.search(n): rng.setdefault('e', n)
+        if len(rng) == 2: params[rng['s']] = day30; params[rng['e']] = day
         rows = []; meta = None
         for page in range(1, MAX_PAGES + 1):
             params['pageNo'] = page
             got, meta = items_of(get(base, params, timeout=20, retry=1))
             rows += got
             if len(got) < 1000: break
+      if len(rng) == 2: ent['range30'] = bool(rows)
       fields = sorted({k for r in rows[:200] for k in r.keys()})
       afield = next((f for f in fields if ADDR.search(f)), None)
       sdf = next((f for f in fields if re.search(r'(city|ctpv|ctprvn|sido|SIDO|CTPV)', f) and not re.search(r'(cd|Cd|CD|code)$', f)), None)
