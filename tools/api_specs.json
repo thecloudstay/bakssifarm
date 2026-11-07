@@ -21,7 +21,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/exam_export_api.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3033757",
@@ -45,7 +45,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/momqm_api.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3034938",
@@ -67,7 +67,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3037263",
@@ -94,7 +94,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141226000000000174_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3055523",
@@ -121,7 +121,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151204000000000316_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3055528",
@@ -370,7 +370,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15000577",
@@ -714,7 +714,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15001668",
@@ -738,8 +738,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/ice_io.do"
    ]
   },
-  "fetched": "2026-10-24",
-  "err": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15008409",
@@ -766,7 +765,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20150827000000000225_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15009422",
@@ -790,7 +789,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/smp_ra_api.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15028139",
@@ -897,7 +896,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15028143",
@@ -1003,7 +1002,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15029181",
@@ -1030,7 +1029,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151127000000000313_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15029182",
@@ -1057,7 +1056,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151128000000000315_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15033708",
@@ -1073,10 +1072,8 @@
    "urls": [],
    "names": []
   },
-  "external": "https://marineweather.nmpnt.go.kr/serviceReq/serviceOpenApiIntro.do",
-  "link_pk": "15033708",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15038992",
@@ -1098,7 +1095,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15043939",
@@ -1263,7 +1260,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15050553",
@@ -1290,7 +1287,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000080_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15050565",
@@ -1317,7 +1314,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000068_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15052495",
@@ -1344,7 +1341,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000062_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056511",
@@ -1460,7 +1457,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056545",
@@ -1479,7 +1476,7 @@
   "external": "http://www.khoa.go.kr/oceanmap/main.do",
   "link_pk": "15056545",
   "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056550",
@@ -1650,7 +1647,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056556",
@@ -1777,7 +1774,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056599",
@@ -1799,7 +1796,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056608",
@@ -1818,7 +1815,7 @@
   "external": "http://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=um000",
   "link_pk": "15056608",
   "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056666",
@@ -1836,8 +1833,11 @@
   },
   "external": "http://www.khoa.go.kr/oceanmap/main.do",
   "link_pk": "15056666",
-  "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056719",
@@ -1856,7 +1856,7 @@
   "external": "http://www.khoa.go.kr/oceanmap/main.do",
   "link_pk": "15056719",
   "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056723",
@@ -1883,7 +1883,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000247_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056724",
@@ -1986,7 +1986,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056733",
@@ -2104,7 +2104,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056813",
@@ -2126,7 +2126,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056856",
@@ -2289,7 +2289,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056874",
@@ -2396,7 +2396,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056898",
@@ -2530,7 +2530,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056992",
@@ -2557,7 +2557,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151214000000000337_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057101",
@@ -2715,7 +2715,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057221",
@@ -2739,7 +2739,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/plant_internal.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057367",
@@ -2755,15 +2755,8 @@
    "urls": [],
    "names": []
   },
-  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=002",
-  "link_pk": "15057367",
-  "ext_hint": {
-   "grids": [],
-   "apis": [
-    "http://www.nfqs.go.kr/hpmg/front/api/organic_api.do"
-   ]
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057572",
@@ -2879,7 +2872,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057607",
@@ -3009,7 +3002,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057689",
@@ -3194,7 +3187,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057698",
@@ -3221,7 +3214,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20160127000000000341_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057699",
@@ -3388,7 +3381,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057808",
@@ -3416,7 +3409,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/feedSearch.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057879",
@@ -3443,7 +3436,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161213000000000413_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057886",
@@ -3470,7 +3463,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161213000000000408_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057912",
@@ -3672,7 +3665,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057991",
@@ -3800,7 +3793,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058005",
@@ -3816,13 +3809,8 @@
    "urls": [],
    "names": []
   },
-  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20161213000000000671&filter_ty=O&getBack=G&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
-  "link_pk": "15058005",
-  "ext_hint": {
-   "grids": [],
-   "apis": []
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058007",
@@ -3953,7 +3941,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058123",
@@ -4083,7 +4071,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058183",
@@ -4107,7 +4095,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/plant_foreign.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058246",
@@ -4129,7 +4117,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058281",
@@ -4153,7 +4141,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/geocert_api.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058314",
@@ -4175,7 +4163,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058324",
@@ -4202,7 +4190,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20160127000000000343_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058568",
@@ -4229,7 +4217,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000428_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058595",
@@ -4245,18 +4233,8 @@
    "urls": [],
    "names": []
   },
-  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20151028000000000496&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
-  "link_pk": "15058595",
-  "ext_hint": {
-   "grids": [
-    "Grid_20151028000000000249_1"
-   ],
-   "apis": [
-    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20151028000000000249_1/1/5",
-    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000249_1/1/5"
-   ]
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058693",
@@ -4280,7 +4258,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/quality_api.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058724",
@@ -4302,7 +4280,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058822",
@@ -4922,7 +4900,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058871",
@@ -4944,7 +4922,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058886",
@@ -4966,7 +4944,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058923",
@@ -5150,7 +5128,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058980",
@@ -5246,7 +5224,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059077",
@@ -5344,7 +5322,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059210",
@@ -5469,7 +5447,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059251",
@@ -5605,7 +5583,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059302",
@@ -5635,7 +5613,8 @@
     "SERVICE_KEY_IS_NULL"
    ]
   },
-  "fetched": "2026-10-31"
+  "detail_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059314",
@@ -5662,7 +5641,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000423_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059357",
@@ -5684,7 +5663,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059417",
@@ -5862,7 +5841,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059444",
@@ -5997,7 +5976,8 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15059457",
@@ -6019,7 +5999,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059491",
@@ -6046,7 +6026,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000250_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059494",
@@ -6073,7 +6053,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161213000000000412_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059973",
@@ -6197,7 +6177,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15061340",
@@ -6426,7 +6406,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15061948",
@@ -6453,7 +6433,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20200713000000000605_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062666",
@@ -6480,7 +6460,7 @@
     "https://fonts.googleapis.com/css"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062667",
@@ -6507,7 +6487,7 @@
     "https://fonts.googleapis.com/css"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15063093",
@@ -6523,18 +6503,8 @@
    "urls": [],
    "names": []
   },
-  "external": "https://ecvam.neins.go.kr/api/apiWrite.do",
-  "link_pk": "15063093",
-  "ext_hint": {
-   "grids": [],
-   "apis": [
-    "https://api.vworld.kr/req/address",
-    "https://api.vworld.kr/req/data",
-    "https://api.vworld.kr/req/search",
-    "https://fonts.googleapis.com/css"
-   ]
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064109",
@@ -6561,7 +6531,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/muckBulletinBoard.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064785",
@@ -6588,7 +6558,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064786",
@@ -6615,7 +6585,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064840",
@@ -6643,7 +6613,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064844",
@@ -6671,7 +6641,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064940",
@@ -6699,7 +6669,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15068169",
@@ -6811,7 +6781,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15069189",
@@ -6833,7 +6803,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15073985",
@@ -7198,7 +7168,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074088",
@@ -7306,7 +7276,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074310",
@@ -7334,7 +7304,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074326",
@@ -7362,7 +7332,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074328",
@@ -7390,7 +7360,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075720",
@@ -7485,7 +7455,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075721",
@@ -7580,7 +7550,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075776",
@@ -7633,7 +7603,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075777",
@@ -7759,7 +7729,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075778",
@@ -7895,7 +7865,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075779",
@@ -8021,7 +7991,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075817",
@@ -8110,7 +8080,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075826",
@@ -8199,7 +8169,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075835",
@@ -8288,7 +8258,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075839",
@@ -8377,7 +8347,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075845",
@@ -8500,7 +8470,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076745",
@@ -8624,7 +8594,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076771",
@@ -8748,7 +8718,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15077051",
@@ -8872,7 +8842,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080637",
@@ -8899,7 +8869,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161206000000000387_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15086484",
@@ -8926,7 +8896,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/stkrsEnvrnJdgmn.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15096146",
@@ -9049,7 +9019,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15096171",
@@ -9100,80 +9070,8 @@
     "wholPtCntDnmvl"
    ]
   },
-  "spec": {
-   "host": "apis.data.go.kr",
-   "scheme": "https",
-   "ops": [
-    {
-     "path": "/B551172/Liver09/lvTubercholsisByType",
-     "sum": "간암 라이브러리 환자 결핵 병력 여부",
-     "params": [
-      {
-       "name": "serviceKey",
-       "req": false,
-       "desc": "인증키",
-       "sample": "인증키"
-      },
-      {
-       "name": "type",
-       "req": false,
-       "desc": "데이터 형식",
-       "sample": "xml, json"
-      },
-      {
-       "name": "pageNo",
-       "req": false,
-       "desc": "페이지 수",
-       "sample": "1"
-      },
-      {
-       "name": "numOfRows",
-       "req": false,
-       "desc": "한 페이지 결과 수",
-       "sample": "1"
-      },
-      {
-       "name": "centerNm",
-       "req": false,
-       "desc": "대상 센터 명",
-       "sample": "국립암센터"
-      },
-      {
-       "name": "fromYear",
-       "req": false,
-       "desc": "연도(시작)",
-       "sample": "2010"
-      },
-      {
-       "name": "toYear",
-       "req": false,
-       "desc": "연도(종료)",
-       "sample": "2019"
-      }
-     ],
-     "props": {
-      "resultCode": "결과코드",
-      "resultMsg": "결과메세지",
-      "pageNo": "페이지 수",
-      "numOfRows": "한 페이지 결과 수",
-      "totalCount": "데이터 총 개수",
-      "Items": "목록 리스트",
-      "centerNm": "대상 센터 이름",
-      "critYr": "기준년도",
-      "ptAge": "환자 연령",
-      "ptSexCd": "환자 성별 코드",
-      "statsTrgtNm": "통계 대상 명",
-      "ncsNmvl": "건수 분자 값",
-      "wholNcsDnmvl": "전체 건수 분자 값",
-      "ptCntNmvl": "환자 수 분자 값",
-      "wholPtCntDnmvl": "전체 환자 수 분모 값"
-     },
-     "full": "https://apis.data.go.kr/B551172/Liver09/lvTubercholsisByType"
-    }
-   ],
-   "from": "detail"
-  },
-  "fetched": "2026-10-31"
+  "detail_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15096176",
@@ -9297,7 +9195,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15096373",
@@ -9420,7 +9318,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15097317",
@@ -9542,7 +9440,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15097756",
@@ -9674,7 +9572,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15098601",
@@ -9725,80 +9623,8 @@
     "wholPtCntDnmvl"
    ]
   },
-  "spec": {
-   "host": "apis.data.go.kr",
-   "scheme": "https",
-   "ops": [
-    {
-     "path": "/B551172/Pancreatic09/pnTubercholsisByType",
-     "sum": "췌장암 라이브러리 환자 결핵 병력 여부",
-     "params": [
-      {
-       "name": "serviceKey",
-       "req": false,
-       "desc": "서비스키",
-       "sample": "인증키"
-      },
-      {
-       "name": "type",
-       "req": false,
-       "desc": "페이지 번호",
-       "sample": "xml, json"
-      },
-      {
-       "name": "pageNo",
-       "req": false,
-       "desc": "페이지 수",
-       "sample": "1"
-      },
-      {
-       "name": "numOfRows",
-       "req": false,
-       "desc": "한 페이지 결과 수",
-       "sample": "1"
-      },
-      {
-       "name": "centerNm",
-       "req": false,
-       "desc": "대상 센터 명",
-       "sample": "국립암센터"
-      },
-      {
-       "name": "fromYear",
-       "req": false,
-       "desc": "연도(시작)",
-       "sample": "2010"
-      },
-      {
-       "name": "toYear",
-       "req": false,
-       "desc": "연도(종료)",
-       "sample": "2019"
-      }
-     ],
-     "props": {
-      "resultCode": "결과코드",
-      "resultMsg": "결과메세지",
-      "pageNo": "페이지 수",
-      "numOfRows": "한 페이지 결과 수",
-      "totalCount": "데이터 총 개수",
-      "Items": "목록 리스트",
-      "centerNm": "대상 센터 이름",
-      "critYr": "기준년도",
-      "ptAge": "환자 연령",
-      "ptSexCd": "환자 성별 코드",
-      "statsTrgtNm": "통계 대상 명",
-      "ncsNmvl": "건수 분자 값",
-      "wholNcsDnmvl": "전체 건수 분자 값",
-      "ptCntNmvl": "환자 수 분자 값",
-      "wholPtCntDnmvl": "전체 환자 수 분모 값"
-     },
-     "full": "https://apis.data.go.kr/B551172/Pancreatic09/pnTubercholsisByType"
-    }
-   ],
-   "from": "detail"
-  },
-  "fetched": "2026-10-31"
+  "detail_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101698",
@@ -9825,7 +9651,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20170111000000000494_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101863",
@@ -9853,7 +9679,7 @@
     "http://www.safemap.go.kr/openapi2/lgdInfo"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101999",
@@ -9939,7 +9765,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102029",
@@ -9985,7 +9811,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102045",
@@ -10020,7 +9846,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102076",
@@ -10076,7 +9902,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102408",
@@ -10103,7 +9929,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000025_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102526",
@@ -10130,7 +9956,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151210000000000334_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102748",
@@ -10157,7 +9983,8 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000618_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15102749",
@@ -10184,7 +10011,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000619_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102819",
@@ -10211,7 +10038,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000616_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15103013",
@@ -10238,7 +10065,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000615_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15105524",
@@ -10294,7 +10121,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15105538",
@@ -10350,7 +10177,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15106233",
@@ -10429,7 +10256,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109069",
@@ -10456,7 +10283,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000650_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109070",
@@ -10483,7 +10310,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000642_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109071",
@@ -10510,7 +10337,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000641_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109072",
@@ -10537,7 +10364,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000640_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109073",
@@ -10564,7 +10391,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000638_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109074",
@@ -10591,7 +10418,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000637_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109075",
@@ -10618,7 +10445,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000636_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109076",
@@ -10645,7 +10472,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000635_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109218",
@@ -10672,7 +10499,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151128000000000315_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109239",
@@ -10699,7 +10526,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151125000000000310_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111816",
@@ -10727,7 +10554,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111984",
@@ -10781,7 +10608,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111985",
@@ -10835,7 +10662,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15114407",
@@ -10895,7 +10722,8 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15115752",
@@ -10919,7 +10747,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/radioactivityLocalReport.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15116918",
@@ -10943,7 +10771,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getFishtraceNewsData.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15118023",
@@ -10965,7 +10793,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121328",
@@ -10987,7 +10815,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15126689",
@@ -11025,7 +10853,7 @@
     "https://apihub.kma.go.kr/api/typ02/openApi/SeaMtlyInfoService/getWaveBuoyLstTbl"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15127778",
@@ -11102,7 +10930,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15127779",
@@ -11162,7 +10990,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15127780",
@@ -11244,7 +11072,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15127782",
@@ -11318,7 +11146,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15128096",
@@ -11370,7 +11198,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15129484",
@@ -11397,7 +11225,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151029000000000265_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130187",
@@ -11421,7 +11249,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/fishHstChcMdApi.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133583",
@@ -11475,7 +11303,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133584",
@@ -11517,7 +11345,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133585",
@@ -11565,7 +11393,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15139440",
@@ -11589,7 +11417,7 @@
     "https://apihub.kma.go.kr/notice.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15139442",
@@ -11613,7 +11441,7 @@
     "https://apihub.kma.go.kr/notice.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140583",
@@ -11640,7 +11468,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000653_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141806",
@@ -11716,7 +11544,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141809",
@@ -11812,7 +11640,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141810",
@@ -11922,7 +11750,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141818",
@@ -12077,7 +11905,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142145",
@@ -12104,7 +11932,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20250220000000000671_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142447",
@@ -12128,7 +11956,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getHistorySearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142448",
@@ -12152,7 +11980,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getItemCodeHistoryNoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142452",
@@ -12176,7 +12004,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getTermHistoryNoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142456",
@@ -12200,7 +12028,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getJoinCompanyDetailInfoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142459",
@@ -12224,7 +12052,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getGoodsDetailInfoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142460",
@@ -12248,7 +12076,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getProductInfoListSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142489",
@@ -12314,7 +12142,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142495",
@@ -12364,7 +12192,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142506",
@@ -12414,7 +12242,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142507",
@@ -12466,7 +12294,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142508",
@@ -12516,7 +12344,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142509",
@@ -12566,7 +12394,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142518",
@@ -12618,7 +12446,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142519",
@@ -12682,7 +12510,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15149541",
@@ -12710,7 +12538,7 @@
     "http://www.safemap.go.kr/openapi2/lgdInfo"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15150280",
@@ -12732,7 +12560,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15150647",
@@ -12754,7 +12582,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15151924",
@@ -12772,8 +12600,11 @@
   },
   "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3377",
   "link_pk": "15151924",
-  "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15153249",
@@ -12791,11 +12622,8 @@
   },
   "external": "https://www.safetydata.go.kr/disaster-data/view?dataSn=3673",
   "link_pk": "15153249",
-  "ext_hint": {
-   "grids": [],
-   "apis": []
-  },
-  "fetched": "2026-10-31"
+  "ext_err": "Remote end closed connection without response",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15153301",
@@ -12817,7 +12645,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154803",
@@ -12955,7 +12783,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154842",
@@ -13096,7 +12924,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154871",
@@ -13237,7 +13065,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154914",
@@ -13369,7 +13197,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154930",
@@ -13501,7 +13329,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154952",
@@ -13630,7 +13458,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154971",
@@ -13759,7 +13587,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154984",
@@ -13888,7 +13716,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155089",
@@ -14029,7 +13857,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155097",
@@ -14164,7 +13992,8 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15155105",
@@ -14302,7 +14131,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155112",
@@ -14440,7 +14269,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155118",
@@ -14584,7 +14413,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155121",
@@ -14725,7 +14554,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155169",
@@ -14863,7 +14692,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155272",
@@ -14992,7 +14821,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155508",
@@ -15060,7 +14889,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155516",
@@ -15130,7 +14959,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156013",
@@ -15198,7 +15027,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156015",
@@ -15248,7 +15077,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156017",
@@ -15298,7 +15127,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156057",
@@ -15378,7 +15207,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156062",
@@ -15460,7 +15289,8 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15156069",
@@ -15546,7 +15376,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156746",
@@ -15572,7 +15402,7 @@
     "https://www.nifs.go.kr/OpenAPI_xml"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156749",
@@ -15598,7 +15428,7 @@
     "https://www.nifs.go.kr/OpenAPI_xml"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15157584",
@@ -15622,7 +15452,7 @@
     "https://www.hanwooai.co.kr:7080/api/v1/inseminations"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15157585",
@@ -15646,7 +15476,7 @@
     "https://www.hanwooai.co.kr:7080/api/v1/inseminations/weekly"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160015",
@@ -15738,7 +15568,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160244",
@@ -15808,7 +15638,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160412",
@@ -15908,7 +15738,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102060",
@@ -15964,7 +15794,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059518",
@@ -16026,89 +15856,11 @@
     "ymd"
    ]
   },
+  "detail_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
   "spec": {
    "host": "apis.data.go.kr",
    "scheme": "https",
    "ops": [
-    {
-     "path": "/1360000/FmlandWthrInfoService/getDayStatistics",
-     "sum": "일통계조회",
-     "params": [
-      {
-       "name": "ServiceKey",
-       "req": true,
-       "desc": "서비스키",
-       "sample": "-"
-      },
-      {
-       "name": "pageNo",
-       "req": true,
-       "desc": "페이지 번호",
-       "sample": "1"
-      },
-      {
-       "name": "numOfRows",
-       "req": true,
-       "desc": "한 페이지 결과 수",
-       "sample": "10"
-      },
-      {
-       "name": "dataType",
-       "req": false,
-       "desc": "응답자료형식",
-       "sample": "XML"
-      },
-      {
-       "name": "ST_YMD",
-       "req": true,
-       "desc": "시작 연월일",
-       "sample": "20161201"
-      },
-      {
-       "name": "ED_YMD",
-       "req": true,
-       "desc": "종료 연월일",
-       "sample": "20161201"
-      },
-      {
-       "name": "AREA_ID",
-       "req": true,
-       "desc": "지역 아이디",
-       "sample": "4122000000"
-      },
-      {
-       "name": "PA_CROP_SPE_ID",
-       "req": true,
-       "desc": "작물별 특성 아이디",
-       "sample": "PA130201"
-      }
-     ],
-     "props": {
-      "resultCode": "결과코드",
-      "resultMsg": "결과메시지",
-      "numOfRows": "한 페이지 결과 수",
-      "pageNo": "페이지 번호",
-      "totalCount": "전체 결과 수",
-      "dataType": "데이터 타입",
-      "ymd": "연원일",
-      "areaId": "지역 아이디",
-      "areaName": "지역 이름",
-      "paCropName": "작물 명",
-      "paCropSpeId": "작물별 특성아이디",
-      "paCropSpeName": "작물별 특성 이름",
-      "dayAvgTa": "일 평균기온",
-      "dayMaxTa": "일 최고기온",
-      "dayMinTa": "일 최저기온",
-      "dayAvgRhm": "일 평균상대습도",
-      "dayMinRhm": "일 최저상대습도",
-      "daySumRn": "일 강수량",
-      "dayAvgWs": "일 평균풍속",
-      "daySumSs": "일 누적일조시간",
-      "wmCount": "특보 발효 여부",
-      "wmCd": "특보 코드"
-     },
-     "full": "https://apis.data.go.kr/1360000/FmlandWthrInfoService/getDayStatistics"
-    },
     {
      "path": "/1360000/FmlandWthrInfoService/getPureStatistics",
      "sum": "순통계조회",
@@ -16489,7 +16241,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058386",
@@ -16506,8 +16258,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=2XO0Z208BB6LSO00M897638968&infSeq=3&order=&loc=&searchWord=%EA%B0%80%EC%B6%95+%EC%82%AC%EC%9C%A1%EC%97%85%EC%B2%B4+%ED%98%84%ED%99%A9",
   "link_pk": "15058386",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057795",
@@ -16524,8 +16276,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=J1LBBNRN7YHWYHXF6GDN26622691&infSeq=3",
   "link_pk": "15057795",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109049",
@@ -16551,7 +16303,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220822000000000623_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057968",
@@ -16669,7 +16421,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109047",
@@ -16695,7 +16447,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220817000000000620_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109237",
@@ -16716,7 +16468,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059024",
@@ -16733,8 +16485,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=R68S9K7NAOUDND8UN69G27213400&infSeq=2",
   "link_pk": "15059024",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109048",
@@ -16760,7 +16512,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220818000000000621_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109234",
@@ -16781,7 +16533,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109233",
@@ -16807,7 +16559,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151127000000000311_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109236",
@@ -16833,7 +16585,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151127000000000313_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109050",
@@ -16859,7 +16611,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220822000000000624_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15135883",
@@ -16880,7 +16632,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15097245",
@@ -16987,7 +16739,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109845",
@@ -17022,7 +16774,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15157657",
@@ -17112,7 +16864,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056913",
@@ -17129,8 +16881,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=0F012WV47GW13V992Y4M11634165&infSeq=2&order=&loc=&searchWord=%EC%B6%95%EC%82%B0%EB%AC%BC+%EC%B6%9C%ED%95%98%EC%A0%84+%EC%83%9D%EC%B2%B4+%EC%9E%94%EB%A5%98%EA%B2%80%EC%82%AC+%EC%A7%91%EA%B3%84+%ED%98%84%ED%99%A9",
   "link_pk": "15056913",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102410",
@@ -17156,7 +16908,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141217000000000089_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109058",
@@ -17182,7 +16934,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000632_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15012299",
@@ -17226,7 +16978,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109068",
@@ -17252,7 +17004,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000649_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101446",
@@ -17278,7 +17030,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/frcDsstrPrevnt.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15040630",
@@ -17431,7 +17183,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140549",
@@ -17457,7 +17209,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000654_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121330",
@@ -17478,7 +17230,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057104",
@@ -17504,7 +17256,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151028000000000248_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101389",
@@ -17530,7 +17282,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/farmAppTech.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140547",
@@ -17556,7 +17308,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000660_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140550",
@@ -17582,7 +17334,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000655_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057828",
@@ -17599,8 +17351,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=HT09219440LT43H89TAR1522789&infSeq=3",
   "link_pk": "15057828",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083591",
@@ -17626,7 +17378,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/uptodeFarmngTchnlgyInfo.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059258",
@@ -17643,8 +17395,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=TO0YIYI76S1QBV7CH3CV1479663&infSeq=3",
   "link_pk": "15059258",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058607",
@@ -17661,8 +17413,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=VHBFO6H89O214K80N4M81406098&infSeq=3",
   "link_pk": "15058607",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056853",
@@ -17679,8 +17431,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=SV61976S5SS7XN06YRPX11648631&infSeq=2&order=&loc=&searchWord=%EC%B6%95%EC%82%B0%EB%AC%BC+%EB%8F%84%EC%B6%95%ED%9B%84+%EC%A7%80%EC%9C%A1+%EC%9E%94%EB%A5%98%EA%B2%80%EC%82%AC+%EC%A7%91%EA%B3%84+%ED%98%84%ED%99%A9#2",
   "link_pk": "15056853",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059076",
@@ -17697,8 +17449,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=MOT85A5L3KE0VMGWXSV0737904&infSeq=3&order=&loc=&searchWord=%EB%8F%84%EC%B6%95%EC%9E%A5%C2%B7%EC%A7%91%EC%9C%A0%EC%9E%A5+%ED%98%84%ED%99%A9",
   "link_pk": "15059076",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056595",
@@ -17813,7 +17565,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056673",
@@ -18048,7 +17800,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058271",
@@ -18314,7 +18066,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056542",
@@ -18619,7 +18371,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141811",
@@ -18660,7 +18412,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109060",
@@ -18681,7 +18433,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109062",
@@ -18705,7 +18457,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Api_20220824000000000643_2/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156005",
@@ -18786,7 +18538,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059179",
@@ -18803,8 +18555,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=44PR229P80JZ057W52681634901&infSeq=2&searchWord=%EC%88%98%EC%82%B0%EC%97%85+%EC%A7%91%EA%B3%84+%ED%98%84%ED%99%A9",
   "link_pk": "15059179",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058655",
@@ -19120,7 +18872,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15089066",
@@ -19145,7 +18897,7 @@
     "https://www.nifs.go.kr/OpenAPI_xml"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15001702",
@@ -19168,7 +18920,7 @@
     "http://www.nfqs.go.kr/hpmg/front/api/qrnt_opr_fcts_api.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057994",
@@ -19194,7 +18946,7 @@
     "http://psis.rda.go.kr/openApi/service.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080939",
@@ -19220,7 +18972,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/fruitGrowingArea.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095473",
@@ -19387,7 +19139,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058300",
@@ -19408,7 +19160,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102910",
@@ -19434,7 +19186,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141225000000000162_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058328",
@@ -19460,7 +19212,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000426_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059332",
@@ -19486,7 +19238,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000424_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059452",
@@ -19507,7 +19259,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15041772",
@@ -19533,7 +19285,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/manureRecycling.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102911",
@@ -19559,7 +19311,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141225000000000164_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111641",
@@ -19582,7 +19334,7 @@
     "http://api.mcee.go.kr/geoserver/me/wms"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057124",
@@ -19603,7 +19355,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140559",
@@ -19629,7 +19381,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000658_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140562",
@@ -19655,7 +19407,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000659_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140560",
@@ -19681,7 +19433,8 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000657_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15058064",
@@ -19698,8 +19451,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=DZJCSENGY07VTW081XJH14715251&infSeq=3&order=&loc=&searchWord=%EC%A2%85%EC%98%A4%EB%A6%AC%EC%97%85+%ED%98%84%ED%99%A9",
   "link_pk": "15058064",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058030",
@@ -19716,8 +19469,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=P12M591DNY11VFR994R21346082&infSeq=3",
   "link_pk": "15058030",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083770",
@@ -19855,7 +19608,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074332",
@@ -19882,7 +19635,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109061",
@@ -19908,7 +19661,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20221205000000000651_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15078893",
@@ -20152,7 +19905,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109066",
@@ -20178,7 +19931,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000647_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109067",
@@ -20204,7 +19957,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000648_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141320",
@@ -20256,7 +20009,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141808",
@@ -20313,7 +20066,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156054",
@@ -20378,7 +20131,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109059",
@@ -20404,7 +20157,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220823000000000633_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156073",
@@ -20454,7 +20207,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156060",
@@ -20512,7 +20265,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156026",
@@ -20568,7 +20321,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156018",
@@ -20604,7 +20357,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156022",
@@ -20639,7 +20392,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056670",
@@ -21240,8 +20993,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-24",
-  "err": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058627",
@@ -22476,7 +22228,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156865",
@@ -22501,7 +22253,7 @@
     "https://www.nifs.go.kr/OpenAPI_xml"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058613",
@@ -22518,8 +22270,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=J9IE3LY1W9WXV3LRJBWO19576573&infSeq=2&searchWord=%EC%8B%9C%EA%B5%B0%EB%B3%84%EC%96%B4%ED%95%AD%EC%88%98+%ED%98%84%ED%99%A9",
   "link_pk": "15058613",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057947",
@@ -22646,7 +22398,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057215",
@@ -22765,7 +22517,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056602",
@@ -22893,7 +22645,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15002034",
@@ -22914,7 +22666,8 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15058504",
@@ -22937,7 +22690,7 @@
     "http://ncpms.rda.go.kr/npmsAPI/service"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15078194",
@@ -23977,7 +23730,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15073274",
@@ -24108,7 +23861,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095479",
@@ -24178,7 +23931,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15108406",
@@ -24323,7 +24076,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095468",
@@ -24454,7 +24207,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15052501",
@@ -24475,7 +24228,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121334",
@@ -24496,7 +24249,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121324",
@@ -24517,7 +24270,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057300",
@@ -24543,7 +24296,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161216000000000425_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121325",
@@ -24564,7 +24317,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140552",
@@ -24590,7 +24343,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000661_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080743",
@@ -24616,7 +24369,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161206000000000390_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15128301",
@@ -24640,7 +24393,7 @@
     "https://www.seogu.go.kr/seoguAPI/3660000/"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080631",
@@ -24666,7 +24419,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151027000000000241_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15097251",
@@ -24773,7 +24526,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15140557",
@@ -24799,7 +24552,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20240625000000000656_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059478",
@@ -24816,8 +24569,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=Z69L11L87857CU5163MI696522&infSeq=3",
   "link_pk": "15059478",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056696",
@@ -24834,8 +24587,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=XZC1X4KF79YA8K4M860811982179&infSeq=2",
   "link_pk": "15056696",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056609",
@@ -24852,8 +24605,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=M4X8730RJFV42LD0M16M658708&infSeq=3",
   "link_pk": "15056609",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "3068147",
@@ -24879,7 +24632,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000055_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056737",
@@ -24896,8 +24649,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=JMGZE10393I5CZWW2T6H2342056&infSeq=3&order=&loc=&searchWord=%EA%B0%80%EC%B6%95+%EC%A0%84%EC%97%BC%EB%B3%91+%EB%B0%9C%EC%83%9D+%ED%98%84%ED%99%A9",
   "link_pk": "15056737",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059260",
@@ -24914,8 +24667,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=LPSUG67BOWTHHMHGN86V28394946&infSeq=3",
   "link_pk": "15059260",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121567",
@@ -24932,8 +24685,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=47",
   "link_pk": "15121567",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15163156",
@@ -24956,7 +24712,7 @@
     "https://ax.mafra.go.kr/portal/apiRequest"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15087239",
@@ -24983,7 +24739,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083771",
@@ -25121,7 +24877,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160312",
@@ -25186,7 +24942,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15106661",
@@ -25236,7 +24992,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15087188",
@@ -25262,7 +25018,8 @@
     "https://www.nongsaro.go.kr/portal/apiManual/insectAgchApplc.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15076020",
@@ -25279,8 +25036,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=5",
   "link_pk": "15076020",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075999",
@@ -25297,8 +25057,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=32",
   "link_pk": "15075999",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064169",
@@ -25324,7 +25087,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/mlrdCuration.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15056832",
@@ -25372,61 +25135,8 @@
     "totalCount"
    ]
   },
-  "spec": {
-   "host": "apis.data.go.kr",
-   "scheme": "https",
-   "ops": [
-    {
-     "path": "/6260000/BusanAgriculturalStaticInfoService/getAgriculturalStaticInfo",
-     "sum": "농산물 잔류농약검사 통계 조회",
-     "params": [
-      {
-       "name": "ServiceKey",
-       "req": true,
-       "desc": "서비스키",
-       "sample": "-"
-      },
-      {
-       "name": "pageNo",
-       "req": true,
-       "desc": "페이지 번호",
-       "sample": "1"
-      },
-      {
-       "name": "numOfRows",
-       "req": true,
-       "desc": "한 페이지 결과 수",
-       "sample": "10"
-      },
-      {
-       "name": "resultType",
-       "req": false,
-       "desc": "JSON방식 호출",
-       "sample": "json"
-      }
-     ],
-     "props": {
-      "resultCode": "결과코드",
-      "resultMsg": "결과메시지",
-      "numOfRows": "한 페이지 결과 수",
-      "pageNo": "페이지 번호",
-      "totalCount": "전체 결과 수",
-      "inspecYm": "측정년월",
-      "inspecKb1": "농산물구분",
-      "inspecKb2": "관원민원 구분",
-      "foods01": "검사건수-엄궁",
-      "foods02": "검사건수-반여",
-      "foods03": "검출-엄궁",
-      "foods04": "부적합-엄궁",
-      "foods05": "검출-반여",
-      "foods06": "부적합-반여"
-     },
-     "full": "https://apis.data.go.kr/6260000/BusanAgriculturalStaticInfoService/getAgriculturalStaticInfo"
-    }
-   ],
-   "from": "detail"
-  },
-  "fetched": "2026-10-31"
+  "detail_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156065",
@@ -25476,7 +25186,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156063",
@@ -25529,7 +25239,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156064",
@@ -25579,7 +25289,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109063",
@@ -25605,7 +25315,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000646_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156070",
@@ -25654,7 +25364,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057064",
@@ -25794,7 +25504,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058859",
@@ -25926,7 +25636,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156002",
@@ -25961,7 +25671,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156011",
@@ -26002,7 +25712,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15155994",
@@ -26041,8 +25751,7 @@
     }
    ]
   },
-  "fetched": "2026-10-24",
-  "err": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109229",
@@ -26066,7 +25775,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Api_20161207000000000394_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15157290",
@@ -26091,7 +25800,7 @@
     "https://www.nifs.go.kr/OpenAPI_xml"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059974",
@@ -26132,7 +25841,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059975",
@@ -26299,7 +26008,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15086334",
@@ -26325,7 +26034,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/xportSftyVioltStus.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15078057",
@@ -26672,7 +26381,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095484",
@@ -26715,6 +26424,7 @@
     "year"
    ]
   },
+  "detail_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
   "spec": {
    "host": "apis.data.go.kr",
    "scheme": "https",
@@ -26765,58 +26475,11 @@
       "climate_Rice_Temp": "기후생산력지수(벼)"
      },
      "full": "https://apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/ClmtPrdv/getWeatherClimateRiceSpotList"
-    },
-    {
-     "path": "/1390802/AgriWeather/WeatherObsrInfo/ClmtPrdv/getWeatherClimateRiceList",
-     "sum": "농업기상 관측지대별 기후생산력지수(벼) 정보 조회",
-     "params": [
-      {
-       "name": "serviceKey",
-       "req": false,
-       "desc": "인증키",
-       "sample": "인증키"
-      },
-      {
-       "name": "zone_Code",
-       "req": false,
-       "desc": "관측지대 코드",
-       "sample": "4"
-      },
-      {
-       "name": "start_Year",
-       "req": false,
-       "desc": "관측 시작년도",
-       "sample": "2010"
-      },
-      {
-       "name": "end_Year",
-       "req": false,
-       "desc": "관측 종료년도",
-       "sample": "2018"
-      },
-      {
-       "name": "date",
-       "req": false,
-       "desc": "출수일자",
-       "sample": "0901"
-      }
-     ],
-     "props": {
-      "result_Code": "결과 코드",
-      "result_Msg": "결과 메시지",
-      "items": "조회결과 목록",
-      "zone_Code": "관측지대 코드",
-      "zone_Name": "관측지대 명",
-      "item": "조회결과",
-      "year": "년도",
-      "climate_Rice_Temp": "기후생산력지수(벼)"
-     },
-     "full": "https://apis.data.go.kr/1390802/AgriWeather/WeatherObsrInfo/ClmtPrdv/getWeatherClimateRiceList"
     }
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15002220",
@@ -26842,7 +26505,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20200929000000000606_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102820",
@@ -26868,7 +26531,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220621000000000617_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15041765",
@@ -26894,7 +26557,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/stkrsPractialTech.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15121331",
@@ -26915,7 +26578,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080748",
@@ -26930,18 +26593,8 @@
    "urls": [],
    "names": []
   },
-  "external": "https://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20200929000000001392&service_ty=O",
-  "link_pk": "15080748",
-  "ext_hint": {
-   "grids": [
-    "Grid_20200929000000000606_1"
-   ],
-   "apis": [
-    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20200929000000000606_1/1/5",
-    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20200929000000000606_1/1/5"
-   ]
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "3055319",
@@ -26967,7 +26620,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20170111000000000491_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15115478",
@@ -27027,7 +26680,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080587",
@@ -27053,7 +26706,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161206000000000388_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15079706",
@@ -27079,7 +26732,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141225000000000154_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15103485",
@@ -27123,7 +26776,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130774",
@@ -27183,7 +26836,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080629",
@@ -27209,7 +26862,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141225000000000157_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080744",
@@ -27235,7 +26888,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161206000000000391_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15104788",
@@ -27284,7 +26937,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15131208",
@@ -27319,7 +26972,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101223",
@@ -27345,7 +26998,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000079_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080607",
@@ -27371,7 +27024,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141225000000000155_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080606",
@@ -27397,7 +27050,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141225000000000153_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15147274",
@@ -27457,7 +27110,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141807",
@@ -27503,7 +27156,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059276",
@@ -27520,8 +27173,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=BV286D8X50PW92877VZ6609746&infSeq=3&order=&loc=&searchWord=%EA%B0%80%EC%B6%95+%EC%9D%B8%EA%B3%B5+%EC%88%98%EC%A0%95%EC%86%8C%EC%97%85%EC%B2%B4+%ED%98%84%ED%99%A9",
   "link_pk": "15059276",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057383",
@@ -27538,8 +27191,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=MTY6RXZA08P57M4P933K11972455&infSeq=3&order=&loc=&searchWord=%ED%8F%90%EC%82%AC%EA%B0%80%EC%B6%95+%EC%B2%98%EB%A6%AC%EC%9E%A5%EB%B9%84+%EC%A7%80%EC%9B%90+%EC%A7%91%EA%B3%84+%ED%98%84%ED%99%A9",
   "link_pk": "15057383",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160264",
@@ -27790,7 +27443,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058391",
@@ -27807,8 +27460,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=RJ7EXMQFTWT17XT92ROS21858798&infSeq=3",
   "link_pk": "15058391",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "3055324",
@@ -27834,7 +27487,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141119000000000061_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15165612",
@@ -27855,7 +27508,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15086459",
@@ -27881,7 +27534,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/machineSafety.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15124613",
@@ -27918,7 +27571,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15033044",
@@ -27939,7 +27592,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062450",
@@ -28031,7 +27684,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15124970",
@@ -28192,7 +27845,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111416",
@@ -28235,7 +27888,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111417",
@@ -28282,7 +27935,8 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15111418",
@@ -28329,7 +27983,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075883",
@@ -28394,7 +28048,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15122361",
@@ -28450,7 +28104,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15040631",
@@ -28588,7 +28242,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15078191",
@@ -28615,7 +28269,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15126216",
@@ -28658,7 +28312,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15097884",
@@ -28685,7 +28339,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133582",
@@ -28719,7 +28373,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111813",
@@ -28746,7 +28400,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130186",
@@ -28769,7 +28423,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/fishCrrnSttsByRgstCmpnApi.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142453",
@@ -28792,7 +28446,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getLocationHistoryNoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142450",
@@ -28815,7 +28469,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getAreaHistoryNoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142449",
@@ -28838,7 +28492,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getGoodsHistoryNoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142463",
@@ -28861,7 +28515,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getShipmentDetailInfoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142461",
@@ -28884,7 +28538,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getProductDetailInfoSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142294",
@@ -28899,15 +28553,8 @@
    "urls": [],
    "names": []
   },
-  "external": "https://www.nfqs.go.kr/hpmg/api/actionApiDetail.do?apiCd=026",
-  "link_pk": "15142294",
-  "ext_hint": {
-   "grids": [],
-   "apis": [
-    "https://www.nfqs.go.kr/hpmg/front/api/getItemCodeSearch.do"
-   ]
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142457",
@@ -28930,7 +28577,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getGoodsInfoListSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130260",
@@ -28953,7 +28600,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/saltLlrgdsInfrmApi.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142462",
@@ -28976,7 +28623,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getShipmentInfoListSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142455",
@@ -28999,7 +28646,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getJoinCompanyListSearch.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130261",
@@ -29022,7 +28669,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/saltLrgprPrdctApi.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130262",
@@ -29045,7 +28692,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/saltLrgprShpmnApi.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15116927",
@@ -29068,7 +28715,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/getSaltPublicData.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15130190",
@@ -29091,7 +28738,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/fishHwToDstnAqtcPrdcApi.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076005",
@@ -29108,8 +28755,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=33",
   "link_pk": "15076005",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141815",
@@ -29154,7 +28804,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076053",
@@ -29171,8 +28821,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=42",
   "link_pk": "15076053",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109064",
@@ -29198,7 +28851,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220824000000000644_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15139765",
@@ -29219,7 +28872,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15135915",
@@ -29240,7 +28893,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062847",
@@ -29390,7 +29043,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15135912",
@@ -29411,7 +29064,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109065",
@@ -29437,7 +29090,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20220826000000000645_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15153184",
@@ -29458,7 +29111,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058130",
@@ -29475,8 +29128,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=9P55ZX3B7W49W4F65G8G844940&infSeq=3&order=&loc=&searchWord=%EC%96%B4%EC%84%A0+%EC%A7%91%EA%B3%84+%ED%98%84%ED%99%A9",
   "link_pk": "15058130",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15144225",
@@ -29530,7 +29183,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156040",
@@ -29566,7 +29219,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15034081",
@@ -29697,7 +29350,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15153185",
@@ -29718,7 +29371,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15004517",
@@ -29735,8 +29388,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=30",
   "link_pk": "15004517",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109105",
@@ -29754,7 +29410,7 @@
   "external": "https://www.atfis.or.kr/home/openapi.do?act=detail&oaurId=5",
   "link_pk": "15109105",
   "ext_err": "HTTP Error 400: Bad Request",
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095736",
@@ -29775,7 +29431,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102241",
@@ -29801,7 +29457,7 @@
     "http://psis.rda.go.kr/openApi/service.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15041700",
@@ -29827,7 +29483,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/orgnicTchBook.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15015158",
@@ -29854,7 +29510,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/dbyhsCccrrncInfo.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062855",
@@ -29962,7 +29618,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058192",
@@ -29985,7 +29641,7 @@
     "http://ncpms.rda.go.kr/npmsAPI/service"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3060743",
@@ -30011,7 +29667,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/cropEbook.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059306",
@@ -30040,7 +29696,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/agchmSafeUseManualSearch.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057614",
@@ -30057,8 +29713,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?infId=9BHXN16CV4BX1TWGK7V629074929&infSeq=2",
   "link_pk": "15057614",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076050",
@@ -30075,8 +29731,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=44",
   "link_pk": "15076050",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076027",
@@ -30093,8 +29752,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=34",
   "link_pk": "15076027",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083709",
@@ -30169,7 +29831,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15022797",
@@ -30192,7 +29854,8 @@
     "https://datacookchatbot.com/api/chat/stream"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15059966",
@@ -30319,7 +29982,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15059969",
@@ -30436,7 +30099,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15077031",
@@ -30457,7 +30120,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102034",
@@ -30496,7 +30159,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062920",
@@ -30537,7 +30200,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15098510",
@@ -30647,7 +30310,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15041703",
@@ -30673,7 +30336,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/processFcltyEntrps.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102078",
@@ -30716,7 +30379,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101734",
@@ -30742,7 +30405,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20141222000000000136_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101562",
@@ -30763,7 +30426,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3055108",
@@ -30778,18 +30441,8 @@
    "urls": [],
    "names": []
   },
-  "external": "http://data.mafra.go.kr/opendata/data/indexOpenDataDetail.do?data_id=20170111000000000748&filter_ty=O&getBack=&sort_id=&s_data_nm=&instt_id=&cl_code=&shareYn=",
-  "link_pk": "3055108",
-  "ext_hint": {
-   "grids": [
-    "Grid_20170111000000000490_1"
-   ],
-   "apis": [
-    "http://211.237.50.150:7080/openapi/sample/xls/Grid_20170111000000000490_1/1/5",
-    "http://211.237.50.150:7080/openapi/sample/xml/Grid_20170111000000000490_1/1/5"
-   ]
-  },
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102557",
@@ -30839,7 +30492,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080635",
@@ -30865,7 +30518,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20151027000000000244_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080746",
@@ -30891,7 +30544,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20161206000000000393_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15038287",
@@ -30908,8 +30561,14 @@
   },
   "external": "http://data.dongjak.go.kr/openinf/sheetview.jsp?infId=OA-18121",
   "link_pk": "15038287",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "https://data.dongjak.go.kr/openinf/openapiview.jsp",
+    "https://www.data.go.kr/data/15154842/openapi.do"
+   ]
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15165566",
@@ -30930,7 +30589,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15165570",
@@ -30951,7 +30610,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15157795",
@@ -30987,7 +30646,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062459",
@@ -31023,7 +30682,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15124978",
@@ -31118,7 +30777,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15087173",
@@ -31144,7 +30803,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/ltrtreInfo.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15041771",
@@ -31170,7 +30829,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/directDelng.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15038293",
@@ -31187,8 +30846,14 @@
   },
   "external": "http://data.dongjak.go.kr/openinf/sheetview.jsp?infId=OA-16585",
   "link_pk": "15038293",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": [
+    "https://data.dongjak.go.kr/openinf/openapiview.jsp",
+    "https://www.data.go.kr/data/15154984/openapi.do"
+   ]
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15032822",
@@ -31209,7 +30874,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15032820",
@@ -31230,7 +30895,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15032821",
@@ -31251,7 +30916,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15118113",
@@ -31293,7 +30958,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074319",
@@ -31320,7 +30985,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111981",
@@ -31357,7 +31022,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076022",
@@ -31374,8 +31039,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=6",
   "link_pk": "15076022",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076023",
@@ -31390,10 +31058,8 @@
    "urls": [],
    "names": []
   },
-  "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=7",
-  "link_pk": "15076023",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "link_err": "<urlopen error _ssl.c:994: The handshake operation timed out>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15141813",
@@ -31447,7 +31113,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102970",
@@ -31521,7 +31187,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15135894",
@@ -31542,7 +31208,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15135919",
@@ -31563,7 +31229,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15153251",
@@ -31584,7 +31250,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109848",
@@ -31626,7 +31292,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15164362",
@@ -31667,7 +31333,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064972",
@@ -31694,7 +31360,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058695",
@@ -31711,8 +31377,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=6GXT8558R3S0M75HG3BO1427215&infSeq=2&order=&loc=&searchWord=%EC%88%98%EC%82%B0%EB%AC%BC+%EC%95%88%EC%A0%84%EC%84%B1+%EA%B2%80%EC%82%AC%EA%B2%B0%EA%B3%BC+%ED%98%84%ED%99%A9",
   "link_pk": "15058695",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057270",
@@ -31733,7 +31399,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15132779",
@@ -31767,7 +31433,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142090",
@@ -31833,7 +31499,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15157819",
@@ -31867,7 +31533,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3060748",
@@ -31894,7 +31560,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/farmPrdtIncome.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095739",
@@ -31915,7 +31581,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15144647",
@@ -31980,7 +31646,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15042594",
@@ -32076,7 +31742,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15063096",
@@ -32188,7 +31854,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15086337",
@@ -32214,7 +31880,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/monthFarmTech.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101372",
@@ -32240,7 +31906,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/ntcnqFchAppn.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075889",
@@ -32320,7 +31986,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101370",
@@ -32346,7 +32012,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/frtlzrQltinsp.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15126500",
@@ -32363,8 +32029,8 @@
   },
   "external": "https://www.anyang.go.kr/main/selectBbsNttView.do?key=4347&bbsNo=1824&nttNo=364774&searchCtgry=&searchKrwd=&pageIndex=2&integrDeptCode=",
   "link_pk": "15126500",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "<urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1011)>",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101365",
@@ -32390,7 +32056,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/agchmQltinsp.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133586",
@@ -32423,7 +32089,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15128503",
@@ -32447,7 +32113,7 @@
     "https://www.seogu.go.kr/seoguAPI/3660000/"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15151027",
@@ -32481,7 +32147,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15086493",
@@ -32507,7 +32173,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/farmMachineDecision.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064141",
@@ -32533,7 +32199,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/farmSafeGoods.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083586",
@@ -32559,7 +32225,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/machineVod.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15096031",
@@ -32640,7 +32306,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15002002",
@@ -32729,7 +32395,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057713",
@@ -32747,7 +32413,7 @@
   "external": "http://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=agrixue102",
   "link_pk": "15057713",
   "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101371",
@@ -32773,7 +32439,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/agriAccident.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15159988",
@@ -32830,7 +32496,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075998",
@@ -32847,8 +32513,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=31",
   "link_pk": "15075998",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076054",
@@ -32865,8 +32534,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=23",
   "link_pk": "15076054",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076055",
@@ -32883,8 +32555,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=24",
   "link_pk": "15076055",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076036",
@@ -32901,8 +32576,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=36",
   "link_pk": "15076036",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076044",
@@ -32919,8 +32597,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=41",
   "link_pk": "15076044",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076048",
@@ -32937,8 +32618,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=45",
   "link_pk": "15076048",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15120298",
@@ -32955,8 +32639,11 @@
   },
   "external": "https://www.garak.co.kr/homepage/M0000258/publicdata/selectPageListPublicData.do?publicDataRealmSn=29",
   "link_pk": "15120298",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064159",
@@ -32982,7 +32669,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/farmTechPolicyData.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110880",
@@ -33016,7 +32703,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15144182",
@@ -33051,7 +32738,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083593",
@@ -33077,7 +32764,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/evrfrndFarmng.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101394",
@@ -33103,7 +32790,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/orgnicFarmng.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15096607",
@@ -33127,7 +32814,8 @@
     "https://www.safetyreport.go.kr/api"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15058706",
@@ -33145,7 +32833,7 @@
   "external": "http://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=weissitemd",
   "link_pk": "15058706",
   "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15032747",
@@ -33166,7 +32854,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095554",
@@ -33403,7 +33091,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057668",
@@ -33420,8 +33108,8 @@
   },
   "external": "https://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=gimsscs",
   "link_pk": "15057668",
-  "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "ext_err": "HTTP Error 502: Bad Gateway",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057789",
@@ -33438,8 +33126,8 @@
   },
   "external": "https://www.vworld.kr/dev/v4dv_wmsguide2_s001.do",
   "link_pk": "15057789",
-  "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "ext_err": "HTTP Error 502: Bad Gateway",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101051",
@@ -33463,7 +33151,7 @@
     "https://www.nie-ecobank.kr/ecoapi/"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101312",
@@ -33487,7 +33175,7 @@
     "https://www.nie-ecobank.kr/ecoapi/"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101313",
@@ -33511,7 +33199,7 @@
     "https://www.nie-ecobank.kr/ecoapi/"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101299",
@@ -33535,7 +33223,7 @@
     "https://www.nie-ecobank.kr/ecoapi/"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15086547",
@@ -33561,7 +33249,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/insectSampleSrch.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064166",
@@ -33587,7 +33275,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/insectMkerInfo.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15087170",
@@ -33613,7 +33301,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/clgruppEcnmyInsectSrch.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15143483",
@@ -33759,7 +33447,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142775",
@@ -33832,7 +33520,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15167890",
@@ -33873,7 +33561,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062558",
@@ -33908,7 +33596,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15028144",
@@ -34012,7 +33700,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15032750",
@@ -34033,7 +33721,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15028142",
@@ -34138,7 +33826,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15028138",
@@ -34244,7 +33932,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058685",
@@ -34271,7 +33959,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083646",
@@ -34298,7 +33986,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15028140",
@@ -34338,7 +34026,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064831",
@@ -34365,7 +34053,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15064787",
@@ -34391,7 +34079,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15032818",
@@ -34412,7 +34100,8 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15032819",
@@ -34433,7 +34122,7 @@
    "grids": [],
    "apis": []
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057637",
@@ -34450,8 +34139,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=ZP00NKB44H9ZJXUSY11Z11622002&infSeq=2&order=&loc=&searchWord=%EC%B6%95%EC%82%B0%EB%AC%BC+%EB%AF%B8%EC%83%9D%EB%AC%BC+%EA%B2%80%EC%82%AC%EA%B2%B0%EA%B3%BC+%ED%98%84%ED%99%A9",
   "link_pk": "15057637",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15124612",
@@ -34486,7 +34175,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15095544",
@@ -34513,7 +34202,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15090431",
@@ -34620,7 +34309,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154861",
@@ -34719,7 +34408,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15154851",
@@ -34818,7 +34507,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15107365",
@@ -34856,7 +34545,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15105522",
@@ -34894,8 +34583,7 @@
     }
    ]
   },
-  "fetched": "2026-10-24",
-  "err": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058808",
@@ -34912,8 +34600,8 @@
   },
   "external": "http://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=Y233E3G2O6W487G1RBN81652818&infSeq=3&order=&loc=&searchWord=%EC%88%98%EC%82%B0%EC%9E%90%EC%9B%90+%EB%B3%B4%ED%98%B8%EA%B5%AC%EC%97%AD+%EA%B4%80%EB%A6%AC+%ED%98%84%ED%99%A9",
   "link_pk": "15058808",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15102996",
@@ -34969,7 +34657,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15015139",
@@ -34995,7 +34683,7 @@
     "http://211.237.50.150:7080/openapi/sample/xml/Grid_20160201000000000345_1/1/5"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109842",
@@ -35042,7 +34730,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15159890",
@@ -35075,7 +34763,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15081274",
@@ -35102,7 +34790,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15115751",
@@ -35125,7 +34813,7 @@
     "https://www.nfqs.go.kr/hpmg/front/api/radioactivityDailyRslt.do"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133140",
@@ -35177,7 +34865,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15113321",
@@ -35220,7 +34908,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15062922",
@@ -35334,7 +35022,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111807",
@@ -35361,7 +35049,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15143614",
@@ -35536,7 +35224,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15027426",
@@ -35563,7 +35251,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/frmhsTasteHos.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160056",
@@ -35618,7 +35306,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15109835",
@@ -35657,7 +35345,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15111829",
@@ -35684,7 +35372,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3061376",
@@ -36095,7 +35783,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15142729",
@@ -36168,7 +35856,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15143501",
@@ -36281,7 +35969,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15150620",
@@ -36341,7 +36029,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15125691",
@@ -36596,7 +36284,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15156441",
@@ -36682,7 +36370,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15144105",
@@ -36712,7 +36400,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15123788",
@@ -36735,7 +36423,7 @@
     "http://ncpms.rda.go.kr/npmsAPI/service"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15075887",
@@ -37061,7 +36749,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15098287",
@@ -37171,7 +36859,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15160319",
@@ -37232,7 +36920,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15144796",
@@ -37895,7 +37583,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15000937",
@@ -38034,7 +37722,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074323",
@@ -38061,7 +37749,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074324",
@@ -38088,7 +37776,7 @@
     "https://www.foodsafetykorea.go.kr/WEB-INF/jsp/layout/apiLayout_new.jsp"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133581",
@@ -38119,7 +37807,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15133580",
@@ -38156,7 +37844,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076930",
@@ -38274,7 +37962,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110764",
@@ -38314,7 +38002,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "3069087",
@@ -38422,7 +38110,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15085410",
@@ -38542,7 +38230,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110743",
@@ -38576,7 +38264,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110566",
@@ -38608,7 +38296,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110724",
@@ -38650,7 +38338,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15113929",
@@ -38686,7 +38374,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15158647",
@@ -38758,7 +38446,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101988",
@@ -38784,7 +38472,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/prdlstImxprtTrend.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058006",
@@ -38802,7 +38490,8 @@
   "external": "https://www.vworld.kr/dev/v4dv_wmsguide2_s001.do",
   "link_pk": "15058006",
   "ext_err": "Remote end closed connection without response",
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15056928",
@@ -38819,8 +38508,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&sortColumn=&sortDirection=&infId=8M7880469YIY4864Z4L012453467&infSeq=2",
   "link_pk": "15056928",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15057304",
@@ -38837,8 +38526,8 @@
   },
   "external": "http://www.vworld.kr/dev/v4dv_2ddataguide2_s002.do?svcIde=agrixue101",
   "link_pk": "15057304",
-  "ext_err": "HTTP Error 502: Bad Gateway",
-  "fetched": "2026-10-31"
+  "ext_err": "Remote end closed connection without response",
+  "fetched": "2026-11-07"
  },
  {
   "id": "15076056",
@@ -38855,8 +38544,11 @@
   },
   "external": "https://temp.garak.co.kr/publicdata/selectPageListPublicData.do?sch_public_data_realm_code=25",
   "link_pk": "15076056",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_hint": {
+   "grids": [],
+   "apis": []
+  },
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110542",
@@ -38898,7 +38590,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110512",
@@ -38936,7 +38628,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110553",
@@ -38974,7 +38666,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15110510",
@@ -39014,7 +38706,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15078771",
@@ -39113,7 +38805,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15080936",
@@ -39139,7 +38831,8 @@
     "https://www.nongsaro.go.kr/portal/apiManual/femaleFarmerNotice.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-10-31",
+  "err": "<urlopen error _ssl.c:994: The handshake operation timed out>"
  },
  {
   "id": "15056626",
@@ -39156,8 +38849,8 @@
   },
   "external": "https://data.gg.go.kr/portal/data/service/selectServicePage.do?page=1&rows=10&sortColumn=&sortDirection=&infId=9928ZK20V6Z7YRQR311312443696&infSeq=2",
   "link_pk": "15056626",
-  "ext_err": "<urlopen error timed out>",
-  "fetched": "2026-10-31"
+  "ext_err": "The read operation timed out",
+  "fetched": "2026-11-07"
  },
  {
   "id": "3060747",
@@ -39184,7 +38877,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/agriTechVideo.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15079537",
@@ -39323,7 +39016,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15081308",
@@ -39349,7 +39042,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/agroHealingResearchResult.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15083592",
@@ -39375,7 +39068,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/agroHealingRef.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15101448",
@@ -39401,7 +39094,7 @@
     "https://www.nongsaro.go.kr/portal/apiManual/ovseaFarmng.zip"
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15074337",
@@ -39657,7 +39350,7 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15108113",
@@ -39703,7 +39396,7 @@
     }
    ]
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  },
  {
   "id": "15058347",
@@ -39843,6 +39536,6 @@
    ],
    "from": "detail"
   },
-  "fetched": "2026-10-31"
+  "fetched": "2026-11-07"
  }
 ]
