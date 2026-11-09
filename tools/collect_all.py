@@ -102,7 +102,7 @@ for s in order:
     if '_rows' not in s and (not spec or not spec.get('ops')):
         ent.update({'state': '명세 없음', 'urls': (s.get('plain') or {}).get('urls', [])[:3]}); skip += 1; continue
     if '_rows' not in s and not KEY: ent.update({'state': '열쇠 대기'}); skip += 1; continue
-    rng = {}
+    rng = {}; ymp = {}
     try:
       if '_rows' in s: rows = s['_rows']; meta = None
       else:
@@ -131,13 +131,32 @@ for s in order:
             if RSTART.search(n): rng.setdefault('s', n)
             elif REND.search(n): rng.setdefault('e', n)
         if len(rng) == 2: params[rng['s']] = day30; params[rng['e']] = day
+        # 기간 짝이 없고 선택 항목인 연도·월 변수(견본이 4자리 연도·1~2자리 월·6자리 연월)만 있는 월별 창구도 지난번 빈 응답이었으면 지난달로 채움(예: 축평원 축산물유통정보 재고동향 standYyyy·standMm — 비워 물으면 「정상 서비스」인데 0건). 지난달이 아직 안 올라왔으면 그 전달로 한 번 더. 받아진 창구는 ym 표시로 다음에도 같은 방식
+        ymp = {}
+        if len(rng) < 2:
+            for p in (op.get('params', []) if ent.get('state') == '빈 응답' or ent.get('ym') else []):
+                n = p.get('name') or ''; smp = str(p.get('sample') or '')
+                if n in params or p.get('req'): continue
+                if re.search(r'(yyyymm|Ym$|YM$|ym$)', n) and re.fullmatch(r'20\d{4}', smp): ymp.setdefault('ym', n)
+                elif re.search(r'(yyyy|Yyyy|YYYY|year|Year|YEAR|yr$|Yr$)', n) and re.fullmatch(r'20\d\d', smp): ymp.setdefault('y', n)
+                elif re.search(r'(Mm$|MM$|mm$|month|Month|MONTH|mon$|Mon$)', n) and re.fullmatch(r'\d{1,2}', smp): ymp.setdefault('m', n); ymp['mz'] = len(smp) == 2
+            if not ('ym' in ymp or ('y' in ymp and 'm' in ymp)): ymp = {}
+        def put_month(back):
+            d = now().date().replace(day=1)
+            for _ in range(back): d = (d - datetime.timedelta(days=1)).replace(day=1)
+            if 'ym' in ymp: params[ymp['ym']] = d.strftime('%Y%m')
+            else: params[ymp['y']] = str(d.year); params[ymp['m']] = f'{d.month:02d}' if ymp.get('mz') else str(d.month)
         rows = []; meta = None
-        for page in range(1, MAX_PAGES + 1):
-            params['pageNo'] = page
-            got, meta = items_of(get(base, params, timeout=20, retry=1))
-            rows += got
-            if len(got) < 1000: break
+        for back in ((1, 2) if ymp else (0,)):
+            if ymp: put_month(back)
+            for page in range(1, MAX_PAGES + 1):
+                params['pageNo'] = page
+                got, meta = items_of(get(base, params, timeout=20, retry=1))
+                rows += got
+                if len(got) < 1000: break
+            if rows: break
       if len(rng) == 2: ent['range30'] = bool(rows)
+      if ymp: ent['ym'] = bool(rows)
       fields = sorted({k for r in rows[:200] for k in r.keys()})
       afield = next((f for f in fields if ADDR.search(f)), None)
       sdf = next((f for f in fields if re.search(r'(city|ctpv|ctprvn|sido|SIDO|CTPV)', f) and not re.search(r'(cd|Cd|CD|code)$', f)), None)

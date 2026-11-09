@@ -85,7 +85,9 @@ try:
     jsave(os.path.join(DATA, 'origin.json'), {'at': stamp(), 'months': [f[:7] for f in files], 'days': sum(len(jload(os.path.join(od, f), {}).get('days', [])) for f in files),
           'units': pub, 'items': [[i, round(v)] for i, v in items.most_common(60)],
           'source': '한국농수산식품유통공사 전국 공영도매시장 경매원천정보(낙찰 건별 원산지·총가격). 원산지가 시군까지 적힌 낙찰만, 농협 수매 품목 제외'})
-    status('origin', True, f'{ymd} 낙찰 {len(rows):,}건' + (f' · 빠진 날 채움 {", ".join(filled)}' if filled else '') + f' · 누적 {len(files)}개월')
+    last = max((d for f in files for d in jload(os.path.join(od, f), {}).get('days', [])), default='')
+    head = f'{ymd} 낙찰 {len(rows):,}건' if rows else (f'{ymd} 일요일 경매 없음' if day.weekday() == 6 else f'{ymd} 낙찰 0건(다음 실행에서 다시)') + (f' · 마지막 쌓인 날 {last}' if last else '')
+    status('origin', True, head + (f' · 빠진 날 채움 {", ".join(filled)}' if filled else '') + f' · 누적 {len(files)}개월')
     print('출하 금액', ymd, len(rows))
 except Exception as e:
     status('origin', False, str(e)[:200]); print('실패', e)
