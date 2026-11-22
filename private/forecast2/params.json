@@ -7,7 +7,7 @@
  "w": {
   "feed": 1.0,
   "hanwoo": 0.6,
-  "pig": 0.6,
+  "pig": 0.48,
   "macro_hog": 0.3,
   "macro_cattle": 0.3
  },
@@ -26,11 +26,18 @@
   "feed": 60,
   "livestock": 10
  },
- "calib_log": [],
+ "calib_log": [
+  {
+   "date": "2026-11-23",
+   "changes": [
+    "pig 가중치 0.6→0.48(적중 62% vs 기준선 76%, 21건)"
+   ]
+  }
+ ],
  "pass": {
   "up": 0.54,
   "down": 0.48,
   "th": 3.0
  },
- "last_calib": "2026-11-16"
+ "last_calib": "2026-11-23"
 }
