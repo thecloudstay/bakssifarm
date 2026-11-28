@@ -1,1 +1,1 @@
-{"n":0,"closed":0,"rate":null,"rows":[],"n_days":29}
+{"n":2,"closed":0,"rate":0,"rows":[{"d":"2026-10-30","pair":"pig_ushog","state":"국산 상대 고평가","z0":1.04,"z1":2.54,"closed":false,"to":"2026-11-27"},{"d":"2026-10-30","pair":"banana_fx","state":"도매가 수입 원가 대비 낮음","z0":-1.95,"z1":-2.42,"closed":false,"to":"2026-11-27"}],"n_days":30}
